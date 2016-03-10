@@ -1,0 +1,91 @@
+#!/usr/bin/perl -w
+#
+### =============================================================== ###
+#                                                                     #
+#  The Ingest Server Startup                                          #
+#                                                                     #
+#  Function:                                                          #
+#  Script to startup the HORIZON server.                                 #
+#                                                                     #
+#  Copyright (c) 2007, Jet Propulsion Laboratory,                     #
+#  California Institute of Technology.  All rights reserved           #
+#                                                                     #
+#                                                                     #
+#  History:                                                           #
+#  Aug. 28, 2007 initial release                                      #
+#                                                                     #
+#                                                                     #
+### =============================================================== ###
+#
+# $Id: $
+#
+
+use strict;
+use File::Spec;
+use Getopt::Std;
+use Sys::Hostname;
+die "[ERROR] HORIZON environment variable is not set.\n" unless $ENV{HORIZON};
+require File::Spec->catdir($ENV{HORIZON}, 'horizonconfig.pm');
+
+#umask 077;
+
+my @app_argv = @ARGV;
+my $debug=0;
+
+my $javaCmd = &getCmd ($debug);
+my $classpath = $ENV{CLASSPATH} ? $ENV{CLASSPATH} : "";
+my @args = &getJVMArgs($classpath, $debug);
+
+my $policy = File::Spec->catdir($ENV{HORIZON}, 'horizon.policy');
+my $logconfig = File::Spec->catdir($ENV{HORIZON}, 'horizonserver.lcf');
+
+my $isOption = 0;
+my @optArgv = ();
+foreach my $element (@ARGV) {
+	my $argument = "";
+	if($isOption == 1) {
+		$argument = $element;
+		$isOption = 0;
+	} else {
+		if(index($element, '-') == 0) {
+			$argument = $element;
+			if(length($element) == 2) {
+				$isOption = 1;
+			}
+		}
+	}
+	if($argument ne "") {
+		push(@optArgv, $argument);
+	}
+}
+my @tempArgv = @ARGV;
+@ARGV = @optArgv;
+my %options=();
+getopt ('f:n:u:p:r:h:t:s:z:w:e:', \%options);
+@ARGV = @tempArgv;
+my $logfile = "";
+my $servername = "";
+if ($options{n}) {
+   $logfile = "$options{n}.log";
+   $servername = "$options{n}@".hostname;
+}
+
+push @args, "-server";
+push @args, "-Xms75m";
+push @args, "-Xmx512m";
+push @args, "-Dlog4j.configuration=file://$logconfig";
+push @args, "-Dlog4j.configuratorClass=org.apache.log4j.xml.DOMConfigurator";
+push @args, "-Dhorizon.home=$ENV{HORIZON}/../";
+push @args, "-Dhorizon.logging.file=$logfile";
+push @args, "-Dhorizon.server.name=$servername";
+push @args, "-Dhorizon.home=".File::Spec->catdir($ENV{HORIZON}, '..');
+push @args, "-Dhorizon.version=".File::Spec->catdir($ENV{HORIZON}, '..');
+push @args, "-Dhorizon.domain.file=".File::Spec->catdir($ENV{HORIZON}, 'horizondomain.xml');
+push @args, "gov.nasa.horizon.ingest.server.IngestServer";
+push @args, @app_argv;
+
+print "\n $javaCmd @args\n\n" if ($debug);
+my $returnValue = &run ("$javaCmd @args", $debug);
+#system $javaCmd, @args;
+exit $returnValue >> 8;
+

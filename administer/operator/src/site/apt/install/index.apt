@@ -1,0 +1,50 @@
+~~ Copyright 2009, by the California Institute of Technology.
+~~ ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+~~
+~~ $Id: $
+
+  ---
+  Installation
+  ---
+  Christian Alarcon
+  ---
+
+{Installation}
+
+   This document describes how to install and configure the Manager Operator Tool web application. The following sections can be found in this document:
+	
+   * {{{Necessary_Software}Necessary Software}}
+
+   * {{{Build_Instructions}Build Instructions}}
+
+   * {{{Reset_Instructions}Reset Instructions}}
+   
+{Necessary Software}
+
+   The Manager Operator Tool in its current form can function as minimally as just have an Apache server (or PHP5 compatible web server) with PHP5 installed. Additionaly, the PO.DAAC "Manager" software must be running at an accesible location to the web server. Please see the installation guide for that software if required. No database is required for this release, just access to a Manager grails application.
+
+   The JQuery 1.4.2 javascript framework is also required for this software to run, but a compatible version is supplied in the /js directory. No set up is required for this. 
+
+   Additionally, the plugins JQuery-UI 1.8.4 and JQGrid must also be installed in the /js directory. Both are also included in this package with no set up required.
+
+{Build Instructions}
+
+   The Manager Operator Tool can be deployed as easily as copying the contents of src/main/html to an active web server directory. A standard apache installation defaults to /var/www, however this should be changed to a desired location. The directory structure must remain intact as it is in the repository. A first time use wizard will auto generate the configuration needed for this tool.
+   
+   * Software Configuration
+   
+   The Manager Operator Tool requires minimal configuration. Upon first load, a wizard will appear to auto-generate all necessary configurations and pointers to services. Simply supply a valid username/password and the url of a working manager to begin the process. The wizard will then retreive the configuration file and place it in the "config" directory as "horizondomain.xml". 
+   
+[../images/op_wizard.jpg]
+
+	The tool still has its own configuration file for the different paths of each service. Modifying this will not be necessary under normal circumstances. For reference, here are their values.
+   	
+   	*$OPERATOR_AUTH represents the relative login API call from $OPERATOR_MANAGER_URL. This should only be changed if the Manager software is ever updated with a change in its Manager Operator Tool API.
+   	
+   	*$OPERATOR_LIST_GRANULE, $OPERATOR_EDIT_GRANULE, $OPERATOR_DELETE_GRANULE represents the relative granule management API calls from $OPERATOR_MANAGER_URL. This should only be changed if the Manager software is ever updated with a change in its Manager Operator Tool API.   
+   	
+   	*$OPERATOR_LIST_STORAGE, $OPERATOR_EDIT_GRANULE represents the relative storage management API calls from $OPERATOR_MANAGER_URL. This should only be changed if the Manager software is ever updated with a change in its Manager Operator Tool API.
+   	
+{Reset Instructions}
+
+	If desired, the operator tool can be reset to its default state with the wizard upon first load by simply deleting the "horizondomain.xml" file located in the config directory.   	   

@@ -1,0 +1,63 @@
+Return-Path: <Chris.Finch@jpl.nasa.gov>
+Received: from localhost by mbox4.jpl.nasa.gov with LMTP for <axt@jpl.nasa.gov>; Mon, 13 Oct 2008 15:12:03 -0700
+Received: from nmta3.jpl.nasa.gov with LMTP by mbox4.jpl.nasa.gov (3.0.5/sieved-3-0-5-build-1138)
+	for <axt@jpl.nasa.gov>; Mon, 13 Oct 2008 15:12:03 -0700
+Received: from mail.jpl.nasa.gov (sentrion1.jpl.nasa.gov [127.0.0.1])
+	by nmta3.jpl.nasa.gov (Switch-3.2.6/Switch-3.2.6) with ESMTP id m9DMC2aD000851
+	for <axt@jpl.nasa.gov>; Mon, 13 Oct 2008 15:12:02 -0700
+Received: from xmta1.jpl.nasa.gov (xmta1.jpl.nasa.gov [127.0.0.1])
+	by mail.jpl.nasa.gov (Switch-3.3.2mp/Switch-3.3.2mp) with ESMTP id m9DMBxse031441
+	(using TLSv1/SSLv3 with cipher DHE-RSA-AES256-SHA (256 bits) verified NO)
+	for <Atsuya.Takagi@jpl.nasa.gov>; Mon, 13 Oct 2008 22:11:59 GMT
+Received: from [127.0.0.1] (basalt.jpl.nasa.gov [127.0.0.1])
+	by xmta1.jpl.nasa.gov (Switch-3.2.6/Switch-3.2.6) with ESMTP id m9DMBvdF008807
+	for <Atsuya.Takagi@jpl.nasa.gov>; Mon, 13 Oct 2008 15:11:57 -0700
+Mime-Version: 1.0
+Message-Id: <p06230907c51978266274@[127.0.0.1]>
+Date: Mon, 13 Oct 2008 15:11:56 -0700
+To: Atsuya Takagi <Atsuya.Takagi@jpl.nasa.gov>
+From: Data Ingestor (Tim) <ingest@seacow.jpl.nasa.gov> (by way of
+ Christopher J. Finch)
+Subject: Submission Package JASON1 AUX 249_03
+Content-Type: text/plain; charset="us-ascii" ; format="flowed"
+X-Source-IP: basalt.jpl.nasa.gov [127.0.0.1]
+X-Source-Sender: Chris.Finch@jpl.nasa.gov
+X-AUTH: Authorized
+X-AUTH: Authorized
+
+
+GROUP = Submission_Package_ACK
+   Product_Name = "JASON_1_TRSR1"
+   Product_Type = "DATA"
+   Delivery_Version_Number = "1"
+   Internet_Host_Name = "lapinta.jpl.nasa.gov"
+   Internet_Address = "127.0.0.1"
+   FTP_Transfer_Mode = "binary"
+   Path_Name = "/data/dev/ingest-test/jason1/private/trsr/data/c248"
+   File_Name_List = {
+       "JA1_TRSR1_2008_10_07_00_26_40.",
+       "JA1_TRSR1_2008_10_07_02_23_11.",
+       "JA1_TRSR1_2008_10_07_03_48_30.",
+       "JA1_TRSR1_2008_10_07_05_51_30.",
+       "JA1_TRSR1_2008_10_07_18_51_41."
+       }
+   Files = 5
+   Submission_Status = COPIED
+   Submission_Comment = "JASON1 CYCLE 248"
+END_GROUP = Submission_Package_ACK
+
+GROUP = Submission_Package_ACK
+   Product_Name = "PODAAC JASON1 INVENTORY ENTRY"
+   Product_Type = "DATA"
+   Delivery_Version_Number = ""
+   Internet_Host_Name = "lapinta.jpl.nasa.gov"
+   Internet_Address = "127.0.0.1"
+   FTP_Transfer_Mode = "binary"
+   Path_Name = "/data/dev/ingest-test/jason1/private/lod/c248"
+   File_Name_List = {
+       "JASON1_TRSR1_248_08.LOD"
+       }
+   Files = 1
+   Submission_Status = COPIED
+   Submission_Comment = "JASON1 CYCLE 248"
+END_GROUP = Submission_Package_ACK

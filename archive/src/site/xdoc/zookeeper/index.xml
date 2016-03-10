@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2013, by the California Institute of Technology. -->
+<!-- ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged. -->
+<!--  -->
+<!-- $Id: $ -->
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+
+   <properties>
+      <title>Archive Operation Guide</title>
+      <author email="Christian.Alarcon@jpl.nasa.gov">Christian Alarcon</author>
+   </properties>
+
+   <body>
+
+      <!-- The body of the document contains a number of sections -->
+      <section name="Operation">
+
+         <!-- Within sections, any XHTML can be used -->
+         <p>This document describes how to use the Archive applications. Each section corresponds with an available application. The following sections can be found in this document:</p>
+         <ul>
+            <li><a href="#Archive_Tool">Archive Tool</a></li>
+         </ul>
+
+      </section>
+
+      <section name="Archive Tool" id="Archive_Tool">
+         <p>This application is a command-line tool to allow different capabilities to manipulate the archived data and its associated metadata via Inventory API. Before running the executable, be sure to source the useHORIZON.csh file included in the root directory of the distributable.</p>
+         <source>
+% source useHORIZON.csh
+         </source>
+         <p>The verify command is to query the database for product archive references and verify the files for existence, size, and checksum.</p>
+         <p>To view the archive_tool's usage, execute this command as below:</p>
+         <source>
+% archive_tool.sh
+usage: ArchiveTool -pt &lt;productTypeId&gt; | -p &lt;productId&gt; | -pl &lt;id1,id2,id3,...&gt;
+       | -pr &lt;beginId:endId&gt; -delete | -relocate | -rolling_store | -verify
+       [-help]
+ -pt,--productTypeId &lt;productTypeId&gt;   ProductType Id
+ -delete                      Delete the archived entity by productId;
+ -p,--productId &lt;productId&gt;   Product Id
+ -pl &lt;id1,id2,id3,...&gt;        List of product id
+ -pr &lt;beginId:endId&gt;          Range of product id
+ -help                        print usage
+ -locate                      Locate product IDs based on name or
+                              start/stop times;
+ -relocate                    Relocate the archived entity by productId;
+ -rolling_store               Scan for and process rolling store data;
+ -verify                      Verify the archived entity by productId or
+                              productTypeId;
+
+         </source>
+         <p>where option -pt is to execute the function based on productType and options -p, -pl, and -pr are to apply the function based on product.
+            The log messages including the result report from archive_tool.sh is captured into the archive log file which file name is specified in the archive configuration file.</p>
+         <p> The key options include verify, relocate, delete, and rolling_store. Each option has its own help usage page but they're very similar.</p>
+         <p>Another common input is the indexes (-i or --index). When the request is productType based, this tool allows to process a number of products within the productType using beginning and ending indexes. This option is useful when you have a large list of products, let's say 50,000, and you only want to process 500 at a time. You can use the -i 1:500 syntax to process the first 500 products, this is not equivalent to product ids 1-500, merely any 1-500 products that match what you are querying on (i.e. the first 500 products in the productType named X).</p>
+         <p>Here is the usage for option relocate. Note that the argument, -bp or --basepath, is used for the base path location where the archived data is to relocate to.</p>
+         <source>
+% archive_tool.sh -relocate -help
+usage: ArchiveTool -bp &lt;basepath&gt; -pt &lt;productTypeId&gt; | -p &lt;productId&gt; | -pl
+       &lt;id1,id2,id3,...&gt; | -pr &lt;beginId:endId&gt;    [-help] [-i
+       &lt;beginIndex:endIndex&gt;] -relocate
+ -bp,--basepath &lt;basepath&gt;          Base Path Location
+ -pt,--productTypeId &lt;productTypeId&gt;         ProductType Id
+ -f,--force                         Force the relocation of products
+                                    without prompting user
+ -p,--productId &lt;productId&gt;         Product Id
+ -pl &lt;id1,id2,id3,...&gt;              List of product id
+ -pr &lt;beginId:endId&gt;                Range of product id
+ -help                              print verify usage
+ -i,--index &lt;beginIndex:endIndex&gt;   Begin and end Index to use with
+                                    productTypeId;
+ -relocate                          Relocate the archived entity by
+                                    productId;
+         </source>
+         <p>Here is the usage for option verify. Note that if argument, -lp or --locationPolicy, is specified, this tool only validates the product references and regenerate if they are missing.</p>
+         <source>
+% archive_tool.sh -verify -help
+usage: ArchiveTool -pt &lt;productTypeId&gt; | -p &lt;productId&gt; | -pl &lt;id1,id2,id3,...&gt;
+       | -pr &lt;beginId:endId&gt;    [-help] [-i &lt;beginIndex:endIndex&gt;] [-lp] -verify
+ -cs,--checksum                     When verifying a product, also verify
+                                    its checksum.
+ -pt,--productTypeId &lt;productTypeId&gt;         ProductType Id
+ -p,--productId &lt;productId&gt;         Product Id
+ -pl &lt;id1,id2,id3,...&gt;              List of product id
+ -pr &lt;beginId:endId&gt;                Range of product id
+ -help                              print verify usage
+ -i,--index &lt;beginIndex:endIndex&gt;   Begin and end Index to use with
+                                    productTypeId;
+ -lp,--locationPolicy               Validate references against productType
+                                    location policy
+ -verify                            Verify the archived entity by
+                                    productId or productTypeId;
+                                    
+         </source>
+         <p>If the checksum option is not included, the tool will not calculate the checksum for the files, which will speed up operation. The product can still be marked as 'CORRUPT' due to file size mismatches which are still checked. Also, the checksum option computes the files checksum in realtime, it does not read what the value should be from any checksum files.</p>
+         <p>Here is an overview of the verify program flow:<img src="../images/verify.jpg"/></p>
+         <p>Here is the usage for option delete. Note that if argument, --data-only, is specified, this tool retains the product metadata and sets their status accordingly.</p>
+         <source>
+% archive_tool.sh -delete -help
+usage: ArchiveTool -pt &lt;productTypeId&gt; | -p &lt;productId&gt; | -pl &lt;id1,id2,id3,...&gt;
+       | -pr &lt;beginId:endId&gt; [--data-only] -delete    [-help] [-i
+       &lt;beginIndex:endIndex&gt;]
+ -pt,--productTypeId &lt;productTypeId&gt;         ProductType Id
+    --data-only                     Delete archived data only;
+ -delete                            Delete the archived entity by
+                                    productId;
+ -p,--productId &lt;productId&gt;         Product Id
+ -pl &lt;id1,id2,id3,...&gt;              List of product id
+ -pr &lt;beginId:endId&gt;                Range of product id
+ -help                              print delete usage
+ -i,--index &lt;beginIndex:endIndex&gt;   Begin an end Index to use with
+                                    productTypeId;
+         </source>
+         <p>Here is the usage for option rolling store. Note that if there is no input arguments specified with this option, this tool scans and processes all ROLLING-STORE productTypes.</p>
+         <source>
+% archive_tool.sh -rolling_store -help
+usage: ArchiveTool -pt &lt;productTypeId&gt; | -p &lt;productId&gt; | -pl &lt;id1,id2,id3,...&gt;
+       | -pr &lt;beginId:endId&gt;    [-help] [-i &lt;beginIndex:endIndex&gt;] -rolling_store
+ -pt,--productTypeId &lt;productTypeId&gt;         ProductType Id
+ -p,--productId &lt;productId&gt;         Product Id
+ -pl &lt;id1,id2,id3,...&gt;              List of product id
+ -pr &lt;beginId:endId&gt;                Range of product id
+ -help                              print rolling_store usage
+ -i,--index &lt;beginIndex:endIndex&gt;   Begin and end Index to use with
+                                    productTypeId;
+ -rolling_store                     Scan for and process rolling store
+                                    data;
+ -start,--start-date &lt;arg&gt;          A start date (MM/dd/yyyy) with which
+                                    only products after should be
+                                    processed.
+ -stop,--stop-date &lt;arg&gt;            A stop date (MM/dd/yyyy) with which
+                                    only products before should be
+                                    processed.
+         </source>
+         <p>Here is an overview of the rolling_store program flow:<img src="../images/rolling_store.jpg"/></p>
+      </section>
+   </body>
+
+</document>

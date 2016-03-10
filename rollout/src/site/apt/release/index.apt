@@ -1,0 +1,119 @@
+~~ Copyright 2008, by the California Institute of Technology.
+~~ ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+~~
+~~ $Id: index.apt 10538 2012-08-30 20:35:13Z gangl $
+
+  ---
+  Release Description
+  ---
+  Thomas Huang
+  ---
+  
+Release Description
+
+  The Release Description Documents (RDDs) detail the new and modified capabilities that comprise a particular Product Rollout Program Set release. These documents will also describe any impact that the new or modified capabilities will have on PO.DAAC operations, data providers and data consumers. The intended audience for these documents includes the PO.DAAC Test Engineer and Configuration Manager.
+
+* Release History
+
+  * Version: {{{./index-4.2.0.html}4.2.0}} 
+
+    * Date: 2012-09-01
+
+    * Description: This release of the Product Rollout program set contains the web-application Dataset Editing Tool.  This release is intended as an operational release.
+
+  * Version: {{{./index-4.1.0.html}4.1.0}} 
+
+    * Date: 2012-06-08
+
+    * Description: This release of the Product Rollout program set contains the web-application Dataset Editing Tool.  This release is intended as an operational release.
+
+  * Version: {{{./index-4.0.0.html}4.0.0}} 
+
+    * Date: 2012-03-14
+
+    * Description: This release of the Product Rollout program set contains the web-application Dataset Editing Tool.  This release is intended as an operational release.
+
+  * Version: {{{./index-3.2.2.html}3.2.2}} 
+
+    * Date: 2011-11-23
+
+    * Description: This release of the Product Rollout program set contains the web-application Dataset Editing Tool.  This release is intended as an operational release.
+
+  * Version: {{{./index-3.2.1.html}3.2.1}} 
+
+    * Date: 2011-09-30
+
+    * Description: This release of the Product Rollout program set contains the web-application Dataset Editing Tool.  This release is intended as an operational release.
+
+  * Version: {{{./index-3.2.0.html}3.2.0}} 
+
+    * Date: 2011-08-22
+
+    * Description: This release of the Product Rollout program set contains the web-application Dataset Editing Tool.  This release is intended as an operational release.
+
+  * Version: {{{./index-3.1.1.html}3.1.1}} 
+
+    * Date: 2011-06-02
+
+    * Description: This release of the Product Rollout program set contains the web-application Dataset Editing Tool.  This release is intended as an operational release.
+
+  * Version: {{{./index-3.1.0.html}3.1.0}} 
+
+    * Date: 2011-04-01
+
+    * Description: This release of the Product Rollout program set contains the web-application Dataset Editing Tool.  This release is intended as an operational release.
+
+  * Version: {{{./index-3.0.0.html}3.0.0}} 
+
+    * Date: 2011-01-21
+
+    * Description: This release of the Product Rollout program set contains the web-application Dataset Editing Tool.  This release is intended as an operational release.
+
+  * Version: {{{./index-2.2.1.html}2.2.1}} 
+
+    * Date: 2010-11-15
+
+    * Description: This release of the Product Rollout program set contains the web-application Dataset Editing Tool.  This release is intended as an operational release.
+
+  * Version: {{{./index-2.2.0.html}2.2.0}} 
+
+    * Date: 2010-09-17
+
+    * Description: This release of the Product Rollout program set contains the web-application Dataset Editing Tool.  This release is intended as an operational release.
+
+  * Version: {{{./index-2.1.1.html}2.1.1}}
+
+    * Date: 2010-07-11
+
+    * Description: This release of the Product Rollout program set contains the web-application Dataset Editing Tool.  This release is intended as an operational release.
+
+  * Version: {{{./index-2.1.0.html}2.1.0}}
+
+    * Date: 2010-04-23
+
+    * Description: This release of the Product Rollout program set contains the web-application Dataset Editing Tool.  This release is intended as an operational release.
+
+  * Version: {{{./index-2.0.0.html}2.0.0}}
+
+    * Date: 2010-01-28
+
+    * Description: This release of the Product Rollout program set represents an evaluation release of the Dataset Rollout Tool.  This release is intended as an evaluation release.
+
+  * Version: {{{./index-1.2.0.html}1.2.0}}
+
+    * Date: 2008-09-18
+
+    * Description: This release of the Product Rollout program set represents a maintenance release of the Jason-1 Streamline software to support Jason-1 SGDR netCDF version C. This release is intended as an operational release.
+
+  * Version: {{{./index-1.1.0.html}1.1.0}}
+
+    * Date: 2008-08-29
+
+    * Description: This release of the Product Rollout program set represents a maintenance release of the Jason-1 Streamline software to support Jason-1 GDR version C. This release is intended as an operational release.
+
+  * Version: 1.0.0
+
+    * Date: 2007-10-10
+
+    * Description: This release of the Product Rollout program set is an initial release of the Jason-1 Streamline software. This release is described in a separate {{{https://bravo-lib.jpl.nasa.gov/docushare/dsweb/Get/Version-533583/sccoos_rdd_20080208.doc}RDD}} document. This release is intended as an operational release.
+

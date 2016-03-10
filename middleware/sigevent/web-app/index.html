@@ -1,0 +1,526 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+	"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<title>DMAS Significant Event Viewer</title>
+
+	<link rel="stylesheet" href="css/sigevent.css">
+
+	<script type="text/javascript" src="js/dojo/dojo.js" charset="utf-8"></script>
+	<script type="text/javascript" src="js/config.js" charset="utf-8"></script>
+	<script type="text/javascript" src="js/src.js" charset="utf-8"></script>
+
+</head>
+<body class="tundra" role="application">
+	<div id="preLoader"><p></p></div>
+	<div dojoType="dojo.data.ItemFileWriteStore" jsId="notificationStore"
+		url="/sigevent/notifies/list?format=DOJO_JSON" clearOnClose="true" urlPreventCache="true"></div>
+	<div dojoType="dojo.data.ItemFileWriteStore" jsId="eventStore"
+		url="/sigevent/events/list?format=DOJO_JSON&&sort=lastReceived&order=desc&type=ERROR&type=WARN&type=INFO&page=0" clearOnClose="true" urlPreventCache="true"></div>
+	<div dojoType="dojo.data.ItemFileWriteStore" jsId="categoryStore"
+		url="/sigevent/constants/categories/list?format=dojo_json" clearOnClose="true" urlPreventCache="true"></div>
+	<div dojoType="dojo.data.ItemFileWriteStore" jsId="categoryMenuStore"
+		url="/sigevent/constants/categories/list?format=dojo_json" clearOnClose="true" urlPreventCache="true"></div>
+	<div dojoType="dijit.tree.ForestStoreModel" jsId="categoryModel"
+  		store="categoryMenuStore" query="{type: 'SysConstant'}" labelAttr="Value" childrenAttr="children"
+		></div>
+	<div dojoType="dojo.data.ItemFileWriteStore" jsId="eventTypesStore"
+		url="/sigevent/constants/eventTypes/list?format=dojo_json" clearOnClose="true" urlPreventCache="true"></div>
+	<div dojoType="dijit.tree.ForestStoreModel" jsId="eventTypesModel" rootId="categoryRoot"
+  		store="eventTypesStore" query="{type: 'SysConstant'}" labelAttr="Value" childrenAttr="children"
+		></div>
+
+	<div dojoType="dijit.layout.BorderContainer" id="main" gutters="true">
+		
+		<div id="head" region="top" dojoType="dijit.layout.BorderContainer">
+			<div id="top">
+				<div id="top-left"></div>
+				<div id="top-right"></div>
+				<!--<span style="float:left; padding-top: 10px;">DMAS SigEvent Viewer System V5.0.0a</span>-->
+			</div>
+			<div id="banner">
+				<div class="banner-text">
+					<span style="display:block; font-weight:bold;">Version 5.0.0</span>
+					<div id="login-text" style="padding-top:6px;"></div>
+				</div>
+				<div class="banner-title"><span style="font-weight:bold;">DMAS</span> Sig Event Viewer</div>
+			</div>
+			
+		</div>
+
+		<div dojoType="dijit.layout.TabContainer" id="tabs" jsId="tabs" region="center">
+			<!-- main section with tree, table, and preview -->
+			<div dojoType="dijit.layout.BorderContainer" id="inbox" title="Events" jsId="inbox" design="sidebar">
+				<div dojoType="dijit.layout.AccordionContainer" id="accordion"
+						region="leading" minSize="60" style="width:220px;" splitter="true">
+					<div dojoType="dijit.layout.AccordionPane" title="Search Events">
+						<form dojoType="dijit.form.Form" jsId="searchForm">
+							<div id="searchItem">
+								Category:<br>
+								<input dojoType="dijit.form.TextBox" id="categorySearch" name="category" size="2"><br>
+								Type:<br>
+								<input dojoType="dijit.form.TextBox" id="typeSearch" name="groupType" style="size: 2;"><br>
+								Source:<br>
+								<input dojoType="dijit.form.TextBox" id="sourceSearch" name="source" style="size: 2;"><br>
+								Computer:<br>
+								<input dojoType="dijit.form.TextBox" id="computerSearch" name="computer" style="size: 2;"><br>
+								Description:<br>
+								<input dojoType="dijit.form.TextBox" id="descriptionSearch" name="description" style="size: 2;"><br>
+								<button dojoType="dijit.form.Button" id="searchButton" onClick="searchEvents">Search!</button>
+								<button dojoType="dijit.form.Button" id="searchResetButton" onClick="resetSearch">Reset</button>
+							</div>
+						</form>
+					</div>
+					<div dojoType="dijit.layout.AccordionPane" title="Event Groups" style="margin: 1px" selected=true>
+						<div dojoType="dijit.layout.BorderContainer" design="sidebar" style="margin: 1px">
+						<div dojoType="dijit.layout.ContentPane" region="top" style="margin: 0; float:none; align: center; text-align: center">
+							<input dojoType="dijit.form.CheckBox" type="checkBox" checked="true" id="infoCheckBox" value="INFO" onChange="typeSelectClick">Info</input>&nbsp&nbsp
+							<input dojoType="dijit.form.CheckBox" type="checkBox" checked="true" id="warnCheckBox" value="WARN" onChange="typeSelectClick">Warn</input>&nbsp&nbsp
+							<input dojoType="dijit.form.CheckBox" type="checkBox" checked="true" id="errorCheckBox" value="ERROR" onChange="typeSelectClick">Error</input><br/>
+							<input dojoType="dijit.form.CheckBox" type="checkBox" checked="true" id="resolveCheckBox" value="ERROR" onChange="filterResolvedClick" style="padding-top: 8px;">Resolved</input>
+						</div>
+						<div dojoType="dijit.layout.ContentPane" region="center" minSize=5 id="treeSection"></div>
+						<!-- <div dojoType="dijit.Tree" id="mytree" jsId="mytree" model="categoryModel" showRoot="true" label="All Events">
+							<script type="dojo/method" event="onClick" args="item">	
+								if(item.root) {
+									pageState.page = 0;
+									pageState.order="";
+									pageState.category="";
+									pageState.source="";
+									pageState.computer="";
+									pageState.description="";
+									eventStore._jsonFileUrl=stateToURL(pageState);
+									refreshEvent();
+								}
+								else {
+									pageState.page = 0;
+									pageState.order="";
+									pageState.category=categoryMenuStore.getValue(item, "Value");
+									pageState.source="";
+									pageState.computer="";
+									eventStore._jsonFileUrl=stateToURL(pageState);
+									refreshEvent();
+								}
+							</script> 
+							<script type="dojo/method" event="getIconClass" args="item">
+								if(item.Value == "UNCATEGORIZED") {return "mailIconMailbox";}
+								else return "mailIconFolderDocuments";
+							</script>
+						</div> -->
+						<div dojoType="dijit.layout.ContentPane" region="bottom">
+						    <div id="current-category"></div>
+						    <button dojoType="dijit.form.Button" type="submit" onClick="dijit.byId('newEventGroup').show();" style="vertical-align: bottom; border:0">New Category</button>
+						    <button dojoType="dijit.form.Button" type="submit" onClick="dijit.byId('editEventGroup').show();" style="vertical-align: bottom; border:0">Edit Categories</button>
+						</div>
+						</div>					
+					</div>
+				</div>  <!-- end of Accordion -->
+
+				<!-- list of events pane -->
+				<div dojoType="dijit.Toolbar" id="eventPageMenu" region="top" height="20px" style="text-align:center;">
+					<button dojoType="dijit.form.Button" type="submit" onClick="refreshEvent" style="float:right">Refresh</button>
+					<button dojoType="dijit.form.Button" type="submit" onClick="previousPage" style="float:left">Previous</button>	
+					<button dojoType="dijit.form.Button" type="submit" onClick="nextPage" style="float:left">Next</button>	
+				</div>
+				<table dojoType="dojox.grid.DataGrid"
+					  region="center" minSize="20" 
+					  jsId="eventGrid"
+					  id="eventGrid"
+					  store="eventStore" query="{ Id: '*' }"
+					  onRowClick="onEventClick"
+					  onHeaderCellClick="eventColumnSort"
+					  style="height: auto;">
+					  <thead>
+						<tr>
+							<th field="Resolution" width="5px" formatter="formatResolve" sortable="false">&nbsp</th>
+							<!--<th field="Type" width="15px" formatter="formatFlag">&nbsp</th>-->
+							<th field="Category" width="65px">Category</th>
+							<th field="Type" width="45px">Type</th>
+							<th field="Source" width="50px">Source</th>
+							<th field="Computer" width="54px">Computer</th>
+							<th field="Description" width="auto" formatter="formatDescription">Description</th>
+							<th field="LastReceived" width="125px" formatter="formatDate">Last Received</th>
+						</tr>
+					  </thead>
+				</table> <!-- end of events pane -->
+
+				<!-- event preview pane -->
+				<div id="message" dojoType="dijit.layout.ContentPane" region="bottom" role="region" aria-live="assertive" aria-atomic="true" minSize="20" style="height: 200px;" splitter="true">
+					<p>
+					This is the DMAS Significant Event Viewer
+					</p>
+				</div> <!-- end of event preview -->
+
+			</div> <!-- end of events -->
+
+			<!-- View for notification management -->
+			<div dojoType="dijit.layout.BorderContainer" title="Notifications">
+				<div dojoType="dijit.Toolbar" id="notifytoolbar" region="top">
+						<button dojoType="dijit.form.Button" type="submit" onClick="refreshNotification" style="float:right">Refresh</button>
+						<button dojoType="dijit.form.Button" type="submit" onClick="dijit.byId('newNotification').show();" iconClass="mailIconNewMessage">Create New</button>
+						<button dojoType="dijit.form.Button" type="submit" onClick="deleteNotification" iconClass="mailIconCancel">Delete Selected</button>
+								
+				</div>
+				<table dojoType="dojox.grid.DataGrid" 
+					region="center" minSize="20"
+					jsId="notificationGrid"
+					id="notificationGrid"
+					store="notificationStore" query="{ Id: '*' }"
+					style="height: auto"
+					onRowDblClick="initEditNotification"
+					editable="false">
+					    <thead>
+						<tr>
+						    <th width="120px" editable="false" field="Category">Category</th>
+						    <th width="50px" editable="false" field="Type">Type</th>
+						    <th width="50px" editable="false" field="Method">Method</th>
+						    <th width="100px" editable="false" field="Contact">Contact</th>
+						    <th width="25px" editable="false" field="Rate">Rate</th>
+						    <th width="140px" editable="false" field="LastNotified" formatter="formatDate">Last Notify</th>
+						    <!--<th width="80px" editable="false" field="lastReport">Last Report</th>-->
+						    <th width="50px" editable="false" field="MessageFormat">Format</th>
+						    <th width="80px" editable="false" field="Content">Content</th>
+						    <th width="auto" editable="false" field="Note">Note</th>
+						    <th width="44px" editable="false" field="RemindRate">Remind Rate</th>
+						</tr>
+					    </thead>
+				</table>
+				<div dojoType="dijit.layout.ContentPane" id="notificationInfo" region="bottom">
+				This is the notification list. Double click a row to update an existing notification.				
+				</div>
+			</div><!-- end of notification management -->
+
+		</div> <!-- end of TabContainer -->
+
+		<div dojoType="dijit.layout.ContentPane" region="bottom" id="footer" align="left">
+			<div id="bottom-left"></div>
+			<div id="bottom-right"></div>
+			
+			
+
+			<div id="fetchMail" style="opacity:0;visibility:hidden">
+				<div id="fakeFetch" dojoType="dijit.ProgressBar" style="height:15px; width:275px;" indeterminate="true" report="fakeReport"></div>
+			</div>
+		</div> 
+	</div> <!-- end of main -->
+	
+	<!-- New notification pop up -->
+	<div dojoType="dijit.Dialog" id="newNotification" jsId="newNotification" title="Add a new notification:" style="width: 380px;">
+		<div dojoType="dijit.form.Form" jsId="notificationForm" onSubmit="addNewNotification">
+			<table width="400px" margin="0 auto">
+			<tr>
+				<td><label for="categoryEntry">Category:</label></td>
+				<td><select dojoType="dijit.form.FilteringSelect" 
+						id="categoryEntry" 
+						name="category" 
+						store="categoryStore" 
+						searchAttr="Value" 
+						query="{type: 'SysConstant'}"
+						labelAttr="Value"></td>
+			</tr>
+			<tr>
+				<td><label for="typeEntry">Type:</label></td>
+				<td><select dojoType="dijit.form.FilteringSelect" 
+						id="typeEntry" 
+						value="INFO"						
+						name="type">
+					<option value="INFO">INFO</option>
+					<option value="WARN">WARN</option>
+					<option value="ERROR">ERROR</option></select></td>
+			</tr>
+			<tr>
+				<td><label for="methodEntry">Method:</label></td>
+				<td><select dojoType="dijit.form.FilteringSelect" 
+						id="methodEntry" 
+						value="EMAIL"
+						name="method">
+					<option value="EMAIL">EMAIL</option>
+					<option value="JMS">JMS</option>
+					<option value="MULTICAST">MULTICAST</option></select></td>
+			</tr>
+			<tr>
+				<td><label for="contactEntry">Contact:</label></td>
+				<td><input dojoType="dijit.form.ValidationTextBox" 
+						id="contactEntry" 
+						name="contact"
+						validator="dojox.validate.isEmailAddress"
+						required="true"
+						invalidMessage="Required and must be in proper email format">
+				</td>
+			</tr>
+			<tr>
+				<td><label for="rateEntry">Rate(in minutes):</label></td>
+				<td><input dojoType="dijit.form.ValidationTextBox" 
+						id="rateEntry" 
+						regExp="[\d]+"
+						name="rate"
+						required="true"
+						maxLength="15"
+						invalidMessage="Non-zero number only.">
+				</td>
+			</tr>
+			<tr>
+				<td><label for="messageFormatEntry">Message Format:</label></td>
+				<td><select dojoType="dijit.form.FilteringSelect" 
+						id="messageFormatEntry" 
+						value="TEXT"
+						name="messageFormat">
+					<option value="TEXT">TEXT</option>
+					<option value="JSON">JSON</option>
+					<option value="XML">XML</option></select></td>
+			</tr>
+			<tr>
+				<td><label for="contentEntry">Content:</label></td>
+				<td><select dojoType="dijit.form.FilteringSelect" 
+						id="contentEntry" 
+						value="COMPLETE"
+						name="content">
+					<option value="COMPLETE">COMPLETE</option>
+					<option value="DESCRIPTION">DESCRIPTION</option></select></td>
+			</tr>
+			<tr>
+				<td><label for="noteEntry">Note:</label></td>
+				<td><input dojoType="dijit.form.ValidationTextBox" 
+						id="noteEntry" 
+						name="note"
+						required="false"
+						invalidMessage="Please add a note.">
+				</td>
+			</tr>
+			<tr>
+			    <td><label for="remindRateEntry">Remind Rate(in minutes):</label></td>
+				<td><input dojoType="dijit.form.ValidationTextBox" 
+						id="remindRateEntry" 
+						regExp="[\d]+"
+						name="remindRate"
+						required="true"
+						maxLength="15"
+						invalidMessage="Numbers only (0 results in no reminder)">
+				</td>
+			</tr>
+			<tr>
+				<td colspan=2 align=center>
+					<button dojoType="dijit.form.Button" onClick="addNewNotification" iconClass="mailIconOk">Add</button>
+					<button dojoType="dijit.form.Button" onClick="closeNewNotification" iconClass="mailIconCancel">Cancel</button>
+				</td>
+			</tr>
+			</table>
+		</div>
+	</div>
+	<div dojoType="dijit.Dialog" id="editNotificationDisplay" jsId="editNotificationDisplay" title="Edit a notification:" style="width: 380px;">
+		<div dojoType="dijit.form.Form" jsId="editNotificationForm" onSubmit="editNotification">
+			<table width="400px" margin="0 auto">
+			<tr>
+				<td><label for="ENidValue">ID:</label></td>
+				<td><div id=ENidValue></div></td>
+			</tr>
+			<tr>
+				<td><label for="ENcategoryValue">Category:</label></td>
+				<td><div id=ENcategoryValue></div></td>
+			</tr>
+			<tr>
+				<td><label for="ENtypeEntry">Type:</label></td>
+				<td><div id=ENtypeValue></div></td>
+			</tr>
+			<tr>
+				<td><label for="methodEntry">Method:</label></td>
+				<td><select dojoType="dijit.form.FilteringSelect" 
+						id="ENmethodEntry" 
+						value="EMAIL"
+						name="ENmethod">
+					<option value="EMAIL">EMAIL</option>
+					<option value="JMS">JMS</option>
+					<option value="MULTICAST">MULTICAST</option></select></td>
+			</tr>
+			<tr>
+				<td><label for="ENcontactEntry">Contact:</label></td>
+				<td><input dojoType="dijit.form.ValidationTextBox" 
+						id="ENcontactEntry" 
+						name="ENcontact"
+						required="true"
+						invalidMessage="Required.">
+				</td>
+			</tr>
+			<tr>
+				<td><label for="ENrateEntry">Rate(in minutes):</label></td>
+				<td><input dojoType="dijit.form.ValidationTextBox" 
+						id="ENrateEntry" 
+						regExp="[\d]+"
+						name="ENrate"
+						required="true"
+						maxLength="15"
+						invalidMessage="Non-zero number only.">
+				</td>
+			</tr>
+			<tr>
+				<td><label for="ENmessageFormatEntry">Message Format:</label></td>
+				<td><select dojoType="dijit.form.FilteringSelect" 
+						id="ENmessageFormatEntry" 
+						value="TEXT"
+						name="ENmessageFormat">
+					<option value="TEXT">TEXT</option>
+					<option value="JSON">JSON</option>
+					<option value="XML">XML</option></select></td>
+			</tr>
+			<tr>
+				<td><label for="ENcontentEntry">Content:</label></td>
+				<td><select dojoType="dijit.form.FilteringSelect" 
+						id="ENcontentEntry" 
+						value="COMPLETE"
+						name="ENcontent">
+					<option value="COMPLETE">COMPLETE</option>
+					<option value="DESCRIPTION">DESCRIPTION</option></select></td>
+			</tr>
+			<tr>
+				<td><label for="ENnoteEntry">Note:</label></td>
+				<td><input dojoType="dijit.form.ValidationTextBox" 
+						id="ENnoteEntry" 
+						name="ENnote"
+						required="false"
+						invalidMessage="Please add a note.">
+				</td>
+			</tr>
+            <tr>			
+			    <td><label for="ENremindRateEntry">Remind Rate(in minutes):</label></td>
+				<td><input dojoType="dijit.form.ValidationTextBox" 
+						id="ENremindRateEntry" 
+						regExp="[\d]+"
+						name="ENremindRate"
+						required="false"
+						maxLength="15"
+						invalidMessage="Numbers only (0 results in no reminder)">
+				</td>
+			</tr>
+			<tr>
+				<td colspan=2 align=center>
+					<button dojoType="dijit.form.Button" onClick="editNotification" iconClass="mailIconOk">Save</button>
+					<button dojoType="dijit.form.Button" onClick="closeEditNotification" iconClass="mailIconCancel">Cancel</button>
+				</td>
+			</tr>
+			</table>
+		</div>
+	</div>
+	<div dojoType="dijit.Dialog" id="newEventGroup" jsId="newEventGroup" title="Add a new event group:" style="width: 410px;">
+		<div dojoType="dijit.form.Form" jsId="eventGroupForm" onSubmit="addNewEventGroup">
+			<table width="400px" margin="0 auto">
+			<tr>
+				<td><label for="EGcategoryEntry">Category:</label></td>
+				<td><select dojoType="dijit.form.ValidationTextBox" 
+						id="EGcategoryEntry" 
+						name="EGcategory" 
+						required="true"
+						invalidMessage="Required."></td>
+			</tr>
+			<tr>
+				<td><label for="EGtypeEntry">Type:</label></td>
+				<td><select dojoType="dijit.form.FilteringSelect" 
+						id="EGtypeEntry" 
+						value="INFO"						
+						name="EGtype">
+					<option value="INFO">INFO</option>
+					<option value="WARN">WARN</option>
+					<option value="ERROR">ERROR</option></select></td>
+			</tr>
+			<tr>
+				<td><label for="EGrateEntry">Purge Rate(in days):</label></td>
+				<td><input dojoType="dijit.form.ValidationTextBox" 
+						id="EGrateEntry" 
+						regExp="[\d]+"
+						name="EGrate"
+						required="true"
+						invalidMessage="Non-zero number only.">
+				</td>
+			</tr>
+			<tr>
+				<td colspan=2 align=center>
+					<button dojoType="dijit.form.Button" onClick="addNewEventGroup" iconClass="mailIconOk">Add</button>
+					<button dojoType="dijit.form.Button" onClick="closeNewEventGroup" iconClass="mailIconCancel">Cancel</button>
+				</td>
+			</tr>
+			</table>
+		</div>
+	</div>
+	<div dojoType="dijit.Dialog" id="editEventGroup" jsId="editEventGroup" title="Edit an event group" style="width: 410px;">
+		<div dojoType="dijit.form.Form" jsId="eventGroupEditForm" onSubmit="addNewEventGroup">
+			<table width="400px" margin="0 auto">
+      <tr>
+        <td><label for="EGcategoryEntry">Category:</label></td>
+        <td><select dojoType="dijit.form.FilteringSelect" 
+            id="EGEditCategoryEntry" 
+            name="EGEditCategory" 
+            store="categoryStore" 
+            searchAttr="Value" 
+            query="{type: 'SysConstant'}"
+            labelAttr="Value"></td>
+      </tr>
+      <tr>
+        <td><label for="EGcategoryTypeEntry">Type:</label></td>
+        <td><select dojoType="dijit.form.FilteringSelect" 
+            id="EGEditCategoryTypeEntry" 
+            value="INFO"            
+            name="EGEditCategoryType">
+          <option value="INFO">INFO</option>
+          <option value="WARN">WARN</option>
+          <option value="ERROR">ERROR</option></select></td>
+      </tr>
+      <tr>
+        <td><label for="EGEditPurgeRateEntry">Purge Rate (in days):</label></td>
+        <td><select dojoType="dijit.form.ValidationTextBox" 
+            id="EGEditPurgeRateEntry" 
+            name="EGEditPurgeRate"
+            regExp="[\d]+"
+            invalidMessage="Required."></td>
+      </tr>
+			<tr>
+				<td colspan=2 align=center>
+					<button dojoType="dijit.form.Button" onClick="editEventGroup" iconClass="mailIconOk">Add</button>
+					<button dojoType="dijit.form.Button" onClick="closeEditEventGroup" iconClass="mailIconCancel">Cancel</button>
+				</td>
+			</tr>
+			</table>
+		</div>
+	</div>
+	<!-- Generic Message Popup -->	
+	<div dojoType="dijit.Dialog" id="gmessageDialog" title="Attention:" minWidth="50px">
+		<div id="gmessage">
+		</div>
+	</div>
+	<div dojoType="dijit.Dialog" id="newTabDialog" jsId="newTabDialog" title="Enter New Tab Title" minWidth="50px" style="width:400px; text-align:center">
+		<div>Tab Title: <input dojoType="dijit.form.ValidationTextBox" maxLength="20" style="float:none;" id="tabTitleInput" required="true"></input></div>
+		<div dojoType="dijit.form.Button" iconClass="mailIconNewMessage">
+						<script type="dojo/method" event="onClick" args="item">	
+							createNewTab(dijit.byId('tabTitleInput').attr('value'));
+							newTabDialog.hide();
+						</script>OK</div>
+		<br>Please note, the tab title does not reflect tab content. Content is determined by what parameters you have selected in the main window at the time.
+	</div>
+	<div dojoType="dijit.Dialog" id="loginPrompt" jsId="loginPrompt" title="Login:" style="width: 270px;">
+		<div dojoType="dijit.form.Form" jsId="loginForm" onSubmit="processLogin">
+			<table width="100%" margin="0 auto">
+			<tr>
+				<td><label for="loginUser">User Name:</label></td>
+				<td><input dojoType="dijit.form.ValidationTextBox" 
+						id="loginUser" 
+						name="loginUser" 
+						required="true"
+						style="width:150px;"
+						invalidMessage="Required"></td>
+			</tr>
+			<tr>
+				<td><label for="loginUser">Password:</label></td>
+				<td><input dojoType="dijit.form.ValidationTextBox" 
+						type="password"
+						id="loginPw" 
+						name="loginPw" 
+						required="true"
+						style="width:150px";
+						invalidMessage="Required"></td>
+			</tr>
+						<tr>
+				<td colspan=2 align=center>
+					<button dojoType="dijit.form.Button" onClick="processLogin" iconClass="mailIconOk">Login</button>
+				</td>
+			</tr>
+</body>
+</html>
+

@@ -1,0 +1,184 @@
+<!-- 
+   Copyright (c) 2008-2013
+   Jet Propulsion Laboratory, California Institute of Technology
+   All rights reserved
+   
+   This XML schema defines common spatial message data type used to
+   define a product.
+   
+   @author T. Huang {Thomas.Huang@jpl.nasa.gov}
+   @version $Id: $
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:horizon.nasa="http://horizon.nasa.gov"
+   targetNamespace="http://horizon.nasa.gov" elementFormDefault="qualified">
+   <xsd:complexType name="SpatialDomain">
+      <xsd:annotation>
+         <xsd:documentation> Definition of a spatial domain type for metadata. </xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence>
+         
+         <xsd:element name="points" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation> A collection of points. </xsd:documentation>
+            </xsd:annotation>
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="point" type="horizon.nasa:Point" minOccurs="1"
+                     maxOccurs="unbounded"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         
+         <xsd:element name="lines" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation> A collection of lines. </xsd:documentation>
+            </xsd:annotation>
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="line" type="horizon.nasa:Line" minOccurs="1" maxOccurs="unbounded"
+                  />
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         
+         <xsd:element name="rectangles" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation> Typically a product should contain a single bounding rectangle,
+                  but in special cases a product could have more than one
+                  rectangle</xsd:documentation>
+            </xsd:annotation>
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="rectangle" type="horizon.nasa:BoundingRectangle" minOccurs="0"
+                     maxOccurs="unbounded"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+
+         <xsd:element name="polygons" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation> A polygon has one external ring an zero or more internal rings,
+                  or holes. </xsd:documentation>
+            </xsd:annotation>
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="polygon" type="horizon.nasa:BoundingPolygon" minOccurs="1"
+                     maxOccurs="unbounded"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+
+         <xsd:element name="swaths" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation> Typically a product should have at most one swath. In special
+                  cases, a product could have more than one swath.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="swath" type="horizon.nasa:Swath" minOccurs="0"
+                     maxOccurs="unbounded"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+
+         <xsd:element name="ellipses" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>Typically a product should have at most one
+                  ellipse.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="ellipse" type="horizon.nasa:Ellipse" minOccurs="0"
+                     maxOccurs="unbounded"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="Line">
+      <xsd:sequence>
+         <xsd:element name="point" type="horizon.nasa:Point" minOccurs="2" maxOccurs="2"/>
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="BoundingRectangle">
+      <xsd:annotation>
+         <xsd:documentation> Defines a rectangle bounding type. </xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element name="westLongitude" type="xsd:double"/>
+         <xsd:element name="northLatitude" type="xsd:double"/>
+         <xsd:element name="eastLongitude" type="xsd:double"/>
+         <xsd:element name="southLatitude" type="xsd:double"/>
+         <xsd:element name="region" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="BoundingPolygon">
+      <xsd:annotation>
+         <xsd:documentation> Defines a free-form polygon region. Points are connected in either
+            clockwise/counterclockwise order. A poloygon contains at least four vertices where the
+            last vertex must be the same as the first. </xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element name="point" type="horizon.nasa:Point" minOccurs="4" maxOccurs="unbounded"/>
+         <xsd:element name="region" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="order" type="horizon.nasa:PointOrder" default="COUNTERCLOCKWISE">
+            <xsd:annotation>
+               <xsd:documentation> The ordering in connecting the points (CLOCKWISE or
+                  COUNTERCLOCKWISE) </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:simpleType name="PointOrder">
+      <xsd:annotation>
+         <xsd:documentation> Defines the ordering direction of a collection of points.
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:string">
+         <xsd:enumeration value="CLOCKWISE"/>
+         <xsd:enumeration value="COUNTERCLOCKWISE"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:complexType name="Swath">
+      <xsd:annotation>
+         <xsd:documentation> Defines the swath data structure. </xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element name="inclinationAngle" type="xsd:double" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="swathWidth" type="xsd:double" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="equatorCrossingTime" type="xsd:nonNegativeInteger" minOccurs="0"
+            maxOccurs="1"/>
+         <xsd:element name="equatorCrossingLongitude" type="xsd:double" minOccurs="0" maxOccurs="1"
+         />
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="Ellipse">
+      <xsd:annotation>
+         <xsd:documentation> Defines the ellipse spatial type. </xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element name="center" type="horizon.nasa:Point"/>
+         <xsd:element name="radius" type="horizon.nasa:Radius"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="Radius">
+      <xsd:annotation>
+         <xsd:documentation> Defines the radius type. </xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element name="unit" type="xsd:string"/>
+         <xsd:element name="value" type="xsd:double"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="Point">
+      <xsd:annotation>
+         <xsd:documentation> Defines a point in space. </xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element name="longitude" type="xsd:double"/>
+         <xsd:element name="latitude" type="xsd:double"/>
+      </xsd:sequence>
+   </xsd:complexType>
+</xsd:schema>

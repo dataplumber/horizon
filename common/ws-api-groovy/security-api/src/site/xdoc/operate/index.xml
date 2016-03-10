@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Copyright 2008-2009, by the California Institute of Technology. -->
+<!-- ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged. -->
+<!--  -->
+<!-- $Id: $ -->
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+   <properties>
+      <title>Operation</title>
+      <author>T. Huang</author>
+   </properties>
+   <body>
+      <section name="Operation">
+         <p>This document describes how to use the Security API applications. Each section
+            corresponds with an available application. The following sections can be found in this
+            document:</p>
+         <ul>
+            <li><a href="#SAPI">SAPI</a></li>
+         </ul>
+      </section>
+      <section name="SAPI" id="SAPI">
+         <p>This application is a command-line tool to allow users to genereate tokens with the
+            security service for a specified realm. Tokens can be used in places of passwords for
+            any tool using the security service.</p>
+         <p>This application should be run as follows:</p>
+         <source>% ./sapi</source>
+         <p>And you'll be prompted with the following options:</p>
+         <source>
+&gt; Please enter the SecurtyService Host (i.e. https://lanina): https://lanina
+&gt; Please enter the SecurtyService Port: 9192
+&gt; Please enter the realm you want to create a token for: HORIZON-INVENTORY
+&gt; Please enter your username: gangl
+&gt; Please enter your password: 
+         </source>
+         <p>Note that the host and prot may not be required if they are configured in the
+            sapi.properties file. The password field will not echo back responses. The program will
+            exit without any output on success, but will create an entry in the ~/.maple file.</p>
+         <p>~/.maple was used as the file name because it's unique, and sapi (security-api) sounds
+            like sappy. Like syrup.</p>
+      </section>
+   </body>
+</document>

@@ -1,0 +1,18 @@
+ 
+sat: Aqua
+projection: Plate Carree
+projection center lon: +0.0000
+projection center lat: +0.0000
+standard parallel: +0.0000
+UL lon: -9.0000
+UL lat: +90.0000
+UR lon: +0.0000
+UR lat: +90.0000
+LR lon: +0.0000
+LR lat: +81.0000
+LL lon: -9.0000
+LL lat: +81.0000
+UL easting (km): -1000.7555
+UL northing (km): +10007.5547
+ellipsoid: WGS84
+L2 granules: A132131445 A132131450 A132131310 A132131130 A132130950 A132130815

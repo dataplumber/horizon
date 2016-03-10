@@ -1,0 +1,42 @@
+~~ Copyright 2008, by the California Institute of Technology.
+~~ ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+~~
+~~ $Id: index.apt 2229 2008-11-03 09:03:45Z thuang $
+
+  ---
+  Operation
+  ---
+  Mike Gangl 
+  ---
+  
+Overview
+
+   J1SLX is a middleware application implemented using the {{{http://grails.org}Grails}} web framework.  The purpose of this middleware application is to provide a tool for reassociating jason 1 datasets to the official datasets once NASA and CNES agree on which to include.
+   
+ 
+First Startup
+
+   After the first startup of the J1SLX application, the first job will kick off. Assuming migration succeeded and there are catalog entries available, a background job will begin fetching datasets and their granules from the inventory. If these granules belong to an existing catalog entry, it will be associated with that entry. If that entry has been approved for offical release, the entry will be reassocitated right away.
+ 
+   If it is not approved for release, then nothing will happen with the physical granule, but it will be associated with the catalog entry for future use.
+   
+   If no catalog entry exists for the granule, then it will be created and associated with it. All the correct flags will be set for catalog entries when data is seen (staged, aproval flags, etc).
+
+Login
+
+[../images/j1slx_login.jpg]
+
+   Upon accessing the system, a username and passowrd will be required to log in. Make sure you're accessing the server over HTTPS, and use your JPL username and password to authenticate. This will look up the LDAP group configured in the installation documents.
+
+   If successful, you'll be presented with the main webtool which will allow you to view and approve catalog entries in real time.
+
+
+Approving entries
+
+[../images/j1slx_webtool.jpg]
+
+   Here is the interface for approving catalog entries. It is, for the msot part, the same as the legacy tool. All the fields are sortable by their column headers. The default sort is by cycle, descending.
+   
+[../images/j1slx_webtool_confirm.jpg]
+
+   When two boxes are ticked for approval, the confirmation dialog pops up. Clicking 'confirm' here will begin the reassociation process. All calls are made via ajax, so no page reloading will be done. Once a catalog entry is reassociated, any new granuels that come in for that cycle will be reassociated to their official dataset defined in the config file.

@@ -1,0 +1,277 @@
+@import "../js/dojo/resources/dojo.css";
+@import "../js/dijit/themes/tundra/tundra.css";
+@import "../js/dojox/grid/resources/Grid.css";
+@import "../js/dojox/grid/resources/tundraGrid.css";
+@import "../js/dijit/themes/soria/soria.css";
+@import "../js/dojox/grid/resources/Grid.css";
+@import "../js/dojox/grid/resources/soriaGrid.css";
+
+
+html, body{	
+	width: 100%;	/* make the body expand to fill the visible window */
+	height: 100%;
+	/*overflow: hidden;	/* erase window level scrollbars */
+	padding: 0 0 0 0;
+	margin: 0px 0 0px 0;
+	font: 10pt Arial,Myriad,Tahoma,Verdana,sans-serif;
+	background-color: #000000
+}
+
+#main{
+	/*border:1px solid #969696;*/
+	/*font-size:1em;*/
+	margin:10px auto;
+	width:98%;
+	min-width:900px;
+	height: 96%;
+	min-height: 600px;
+	padding: 0 0 0 0;
+}
+
+#banner {
+background-color: #333333; 
+color: #333;
+width: 100%;
+height: 62px;
+text-align: left;
+position:relative;
+/*padding:3px; */
+}
+
+.banner-text{
+position:absolute;
+right:0;
+color:#fff;
+padding:10px;
+text-align: right;
+}
+
+.banner-title {
+	color:#fff;
+	padding-top:10px;
+	padding-left:20px;
+	font-size:30px;
+	text-shadow: 1px 4px 2px #000000;
+}
+
+#login-text{
+font-size: 11px;
+font-weight: normal;
+}
+
+.login-link{
+cursor: pointer;	
+color:#bbb;
+}
+
+#top{
+background-color: #333333; 
+color: #ffffff;
+padding:0px; 
+border: 0;
+background: url(../images/top.gif) repeat-x;
+height: 37px;
+}
+
+#top-left{
+height: 37px;
+width: 25px;
+background: url(../images/top-left.gif);
+float: left;
+}
+
+#top-right{
+height: 37px;
+width: 90px;
+background: url(../images/top-right.gif);
+float: right;
+}
+
+#banner{
+width: 100%;
+background: url("../images/banner-bg.jpg");
+}
+
+#footer {
+background-color: #333333; 
+color: #ffffff;
+padding:0px; 
+border: 0;
+background: url(../images/bottom.gif);
+height: 37px;
+}
+
+#bottom-left {
+height: 37px;
+width: 25px;
+background: url(../images/bottom-left.gif);
+float: left;
+}
+
+#bottom-right {
+height: 37px;
+width: 90px;
+background: url(../images/bottom-right.gif);
+float: right;
+}
+
+
+/* list of messages
+TODO: If i add the rules below as a plain tr/td it seems to mess up accordion, tree, etc. ???
+*/
+#listPane tr:hover, #listPane td:hover, .dijitTreeContent:hover {
+	background-color: #ededed;
+	color: #333;
+	cursor: pointer;
+}
+#listPane tr, #listPane td { cursor: pointer; }
+
+table.demoTable {
+	border-collapse: collapse;	
+}
+
+th {
+	background-color: #4f8ce5; 
+	color: #666; 
+	font-weight:: bold !important;
+	margin:0;
+	padding:3px; 
+	background-image:url('../js/dijit/themes/tundra/images/titleBar.png');
+	background-position:0px -1px; 
+}
+
+.dijitRtl caption,
+.dijitRtl th {
+	text-align:right;
+}
+
+th .arrowNode { 
+	position:relative; 
+	float:left;
+	top:4px;
+	left:4px; 
+	width:16px;
+	height:16px;
+}
+
+.dijitRtl th .arrowNode{
+	float:right;	
+}
+
+th.arrowUp .arrowNode {
+	margin-right: 5px;
+	margin-top: -4px;
+	margin-bottom: 5px;
+	width: 15px;
+	height:15px;
+	background:transparent url("../js/dijit/themes/tundra/images/spriteRoundedIconsSmall.png") -45px top no-repeat;
+}
+
+th.arrowDown .arrowNode {
+	margin-right: 5px;
+	margin-top: -4px;
+	margin-bottom: 5px;
+	width: 15px;
+	height:15px;
+	background:transparent url("../js/dijit/themes/tundra/images/spriteRoundedIconsSmall.png") -15px top no-repeat;
+}
+
+.demoTable td { padding:3px; } 
+.demoTable {
+	border-spacing:0; 
+	padding:0; margin:0; 
+	width:98%;
+	
+}
+.oddRow {
+	background-color: #f2f5f9;
+}
+
+.selectedRow {
+	background-color: black;
+}
+
+#message {
+	padding: 8px;
+	overflow: auto !important;
+}
+
+/* Icons */
+
+.mailIconCancel,
+.mailIconOptions,
+.mailIconFolderDocuments,
+.mailIconFolderInbox,
+.mailIconFolderSent,
+.mailIconGetMail,
+.mailIconNewMessage,
+.mailIconMailbox,
+.mailIconOk,
+.mailIconTrashcanFull {
+	background-image: url('../images/icons.png'); /* mail icons sprite image */
+	background-repeat: no-repeat; 
+	width: 16px;
+	height: 16px;
+	text-align: center;
+	padding-right:4px; 
+}
+
+.dj_ie6 .mailIconCancel,
+.dj_ie6 .mailIconOptions,
+.dj_ie6 .mailIconFolderDocuments,
+.dj_ie6 .mailIconFolderInbox,
+.dj_ie6 .mailIconFolderSent,
+.dj_ie6 .mailIconGetMail,
+.dj_ie6 .mailIconNewMessage,
+.dj_ie6 .mailIconMailbox,
+.dj_ie6 .mailIconOk,
+.dj_ie6 .mailIconTrashcanFull {
+	background-image: url('../images/icons.gif');
+}
+
+
+.mailIconCancel { background-position: 0px; }
+.mailIconOptions { background-position: -22px; }
+.mailIconFolderDocuments { background-position: -44px; }
+.mailIconFolderInbox { background-position: -66px; }
+.mailIconFolderSent { background-position: -88px; }
+.mailIconGetMail { background-position: -110px; }
+.mailIconNewMessage { background-position: -132px; }
+.mailIconMailbox { background-position: -154px; }
+.mailIconOk { background-position: -176px; }
+.mailIconTrashcanFull { background-position: -198px; }
+
+/* page inline styles */
+
+#inbox .dijitSplitterH { height: 5px }
+#inbox .dijitSplitterV { width: 5px }
+
+#preLoader {
+	width:100%; height:100%; margin:0; padding:0;
+	position:absolute; top:0; left:0;
+	background:#fff url('../js/dojox/image/resources/images/loading.gif') no-repeat center center;
+	z-index:999;
+}
+#preLoader p {
+	color:#ededed;
+	font:72pt Arial,san-serif;
+	font-weight:bold;
+	
+}
+
+/* buttons on Contact tab for filtering list of contacts to a given letter */
+.contactIndex, .contactIndexAll {
+	margin: 0.5em;
+	color: blue;
+	font-style: italic;
+	vertical-align: middle;
+	cursor: pointer;
+}
+.contactIndexAll {
+	/* for the word ALL that appears before and after the letters A-Z */
+	color: purple;
+}
+.contactIndexSelected {
+	/* the most recently selected letter gets this class too */
+	color: red;
+}

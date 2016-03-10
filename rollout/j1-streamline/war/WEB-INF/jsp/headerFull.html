@@ -1,0 +1,528 @@
+<!-- RLC July 17, 2007
+Non-dreamweaver CGIs like POET or the hurricane page need headerFull.html
+and footerFull.html to look and feel like the other pages.  I created this
+file by chopping the source of a page with proper headers and footers into
+headerFull.html, tagBalanced.html, footerFull.html.  The goal is to create a
+header and footer such that a tag-balanced html file can be ('<' -> '('):
+
+  (!--#include virtual="/headerFull.html"--)
+  <script language="javascript">document.title = "a nice title"</script>
+  <p>text</p>
+  (!--#include virtual="/footerFull.html"--)
+
+How was this done (in case you have to do it again for a new look and feel
+- dumped useles <link href="index_files/common.css"...
+- dumped redundant <meta http-equiv..., mmLoadMenus(), div mmg1000
+- changed src="mm_menu.js" to src="/mm_menu.js"
+- changed 
+   <td width="239"...><div...><a href=...><font...>
+   + View the NASA Portal</font></a></div></td>
+   <td width="180" valign="middle"...><font...>Search PO.DAAC</font><form...>
+  to
+   <td width="189"...><a href=...><font...>
+   + View the NASA Portal</font></a></td>
+   <td width="100" ...><font...>Search<br>PO.DAAC</font></td>
+   <td width="130" align="left" bgcolor="#3D4e79"><form...>
+- corrected
+   onMouseOut="MM_swapImgRestore();MM_startTimeout();;MM_nbGroup('out')"><img input title="Data Products"...
+   onMouseOut="MM_nbGroup('out');MM_startTimeout();"><img input title="Tools...
+  to
+   onMouseOut="MM_nbGroup('out');MM_startTimeout();"><img input title="Data ...
+   onMouseOut="MM_nbGroup('out');MM_startTimeout();"><img input title="Tools...
+- replaced the <tr> with NEW! announcement to a simple <tr></tr>
+-->
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<title>PO.DAAC Home</title>
+<script language="javascript">
+<!--
+// JPL FUNCTIONS BELOW -----------------
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+//-->
+</script>
+
+  <style type="text/css">
+<!--
+.style2 {font-family: Arial, Helvetica, sans-serif}
+.style4 {font-size: 15px}
+.style6 {color: #FFFFFF}
+a:link {
+	color: #333399;
+}
+a:visited {
+	color: #333399;
+}
+.style7 {font-family: Arial, Helvetica, sans-serif; font-size: 12px; }
+.style9 {font-family: Arial, Helvetica, sans-serif; font-size: 11px; }
+.style21 {font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: bold; color: #9E7BC1; }
+.style22 {color: #202060}
+a:hover {
+	color: #333399;
+}
+a:active {
+	color: #333399;
+}
+.style17 {
+	color: #FFFFFF;
+	font-weight: bold;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+}
+.style24 {
+	font-size: 12px;
+	color: #1C2C47;
+	font-weight: bold;
+	font-family: "Times New Roman", Times, serif;
+}
+.style26 {font-size: 13px; color: #1C2C47; font-weight: bold; font-family: "Times New Roman", Times, serif; }
+.style29 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #3D4E79;
+	font-weight: bold;
+}
+.style33 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #000000;
+}
+.style34 {font-size: 20px}
+-->
+  </style>
+<body leftmargin="0" topmargin="0" onload="MM_preloadImages('http://podaac.jpl.nasa.gov/images/home_off.jpg','http://podaac.jpl.nasa.gov/images/access_data_on.jpg','http://podaac.jpl.nasa.gov/images/ftp_on.jpg','http://podaac.jpl.nasa.gov/images/education_on.jpg','http://podaac.jpl.nasa.gov/images/faq_off.jpg','http://podaac.jpl.nasa.gov/images/related_links_on.jpg','http://podaac.jpl.nasa.gov/images/subscribe_on.jpg','http://podaac.jpl.nasa.gov/images/glossary_on.jpg','http://podaac.jpl.nasa.gov/images/sitemap_on.jpg','http://podaac.jpl.nasa.gov/images/feedback_on.jpg','http://podaac.jpl.nasa.gov/images/software_on.jpg','http://podaac.jpl.nasa.gov/images/product_faq_on.jpg','http://podaac.jpl.nasa.gov/images/knownproblems_on.jpg','http://podaac.jpl.nasa.gov/images/whatsnew_on.jpg','http://podaac.jpl.nasa.gov/images/references_on.jpg','http://podaac.jpl.nasa.gov/images/product_relatedlinks_on.jpg','http://podaac.jpl.nasa.gov/images/help_on.jpg','http://podaac.jpl.nasa.gov/images/browse_on.jpg','http://podaac.jpl.nasa.gov/images/subset_on.jpg','http://podaac.jpl.nasa.gov/images/product_ftp_on.jpg','http://podaac.jpl.nasa.gov/images/order_on.jpg','http://podaac.jpl.nasa.gov/images/about_off.jpg','http://podaac.jpl.nasa.gov/images/contact_off.jpg','http://podaac.jpl.nasa.gov/images/documentation_on.jpg','http://podaac.jpl.nasa.gov/images/home_down.gif','http://podaac.jpl.nasa.gov/images/home_over.gif','http://podaac.jpl.nasa.gov/images/home_ov_down.gif','http://podaac.jpl.nasa.gov/images/topnav_01.gif','http://podaac.jpl.nasa.gov/images/topnav_02.gif','http://podaac.jpl.nasa.gov/images/topnav_03.gif','http://podaac.jpl.nasa.gov/images/topnav_04.gif','http://podaac.jpl.nasa.gov/images/topnav_05.gif','index_files/new_home_up.gif','index_files/new_data_overview_up.gif','index_files/new_bibliography_up.gif','index_files/new_mission_status_up.gif','images/announceOVER.jpg','images/homeUP.jpg','images/homeOVER.jpg','images/dataUP.jpg','images/toolsUP.jpg','images/toolsOVER.jpg','images/faqUP.jpg','images/faqOVER.jpg','images/infoUP.jpg','images/infoOVER.jpg','images/feedbackUP.jpg','images/feedbackOVER.jpg','images/topnav_01cr.jpg','images/topnav_02cr.jpg','images/topnav_03cr.jpg','images/topnav_04cr.jpg','images/topnav_05cr.jpg','images/homeOVERN.jpg','images/homeUPN.jpg','images/dataUPN.jpg','images/dataOVERN.jpg','images/toolsUPN.jpg','images/toolsOVERN.jpg','images/faqUPN.jpg','images/faqOVERN.jpg','images/feedbackUPN.jpg','images/feedbackOVERN.jpg','images/surveyUPN.jpg','images/surveyOVERN.jpg','images/annOVER.jpg','images/annUP.jpg');MM_showHideLayers('mmg1000','','show','mmg700','','hide','mmg500','','hide')" bgcolor="#000000" marginheight="0" marginwidth="0">
+<table width="753" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#ffffff" valign="top">
+  <!--DWLayoutTable-->
+  <tbody>
+    <tr bgcolor="#000000">
+      <td width="10" align="center" valign="top" bgcolor="#000000"><img src="images/spacer.gif" alt="spacer" height="1" width="10"></td>
+      <td colspan="3" align="center" valign="top" bgcolor="#000000"><img src="images/spacer.gif" alt="spacer" height="10" width="730"></td>
+      <td width="10" align="center" valign="top" bgcolor="#000000"><img src="images/spacer.gif" alt="spacer" height="8" width="9"></td>
+    </tr>
+    <tr>
+      <td align="center" valign="top"><img src="images/spacer.gif" alt="spacer" height="1" width="10"></td>
+      <td colspan="3" align="center" valign="top"><img src="images/spacer.gif" alt="spacer" height="10" width="730"></td>
+      <td align="center" valign="top"><img src="images/spacer.gif" alt="spacer" height="1" width="10"></td>
+    </tr>
+    <tr valign="top">
+      <td rowspan="3" align="center" valign="top"><!--DWLayoutEmptyCell-->&nbsp;</td>
+      <td colspan="3" align="center" valign="top"><style type="text/css">
+<!--
+body {
+	background-color: #FFFFFF;
+}
+.style64 {font-size: 12px}
+a:link {
+	color: #333366;
+}
+a:visited {
+	color: #336666;
+}
+a:hover {
+	color: #336666;
+}
+-->
+</style>
+<script language="javascript">
+<!--
+function mmLoadMenus() {
+                                                                      window.mm_menu_0316173258_0_1 = new Menu("Ocean&nbsp;Surface&nbsp;Topography",260,15,"Arial, Helvetica, sans-serif",9,"#222222","#FFFFFF","#EFEFEF","#666699","left","middle",3,0,1000,-5,7,true,true,true,0,true,true);
+    mm_menu_0316173258_0_1.addMenuItem("Jason","window.open('/cgi-bin/dcatalog/fam_summary.pl?ost+jason', '_self');");
+    mm_menu_0316173258_0_1.addMenuItem("TOPEX/POSEIDON","window.open('/cgi-bin/dcatalog/fam_summary.pl?ost+topex', '_self');");
+    mm_menu_0316173258_0_1.addMenuItem("Sea&nbsp;Surface&nbsp;Height&nbsp;Anomaly&nbsp;(SSHA)","window.open('/cgi-bin/dcatalog/fam_summary.pl?ost+ssha', '_self');");
+    mm_menu_0316173258_0_1.addMenuItem("Along&nbsp;Track&nbsp;Gridded&nbsp;SSHA","window.open('/cgi-bin/dcatalog/fam_summary.pl?ost+atg', '_self');");
+    mm_menu_0316173258_0_1.addMenuItem("Near&nbsp;Real&nbsp;Time","window.open('/cgi-bin/dcatalog/fam_summary.pl?ost+nrt', '_self');");
+    mm_menu_0316173258_0_1.addMenuItem("Geophysical&nbsp;Data&nbsp;Record&nbsp;(GDR)","window.open('/cgi-bin/dcatalog/fam_summary.pl?ost+gdr', '_self');");
+    mm_menu_0316173258_0_1.addMenuItem("Altimeter&nbsp;Ocean&nbsp;Pathfinder","window.open('/cgi-bin/dcatalog/fam_summary.pl?ost+altpath', '_self');");
+    mm_menu_0316173258_0_1.addMenuItem("OSCAR","window.open('/products/product215.html', '_self');");
+    mm_menu_0316173258_0_1.addMenuItem("WOCE","window.open('/cgi-bin/dcatalog/fam_summary.pl?ost+woce', '_self');");
+     mm_menu_0316173258_0_1.hideOnMouseOut=true;
+     mm_menu_0316173258_0_1.bgColor='#555555';
+     mm_menu_0316173258_0_1.menuBorder=1;
+     mm_menu_0316173258_0_1.menuLiteBgColor='#FFFFFF';
+     mm_menu_0316173258_0_1.menuBorderBgColor='#777777';
+    window.mm_menu_0316173258_0_2 = new Menu("Ocean&nbsp;Vector&nbsp;Winds",178,15,"Arial, Helvetica, sans-serif",9,"#222222","#FFFFFF","#EFEFEF","#666699","left","middle",3,0,1000,-5,7,true,true,true,0,true,true);
+    mm_menu_0316173258_0_2.addMenuItem("SeaWinds&nbsp;on&nbsp;ADEOS-II","window.open('/cgi-bin/dcatalog/fam_summary.pl?ovw+seawinds', '_self');");
+    mm_menu_0316173258_0_2.addMenuItem("SeaWinds&nbsp;on&nbsp;QuikSCAT","window.open('/cgi-bin/dcatalog/fam_summary.pl?ovw+qscat', '_self');");
+    mm_menu_0316173258_0_2.addMenuItem("Scatterometer&nbsp;Sigma0","window.open('/cgi-bin/dcatalog/fam_summary.pl?ovw+scp', '_self');");
+    mm_menu_0316173258_0_2.addMenuItem("NSCAT","window.open('/cgi-bin/dcatalog/fam_summary.pl?ovw+nscat', '_self');");
+    mm_menu_0316173258_0_2.addMenuItem("SeaSat","window.open('/cgi-bin/dcatalog/fam_summary.pl?ovw+seasat', '_self');");
+    mm_menu_0316173258_0_2.addMenuItem("SSM/I","window.open('/cgi-bin/dcatalog/fam_summary.pl?ovw+ssmi', '_self');");
+    mm_menu_0316173258_0_2.addMenuItem("Nimbus-7","window.open('/cgi-bin/dcatalog/fam_summary.pl?ovw+nimbus', '_self');");
+    mm_menu_0316173258_0_2.addMenuItem("Multi-Parameter","window.open('/cgi-bin/dcatalog/fam_summary.pl?ovw+multi', '_self');");
+     mm_menu_0316173258_0_2.hideOnMouseOut=true;
+     mm_menu_0316173258_0_2.bgColor='#555555';
+     mm_menu_0316173258_0_2.menuBorder=1;
+     mm_menu_0316173258_0_2.menuLiteBgColor='#FFFFFF';
+     mm_menu_0316173258_0_2.menuBorderBgColor='#777777';
+    window.mm_menu_0316173258_0_3 = new Menu("Sea&nbsp;Surface&nbsp;Temperature",143,15,"Arial, Helvetica, sans-serif",9,"#222222","#FFFFFF","#EFEFEF","#666699","left","middle",3,0,1000,-5,7,true,true,true,0,true,true);
+    mm_menu_0316173258_0_3.addMenuItem("AVHRR&nbsp;Pathfinder","window.open('/cgi-bin/dcatalog/fam_summary.pl?sst+pfsst', '_self');");
+    mm_menu_0316173258_0_3.addMenuItem("ATSR","window.open('/cgi-bin/dcatalog/fam_summary.pl?sst+atsr', '_self');");
+    mm_menu_0316173258_0_3.addMenuItem("MODIS","window.open('/cgi-bin/dcatalog/fam_summary.pl?sst+modis', '_self');");
+    mm_menu_0316173258_0_3.addMenuItem("AVHRR&nbsp;MCSST","window.open('/cgi-bin/dcatalog/fam_summary.pl?sst+mcsst', '_self');");
+    mm_menu_0316173258_0_3.addMenuItem("GOES","window.open('/cgi-bin/dcatalog/fam_summary.pl?sst+goes', '_self');");
+    mm_menu_0316173258_0_3.addMenuItem("GHRSST","window.open('http://ghrsst.jpl.nasa.gov', '_blank');");
+    mm_menu_0316173258_0_3.addMenuItem("NCEP&nbsp;Reynolds","window.open('/cgi-bin/dcatalog/fam_summary.pl?sst+reynolds', '_self');");
+    mm_menu_0316173258_0_3.addMenuItem("Climatology","window.open('/cgi-bin/dcatalog/fam_summary.pl?sst+clim', '_self');");
+    mm_menu_0316173258_0_3.addMenuItem("In-Situ","window.open('/cgi-bin/dcatalog/fam_summary.pl?sst+insitu', '_self');");
+    mm_menu_0316173258_0_3.addMenuItem("Multi-Parameter","window.open('/cgi-bin/dcatalog/fam_summary.pl?sst+multi', '_self');");
+    mm_menu_0316173258_0_3.addMenuItem("WOCE","window.open('/cgi-bin/dcatalog/fam_summary.pl?sst+woce', '_self');");
+     mm_menu_0316173258_0_3.hideOnMouseOut=true;
+     mm_menu_0316173258_0_3.bgColor='#555555';
+     mm_menu_0316173258_0_3.menuBorder=1;
+     mm_menu_0316173258_0_3.menuLiteBgColor='#FFFFFF';
+     mm_menu_0316173258_0_3.menuBorderBgColor='#777777';
+    window.mm_menu_0316173258_0_4 = new Menu("Other",171,15,"Arial, Helvetica, sans-serif",9,"#222222","#FFFFFF","#EFEFEF","#666699","left","middle",3,0,1000,-5,7,true,true,true,0,true,true);
+    mm_menu_0316173258_0_4.addMenuItem("Atmospheric&nbsp;Moisture","window.open('/cgi-bin/dcatalog/fam_summary.pl?param+atmos', '_self');");
+    mm_menu_0316173258_0_4.addMenuItem("Brightness&nbsp;Temperature","window.open('/cgi-bin/dcatalog/fam_summary.pl?param+brtemp', '_self');");
+    mm_menu_0316173258_0_4.addMenuItem("Climatology","window.open('/cgi-bin/dcatalog/fam_summary.pl?param+clim', '_self');");
+    mm_menu_0316173258_0_4.addMenuItem("Heat&nbsp;Flux","window.open('/cgi-bin/dcatalog/fam_summary.pl?param+hflux', '_self');");
+    mm_menu_0316173258_0_4.addMenuItem("Ice&nbsp;(Land/Sea)","window.open('/cgi-bin/dcatalog/fam_summary.pl?param+ice', '_self');");
+    mm_menu_0316173258_0_4.addMenuItem("In-Situ","window.open('/cgi-bin/dcatalog/fam_summary.pl?param+insitu', '_self');");
+    mm_menu_0316173258_0_4.addMenuItem("Multi-Parameter","window.open('/cgi-bin/dcatalog/fam_summary.pl?param+multi', '_self');");
+    mm_menu_0316173258_0_4.addMenuItem("Ocean&nbsp;Currents","window.open('/products/product215.html', '_self');");
+    mm_menu_0316173258_0_4.addMenuItem("Scatterometer&nbsp;Sigma0","window.open('/cgi-bin/dcatalog/fam_summary.pl?param+scp', '_self');");
+     mm_menu_0316173258_0_4.hideOnMouseOut=true;
+     mm_menu_0316173258_0_4.bgColor='#555555';
+     mm_menu_0316173258_0_4.menuBorder=1;
+     mm_menu_0316173258_0_4.menuLiteBgColor='#FFFFFF';
+     mm_menu_0316173258_0_4.menuBorderBgColor='#777777';
+    window.mm_menu_0316173258_0_5 = new Menu("Satellite/Instrument",203,15,"Arial, Helvetica, sans-serif",9,"#222222","#FFFFFF","#EFEFEF","#666699","left","middle",3,0,1000,-5,7,true,true,true,0,true,true);
+    mm_menu_0316173258_0_5.addMenuItem("ATSR","window.open('/cgi-bin/dcatalog/fam_summary.pl?sat_instr+atsr', '_self');");
+    mm_menu_0316173258_0_5.addMenuItem("AVHRR","window.open('/cgi-bin/dcatalog/summary.pl?avhrr', '_self');");
+    mm_menu_0316173258_0_5.addMenuItem("ERS-1/-2","window.open('/cgi-bin/dcatalog/fam_summary.pl?sat_instr+ers', '_self');");
+    mm_menu_0316173258_0_5.addMenuItem("GEOS-3","window.open('/cgi-bin/dcatalog/fam_summary.pl?sat_instr+geos', '_self');");
+    mm_menu_0316173258_0_5.addMenuItem("GEOSAT","window.open('/cgi-bin/dcatalog/fam_summary.pl?sat_instr+geosat', '_self');");
+    mm_menu_0316173258_0_5.addMenuItem("GEOSAT&nbsp;Follow-On","window.open('/cgi-bin/dcatalog/fam_summary.pl?sat_instr+gfo', '_self');");
+    mm_menu_0316173258_0_5.addMenuItem("GOES","window.open('/cgi-bin/dcatalog/fam_summary.pl?sat_instr+goes', '_self');");
+    mm_menu_0316173258_0_5.addMenuItem("GRACE","window.open('/grace/', '_self');");
+    mm_menu_0316173258_0_5.addMenuItem("IN-SITU","window.open('/cgi-bin/dcatalog/fam_summary.pl?sat_instr+insitu', '_self');");
+    mm_menu_0316173258_0_5.addMenuItem("Jason","window.open('/cgi-bin/dcatalog/fam_summary.pl?sat_instr+jason', '_self');");
+    mm_menu_0316173258_0_5.addMenuItem("MODIS","window.open('/cgi-bin/dcatalog/fam_summary.pl?sat_instr+modis', '_self');");
+    mm_menu_0316173258_0_5.addMenuItem("NIMBUS-7&nbsp;SMMR","window.open('/cgi-bin/dcatalog/fam_summary.pl?sat_instr+nimbus', '_self');");
+    mm_menu_0316173258_0_5.addMenuItem("NSCAT","window.open('/cgi-bin/dcatalog/fam_summary.pl?sat_instr+nscat', '_self');");
+    mm_menu_0316173258_0_5.addMenuItem("SEASAT","window.open('/cgi-bin/dcatalog/fam_summary.pl?sat_instr+seasat', '_self');");
+    mm_menu_0316173258_0_5.addMenuItem("SEAWINDS&nbsp;on&nbsp;ADEOS-II","window.open('/cgi-bin/dcatalog/fam_summary.pl?sat_instr+seawinds', '_self');");
+    mm_menu_0316173258_0_5.addMenuItem("SEAWINDS&nbsp;on&nbsp;QUIKSCAT","window.open('/cgi-bin/dcatalog/fam_summary.pl?sat_instr+qscat', '_self');");
+    mm_menu_0316173258_0_5.addMenuItem("SSM/I","window.open('/cgi-bin/dcatalog/fam_summary.pl?sat_instr+ssmi', '_self');");
+    mm_menu_0316173258_0_5.addMenuItem("TOGA","window.open('/cgi-bin/dcatalog/fam_summary.pl?sat_instr+toga', '_self');");
+    mm_menu_0316173258_0_5.addMenuItem("TOPEX/POSEIDON","window.open('/cgi-bin/dcatalog/fam_summary.pl?sat_instr+topex', '_self');");
+    mm_menu_0316173258_0_5.addMenuItem("NEREIDS");
+     mm_menu_0316173258_0_5.hideOnMouseOut=true;
+     mm_menu_0316173258_0_5.bgColor='#555555';
+     mm_menu_0316173258_0_5.menuBorder=1;
+     mm_menu_0316173258_0_5.menuLiteBgColor='#FFFFFF';
+     mm_menu_0316173258_0_5.menuBorderBgColor='#777777';
+  window.mm_menu_0316173258_0 = new Menu("root",373,15,"Arial, Helvetica, sans-serif",9,"#222222","#FFFFFF","#EFEFEF","#666699","left","middle",3,0,1000,-5,7,true,true,true,0,true,true);
+  mm_menu_0316173258_0.addMenuItem(mm_menu_0316173258_0_1,"window.open('/cgi-bin/dcatalog/summary.pl?ost', '_self');");
+  mm_menu_0316173258_0.addMenuItem(mm_menu_0316173258_0_2,"window.open('/cgi-bin/dcatalog/summary.pl?ovw', '_self');");
+  mm_menu_0316173258_0.addMenuItem(mm_menu_0316173258_0_3,"window.open('/cgi-bin/dcatalog/summary.pl?sst', '_self');");
+  mm_menu_0316173258_0.addMenuItem("GHRSST&nbsp;-&nbsp;GODAE&nbsp;High&nbsp;Resolution&nbsp;SST&nbsp;Pilot&nbsp;Project","window.open('http://ghrsst.jpl.nasa.gov', '_blank');");
+  mm_menu_0316173258_0.addMenuItem("Multi-Parameter","window.open('/cgi-bin/dcatalog/fam_summary.pl?param+multi', '_self');");
+  mm_menu_0316173258_0.addMenuItem("Gravity&nbsp;(GRACE)","window.open('/grace', '_self');");
+  mm_menu_0316173258_0.addMenuItem(mm_menu_0316173258_0_4);
+  mm_menu_0316173258_0.addMenuItem(mm_menu_0316173258_0_5);
+   mm_menu_0316173258_0.hideOnMouseOut=true;
+   mm_menu_0316173258_0.childMenuIcon="images/arrows.gif";
+   mm_menu_0316173258_0.bgColor='#555555';
+   mm_menu_0316173258_0.menuBorder=1;
+   mm_menu_0316173258_0.menuLiteBgColor='#FFFFFF';
+   mm_menu_0316173258_0.menuBorderBgColor='#777777';
+window.mm_menu_0802103955_0 = new Menu("root",130,15,"Arial, Helvetica, sans-serif",9,"#222222","#FFFFFF","#FFFFFF","#666699","left","middle",3,0,1000,-5,7,true,true,true,0,true,true);
+  mm_menu_0802103955_0.addMenuItem("About&nbsp;Sign-On&nbsp;Account","window.open('https://podaac-login.jpl.nasa.gov/sso/SignOn.vm', '_self');");
+  mm_menu_0802103955_0.addMenuItem("Log&nbsp;In","window.open('https://podaac-login.jpl.nasa.gov/login', '_self');");
+  mm_menu_0802103955_0.addMenuItem("Log&nbsp;Out","window.open('https://podaac-login.jpl.nasa.gov/logout', '_self');");
+  mm_menu_0802103955_0.addMenuItem("Modify&nbsp;Account","window.open('https://podaac-login.jpl.nasa.gov/modify', '_self');");
+  mm_menu_0802103955_0.addMenuItem("Reset&nbsp;Password","window.open('https://podaac-login.jpl.nasa.gov/reset', '_self');");
+  mm_menu_0802103955_0.addMenuItem("Create&nbsp;New&nbsp;Account","window.open('https://podaac-login.jpl.nasa.gov/register', '_self');");
+  mm_menu_0802103955_0.addMenuItem("Ask&nbsp;a&nbsp;Question","window.open('https://podaac.custhelp.com/cgi-bin/podaac.cfg/php/enduser/ask.php', '_self');");
+  mm_menu_0802103955_0.addMenuItem("My&nbsp;PO.DAAC","window.open('https://podaac.custhelp.com/cgi-bin/podaac.cfg/php/enduser/myovr.php', '_self');");
+   mm_menu_0802103955_0.hideOnMouseOut=true;
+   mm_menu_0802103955_0.bgColor='#555555';
+   mm_menu_0802103955_0.menuBorder=1;
+   mm_menu_0802103955_0.menuLiteBgColor='#FFFFFF';
+   mm_menu_0802103955_0.menuBorderBgColor='#777777';
+       window.mm_menu_0913162422_0 = new Menu("root",81,15,"Arial, Helvetica, sans-serif",9,"#222222","#FFFFFF","#FFFFFF","#666699","left","middle",3,0,1000,-5,7,true,true,true,0,true,true);
+  mm_menu_0913162422_0.addMenuItem("New&nbsp;item");
+   mm_menu_0913162422_0.hideOnMouseOut=true;
+   mm_menu_0913162422_0.bgColor='#555555';
+   mm_menu_0913162422_0.menuBorder=1;
+   mm_menu_0913162422_0.menuLiteBgColor='#FFFFFF';
+   mm_menu_0913162422_0.menuBorderBgColor='#777777';
+                                            window.mm_menu_1102162301_0 = new Menu("root",270,15,"Arial, Helvetica, sans-serif",9,"#222222","#FFFFFF","#EFEFEF","#666699","left","middle",3,0,1000,-5,7,true,true,true,0,false,true);
+  mm_menu_1102162301_0.addMenuItem("Hurricane/Typhoon&nbsp;Tracker","window.open('http://podaac.jpl.nasa.gov/hurricanes/', '_blank');");
+  mm_menu_1102162301_0.addMenuItem("Images,&nbsp;Subsetting,&nbsp;Plot&nbsp;(POET)","window.open('http://poet.jpl.nasa.gov', '_blank');");
+  mm_menu_1102162301_0.addMenuItem("Near-Real-Time&nbsp;Image&nbsp;Distribution&nbsp;Server&nbsp;(NEREIDS)","window.open('http://nereids.jpl.nasa.gov', '_blank');");
+  mm_menu_1102162301_0.addMenuItem("Open&nbsp;Data&nbsp;Access&nbsp;Protocol&nbsp;(OpenDAP/DODS)","window.open('http://dods.jpl.nasa.gov', '_blank');");
+  mm_menu_1102162301_0.addMenuItem("FTP","window.open('http://podaac.jpl.nasa.gov/ftp/index.html', '_blank');");
+  mm_menu_1102162301_0.addMenuItem("High&nbsp;Efficiency&nbsp;FTP","window.open('http://lapinta.jpl.nasa.gov/aspera/', '_blank');");
+  mm_menu_1102162301_0.addMenuItem("ECHO&nbsp;(Earth&nbsp;Observing&nbsp;System&nbsp;Clearinghouse)","window.open('http://www.echo.eos.nasa.gov', '_blank');");
+   mm_menu_1102162301_0.hideOnMouseOut=true;
+   mm_menu_1102162301_0.bgColor='#555555';
+   mm_menu_1102162301_0.menuBorder=1;
+   mm_menu_1102162301_0.menuLiteBgColor='#FFFFFF';
+   mm_menu_1102162301_0.menuBorderBgColor='#777777';
+
+mm_menu_1102162301_0.writeMenus();
+} // mmLoadMenus()
+
+<!--
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_nbGroup(event, grpName) { //v6.0
+  var i,img,nbArr,args=MM_nbGroup.arguments;
+  if (event == "init" && args.length > 2) {
+    if ((img = MM_findObj(args[2])) != null && !img.MM_init) {
+      img.MM_init = true; img.MM_up = args[3]; img.MM_dn = img.src;
+      if ((nbArr = document[grpName]) == null) nbArr = document[grpName] = new Array();
+      nbArr[nbArr.length] = img;
+      for (i=4; i < args.length-1; i+=2) if ((img = MM_findObj(args[i])) != null) {
+        if (!img.MM_up) img.MM_up = img.src;
+        img.src = img.MM_dn = args[i+1];
+        nbArr[nbArr.length] = img;
+    } }
+  } else if (event == "over") {
+    document.MM_nbOver = nbArr = new Array();
+    for (i=1; i < args.length-1; i+=3) if ((img = MM_findObj(args[i])) != null) {
+      if (!img.MM_up) img.MM_up = img.src;
+      img.src = (img.MM_dn && args[i+2]) ? args[i+2] : ((args[i+1])? args[i+1] : img.MM_up);
+      nbArr[nbArr.length] = img;
+    }
+  } else if (event == "out" ) {
+    for (i=0; i < document.MM_nbOver.length; i++) {
+      img = document.MM_nbOver[i]; img.src = (img.MM_dn) ? img.MM_dn : img.MM_up; }
+  } else if (event == "down") {
+    nbArr = document[grpName];
+    if (nbArr)
+      for (i=0; i < nbArr.length; i++) { img=nbArr[i]; img.src = img.MM_up; img.MM_dn = 0; }
+    document[grpName] = nbArr = new Array();
+    for (i=2; i < args.length-1; i+=2) if ((img = MM_findObj(args[i])) != null) {
+      if (!img.MM_up) img.MM_up = img.src;
+      img.src = img.MM_dn = (args[i+1])? args[i+1] : img.MM_up;
+      nbArr[nbArr.length] = img;
+  } }
+}
+//-->
+
+function MM_showMenu(menu, x, y, child, imgname) {
+	if (!window.mmWroteMenu) return;
+	MM_clearTimeout();
+	if (menu) {
+		var obj = FIND(imgname) || document.images[imgname] || document.links[imgname] || document.anchors[imgname];
+		x = moveXbySlicePos (x, obj);
+		y = moveYbySlicePos (y, obj);
+	}
+	if (document.layers) {
+		if (menu) {
+			var l = menu.menuLayer || menu;
+			l.top = l.left = 1;
+			hideActiveMenus();
+			if (this.visibility) l = this;
+			window.ActiveMenu = l;
+		} else {
+			var l = child;
+		}
+		if (!l) return;
+		for (var i=0; i<l.layers.length; i++) { 			   
+			if (!l.layers[i].isHilite) l.layers[i].visibility = "inherit";
+			if (l.layers[i].document.layers.length > 0) MM_showMenu(null, "relative", "relative", l.layers[i]);
+		}
+		if (l.parentLayer) {
+			if (x != "relative") l.parentLayer.left = x || window.pageX || 0;
+			if (l.parentLayer.left + l.clip.width > window.innerWidth) l.parentLayer.left -= (l.parentLayer.left + l.clip.width - window.innerWidth);
+			if (y != "relative") l.parentLayer.top = y || window.pageY || 0;
+			if (l.parentLayer.isContainer) {
+				l.Menu.xOffset = window.pageXOffset;
+				l.Menu.yOffset = window.pageYOffset;
+				l.parentLayer.clip.width = window.ActiveMenu.clip.width +2;
+				l.parentLayer.clip.height = window.ActiveMenu.clip.height +2;
+				if (l.parentLayer.menuContainerBgColor && l.Menu.menuBgOpaque ) l.parentLayer.document.bgColor = l.parentLayer.menuContainerBgColor;
+			}
+		}
+		l.visibility = "inherit";
+		if (l.Menu) l.Menu.container.visibility = "inherit";
+	} else if (FIND("menuItem0")) {
+		var l = menu.menuLayer || menu;	
+		hideActiveMenus();
+		if (typeof(l) == "string") l = FIND(l);
+		window.ActiveMenu = l;
+		var s = l.style;
+		s.visibility = "inherit";
+		if (x != "relative") {
+			s.pixelLeft = x || (window.pageX + document.body.scrollLeft) || 0;
+			s.left = s.pixelLeft + 'px';
+		}
+		if (y != "relative") {
+			s.pixelTop = y || (window.pageY + document.body.scrollTop) || 0;
+			s.top = s.pixelTop + 'px';
+		}
+		l.Menu.xOffset = document.body.scrollLeft;
+		l.Menu.yOffset = document.body.scrollTop;
+	}
+	if (menu) window.activeMenus[window.activeMenus.length] = l;
+	MM_clearTimeout();
+}
+//-->
+</script>
+<script language="JavaScript" src="images/mm_menu.js"></script>
+</head>
+<title>PO.DAAC Header</title>
+<script language="javascript">
+
+// JPL FUNCTIONS BELOW -----------------
+
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+//-->
+  </script>
+<link rel="stylesheet" href="images/common.css" type="text/css">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<body leftmargin="0" topmargin="0" onload="MM_preloadImages('http://podaac.jpl.nasa.gov/images/home_off.jpg','http://podaac.jpl.nasa.gov/images/access_data_on.jpg','http://podaac.jpl.nasa.gov/images/ftp_on.jpg','http://podaac.jpl.nasa.gov/images/education_on.jpg','http://podaac.jpl.nasa.gov/images/faq_off.jpg','http://podaac.jpl.nasa.gov/images/related_links_on.jpg','http://podaac.jpl.nasa.gov/images/subscribe_on.jpg','http://podaac.jpl.nasa.gov/images/glossary_on.jpg','http://podaac.jpl.nasa.gov/images/sitemap_on.jpg','http://podaac.jpl.nasa.gov/images/feedback_on.jpg','http://podaac.jpl.nasa.gov/images/software_on.jpg','http://podaac.jpl.nasa.gov/images/product_faq_on.jpg','http://podaac.jpl.nasa.gov/images/knownproblems_on.jpg','http://podaac.jpl.nasa.gov/images/whatsnew_on.jpg','http://podaac.jpl.nasa.gov/images/references_on.jpg','http://podaac.jpl.nasa.gov/images/product_relatedlinks_on.jpg','http://podaac.jpl.nasa.gov/images/help_on.jpg','http://podaac.jpl.nasa.gov/images/browse_on.jpg','http://podaac.jpl.nasa.gov/images/subset_on.jpg','http://podaac.jpl.nasa.gov/images/product_ftp_on.jpg','http://podaac.jpl.nasa.gov/images/order_on.jpg','http://podaac.jpl.nasa.gov/images/topnav_01.gif','http://podaac.jpl.nasa.gov/images/topnav_02.gif','http://podaac.jpl.nasa.gov/images/topnav_03.gif','http://podaac.jpl.nasa.gov/images/topnav_04.gif','http://podaac.jpl.nasa.gov/images/about_off.jpg','http://podaac.jpl.nasa.gov/images/contact_off.jpg','http://podaac.jpl.nasa.gov/images/documentation_on.jpg','http://podaac.jpl.nasa.gov/images/topnav_05.gif','http://podaac.jpl.nasa.gov/images/home_down.gif','http://podaac.jpl.nasa.gov/images/home_over.gif','http://podaac.jpl.nasa.gov/images/home_ov_down.gif','images/new_bibliography_up.gif','images/toolsUP.jpg','images/faqUP.jpg','images/faqOVER.jpg','images/feedbackOVER.jpg','images/newPRODUCTSover.jpg','images/dataUP.jpg','images/topnav_02cr.jpg','images/topnav_03cr.jpg','images/topnav_04cr.jpg','images/topnav_01cr.jpg','images/topnav_05cr.jpg','images/annUP.jpg','images/annOVER.jpg','images/homeUPN.jpg','images/homeOVERN.jpg','images/dataUPN.jpg','images/toolsUPN.jpg','images/toolsOVERN.jpg','images/surveyUPN.jpg','images/surveyOVERN.jpg','images/faqUPN.jpg','images/faqOVERN.jpg','images/feedbackUPN.jpg','images/feedbackOVERN.jpg','images/dataOVERN.jpg');MM_showHideLayers('mmg1000','','show','mmg700','','hide','mmg500','','hide')" marginheight="0" marginwidth="0" text="#000000">
+<script language="JavaScript1.2">mmLoadMenus();</script>
+<map name="MapMap">
+  <area shape="rect" coords="12,5,323,74" href="http://podaac.jpl.nasa.gov" target="_self" alt="PO.DAAC Logo">
+</map>
+<map name="Map">
+  <area shape="rect" coords="12,5,323,74" href="http://podaac.jpl.nasa.gov" target="_self" alt="PO.DAAC Logo">
+</map>
+<div id="mmg1000" style="position:absolute; left:266px; top:296px; width:0px; height:1px; background-image:url(images/contact_bar.jpg); layer-background-image:url(images/contact_bar.jpg); border:1px none #000000; z-index:2; visibility: hidden;"></div>
+<table valign="top" align="center" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" width="730">
+  <!--DWLayoutTable-->
+  <tbody>
+    <tr> 
+      <td width="862" valign="top"><table bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0">
+          <!--DWLayoutTable-->
+          <tbody>
+            <tr> 
+              <td width="854" valign="top"><table border="0" cellpadding="0" cellspacing="0" width="730">
+                  <!--DWLayoutTable-->
+                  <tbody>
+                    <tr> 
+                      <td width="311" valign="top" background="images/greybg.gif"><img src="images/nasa_logoSHORT.gif" alt="NASA Logo - Jet Propulsion Laboratory" width="311" border="0" usemap="#Map3"> </td>
+                      <td width="189" align="center" valign="middle" bgcolor="#cccccc"><a href="http://www.nasa.gov" class="navLnkBlack style6 style64"><font face="Arial, Helvetica, sans-serif">
+                      + View the NASA Portal</font></a></td>
+                      <td width="100" align="center" bgcolor="#3D4E79"><font color="#ffffff" face="arial" size="2">Search<br>PO.DAAC&nbsp;</font></td>
+                      <td width="130" align="left" bgcolor="#3D4e79"><form method="get" action="http://search.jpl.nasa.gov:8080/cgi-bin/htsearch">
+                            <input name="words" size="10" maxlength="200" value="" type="textbox">
+                            <input title="search" src="images/arrow.gif" name="search" border="0" height="14" type="image" width="16">
+                            <input type="hidden" name="config" value="htdig">
+                            <input type="hidden" name="restrict" value="">
+                            <input type="hidden" name="exclude" value="">
+                      </form></td>
+                    </tr>
+                  </tbody>
+              </table></td>
+            </tr>
+            <tr>
+              <td valign="top"><img src="images/spacer.gif" height="3" width="730"></td>
+            </tr>
+            <tr> 
+              <td valign="top"><table border="0" cellpadding="0" cellspacing="0">
+                  <!--DWLayoutTable-->
+                  <tbody>
+                    <tr> 
+                      <td><a href="http://www.jpl.nasa.gov/index.cfm" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('home','','images/topnav_01cr.jpg',1)"><img src="images/topnavoff_01cr.jpg" input title="JPL Home" name="home" border="0" height="20" width="147"></a></td>
+                      <td><a href="http://www.jpl.nasa.gov/earth/" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('earth','','images/topnav_02cr.jpg',1)"><img src="images/topnavoff_02cr.jpg" input title="Earth" name="earth" border="0" height="20" width="146"></a></td>
+                      <td><a href="http://www.jpl.nasa.gov/solar_system" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('solar_system','','images/topnav_03cr.jpg',1)"><img src="images/topnavoff_03cr.jpg" input title="Solar System" name="solar_system" border="0" height="20" width="146"></a></td>
+                      <td><a href="http://www.jpl.nasa.gov/stars_galaxies/" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('stars','','images/topnav_04cr.jpg',1)"><img src="images/topnavoff_04cr.jpg" input title="Stars &amp; Galaxies" name="stars" border="0" height="20" width="146"></a></td>
+                      <td><a href="http://www.jpl.nasa.gov/technology/" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('technology','','images/topnav_05cr.jpg',1)"><img src="images/topnavoff_05cr.jpg" input title="Technology" name="technology" border="0" height="20" width="145"></a></td>
+                    </tr>
+                  </tbody>
+              </table></td>
+            </tr>
+            <tr> 
+              <td valign="top"><img src="images/spacer.gif" height="3" width="730"></td>
+            </tr>
+            <tr> 
+              <td valign="top"><img src="images/podaac_banner_finalOCT06.jpg" width="730" height="80" border="0" usemap="#Map4" target="_self"></td>
+            </tr>
+            <tr>
+              <td valign="top"><img src="images/spacer.gif" height="4" width="593"> </td>
+            </tr>
+            <tr>
+              <td align="left" valign="top">
+<a href="/index.html" target="_top" onClick="MM_nbGroup('down','group1','HOME','images/homeOVERN.jpg',1)" onMouseOver="MM_nbGroup('over','HOME','images/homeOVERN.jpg','images/homeUPN.jpg',1)" 
+onMouseOut="MM_nbGroup('out')"><img src="images/homeN.jpg" input title="PO.DAAC Home" name="HOME" width="77" height="21" border="0" onload=""></a><a href="/catalog/" target="_top" onClick="MM_nbGroup('down','group1','dataproducts','images/dataUPN.jpg',1)" onMouseOver="MM_swapImage('over','Data Products','images/dataOVER.jpg','images/dataUP.jpg',1);MM_showMenu(window.mm_menu_0316173258_0,0,21,null,'dataproducts');MM_nbGroup('over','dataproducts','images/dataOVERN.jpg','images/dataUPN.jpg',1)" 
+onMouseOut="MM_nbGroup('out');MM_startTimeout();"><img src="images/dataN.jpg" input title="Data Products" name="dataproducts" width="128" height="21" border="0" onLoad=""></a><a href="/dts/" target="_top" onClick="MM_nbGroup('down','group1','tools','images/toolsUPN.jpg',1)" onMouseOver="MM_nbGroup('over','tools','images/toolsOVERN.jpg','images/toolsUPN.jpg',1);MM_showMenu(window.mm_menu_1102162301_0,0,21,null,'tools')" 
+onMouseOut="MM_nbGroup('out');MM_startTimeout();"><img src="images/toolsN.jpg" input title="Tools &amp; Services" name="tools" width="136" height="21" border="0" onLoad=""></a><a href="http://podaac-help.jpl.nasa.gov/propweb/support.cfm" target="_top" onClick="MM_nbGroup('down','group1','faq2','images/faqUPN.jpg',1)" onMouseOver="MM_nbGroup('over','faq2','images/faqOVERN.jpg','images/faqUPN.jpg',1)" 
+onMouseOut="MM_nbGroup('out')"><img src="images/faqqN.jpg" input title="FAQ" name="faq2" width="60" height="21" border="0" onload=""></a><a href="/contact/index.html" target="_top" onClick="MM_nbGroup('down','group1','contact','images/feedbackUPN.jpg',1)" onMouseOver="MM_nbGroup('over','contact','images/feedbackOVERN.jpg','images/feedbackUPN.jpg',1)" 
+onMouseOut="MM_nbGroup('out')"><img src="images/feedbackN.jpg" input title="Contact" name="contact" width="84" height="21" border="0" onLoad=""></a><a href="http://romulus.gsfc.nasa.gov/htbin/survey/esdisSurvey.cgi?DAAC=PO.DAAC&pop=T" target="_blank" onClick="MM_nbGroup('down','group1','nasa survey','images/surveyUPN.jpg',1)" onMouseOver="MM_nbGroup('over','nasa survey','images/surveyOVERN.jpg','images/surveyUPN.jpg',1)" 
+onMouseOut="MM_nbGroup('out')"><img src="images/surveyN.jpg" input title="NASA Survey" name="nasa survey" border="0" onLoad=""></a><a href="/announcements/" target="_top" onClick="MM_nbGroup('down','group1','announcement','images/annOVER.jpg',1)" onMouseOver="MM_nbGroup('over','announcement','images/annUP.jpg','images/annOVER.jpg',1)" onMouseOut="MM_nbGroup('out')"><img name="announcement" src="images/ann.jpg" border="0" input title="Announcements" onLoad=""></a></td>            
+            <tr>
+              <td valign="top"><img src="images/spacer.gif" height="4" width="730"></td>
+            </tr>
+          </tbody>
+      </table></td>
+    </tr>
+  </tbody>
+</table>
+<map name="Map3">
+  <area shape="circle" coords="49,19,15" href="http://www.nasa.gov" target="_blank" input title="NASA Logo">
+  <area shape="rect" coords="78,7,237,22" href="http://www.jpl.nasa.gov" target="_blank" title="JPL Logo" input>
+  <area shape="rect" coords="78,22,224,40" href="http://www.caltech.edu" target="_blank" input title="Caltech Logo">
+</map>
+<map name="Map4">
+  <area shape="rect" coords="15,6,323,71" href="http://podaac.jpl.nasa.gov" target="_self" input title"PO.DAAC logo and banner">
+</map>
+
+        <map name="Map">
+              <area shape="rect" coords="91,16,282,40" href="http://www.jpl.nasa.gov/" alt="Jet Propulsion Laboratory">
+              <area shape="circle" coords="62,40,24" href="http://www.nasa.gov/" alt="NASA">
+              <area shape="rect" coords="91,41,275,54" href="http://www.caltech.edu/" alt="Caltech">
+        </map>      </td>
+      <td rowspan="3" align="center" valign="top"><img src="images/spacer.gif" alt="spacer" height="1" width="10"></td>
+    </tr>
+    <tr valign="top"></tr>	<! header shifts without this>
+    <!--// PO.DAAC Title  BEGINNING ----------------->
+	<!--// PO.DAAC Title  END ----------------->
+	
+	<!--// PO.DAAC Body BEGINNING ----------------->
+	<tr>
+	  <td colspan="3" valign="top">

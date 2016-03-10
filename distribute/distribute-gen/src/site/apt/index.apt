@@ -1,0 +1,14 @@
+~~ Copyright 2008, by the California Institute of Technology.
+~~ ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+~~
+~~ $Id: index.apt 1341 2008-06-11 06:15:34Z shardman $
+
+  ---
+  About Distribute Code Generation
+  ---
+  Sean Hardman
+  ---
+  
+About Distribute Code Generation
+
+  The Distribute Code Generation is the root module for all code generation modules.

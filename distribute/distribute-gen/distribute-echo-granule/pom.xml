@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- 
+Copyright 2008, by the California Institute of Technology.
+ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+
+$Id: pom.xml 10506 2012-08-28 22:16:30Z thuang $
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+  http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>gov.nasa.podaac</groupId>
+    <artifactId>distribute-gen</artifactId>
+    <version>5.0.0d</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+
+  <groupId>gov.nasa.podaac</groupId>
+  <artifactId>distribute-echo-granule</artifactId>
+  <packaging>jar</packaging>
+
+  <name>Distribute ECHO Granule Binding</name>
+  <description> The Distribute ECHO Granule Binding module uses JAXB to generate Java classes for
+    handling the ECHO submissions. </description>
+  <url>http://podaac-cm.jpl.nasa.gov/docs/distribute/distribute-gen/distribute-echo-granule/</url>
+
+   <properties>
+       <project.build.sourceEncoding>
+         UTF-8
+       </project.build.sourceEncoding>
+       <project.reporting.outputEncoding>
+         UTF-8
+       </project.reporting.outputEncoding>
+     </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>javax.xml.bind</groupId>
+      <artifactId>jaxb-api</artifactId>
+      <version>2.2.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jvnet.jaxb2_commons</groupId>
+      <artifactId>runtime</artifactId>
+      <version>0.4.1.5</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jvnet.jaxb2_commons</groupId>
+      <artifactId>testing</artifactId>
+      <version>0.4.1.5</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <resources>
+      <resource>
+        <directory>${basedir}/src/resources</directory>
+        <targetPath>META-INF/schemas</targetPath>
+        <filtering>true</filtering>
+        <includes>
+          <include>**/*.xsd</include>
+        </includes>
+      </resource>
+    </resources>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <version>2.1.1</version>
+        <dependencies>
+          <dependency>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+            <version>3.1</version>
+            <exclusions>
+              <exclusion>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+              </exclusion>
+            </exclusions>
+          </dependency>
+        </dependencies>
+      </plugin>
+      <plugin>
+        <groupId>org.jvnet.jaxb2.maven2</groupId>
+        <artifactId>maven-jaxb2-plugin</artifactId>
+        <version>0.7.3</version>
+        <dependencies>
+          <dependency>
+            <groupId>org.jvnet.jaxb2_commons</groupId>
+            <artifactId>basic</artifactId>
+            <version>0.4.1.5</version>
+          </dependency>
+        </dependencies>
+        <executions>
+          <execution>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <generatePackage> gov.nasa.podaac.distribute.echo.jaxb.granule </generatePackage>
+          <schemaDirectory> ${basedir}/src/resources </schemaDirectory>
+          <includeSchemas>
+            <includeSchema>Granule.xsd</includeSchema>
+          </includeSchemas>
+          <strict>true</strict>
+          <verbose>true</verbose>
+          <args>
+            <arg>-Xequals</arg>
+            <arg>-XhashCode</arg>
+            <arg>-XtoString</arg>
+            <arg>-Xsync-methods</arg>
+          </args>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>site</id>
+            <phase>site</phase>
+            <configuration>
+              <tasks>
+                <echo>Running the XSDDoc task</echo>
+                <taskdef name="xsddoc" classname="net.sf.xframe.xsddoc.Task"/>
+                <mkdir dir="${basedir}/target/site/xsddoc"/>
+                <xsddoc file="${basedir}/src/resources/Granule.xsd"
+                  out="${basedir}/target/site/xsddoc" doctitle="ECHO Granule Schema Reference"
+                  header="ECHO Granule Schema Reference"
+                  bottom="Copyright &#169; 2008, by the California Institute of Technology. ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged."
+                  verbose="true"/>
+              </tasks>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+        <dependencies>
+          <dependency>
+            <groupId>xsddoc</groupId>
+            <artifactId>maven-xsddoc-plugin</artifactId>
+            <version>1.0</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+    </plugins>
+  </build>
+  <reporting>
+    <plugins>
+      <plugin>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>dependencies</report>
+              <report>summary</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+      <plugin>
+        <artifactId>maven-javadoc-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <artifactId>maven-surefire-report-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </reporting>
+</project>

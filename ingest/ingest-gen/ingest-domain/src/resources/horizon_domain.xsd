@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+   Copyright (c) 2007-2013
+   Jet Propulsion Laboratory, California Institute of Technology
+   All rights reserved
+   
+   This XML schema defines client application to the HORIZON ingestion services
+   
+   
+   @author T. Huang {Thomas.Huang@jpl.nasa.gov}
+   @version $Id: $
+-->
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:horizon.nasa="http://horizon.nasa.gov"
+    targetNamespace="http://horizon.nasa.gov" elementFormDefault="qualified">
+
+    <xsd:element name="domain">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="default" type="xsd:string"/>
+                <xsd:element name="federation" maxOccurs="unbounded">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="name" type="xsd:string"/>
+                            <xsd:element name="url" type="xsd:anyURI"/>
+                            <xsd:element name="productType" type="xsd:string" minOccurs="0"
+                                maxOccurs="unbounded"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="sigevent" type="xsd:anyURI" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="jobkeeper" minOccurs="0" maxOccurs="1">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="server" type="xsd:anyURI" minOccurs="0" maxOccurs="1"/>
+                            <xsd:element name="webservice" type="xsd:anyURI" minOccurs="0"
+                                maxOccurs="1"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="discovery" type="xsd:anyURI" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="inventory" type="xsd:anyURI" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="security" type="xsd:anyURI" minOccurs="0" maxOccurs="1"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>

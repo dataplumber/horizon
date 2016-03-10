@@ -1,0 +1,106 @@
+~~ Copyright 2010, by the California Institute of Technology.
+~~ ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+~~
+~~ $Id: $
+
+  ---
+  Operation
+  ---
+  Christian Alarcon
+  ---
+
+{Operation}
+
+   This document describes how to operate the Manager Operator Tool application. The operator tool GUI is an AJAX website built using the {{{http://www.jquery.com}JQuery javascript framework}}. This interface allows a user to view and edit various manager database values as well as a visual interpretation of jobs being carried out by the manager program set. The main categories of functions are seprataed into tabs along the top of the application. Each tab serves a separate set of tasks that can be accomplished through the tool. 
+
+   * {{{Login_Instructions}Login Instructions}}
+   
+   * {{{Overview_Tab}Overview Tab}}
+
+   * {{{Granule/Dataset_Management_Instructions}Granule/Dataset Management Instructions}}
+
+   * {{{Storage/Engine_Management_Instructions}Storage/Engine Management Instructions}}
+
+   * {{{Utilities_Instructions}Utilities Instructions}}   
+
+{Login Instructions}
+  
+   Upon entering the applications URL, the user will be asked to log in with their previously assigned username and password. Fill in the proper credentials in the appropriate input fields.
+
+   The log in mechanism works off Manager's authentication system. User login and passwords are stored in Manager's database so the addition or removal of users should be done by a Sys Admin with the proper priviliges. The Bootstrap.groovy file under the Manager grails app controls what appears in the database upon Manager boot. User sessions are managed by PHP. Please refer to Apache/PHP documentation if any changes are to be made to session settings.
+
+{Overview Tab}
+
+	The overview tab is a quick view into the status of all the processes in our system as well as a quick view for statiistics captured in our Solr server.
+	
+[../images/op_overview.jpg]
+	
+	* System Status
+	
+	The system status area shows the online/offline status of all the processes in our system. This includes all running managers, inventory, zookeeper, and Solr. The respective URL's for each process is listed in this box. To refresh the view, scroll to the bottom and click "Refresh Status".
+	
+	* Summary of Granules
+	
+	The summary of granules box shows a quick summary of the count of granules currently in each manager's database and their respective state/lock combos. The tabs will autogenerate depending on the configuration file imported. Clicking any state/lock values will redirect the user to the appropriate tabs showing the corresponding granules with what was clicked.
+	
+	* Storage Summary
+	
+	This box shows the current size and percentage used of each storage registered in DMAS. Clicking each storage redirects to the storage/engine management tab.
+	
+	* Monthly Ingestion
+	
+	This graph shows the number of granules ingested per month. It does not differentiate between datasets as this is a total count. This graph retrieves its data from Solr so there may be some lag between what is in the inventory's database and what is shown here.
+	
+	* Granules per Dataset
+	
+	This pie chart shows a breakdown of how many granules are currently archived per dataset and its percentage of the whole. Hovering over each slice gives more detail.
+	
+	* Priority Overview
+	
+	These tables show three separate way to get visibility into priority queues. "Granule Count By Priority" shows a consistently increasing count of archived granules organized by priority. To keep a consistently increasing count, only the current day's archived granules are counted. "Average Time To Archive" shows the average time, from created to archived, of all granules currently in the manager ing_product table. "Current Job Count By Storage" shows the number of jobs currently queued for each storage by priority. A dynamic number of tables will be generated depending on the number of storages available to that particlar manager.
+
+{Granule/Dataset Management Instructions}
+
+   The following are instructions for all functions available related to the management of granule jobs currently in Manager's ing_product table. Please note that the information shown here does not reflect current engine jobs, but rather Manager's tracking and managing information.
+
+   * Paging
+
+   Granule results are displayed in pages (default 10 records per page). The menu below the actual grid contains page navigation elements. To skip to a particular page, enter the desire page number in the center input box. To advance or go back a single page, or go to the first or last page, use the buttons avilable around the center input box. All related page and record count information is displayed here as well. 
+
+   * Searching
+
+   The input boxes above each column name is the filtering search box. To filter each column with a value desired, type the search string in the corresponding input box for the desired column. Numeric inputs are registered as exact matches whereas text columns search with a "contains this string" logic. Results will be updated as the user types. Results may also be sorted in ascending or descending order per column. Clicking on a column label at the top will toggle this feature. Column widths may also be adjusted by dragging on the edges of the column header's left or right borders.
+
+   * Editing and Deleting Granules
+
+   The operator tool allows for the modification or removal or any of the rows shown. Select the desired rows by either clicking on the row itself or checking the boxes on the left of the row. Multiple rows may be selected or alternatively, checking the box on the very top left of the grid selects all the rows currently displayed. Note: There is currently no feature to select all rows across all pages at this moment. To delete the selected rows, click on the "Delete" button on the bottom left menu. A confirmation box will appear. Once confirmed, the rows will be removed from the tables. To edit, click the "Edit" button and set the values of "State", "Lock", and "Retries" to the desired values. Please refer to the state/lock diagram in the "State Table Diagram" tab. These values will be applied across the board to all selected rows.
+   
+   * Editing Dataset Latency Setting or Priority
+   
+   Similar to editing granules, the user can select one or many datasets in the bottom section and click edit to change its corresponding latency value or priority level.
+
+{Storage/Engine Management Instructions}
+
+   To view the available storages associated with Manager, click on the "Storage Management" tab.
+
+   * Viewing Storage Details
+
+   To open the details box for each storage, click the "View/Edit Details" button for the desired storage. A box will appear with extra information about the storage, such as ID, protocol, and the amount of storage used, reserved, and marked as a threshold in bytes. To close/hide the storage details box, click on the 'x' icon in the upper right of the details box or simply click the summary box again to toggle the details box off.
+
+   * Editing Storage/Location Information
+
+   When necessary, the editing of the used, threshold, and reserved values is possible by clicking the "Edit" box in the storage details popup. Clicking this will convert the appropriate information into text inputs. Modify the inputs to the desired values (positive integers only), and click confirm to send the update request to Manager. To return to the details box without making any edits and returning the values to their original settings, click the "Cancel" button. With the new one storage to many location schema, value updates now go to location entries, but are made invisible to the user. 
+   
+   * Controlling an Engine
+   
+   To pause, resume, or shut down and engine, use the buttons on the right side of each engine box. The pause symbol represents pausing, play for resuming, and "X" for shutting down. Shutting down an engine will actually kill the process and unregister itself from zookeeper. This will result in the engine not appearing on the interface anymore. To restart a shut down engine, the process must be restarted manually on the host that the engine was on.
+   
+{Utilities Instructions}
+
+   The utility tab is reserved for tools admin and experienced users can use to manipulate the operator tool or even some of the associated processes as well. Currently there is only one utility.
+   
+[../images/op_utility.jpg]
+   
+   * Recreating the configuration file
+   
+   To reecreate the "horizondomain.xml" file, click on the reload button on the utility tab. The process will then take the existing login credentials, the current "default" manager (decided by which manager was provided in the wizard), and creates and updated "horizondomain.xml" file in the config directory.

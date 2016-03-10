@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- 
+Copyright 2007-2014, by the California Institute of Technology.
+ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+
+$Id: $
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+   http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+   <modelVersion>4.0.0</modelVersion>
+   <groupId>gov.nasa.horizon</groupId>
+   <artifactId>horizon</artifactId>
+   <version>0.0.0</version>
+   <packaging>pom</packaging>
+   <properties>
+      <horizon.version>5.0.0e</horizon.version>
+   </properties>
+
+   <name>HORIZON - Framework for Data Management and Workflow</name>
+   <description> This project contains the parent Project Object Model (POM). </description>
+   <url>http://horizon.jpl.nasa.gov/</url>
+
+   <modules>
+      <module>common</module>
+      <module>ingest</module>
+      <module>data-handlers</module>
+      <module>archive</module>
+   </modules>
+
+   <inceptionYear>2007</inceptionYear>
+   <organization>
+      <name>Jet Propulsion Laboratory</name>
+      <url>http://www.jpl.nasa.gov/</url>
+   </organization>
+
+   <scm>
+      <developerConnection>scm:svn:http://horizon.jpl.nasa.gov/repo/horizon/trunk/</developerConnection>
+      <url>http://horizon.jpl.nasa.gov/repo/horizon/trunk/</url>
+   </scm>
+
+   <issueManagement>
+      <system>Trac</system>
+      <url>http://horizon.jpl.nasa.gov/trac/</url>
+   </issueManagement>
+
+   <mailingLists>
+      <mailingList>
+         <name>Developer List</name>
+         <subscribe>horizon-dev-subscribe@list.jpl.nasa.gov</subscribe>
+         <unsubscribe>horizon-dev-unsubscribe@list.jpl.nasa.gov</unsubscribe>
+         <post>horizon-dev@list.jpl.nasa.gov</post>
+      </mailingList>
+   </mailingLists>
+
+   <distributionManagement>
+      <repository>
+         <id>horizon-repo</id>
+         <name>HORIZON Repository</name>
+         <url>sftp://horizon.jpl.nasa.gov/home/cm/maven/repo/</url>
+         <uniqueVersion>false</uniqueVersion>
+         <layout>default</layout>
+      </repository>
+      <site>
+         <id>horizon-repo</id>
+         <name>HORIZON Repository</name>
+         <url>sftp://horizon.jpl.nasa.gov/home/cm/maven/docs/horizon</url>
+      </site>
+   </distributionManagement>
+   <repositories>
+    <repository>
+      <id>horizon-repo</id>
+      <name>Horizon Repo</name>
+      <url>http://horizon.jpl.nasa.gov/maven</url>
+    </repository>
+  </repositories>
+   <developers>
+      <developer>
+         <id>qchau</id>
+         <name>Qui Chau</name>
+         <email>Qui.T.Chau@jpl.nasa.gov</email>
+         <roles>
+            <role>Developer</role>
+         </roles>
+      </developer>
+      <developer>
+         <id>gangl</id>
+         <name>Michael Gangl</name>
+         <email>Michael.E.Gangl@jpl.nasa.gov</email>
+         <roles>
+            <role>Developer</role>
+         </roles>
+      </developer>
+      <developer>
+         <id>thuang</id>
+         <name>Thomas Huang</name>
+         <email>Thomas.Huang@jpl.nasa.gov</email>
+         <roles>
+            <role>Core System Development Lead</role>
+         </roles>
+      </developer>
+      <developer>
+         <id>axt</id>
+         <name>Atsuya Takagi</name>
+         <email>Atsuya.Takagi@jpl.nasa.gov</email>
+         <roles>
+            <role>Developer</role>
+         </roles>
+      </developer>
+      <developer>
+         <id>calarcon</id>
+         <name>Christian Alarcon</name>
+         <email>Christian.Alarconi@jpl.nasa.gov</email>
+         <roles>
+            <role>Developer</role>
+         </roles>
+      </developer>
+   </developers>
+
+   <contributors>
+      <contributor>
+         <name>Chris Finch</name>
+         <email>Chris.Finch@jpl.nasa.gov</email>
+         <roles>
+            <role>System Engineer</role>
+         </roles>
+      </contributor>
+   </contributors>
+
+</project>

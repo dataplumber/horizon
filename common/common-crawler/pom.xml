@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- 
+Copyright 2008-2013, by the California Institute of Technology.
+ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+   
+$Id: $
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+   http://maven.apache.org/xsd/maven-4.0.0.xsd">
+   <modelVersion>4.0.0</modelVersion>
+   <parent>
+      <groupId>gov.nasa.horizon</groupId>
+      <artifactId>common</artifactId>
+      <version>5.0.0e</version>
+      <relativePath>../pom.xml</relativePath>
+   </parent>
+
+   <groupId>gov.nasa.horizon</groupId>
+   <artifactId>common-crawler</artifactId>
+   <packaging>jar</packaging>
+
+   <name>Common Crawler</name>
+   <description> The Common Crawler module provides the capability to crawl
+      local directories as well as remote directories via various
+      protocols.</description>
+   <url>http://horizon.jpl.nasa.gov/docs/horizon/common/common-crawler/</url>
+
+   <properties>
+      <project.build.sourceEncoding> UTF-8 </project.build.sourceEncoding>
+      <project.reporting.outputEncoding> UTF-8 </project.reporting.outputEncoding>
+   </properties>
+
+   <dependencies>
+      <dependency>
+         <groupId>gov.nasa.horizon</groupId>
+         <artifactId>common-api</artifactId>
+         <version>5.0.0e</version>
+         <scope>compile</scope>
+      </dependency>
+      <dependency>
+         <groupId>gov.nasa.horizon</groupId>
+         <artifactId>common-crawlercache</artifactId>
+         <version>5.0.0e</version>
+         <exclusions>
+            <exclusion>
+               <groupId>xerces</groupId>
+               <artifactId>xercesImpl</artifactId>
+            </exclusion>
+         </exclusions>
+      </dependency>
+      <dependency>
+         <groupId>commons-net</groupId>
+         <artifactId>commons-net</artifactId>
+         <version>2.0</version>
+         <scope>compile</scope>
+      </dependency>
+      <dependency>
+         <groupId>org.apache.commons</groupId>
+         <artifactId>commons-vfs2</artifactId>
+         <version>2.0</version>
+         <scope>compile</scope>
+      </dependency>
+      <dependency>
+         <groupId>commons-httpclient</groupId>
+         <artifactId>commons-httpclient</artifactId>
+         <version>3.1</version>
+         <optional>true</optional>
+      </dependency>
+      <dependency>
+         <groupId>com.jcraft</groupId>
+         <artifactId>jsch</artifactId>
+         <version>0.1.44-1</version>
+      </dependency>
+
+      <dependency>
+         <groupId>junit</groupId>
+         <artifactId>junit</artifactId>
+         <version>4.8.1</version>
+         <scope>compile</scope>
+      </dependency>
+      <dependency>
+         <groupId>commons-cli</groupId>
+         <artifactId>commons-cli</artifactId>
+         <version>1.2</version>
+         <scope>compile</scope>
+      </dependency>
+   </dependencies>
+
+   <build>
+      <sourceDirectory>src/main/java</sourceDirectory>
+      <testSourceDirectory>src/test/java</testSourceDirectory>
+      <outputDirectory>target/classes</outputDirectory>
+      <resources>
+         <resource>
+            <directory>${basedir}/src/main/resources</directory>
+            <targetPath>META-INF</targetPath>
+            <filtering>true</filtering>
+            <includes>
+               <include>**/common-providers.xml</include>
+            </includes>
+         </resource>
+      </resources>
+      <plugins>
+         <plugin>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <executions>
+               <execution>
+                  <id>bin-release</id>
+                  <phase>package</phase>
+                  <goals>
+                     <goal>attached</goal>
+                  </goals>
+               </execution>
+            </executions>
+            <configuration>
+               <descriptors>
+                  <descriptor>src/main/assembly/common-crawler.xml</descriptor>
+               </descriptors>
+            </configuration>
+         </plugin>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-report-plugin</artifactId>
+            <version>2.5</version>
+            <configuration>
+               <argLine>-Xms32m -Xmx1024m</argLine>
+               <includes>
+                  <!--
+                  <include> **/spider/VFSCrawlerTest.java</include>
+                  <include> **/spider/VFSCrawlerSimpleTest.java</include>
+                        -->
+                  <include>**/DirectoryCrawlerFactoryTest.java</include>
+                  <include>**/DirectoryStateClassTest.java</include>
+                  <include>**/DirectoryStateManagerTest.java</include>
+                  <include>**/DirectoryStateReaderTest.java</include>
+                  <include>**/DirectoryStateWriterTest.java</include>
+                  <include>**/HotDirectoryWatcherTest.java</include>
+                  <include>**/LocalDirectoryCrawlerTest.java</include>
+                  <include>**/StringMatcherTest.java</include>
+               </includes>
+               <systemProperties>
+                  <property>
+                     <name>common.test.cachefile</name>
+                     <value>${basedir}/src/test/resources/crawlercache.xml</value>
+                  </property>
+                  <property>
+                     <name>temp.storage.dir</name>
+                     <value>/tmp/</value>
+                  </property>
+                  <property>
+                     <name>common.test.localpath</name>
+                     <value>file:///Users/ingest/Development/data/dev/ingest-test</value>
+                  </property>
+                  <property>
+                     <name>common.test.remotepath1</name>
+                     <value>ftp://seastorm.jpl.nasa.gov/store/ghrsst/public/data/L2P/MODIS_T/JPL/2008/178</value>
+                  </property>
+                  <property>
+                     <name>user.home</name>
+                     <value>/Users/gangl</value>
+                  </property>
+                  <property>
+                     <name>common.test.remoteuser1</name>
+                     <value>user</value>
+                  </property>
+                  <property>
+                     <name>common.test.remotepass1</name>
+                     <value>password</value>
+                  </property>
+                  <property>
+                     <name>common.test.remotepath2</name>
+                     <value>ftp://satepsdist1e.nesdis.noaa.gov/gsst_bayes/L2P/</value>
+                  </property>
+                  <property>
+                     <name>common.test.remoteuser2</name>
+                     <value>user</value>
+                  </property>
+                  <property>
+                     <name>common.test.remotepass2</name>
+                     <value>password</value>
+                  </property>
+                  <property>
+                     <name>log4j.configuration</name>
+                     <value>file://${basedir}/src/test/resources/generate.lcf</value>
+                  </property>
+                  <property>
+                     <name>log4j.configuratorClass</name>
+                     <value>org.apache.log4j.xml.DOMConfigurator</value>
+                  </property>
+                  <property>
+                     <name>generate.test.path</name>
+                     <value>${basedir}/src/test/resources</value>
+                  </property>
+                  <property>
+                     <name>javax.xml.parsers.DocumentBuilderFactory</name>
+                     <value>com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl</value>
+                  </property>
+                  <property>
+                     <name>javax.xml.parsers.SAXParserFactory</name>
+                     <value>com.sun.org.apache.xerces.internal.jaxp.SAXParserFactoryImpl</value>
+                  </property>
+               </systemProperties>
+            </configuration>
+         </plugin>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-site-plugin</artifactId>
+            <version>2.1.1</version>
+            <dependencies>
+               <dependency>
+                  <groupId>commons-httpclient</groupId>
+                  <artifactId>commons-httpclient</artifactId>
+                  <version>3.1</version>
+                  <exclusions>
+                     <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                     </exclusion>
+                  </exclusions>
+               </dependency>
+            </dependencies>
+         </plugin>
+         <plugin>
+            <inherited>true</inherited>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>2.3.1</version>
+            <configuration>
+               <source>1.7</source>
+               <target>1.7</target>
+            </configuration>
+         </plugin>
+      </plugins>
+   </build>
+
+   <reporting>
+      <plugins>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <reportSets>
+               <reportSet>
+                  <id>html</id>
+                  <reports>
+                     <report>javadoc</report>
+                  </reports>
+               </reportSet>
+            </reportSets>
+         </plugin>
+      </plugins>
+   </reporting>
+
+</project>

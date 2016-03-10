@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+   Copyright (c) 2007-2013
+   Jet Propulsion Laboratory, California Institute of Technology
+   All rights reserved
+   
+   This XML schema defines HORIZON ingest server configuration.
+   
+   @author T. Huang {Thomas.Huang@jpl.nasa.gov}
+   @version $Id: $
+-->
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+   xmlns:horizon.nasa="http://horizon.nasa.gov/webservice/schema"
+   targetNamespace="http://horizon.nasa.gov/webservice/schema" elementFormDefault="qualified">
+
+   <xsd:element name="hostmap">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="host" minOccurs="1" maxOccurs="unbounded">
+               <xsd:complexType>
+                  <xsd:sequence>
+                     <xsd:element name="name" type="xsd:string"/>
+                     <xsd:element name="protocol" type="xsd:string"/>
+                     <xsd:element name="authentication" type="xsd:string" minOccurs="0"
+                        maxOccurs="1"/>
+                     <xsd:element name="connections" default="1">
+                        <xsd:simpleType>
+                           <xsd:restriction base="xsd:positiveInteger">
+                              <xsd:maxInclusive value="10"/>
+                           </xsd:restriction>
+                        </xsd:simpleType>
+                     </xsd:element>
+                  </xsd:sequence>
+               </xsd:complexType>
+            </xsd:element>
+         </xsd:sequence>
+      </xsd:complexType>
+
+   </xsd:element>
+
+</xsd:schema>

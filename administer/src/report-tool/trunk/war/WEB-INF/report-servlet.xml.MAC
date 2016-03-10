@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<!--
+  - Application context definition for "report" DispatcherServlet.
+  -->
+
+<beans>
+
+    <!--  Controllers -->
+
+   <bean id="editReportForm" class="web.EditReportFormController">
+        <property name="sessionForm"><value>true</value></property>
+        <property name="commandName"><value>reportContent</value></property>
+        <property name="commandClass"><value>bus.ReportContent</value></property>       
+        <property name="formView"><value>editReport</value></property>
+        <property name="successView"><value>editReport.htm</value></property>
+        <property name="reportManager">
+            <ref bean="reportMan"/>
+        </property>
+   </bean>
+ 
+   <bean id="appendReportForm" class="web.AppendReportFormController">
+        <property name="sessionForm"><value>true</value></property>
+        <property name="commandName"><value>reportContent</value></property>
+        <property name="commandClass"><value>bus.ReportContent</value></property>       
+        <property name="formView"><value>appendReport</value></property>
+        <property name="successView"><value>appendReport.htm</value></property>
+        <property name="reportManager">
+            <ref bean="reportMan"/>
+        </property>
+   </bean>
+
+   <bean id="htmlReportForm" class="web.htmlReportFormController">
+        <property name="sessionForm"><value>true</value></property>
+        <property name="commandName"><value>reportContent</value></property>
+        <property name="commandClass"><value>bus.ReportContent</value></property>       
+        <property name="formView"><value>htmlReport</value></property>
+        <property name="successView"><value>htmlReport.htm</value></property>
+        <property name="reportManager">
+            <ref bean="reportMan"/>
+        </property>
+    </bean>
+ 
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+      <property name="driverClassName"><value>org.hsqldb.jdbcDriver</value></property>
+      <property name="url">
+       <!-- for WIN
+       <value>jdbc:hsqldb:/Users/msun/work/webapps/report/db/test</value>
+       -->
+       <!-- for MAC
+       -->
+        <value>jdbc:hsqldb:/Users/pan/work/jpl/PODAAC/webapps/report/db/report</value>
+       <!-- for LINUX
+        <value>jdbc:hsqldb:/home/tomcat/dbs/report/db/report</value>
+       -->
+      </property>
+      <property name="username"><value>sa</value></property>
+      <property name="password"><value></value></property>
+    </bean>
+
+    <bean id="reportManDao" class="db.ReportManagerDaoJdbc">
+        <property name="dataSource">
+            <ref bean="dataSource"/>
+        </property>
+    </bean>
+
+    <bean id="reportMan" class="bus.ReportManager">
+        <property name="reportManagerDao">
+            <ref bean="reportManDao"/>
+        </property>
+    </bean>
+
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename"><value>messages</value></property>
+    </bean>
+
+    <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <props>
+                <prop key="/appendReport.htm">appendReportForm</prop>
+                <prop key="/editReport.htm">editReportForm</prop>
+                <prop key="/htmlReport.htm">htmlReportForm</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass"><value>org.springframework.web.servlet.view.JstlView</value></property>
+        <property name="prefix"><value>/WEB-INF/jsp/</value></property>
+        <property name="suffix"><value>.jsp</value></property>
+    </bean>
+</beans>

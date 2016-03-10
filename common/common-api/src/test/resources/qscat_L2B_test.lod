@@ -1,0 +1,11 @@
+Group = Inventory_Entry_Header
+DS_Name = "QSCAT LEVEL 2B"
+Granule_Collection_ID = 0924
+Delivery_Version_Number = "2.5.1-1/2006-11-14"
+Granules = 57
+Pkg_Data_Start_Time = 2007-201T00:33:03.243
+Pkg_Data_Stop_Time = 2007-205T00:29:13.849
+Header_Records = 10
+Record_Type = stream_cr_lf
+End_Group = Inventory_Entry_Header
+QSCATL2B_PULS,QS_S2B41948.20071921305,0924,2007-202T23:06:25.000,2007-201T17:22:54.664,2007-201T19:03:53.748,2007-201T17:48:11.743,183.73,42101,8463111

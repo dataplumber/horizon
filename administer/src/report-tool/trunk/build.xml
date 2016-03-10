@@ -1,0 +1,379 @@
+<?xml version="1.0"?>
+
+<project name="report" basedir="." default="usage">
+    <property file="build.properties"/>
+
+    <property name="src.dir" value="src"/>
+    <property name="web.dir" value="war"/>
+    <property name="build.dir" value="${web.dir}/WEB-INF/classes"/>
+    <property name="name" value="report"/>
+
+    <path id="master-classpath">
+        <fileset dir="${web.dir}/WEB-INF/lib">
+            <include name="*.jar"/>
+        </fileset>
+        <!-- We need the servlet API classes:        -->
+        <!--   for Tomcat 4.1 use servlet.jar        -->
+        <!--   for Tomcat 5.0 use servlet-api.jar    -->
+        <!--   for Other app server - check the docs -->
+        <fileset dir="${appserver.home}/common/lib">
+            <include name="servlet*.jar"/>
+        </fileset>
+        <pathelement path="${build.dir}"/>
+    </path>
+
+    <target name="usage">
+        <echo message=""/>
+        <echo message="user.home is ${user.home}"/>
+        <echo message=""/>
+        <echo message="${name} build file"/>
+        <echo message="-----------------------------------"/>
+        <echo message=""/>
+        <echo message="Available targets are:"/>
+        <echo message=""/>
+        <echo message="build     --> Build the application"/>
+        <echo message="clean     --> Clean output directories"/>
+        <echo message="deploy    --> Deploy application as directory"/>
+        <echo message="deploywar --> Deploy application as a WAR file"/>
+        <echo message="install   --> Install application in Tomcat"/>
+        <echo message="reload    --> Reload application in Tomcat"/>
+        <echo message="start     --> Start Tomcat application"/>
+        <echo message="stop      --> Stop Tomcat application"/>
+        <echo message="list      --> List Tomcat applications"/>
+        <echo message="createTables --> Create tables in DB"/>
+        <echo message="dropTables --> Delete tables in DB"/>
+        <echo message="printData --> Print out data in DB"/>
+        <echo message="clearData --> Clear out data in DB"/>
+        <echo message="loadData  --> Load init. data in DB"/>
+        <echo message=""/>
+    </target>
+
+    <target name="build" description="Compile main source tree java files">
+        <mkdir dir="${build.dir}"/>
+        <javac destdir="${build.dir}" target="1.5" debug="true"
+               deprecation="false" optimize="false" failonerror="true">
+            <src path="${src.dir}"/>
+            <classpath refid="master-classpath"/>
+        </javac>
+        <copy todir="${build.dir}" preservelastmodified="true">
+            <fileset dir="${web.dir}/WEB-INF">
+                <include name="*.properties"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="deploy" depends="build" description="Deploy application">
+        <copy todir="${deploy.path}/${name}" preservelastmodified="true">
+            <fileset dir="${web.dir}">
+                <include name="**/*.*"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="deploywar" depends="build" description="Deploy application as a WAR file">
+        <war destfile="${name}.war"
+             webxml="${web.dir}/WEB-INF/web.xml">
+            <fileset dir="${web.dir}">
+                <include name="**/*.*"/>
+            </fileset>
+        </war>
+        <copy todir="${deploy.path}" preservelastmodified="true">
+            <fileset dir=".">
+                <include name="*.war"/>
+            </fileset>
+        </copy>
+        <chmod file="${deploy.path}/${name}.war" perm="a+r"/>
+    </target>
+
+<!-- ============================================================== -->
+<!-- Tomcat tasks - remove these if you don't have Tomcat installed -->
+<!-- ============================================================== -->
+
+    <taskdef name="install" classname="org.apache.catalina.ant.InstallTask">
+        <classpath>
+            <path location="${appserver.home}/server/lib/catalina-ant.jar"/>
+        </classpath>
+    </taskdef>
+    <taskdef name="reload" classname="org.apache.catalina.ant.ReloadTask">
+        <classpath>
+            <path location="${appserver.home}/server/lib/catalina-ant.jar"/>
+        </classpath>
+    </taskdef>
+    <taskdef name="list" classname="org.apache.catalina.ant.ListTask">
+        <classpath>
+            <path location="${appserver.home}/server/lib/catalina-ant.jar"/>
+        </classpath>
+    </taskdef>
+    <taskdef name="start" classname="org.apache.catalina.ant.StartTask">
+        <classpath>
+            <path location="${appserver.home}/server/lib/catalina-ant.jar"/>
+        </classpath>
+    </taskdef>
+    <taskdef name="stop" classname="org.apache.catalina.ant.StopTask">
+        <classpath>
+            <path location="${appserver.home}/server/lib/catalina-ant.jar"/>
+        </classpath>
+    </taskdef>
+
+    <target name="install" description="Install application in Tomcat">
+        <install url="${tomcat.manager.url}"
+                 username="${tomcat.manager.username}"
+                 password="${tomcat.manager.password}"
+                 path="/${name}"
+                 war="${name}"/>
+    </target>
+
+    <target name="reload" description="Reload application in Tomcat">
+        <reload url="${tomcat.manager.url}"
+                 username="${tomcat.manager.username}"
+                 password="${tomcat.manager.password}"
+                 path="/${name}"/>
+    </target>
+
+    <target name="start" description="Start Tomcat application">
+        <start url="${tomcat.manager.url}"
+                 username="${tomcat.manager.username}"
+                 password="${tomcat.manager.password}"
+                 path="/${name}"/>
+    </target>
+
+    <target name="stop" description="Stop Tomcat application">
+        <stop url="${tomcat.manager.url}"
+                 username="${tomcat.manager.username}"
+                 password="${tomcat.manager.password}"
+                 path="/${name}"/>
+    </target>
+
+    <target name="list" description="List Tomcat applications">
+        <list url="${tomcat.manager.url}"
+                 username="${tomcat.manager.username}"
+                 password="${tomcat.manager.password}"/>
+    </target>
+
+    <target name="clean" description="Clean output directories">
+        <delete>
+            <fileset dir="${build.dir}">
+                <include name="**/*.class"/>
+                <include name="**/messages.properties"/>
+            </fileset>
+        </delete>
+        <delete>
+            <fileset dir="${basedir}">
+                <include name="*.war"/>
+            </fileset>
+        </delete>
+    </target>
+
+    <target name="undeploy" description="Un-Deploy application">
+        <delete>
+            <fileset dir="${deploy.path}/${name}">
+                <include name="**/*.*"/>
+            </fileset>
+        </delete>
+    </target>
+
+    <target name="junit" depends="build,clearData,loadData" description="Run JUnit Tests">
+        <junit printsummary="on"
+               fork="false"
+               haltonfailure="false"
+               failureproperty="tests.failed"
+               showoutput="true">
+            <classpath refid="master-classpath"/>
+            <formatter type="brief" usefile="false"/>
+
+            <batchtest>
+                <fileset dir="${build.dir}">
+                    <include name="**/Test*.*"/>
+                </fileset>
+            </batchtest>
+
+        </junit>
+
+        <fail if="tests.failed">
+        tests.failed=${tests.failed}
+        ***********************************************************
+        ***********************************************************
+        ****  One or more tests failed!  Check the output ...  ****
+        ***********************************************************
+        ***********************************************************
+        </fail>
+    </target>
+
+    <target name="createTables">
+        <echo message="CREATE TABLES USING: ${db.driver} ${db.url}"/>
+        <sql driver="${db.driver}"
+             url="${db.url}"
+             userid="${db.user}"
+             password="${db.pw}"
+             onerror="continue">  
+            <classpath refid="master-classpath"/>
+
+        CREATE TABLE reports (
+          id INTEGER NOT NULL PRIMARY KEY,
+          report_week char(10),
+          section1 varchar2(4000),
+          section2 varchar2(4000),
+          section3 varchar2(4000),
+          section4 varchar2(4000),
+          section5 varchar2(4000),
+          section6 varchar2(4000),
+          section7 varchar2(4000),
+          section8 varchar2(4000),
+          section9 varchar2(4000),
+          section10 varchar2(4000),
+          section11 varchar2(4000),
+          section12 varchar2(4000),
+          section13 varchar2(4000),
+          section14 varchar2(4000),
+          section15 varchar2(4000),
+          section16 varchar2(4000),
+          section17 varchar2(4000),
+          section18 varchar2(4000),
+          section19 varchar2(4000),
+          section20 varchar2(4000),
+          section21 varchar2(4000),
+          section22 varchar2(4000),
+          section23 varchar2(4000),
+          section24 varchar2(4000)
+        );
+      
+	<!-- CREATE INDEX reports_description ON reports(section1); -->
+
+	COMMIT;
+	<!-- SHUTDOWN -->
+
+        </sql> 
+    </target>
+	
+    <target name="dropTables">
+        <echo message="DROP TABLES USING: ${db.driver} ${db.url}"/>
+        <sql driver="${db.driver}"
+             url="${db.url}"
+             userid="${db.user}"
+             password="${db.pw}"
+             onerror="continue">  
+            <classpath refid="master-classpath"/>
+
+        DROP TABLE reports;
+	COMMIT;
+	<!-- SHUTDOWN -->
+
+        </sql> 
+    </target>
+
+    <target name="loadData">
+        <echo message="LOAD DATA USING: ${db.driver} ${db.url}"/>
+        <sql driver="${db.driver}"
+             url="${db.url}"
+             userid="${db.user}"
+             password="${db.pw}"
+             onerror="continue">  
+            <classpath refid="master-classpath"/>
+
+        INSERT INTO reports (id, report_week, 
+          section1,
+          section2,
+          section3,
+          section4,
+          section5,
+          section6,
+          section7,
+          section8,
+          section9,
+          section10,
+          section11,
+          section12,
+          section13,
+          section14,
+          section15,
+          section16,
+          section17,
+          section18,
+          section19,
+          section20,
+          section21,
+          section22,
+          section23,
+          section24)
+          values(1,
+           '2007-06-25',
+           '6-25 section1', 
+           '6-25 section2',
+           '6-25 section3',
+           '6-25 section4',
+           '6-25 section5', 
+           '6-25 section6',
+           '6-25 section7',
+           '6-25 section8',
+           '6-25 section9', 
+           '6-25 section10',
+           '6-25 section11',
+           '6-25 section12',
+           '6-25 section13',
+           '6-25 section14',
+           '6-25 section15',
+           '6-25 section16',
+           '6-25 section17',
+           '6-25 section18',
+           '6-25 section19',
+           '6-25 section20',
+           '6-25 section21',
+           '6-25 section22',
+           '6-25 section23',
+           '6-25 section24'
+          );
+        COMMIT;
+	<!-- SHUTDOWN -->
+
+        </sql> 
+    </target>
+
+    <target name="printData">
+        <echo message="PRINT DATA USING: ${db.driver} ${db.url}"/>
+        <sql driver="${db.driver}"
+             url="${db.url}"
+             userid="${db.user}"
+             password="${db.pw}"
+             onerror="continue"
+             print="true">  
+            <classpath refid="master-classpath"/>
+
+        SELECT * FROM reports;
+
+        </sql> 
+    </target>
+
+    <target name="clearData">
+        <echo message="CLEAR DATA USING: ${db.driver} ${db.url}"/>
+        <sql driver="${db.driver}"
+             url="${db.url}"
+             userid="${db.user}"
+             password="${db.pw}"
+             onerror="continue">  
+            <classpath refid="master-classpath"/>
+
+        DELETE FROM reports;
+        COMMIT;
+	<!-- SHUTDOWN -->
+
+        </sql> 
+    </target>
+	
+	 <target name="testQuery">
+          <echo message="test SQL query USING: ${db.driver} ${db.url}"/>
+		        <sql driver="${db.driver}"
+		             url="${db.url}"
+		             userid="${db.user}"
+		             password="${db.pw}"
+		             onerror="continue"
+			     print="true">
+		            <classpath refid="master-classpath"/>
+
+	  select id, report_week, section1, section11, section12, section121 from reports where report_week = '2007-05-07';
+
+		        </sql> 
+		    </target>
+
+<!-- End Tomcat tasks -->
+
+</project>

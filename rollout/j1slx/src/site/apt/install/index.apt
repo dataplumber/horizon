@@ -1,0 +1,279 @@
+~~ Copyright 2008, by the California Institute of Technology.
+~~ ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+~~
+~~ $Id: index.apt 2577 2009-02-03 18:03:50Z thuang $
+
+  ---
+  Installation
+  ---
+  Mike Gangl
+  ---
+
+{Installation}
+
+   This document describes how to install and configure the J1SLX web application. The following sections can be found in this document:
+
+   * {{{Database_Migration}Database Migration}}
+
+   * {{{Build_Instructions}Build Instructions}}
+
+   * {{{Data_Model}Data Model}}
+   
+{Database Migration}
+
+   J1SLX is meant to run in it's own database, away from the manager and Inventory tables. You'll configure grails access to connect to the database later on, but first the database needs to be setup. To this end, it is easiest to run the J1SLX database in the same database as the current jason1 tool database.
+
+   There are three scripts that must be run to migrate the data from the legacy database to the new database, they are located in $APP_HOME/src/resources/sql
+   
++--
+  j1slx_migration_function_apFlag.sql
+  j1slx_migration_query_catalog.sql
+  j1slx_migration_schema.sql
+
++--
+
+  First, run the j1slx_migration_schema.sql script in the jason1 database. This creates the schema for the tables.
+
+  Secondly, run the j1slx_migration_function_apFlag.sql script. This will create a function that can translate the approval flags from the legacy databse to the new, as well as converting datestrings to long integers, which the new system requires.
+
+  Lastly, run the j1slx_migration_query_catalog.sql script, which will copy catalog entries from the legacy database to the ops database. 
+  
+  After this, the migration is finished!
+  
+  Note: For this migration, no archived time is available for the catalog entries (it does not exist in teh database), so they will default to December 31st, 1969. New entries will have the correct time associated with them.
+
+{Build Instructions}
+
+   J1SLX is a web application that is designed and built with the {{{http://groovy.codehaus.org/}Groovy}} programming language and the {{{http://grails.org/}Grails}} web application framework.  While both these technologies are fully developed on top of {{{http://java.sun.com}Java}} platform, its support from {{{http://maven.apache.org}Maven}} is still a little behind.  The prerequisite for building the J1SLX web application is the Grails web framework must be installed.  Below is the source tree of J1SLX distribution
+   
+   Configuration is done in the $APP_HOME/grails-app/conf/Config.conf file.
+   
++--
+	//sigevent info
+gov.nasa.podaac.j1slx.sig.category="TOOL_J1SLX"
+gov.nasa.podaac.j1slx.sig.url="http://lanina:8100/sigevent/"
++--
+
+   The above fields are the sigevent category to report to, as well as the sigevent server URL.
+
++--
+//ldap info
+gov.nasa.podaac.j1slx.ldap.host = 'ldap://ldap.jpl.nasa.gov:636'
+gov.nasa.podaac.j1slx.ldap.group = 'podaac.j1slx.dev'
+gov.nasa.podaac.j1slx.ldap.searchDn = 'ou=personnel,dc=dir,dc=jpl,dc=nasa,dc=gov'
++--
+
+   The host and searchDN should never change. The 'group' is the LDAP group to check for membership. All authentication/authoirzation to the tool is done through LDAP. A new ops group should be created separate from dev and test in production.
+
+   LDAP Groups can be managed via the {{{https://dir.jpl.nasa.gov/groups/} Directory Intefrace}} tool.
+
++--
+// The host for the inventory client to talk to.
+gov.nasa.podaac.j1slx.inventory.host = 'https://lanina'
+gov.nasa.podaac.j1slx.inventory.port = 9192
+gov.nasa.podaac.j1slx.inventory.user = 'thuang'
+gov.nasa.podaac.j1slx.inventory.pass = 'password'
++--
+   
+   J1SLX talks to the invetory for latest granules. The above information is the connection information for the IWS. Notice the change in supplying both the base host and the port, now that Inventory information is shared over SSL.
+
++--
+gov.nasa.podaac.j1slx.testReassociate = false 
++--
+
+   Useful in test, this allows the user to test the system without relocating any granules. Nothing will be reassociated, but the system works as if everything is working.
+
++--
+//because we can add/remove datasets we'll need to track when each was run individually, not with a single "meta" time.
+//These are hashes of dataset,version,and what open type they are mapped to.
+gov.nasa.podaac.j1slx.datasets = [
+	[dataset:'JASON-1_GDR_NASA',version:'C',mappedTo:'gdr'],
+	[dataset:'JASON-1_GDR_CNES',version:'C',mappedTo:'gdr'],
+	[dataset:'JASON-1_L2_OST_SGDR_VER-C_BINARY_NASA',version:'C',mappedTo:'sgdr'],
+	[dataset:'JASON-1_L2_OST_SGDR_VER-C_BINARY_CNES',version:'C',mappedTo:'sgdr'],
+	[dataset:'JASON-1_SGDR_C_NETCDF_NASA',version:'C',mappedTo:'sgdr_netcdf'],
+	[dataset:'JASON-1_SGDR_C_NETCDF_CNES',version:'C',mappedTo:'sgdr_netcdf'],
+	[dataset:'JASON-1_GDR_NETCDF_C_NASA',version:'C',mappedTo:'gdr_netcdf'],
+	[dataset:'JASON-1_GDR_NETCDF_C_CNES',version:'C',mappedTo:'gdr_netcdf'],
+	[dataset:'JASON-1_GDR_SSHA_NETCDF_NASA',version:'C',mappedTo:'ssha_netcdf'],
+	[dataset:'JASON-1_GDR_SSHA_NETCDF_CNES',version:'C',mappedTo:'ssha_netcdf']
+]
++--
+
+   The above array maps a dataset and a version (dataset and version fields, respectively) to a product type (sgdr,  sgdr_netcd, etc). These 'mapped to' types are defined below, and are the datasets that granules will be moved into, from the 'dataset' field. 
+
++--
+//these are the open, versionless datasets into which data gets moved .
+gov.nasa.podaac.j1slx.dataset.gdr = 'JASON-1_L2_OST_GDR_Ver-C_Binary'
+gov.nasa.podaac.j1slx.dataset.sgdr = 'JASON-1_L2_OST_SGDR_VER-C_BINARY'
+gov.nasa.podaac.j1slx.dataset.gdr_netcdf = 'JASON-1_GDR_NETCDF'
+gov.nasa.podaac.j1slx.dataset.sgdr_netcdf = 'JASON-1_SGDR_NETCDF'
+gov.nasa.podaac.j1slx.dataset.ssha_netcdf = 'JASON-1_GDR_SSHA_NETCDF'
++--
+
+   These are the datasets that granules are mapped into upon reassociation. the suffix matches the 'mapped_to' field above (i.e. sgdr). 
+
++--
+//for the first run of the system, set the time (in milliseconds/epoch time) to set as the 'start time' to begin fetching data from. 
+gov.nasa.podaac.j1slx.initialStartTime = 100000L 
++--
+   
+   You may want to start the system at a certain point in time,  maybe in the past to capture granules that aren't currently in the system. This is a timestamp (milliseconds since 1970) that the inventory system uses to represent time (as in the granule.archive_time_long field).
+
++--
+//default version if no version info is available. Don't think we need this.
+gov.nasa.podaac.j1slx.productVersion = 'C'
+gov.nasa.podaac.j1slx.jobStartDelay = 10 //seconds before starting job that checks for granules.
+gov.nasa.podaac.j1slx.jobInterval = 30 //seconds between each run of checking for new granules.
++--
+
+   Product Version is the default to give a dataset if it can't be determined. This should rarely/never be used. 
+   
+   Job start delay and interval are the number of seconds to wait before starting the jobs process once the grails server starts up. Interval is how often it should be run. For example, 21600 would be the value that corresponds to running it 4 times per day.
+
+   * J1SLX Database Connection Configuration
+   
+   The Data Source configuration information is located in the "grails-app/conf/DataSource.groovy" file.  The configuration is necessary for the J1SLX web application to connect to its data catalog, which is the operation registry for this web application.
+   
++--
+environments {
+   development {
+      dataSource {
+         pooled = true
+         driverClassName = "oracle.jdbc.driver.OracleDriver"
+         url = "jdbc:oracle:thin:@seadb.jpl.nasa.gov:1526:DAACDEV"
+         dialect = "org.hibernate.dialect.Oracle10gDialect"
+         username = '${db username}'
+         password = '${db password}'
+
+      }
+   }
+
+   test {
+      dataSource {
+         pooled = true
+         driverClassName = "oracle.jdbc.driver.OracleDriver"
+         url = "jdbc:oracle:thin:@seadb.jpl.nasa.gov:1526:DAACDEV"
+         dialect = "org.hibernate.dialect.Oracle10gDialect"
+         username = '${db_username}'
+         password = '${db_password}'
+      }
+   }
+   
+   ...
+}
++--
+  
+   * Log Configuration
+
+   In $J1SLX-WS-HOME/grails-app/conf/Config.groovy there is a section for the log4j configuration that looks like the following:
+
++--
+// log4j configuration
+log4j = {
+    appenders {
+      rollingFile name:'catalinaOut', maxFileSize:102400, fileName:"/data/dev/users/podaacdev/logs/inventory.out", file:"/data/dev/users/podaacdev/logs/inventory.out"	
+      file name: 'stacktrace', file: "/data/dev/users/podaacdev/logs/j1slx_out.st", layout: pattern(conversionPattern: '%c{2} %m%n')
+      console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n') 
+   }
+
+
+    info   'gov.nasa.podaac'
+	debug  'grails.app.controller.gov.nasa.podaac.j1slx',
+		   'grails.app.service',
+		   'grails.app.conf',
+		   'grails.app.utils',
+		   'grails.app.jobs',
+		   'grails.app.task',
+		   'grails.app.bootstrap',
+		   'gov.nasa.podaac.archive'
+    error  'org.codehaus.groovy.grails.web.servlet',  //  controllers
+           'org.codehaus.groovy.grails.web.pages', //  GSP
+           'org.codehaus.groovy.grails.web.sitemesh', //  layouts
+           'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
+           'org.codehaus.groovy.grails.web.mapping', // URL mapping
+           'org.codehaus.groovy.grails.commons', // core / classloading
+           'org.codehaus.groovy.grails.plugins', // plugins
+           'org.codehaus.groovy.grails.orm.hibernate', // hibernate integration
+           'org.springframework',
+           'org.hibernate',
+           'net.sf.ehcache.hibernate'
+
+    warn   'org.mortbay.log'
+}
++--
+
+   The appenders must be changed to log to a more suitable location for dev, test and ops. 
+
+   * Memory Configuration
+   
+   The default JavaVM memory allocation by JBoss may not be sufficient.  It is recommended to increase the PermGen memory space.  This memory space is used for dynamically loading of Java classes.
+   
++--
+% setenv JAVA_OPTS "-Xms128m -Xmx512m -Dsun.rmi.dgc.client.gcInterval=3600000 -Dsun.rmi.dgc.server.gcInterval=3600000 -XX:PermSize=256m -XX:MaxPermSize=512m"
++--
+   
+   * Create and Deploy the Web Application
+   
+   After modifying and loading the target environment information, building the Manager web application should be followed.
+   
+   ** Grails Environment
+
+   Before begin the Maven build, the GRAILS_HOME environment variable must be set.
+
++--
+% setenv GRAILS_HOME /usr/local/grails
++--
+   
+   ** Copy the Dependencies
+   
+   Since a WAR (Web ARchive) is a self-contained component, it must be bundled with its own collection of dependencies.
+   
++--
+% mvn dependency:copy-dependencies
++--
+   
+   The command above will download the required JARs to the '<target/dependency>' directory
+
++--
+% cp target/dependency/* lib
++--      
+
+   Grails expects all of its dependencies in the '<lib>' directory.  The copy command above will satisfy this requirement.
+
+   ** Run as Grails application
+   
+   Below is the command to start the Manager Grails application.
+
++--
+% grails -Dgrails.env=<GRAILS_ENV> -Dserver.port=<SERVER_PORT> -Dserver.host=<SERVER_HOST> -Drun-app
++--
+
+   Here is an example to start the J1SLX for Development
+
++--
+% grails -Dgrails.env=development -Dserver.port=8442 -Dserver.port.https=8443 -Dserver.host=lanina.jpl.nasa.gov run-app -https
++--
+
+   The command above will run the J1SLX as Grails application. GRAILS_ENV should be replaced with "test" for testing, and "production" for ops. SERVER_PORT should be replaced with a port number that the application should listen to. SERVER_HOST should be replaced with a hostname that J1SLX should bind to. Note that it is necessary to open SERVER_HOST:SERVER_PORT to outside in order to allow all clients to access to J1SLX.  
+
+   The "-https" command starts grails up in normal mode as well as a listener on an SSL port. To configure the SSL port, include the "-Dserver.port.https=PORT" option.
+
+   When grails app starts up, it automatically installs the plugins needed. If grails does not ask to install them, following commands can be executed to install he plugins.
+
++--
+% grails install-plugin http://cloud.github.com/downloads/nebolsin/grails-quartz/grails-quartz-0.4.2.zip
++--
+      
+   ** Assemble the Web Archive <<NOT SUPPORTED FOR CURRENT RELEASE>>
+
++--
+% mvn -Dgrails.env=development compile
++--
+   
+   The command above will produce a WAR file that is specific to the development environment.  If the '-Dgrails.env' argument is missing, the WAR produced would be for the production environment.  For the test environment, the '-Dgrails.env=test' should be used.
+   
+   ** Deploy to JBoss <<NOT SUPPORTED FOR CURRENT RELEASE>>
+   
+   All web component to be serve by JBoss must be installed under '<$JBOSS_HOME/server/<instance>/deploy>' directory.
+      

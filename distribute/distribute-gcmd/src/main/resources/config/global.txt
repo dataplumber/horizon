@@ -1,0 +1,229 @@
+//Last updated: August 4, 2008 by Dawn Finney
+
+FIRST_PRODUCT_ROW = 3
+
+//XML version
+XML_VERSION = 1.0
+ENCODING = ISO-8859-1
+DIF_XML_NS = http://gcmd.gsfc.nasa.gov/Aboutus/xml/dif/
+DIF_XML_NS_DIF = http://gcmd.gsfc.nasa.gov/Aboutus/xml/dif/
+DIF_XML_NS_XSI = http://www.w3.org/2001/XMLSchema-instance
+DIF_XSI_SCHEMA_LOCATION = http://gcmd.gsfc.nasa.gov/Aboutus/xml/dif/ http://gcmd.gsfc.nasa.gov/Aboutus/xml/dif/dif_v9.7.1.xsd
+
+//Validation 
+DIF_VALIDATOR_WEB_ADDRESS = http://gcmd.nasa.gov/OpenAPI/request.py
+
+//Excel sheet name
+TEMPORAL_SHEET = Temporal
+SPATIAL_SHEET = Spatial 
+PRODUCT_SHEET = Product 
+SUMMARY_SHEET = Summary 
+PERSONNEL_SHEET = Personnel 
+DATA_CENTER_SHEET = Data Center 
+PARAMETER_SHEET = Parameter
+METADATA_REVISION_SHEET = Metadata_Revision
+SENSOR_SHEET = Sensor
+SUBPRODUCT_SHEET = Subproduct
+
+//Product_Number
+PRODUCT_NUMBER = Product#
+
+//CONTACT_ADDRESS
+CONTACT_ADDRESS = Contact_Address
+CONTACT_ADDRESS_COLUMN_NAMES = Address, City, State, Postal_Code, Country 
+CONTACT_ADDRESS_ACTUAL_NAMES = Address, City, Province_or_State, Postal_Code, Country
+ADDRESS = Address 
+CITY = City
+PROVINCE_OR_STATE = State
+POSTAL_CODE = Postal_Code 
+COUNTRY = Country
+
+//DATA_CENTER
+DATA_CENTER = Data_Center
+DATA_CENTER_COLUMN_NAMES = Data_Center_URL, Data_Center_ID 
+DATA_CENTER_ACTUAL_NAMES = Data_Center_URL, Data_Set_ID
+URL = Data_Center_URL 
+ID = Data_Center_ID 	
+
+//DATA_CENTER_NAME
+DATA_CENTER_NAME = Data_Center_Name
+DATA_CENTER_NAME_COLUMN_NAMES = Data_Center_Short_Name, Data_Center_Long_Name
+DATA_CENTER_NAME_ACTUAL_NAMES = Short_Name, Long_Name
+DATA_CENTER_SHORT_NAME = Data_Center_Short_Name 
+DATA_CENTER_LONG_NAME = Data_Center_Long_Name
+
+//DATA_RESOLUTION
+DATA_RESOLUTION = Data_Resolution
+DATA_RESOLUTION_COLUMN_NAMES = Resolution_(N-S), Resolution_(E-W), Horizontal_Resolution_Range, Text, Vertical_Resolution_Range, Resolution, Temporal Resolution Range
+DATA_RESOLUTION_ACTUAL_NAMES = Latitude_Resolution, Longitude_Resolution, Horizontal_Resolution_Range, Vertical_Resolution, Vertical_Resolution_Range, Temporal_Resolution, Temporal_Resolution_Range
+LATITUDE_RESOLUTION = Resolution_(N-S)
+LONGITUDE_RESOLUTION = Resolution_(E-W)
+HORIZONTAL_RESOLUTION_RANGE = Horizontal_Resolution_Range
+VERTICAL_RESOLUTION = Text
+VERTICAL_RESOLUTION_RANGE = Vertical_Resolution_Range
+TEMPORAL_RESOLUTION = Resolution
+TEMPORAL_RESOLUTION_RANGE = Temporal Resolution Range
+
+//DATA_SET_CITATION
+DATA_SET_CITATION = Data_Set_Citation
+DATA_SET_CITATION_COLUMN_NAMES_PRODUCT_SHEET = Title, Web_Page
+DATA_SET_CITATION_COLUMN_NAMES_METADATA_REVISION_SHEET = Dataset Creator
+DATA_SET_CITATION_ACTUAL_NAMES_PRODUCT_SHEET = Dataset_Title, Online_Resource
+DATA_SET_CITATION_ACTUAL_NAMES_METADATA_REVISION_SHEET = Dataset_Creator
+DATASET_CREATOR = Dataset Creator 
+DATASET_TITLE = Title
+ONLINE_RESOURCE = Web_Page
+
+//DIF_CREATION_DATE
+DIF_CREATION_DATE = DIF_Creation_Date
+DIF_CREATION_DATE_ACTUAL_NAME = DIF_Creation_Date
+DIF_CREATION_DATE_COLUMN_NAMES = DIF_Creation_Date
+
+//ENTRY_ID
+ENTRY_ID = Name
+ENTRY_ID_ACTUAL_NAME = Entry_ID
+ENTRY_ID_COLUMN_NAMES = Name
+
+//ENTRY_TITLE
+ENTRY_TITLE = Title
+ENTRY_TITLE_ACTUAL_NAME = Entry_Title
+ENTRY_TITLE_COLUMN_NAMES = Title
+
+//IDN_NODE
+IDN_NODE = IDN_Node
+IDN_NODE_ACTUAL_NAMES= Short_Name, Long_Name
+IDN_NODE_COLUMN_NAMES = IDN_Node_Short_Name, IDN_Node_Long_Name
+IDN_NODE_SHORT_NAME = IDN_Node_Short_Name 
+IDN_NODE_LONG_NAME = IDN_Node_Long_Name 
+DEFAULT_IDN_NODE_SHORT_NAME = USA/NASA
+
+//ISO_TOPIC_CATEGORY
+ISO_TOPIC_CATEGORY = ISO_Topic_Category
+ISO_TOPIC_CATEGORY_ACTUAL_NAME = ISO_Topic_Category
+ISO_TOPIC_CATEGORY_COLUMN_NAMES = ISO_Topic_Category
+
+//LAST_DIF_REVISION_DATE
+LAST_DIF_REVISION_DATE = LastDIFRevisionDate
+LAST_DIF_REVISION_DATE_ACTUAL_NAME = Last_DIF_Revision_Date
+LAST_DIF_REVISION_DATE_COLUMN_NAMES = LastDIFRevisionDate
+	
+//LOCATION
+LOCATION = Location
+LOCATION_COLUMN_NAMES = Location_Category, Location_Keyword, Location_Subregion1, Location_Subregion2, Location_Subregion3, Detailed_Location  
+LOCATION_ACTUAL_NAMES= Location_Category, Location_Type, Location_Subregion1, Location_Subregion2, Location_Subregion3, Detailed_Location
+//LOCATION_CATEGORY = Location_Category
+LOCATION_TYPE = Location_Keyword 
+//LOCATION_SUBREGION1 = Location_Subregion1
+//LOCATION_SUBREGION2 = Location_Subregion2
+//LOCATION_SUBREGION3 = Location_Subregion3
+DETAILED_LOCATION = Detailed_Location 
+DEFAULT_LOCATION_CATEGORY = Geographic Region
+
+//METADATA_NAME
+METADATA_NAME = Metadata_Name
+METADATA_NAME_ACTUAL_NAME = Metadata_Name
+METADATA_NAME_COLUMN_NAMES = Metadata_Name
+DEFAULT_METADATA_NAME = CEOS IDN DIF 	
+
+//METADATA_VERSION
+METADATA_VERSION = Metadata_Version
+METADATA_VERSION_ACTUAL_NAME = Metadata_Version
+METADATA_VERSION_COLUMN_NAMES = Metadata_Version
+DEFAULT_METADATA_VERSION = 9.7
+
+//PARAMETERS
+PARAMETERS = Parameters
+PARAMETERS_COLUMN_NAMES = Topic, Term>Variable_1
+PARAMETERS_ACTUAL_NAMES = Topic, Term;Variable_Level_1
+DEFAULT_CATEGORY = Earth Science
+CATEGORY = Category
+TOPIC = Topic
+TERM_VARIABLE_L1 = Term>Variable_1
+
+//PERSONNEL
+PERSONNEL = Personnel
+PERSONNEL_COLUMN_NAMES = Role, First_Name, Middle_Name, Last_Name, Email, Telephone, Fax
+PERSONNEL_ACTUAL_NAMES = Role, First_Name, Middle_Name, Last_Name, Email, Phone, Fax
+ROLE = Role 
+FIRST_NAME = First_Name 
+MIDDLE_NAME = Middle_Name 
+LAST_NAME = Last_Name 
+EMAIL = Email
+PHONE = Telephone 
+FAX = Fax
+
+//PROJECT
+PROJECT = Project
+PROJECT_COLUMN_NAMES = Project_Short_Name, Project_Long_Name
+PROJECT_ACTUAL_NAMES= Short_Name, Long_Name
+PROJECT_SHORT_NAME = Project_Short_Name 
+PROJECT_LONG_NAME = Project_Long_Name
+
+//SENSOR_NAME
+SENSOR_NAME = Sensor_Name
+SENSOR_NAME_COLUMN_NAMES = Sensor_Short_Name, Sensor_Long_Name
+SENSOR_NAME_ACTUAL_NAMES= Short_Name, Long_Name
+SENSOR_NAME_SHORT_NAME = Sensor_Short_Name 
+SENSOR_NAME_LONG_NAME = Sensor_Long_Name
+
+//SOURCE_NAME
+SOURCE_NAME = Source_Name
+SOURCE_NAME_COLUMN_NAMES = Satellite_Short_Name, Satellite_Long_Name
+SOURCE_NAME_ACTUAL_NAMES= Short_Name, Long_Name
+SOURCE_NAME_SHORT_NAME = Satellite_Short_Name 
+SOURCE_NAME_LONG_NAME = Satellite_Long_Name
+
+//SPATIAL_COVERAGE
+SPATIAL_COVERAGE_ACTUAL_NAME = Spatial_Coverage
+SPATIAL_COVERAGE_COLUMN_NAMES = Geographic_Coverage
+SPATIAL_COVERAGE_ACTUAL_NAMES = Southernmost_Latitude, Northernmost_Latitude, Westernmost_Longitude, Easternmost_Longitude
+SPATIAL_COVERAGE = Geographic_Coverage
+
+//SUMMARY
+SUMMARY = Summary 
+SUMMARY_ACTUAL_NAME = Summary
+SUMMARY_COLUMN_NAMES = Summary 
+
+//TEMPORAL_COVERAGE
+TEMPORAL_COVERAGE = Temporal_Coverage
+TEMPORAL_COVERAGE_COLUMN_NAMES = StartDate, EndDate
+TEMPORAL_COVERAGE_ACTUAL_NAMES = Start_Date, Stop_Date
+START_DATE = StartDate
+STOP_DATE = EndDate
+
+rangeStart
+//all meter types
+-1, 1, meter, < 1 meter
+1, 30, meters, 1 meter - < 30 meters
+30, 100, meters, 30 meters - < 100 meters
+100, 250, meters, 100 meters - < 250 meters
+250, 500, meters, 250 meters - < 500 meters
+500, 1000, meters, 500 meters - < 1 km
+1000, 10000, meters, 1 km - < 10 km or approximately .01 degree - < .09 degree
+10000, 50000, meters, 10 km - < 50 km or approximately .09 degree - < .5 degree
+50000, 100000, meters, 50 km - < 100 km or approximately .5 degree - < 1 degree
+100000, 250000, meters, 100 km - < 250 km or approximately 1 degree - < 2.5 degrees
+250000, 500000, meters, 250 km - < 500 km or approximately 2.5 degrees - < 5.0 degrees
+500000, 1000000, meters, 500 km - < 1000 km or approximately 5.0 degrees - < 10 degrees
+1000000, 99999999, meters, true, false, > 1000km or > 10 degrees
+
+//allDegreeTypes
+.01, .09, degree, 1 km - < 10 km or approximately .01 degree - < .09 degree
+.09, .5, degree, 10 km - < 50 km or approximately .09 degree - < .5 degree
+.5, 1, degree, 50 km - < 100 km or approximately .5 degree - < 1 degree
+1, 2.5, degrees, 100 km - < 250 km or approximately 1 degree - < 2.5 degrees
+2.5, 5.0, degrees, 250 km - < 500 km or approximately 2.5 degrees - < 5.0 degrees
+5, 10, degrees, 500 km - < 1000 km or approximately 5.0 degrees - < 10 degrees
+10, 99999999, degrees, true, false, > 1000km or > 10 degrees
+
+//allSecTypes
+-1, 1, second, < 1 second
+1, 60, seconds, 1 second - < 1 minute
+60, 3600, seconds, 1 minute - < 1 hour
+3600, 86400, seconds, Hourly - < Daily 
+86400, 604800, seconds, Daily - < Weekly
+604800, 2419200, seconds, Weekly - < Monthly
+2419200, 29030400, seconds, Monthly - < Annual
+29030400, 29030400, seconds, false, true, Annual
+29030400, 290304000, seconds, true, true, Decadal
+rangeEnd

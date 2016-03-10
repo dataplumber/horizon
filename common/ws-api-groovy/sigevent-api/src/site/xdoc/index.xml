@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+   <properties/>
+   <body>
+      <!-- Copyright 2009, by the California Institute of Technology. -->
+      <!-- ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged. -->
+      <!--  -->
+      <!-- $Id: $ -->
+      <p>--- About Sigevent API --- Thomas Huang ---</p>
+      <section name="About Sigevent API">
+         <p>The Sigevent API module contains application programming interface interfacing with the
+            HORIZON Significant Event WS implemented in the Groovy programming language.</p>
+      </section>
+   </body>
+</document>

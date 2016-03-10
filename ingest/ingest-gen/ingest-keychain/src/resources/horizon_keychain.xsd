@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+   Copyright (c) 2008 - 2013
+   Jet Propulsion Laboratory, California Institute of Technology
+   All rights reserved
+   
+   This XML schema defines client keychain to the HORIZON ingestion services
+   
+   
+   @author T. Huang {Thomas.Huang@jpl.nasa.gov}
+   @version $Id: $
+-->
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:horizon.nasa="http://horizon.nasa.gov"
+   targetNamespace="http://horizon.nasa.gov" elementFormDefault="qualified">
+
+   <xsd:element name="keychain">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="key" maxOccurs="unbounded">
+               <xsd:complexType>
+                  <xsd:sequence>
+                     <xsd:element name="federation" type="xsd:string"/>
+                     <xsd:element name="username" type="xsd:string"/>
+                     <xsd:element name="password" type="xsd:string"/>
+                  </xsd:sequence>
+               </xsd:complexType>
+            </xsd:element>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+</xsd:schema>

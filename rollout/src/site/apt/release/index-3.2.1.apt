@@ -1,0 +1,195 @@
+~~ Copyright 2008, by the California Institute of Technology.
+~~ ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+~~
+~~ $Id: $
+
+  ---
+  Release Description 3.2.1
+  ---
+  Christian Alarcon
+  ---
+  
+Release Description 3.2.1
+
+  This release of the Product Rollout Program Set represents a large amount of bug fixes and modifications to the initial release of the Dataset Manager tool. The following sections can be found in this document:
+
+  * {{{Capabilities}Capabilities}}
+
+  * {{{Liens}Liens}}
+
+  * {{{System_Requirements}System Requirements}}
+
+  * {{{Compilation}Compilation}}
+
+  * {{{Installation}Installation}}
+
+  * {{{Operation}Operation}}
+
+  * {{{Appendix_A_-_Requirements_Support}Appendix A - Requirements Support}}
+
+  * {{{Appendix_B_-_Test_Status}Appendix B - Test Status}}
+
+{Capabilities}
+
+  This section details the new, modified and corrected capabilities that comprise this release of the Rollout Program Set. In lieu of listing the capabilities by requirement they have been summarized. For a complete list of the requirements and their support status, see {{{Appendix_A_-_Requirements_Support}Appendix A}}.
+
+* New Capabilities
+
+  * {{{https://podaac-cm.jpl.nasa.gov/trac/ticket/1149}Trac-1149}} - Add creation status tab in DMT
+  
+* Modified Capabilities
+
+  * {{{https://podaac-cm.jpl.nasa.gov/trac/ticket/1039}Trac-1039}} - Make sure persistent ID is unique.
+
+  * {{{https://podaac-cm.jpl.nasa.gov/trac/ticket/1040}Trac-1040}} - Make sure dataset short name is unique.
+
+* Corrected Capabilities
+
+  * {{{https://podaac-cm.jpl.nasa.gov/trac/ticket/1148}Trac-1148}} - Conflicting session keys for operator tool and DMT.
+
+{Liens}
+
+  This section details the liens against the capabilities that have yet to be implemented or are partially implemented. In lieu of listing the liens by requirement they have been summarized. For a complete list of the requirements and their support status, see {{{Appendix_A_-_Requirements_Support}Appendix A}}.
+
+  * None
+
+{System Requirements}
+
+  The software contained in this program set was developed in a Red Hat Linux environment on an Intel processor.With proper configuration this tool will run on any operating system running Ant, Java, and Tomcat. The software requires 2 megabytes of memory and depending on the data volume 70 megabytes of disk space. This disk space requirement does not include the disk space needed by the Jason data products.
+
+  The software is dependent on the OCEANDIS and Legacy Ingest programs. These programs transfer the Jason data products from the delivery locations to their restricted locations. These interface locations are specified in the program properties files which are described in the {{{../j1-streamline/install/index.html}Installation}} document.
+
+  * PO.DAAC Standard Computing Environment
+
+  This will eventually be documented on the Wiki and linked to in future releases. For now, the following software and tools should be available in the current environment:
+
+    * Apache Ant 1.7.X
+
+    * Apache Tomcat Application Server 5.5.X
+
+    * Subversion Client 1.3.X
+
+    * Sun Java Standard Edition (J2SE) 1.6.X
+
+[]
+
+  * Oracle Database Server
+
+  The Product Rollout Program Set requires an instance of the Oracle Database Server to be installed, configured for PO.DAAC and running in the current environment. This requirement should be satisfied by the PO.DAAC Oracle database administrator.
+
+{Compilation}
+
+  The details for building the software are contained in the {{{../j1-streamline/install/index.html}Installation}} document. But prior to building the software it must be checked out from the repository. This release has been tagged with version <3.2.1> and is available from the Product Rollout tags directory in the main software repository. The source code can be checked out from CM with the following command:
+
++--
+svn checkout https://podaac-cm/repo/trunk/rollout/tags/3.2.1/j1-streamline/
++--
+
+{Installation}
+
+  The Dataset Manager Tool's install guide can be found {{{../web/install/index.html}here}}
+
+  This section details the procedures for installing and configuring the software in this program set. This release is intended for deployment in the Integration & Test environment as well as the Operations environment. Installation is covered in a separate {{{../j1-streamline/install/index.html}Installation}} document.
+
+* Integration and Test Environment
+
+  The following diagram details where the major components of this release should be installed in the Integration & Test environment and gives a very high-level view of the interfaces between the components and system resources:
+
+[../images/release_1.1.0_it_deployment.jpg]
+
+  In the diagram above, orange boxes represent delivered PO.DAAC software components while yellow boxes represent third-party software components. 
+
+* Operations Environment
+
+  The following diagram details where the major components of this release should be installed in the Operations environment and gives a very high-level view of the interfaces between the components and system resources:
+
+[../images/release_1.1.0_ops_deployment.jpg]
+
+  The is essentially the same diagram as the Integration & Test environment but with different machine names. 
+
+{Operation}
+
+  The Dataset Manager Tool's operation guide can be found {{{../web/operation/index.html}here}}
+
+  This section details any necessary setup and the commands for running the applications in this program set. Operation is covered in a separate {{{../j1-streamline/operate/index.html}Operation}} document.
+
+{Appendix A - Requirements Support}
+
+  The capabilities in this release are detailed in the table below based on the requirements specified in the {{{https://bravo-lib.jpl.nasa.gov/docushare/dsweb/Get/Version-512119/JasonStreamliningRequirementsV1.1.doc}Jason Streamlining Software Requirements Document (SRD)}}. The values for the Support column are defined as follows:
+
+  * <<Full>> - The capability specified by the associated requirement has been implemented and tested at the program set level.
+
+  * <<Partial>> - The capability has been partially implemented. The content of the Description column should provide more details.
+
+  * <<No>> - The capability has not yet been implemented.
+
+[]
+
+  * Requirement: JS5.101 The Jason Streamlining Program Set shall transfer a Jason 1 product to PO.DAAC public access site after both CNES and NASA have notified the system the product is ready for delivery.
+
+    * Support: Full
+
+    * Description: Satisfied in release 1.0.0.
+
+  * Requirement: JS5.102 The Jason Streamlining Program Set shall allow the Jason Data Engineering to mark Jason data products as accepted by NASA.
+
+    * Support: Full
+
+    * Description: Satisfied in release 1.0.0.
+
+  * Requirement: JS5.102 The Jason Streamlining Program Set shall allow the Jason Data Engineering to mark Jason data products as accepted by CNES.
+
+    * Support: Full
+
+    * Description: Satisfied in release 1.0.0.
+
+  * Requirement: JS5.104 When the Jason Data Engineer has marked a product as accepted by NASA and CNES, the Jason Streamlining Program Set shall make the data product available to the public.
+
+    * Support: Full
+
+    * Description: Satisfied in release 1.0.0.
+
+  * Requirement: JS5.105 The Jason Streamlining Program Set shall display the following information about Jason data products in the restricted area to the Jason Data Engineer.
+	a. Cycle	 
+	b. Version
+	c. Author
+	d. NASA Approved Boolean
+	e. CNES Approved Boolean
+	f. GDR Release Date
+	g. SGDR Staged Yes/No
+	h. SGDR Release Date 
+	i. SGDR netCDF Staged Yes/No
+	j. SGDR netCDF Release Date
+	k. GDR netCDF Staged Yes/No
+	l. GDR netCDF Release Date
+	m. SSHA netCDF Staged Yes/No
+	n. SSHA netCDF Release Date
+	o. Email ID
+
+    * Support: Full
+
+    * Description: Satisfied in release 1.0.0. Fields k. through n. were added to address {{{https://podaac-cm.jpl.nasa.gov/trac/ticket/153}CR-153}} in release 1.1.0. Fields i and j were added in release 2.1.0.
+
+  * Requirement: JS5.201 The Jason 1 Streamlining Program Set shall make a Jason data product available to the public within 24 hours of it being marked accepted by the Jason Data Engineer.
+
+    * Support: Full
+
+    * Description: Satisfied in release 1.0.0.
+
+  * Requirement: JS5.202 The Jason 1 Streamlining Program Set shall make data about new data products available to the Jason Data Engineer within 24 hours of its arrival in the restricted area.
+
+    * Support: Full
+
+    * Description: Satisfied in release 1.0.0.
+
+{Appendix B - Test Status}
+
+  This appendix details tests and test procedures for unit and program set level testing performed prior to integration and test by the development staff.
+
+* Unit Tests
+
+  TBD
+
+* Program Set Tests
+
+  TBD

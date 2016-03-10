@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- 
+Copyright 2008, by the California Institute of Technology.
+ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+
+$Id: pom.xml 10504 2012-08-28 22:10:31Z thuang $
+-->
+
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>gov.nasa.podaac</groupId>
+    <artifactId>administer</artifactId>
+    <version>5.0.0d</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+
+  <groupId>gov.nasa.podaac</groupId>
+  <artifactId>admin-monitor</artifactId>
+  <packaging>jar</packaging>
+
+  <name>Monitor</name>
+  <description>
+    The Monitor module provides utilities for monitoring the core data management system in PO.DAAC operations.
+  </description>
+  <url>http://dmas.jpl.nasa.gov/docs/administer/admin-monitor/</url>
+
+  <build>
+      <plugins>
+         <plugin>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <configuration>
+               <descriptors>
+                  <descriptor>
+                     src/main/assembly/administer.xml
+                  </descriptor>
+               </descriptors>
+            </configuration>
+            <executions>
+               <execution>
+                  <id>bin-release</id>
+                  <phase>package</phase>
+                  <goals>
+                     <goal>attached</goal>
+                  </goals>
+               </execution>
+            </executions>
+         </plugin>
+         <plugin>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+               <source>1.5</source>
+               <target>1.5</target>
+            </configuration>
+         </plugin>
+      </plugins>
+  </build>
+</project>

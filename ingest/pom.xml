@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- 
+   Copyright 2007-2013, by the California Institute of Technology.
+   ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+   
+   Ingest Program Set Parent POM
+   
+   @author Thomas Huang {Thomas.Huang@jpl.nasa.gov}
+   @version $Id: $
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+   http://maven.apache.org/xsd/maven-4.0.0.xsd">
+   <modelVersion>4.0.0</modelVersion>
+   <parent>
+      <groupId>gov.nasa.horizon</groupId>
+      <artifactId>horizon</artifactId>
+      <version>0.0.0</version>
+      <relativePath>../horizon/pom.xml</relativePath>
+   </parent>
+   <groupId>gov.nasa.horizon</groupId>
+   <artifactId>ingest</artifactId>
+   <version>5.0.0e</version>
+   <packaging>pom</packaging>
+   <name>Ingest Program Set</name>
+   <description>The Ingest program set serves as the interface to data providers
+      for receiving and verifying data to be placed in the HORIZON archive. </description>
+   <url>http://horizon.jpl.nasa.gov/docs/horizon/ingest/</url>
+
+   <modules>
+      <module>ingest-gen</module>
+      <module>ingest-commons</module>
+      <module>ingest-api</module>
+      <module>ingest-client</module>
+      <module>ingest-server</module>
+   </modules>
+
+   <build>
+      <plugins>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-site-plugin</artifactId>
+            <version>2.1.1</version>
+            <dependencies>
+               <dependency>
+                  <groupId>commons-httpclient</groupId>
+                  <artifactId>commons-httpclient</artifactId>
+                  <version>3.1</version>
+                  <exclusions>
+                     <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                     </exclusion>
+                  </exclusions>
+               </dependency>
+            </dependencies>
+         </plugin>
+      </plugins>
+   </build>
+
+   <reporting>
+      <plugins>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-project-info-reports-plugin</artifactId>
+            <reportSets>
+               <reportSet>
+                  <reports>
+                     <report>dependencies</report>
+                     <report>summary</report>
+                  </reports>
+               </reportSet>
+            </reportSets>
+         </plugin>
+         <plugin>
+            <artifactId>maven-javadoc-plugin</artifactId>
+         </plugin>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-report-plugin</artifactId>
+         </plugin>
+      </plugins>
+   </reporting>
+</project>

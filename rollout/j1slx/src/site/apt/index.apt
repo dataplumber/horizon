@@ -1,0 +1,28 @@
+~~ Copyright 2008, by the California Institute of Technology.
+~~ ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+~~
+~~ $Id: index.apt 2229 2008-11-03 09:03:45Z thuang $
+
+  ---
+  About Jason-1 Streamline 
+  ---
+  Mike Gangl
+  ---
+  
+About Jason-1 Streamline
+
+  The purpose of this software is to provide a method for the Jason Data Engineer to move the Jason GDR binary, GDR netCDF, SSHA netCDF and SGDR binary data sets through the delivery process. The sequence of events for this transition is:
+
+    * CNES and/or NASA send Jason data to PO.DAAC and it is processed by either OCEANIDS or the Legacy Ingest system. OCEANIDS processes CNES delivered binary GDR products.  The Legacy Ingest system processes NASA delivered GDR binary/SGDR binary data and CNES delivered GDR netCDF/SSHA netCDF products. Once processed by either OCEANIDS or the Legacy Ingest system all data are placed in the Jason restricted access site except for the SGDR products which are placed in the private access site.
+  
+  * CNES and NASA both approve the release of either the CNES or NASA cycle of data.
+  
+  * The data engineer releases the approved cycle to the public. The data engineer who last approved a cycle will be listed in the Catalog Entry row.
+  
+[]
+
+  The Jason-1 Streamline software detects when a data product has arrived and stores information about the data product in an Oracle database table. When the data engineer receives an email indicated either CNES or NASA has approved a data set, the data engineer uses the program set web interface to update the database table to indicate the organization's approval. On a regular basis a program is run which examines the database table and moves any newly approved products to the Jason public access area. Because the GDR binary data products and their corresponding GDR netCDF/SSHA netCDF/SGDR binary products arrive asynchronously, the program set and database table track the arrival and transfer of the GDR binary and aforementioned other data sets separately.
+
+  This program set does not read email to detect approvals. The format of the emails is too varied and requires a human eye to decode the meanings.
+
+  Additional documentation for this program set can be found in the {{{http://podaac-lib.jpl.nasa.gov/}PO.DAAC}} DocuShare library contained in the {{{https://bravo-lib.jpl.nasa.gov/docushare/dsweb/View/Collection-78478}Jason-1 Streamline}} collection.

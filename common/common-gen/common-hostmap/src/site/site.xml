@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!--
+Copyright 2008, by the California Institute of Technology.
+ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+
+$Id: site.xml 5885 2010-09-17 20:23:10Z thuang $
+-->
+
+<project name="Common Hostmap Binding">
+  <bannerLeft>
+    <src>images/horizon_logo.jpg</src>
+    <href>http://horizon.jpl.nasa.gov/</href>
+  </bannerLeft>
+
+  <bannerRight>
+    <name>Common Hostmap Binding&nbsp;&nbsp;</name>
+  </bannerRight>
+
+  <body>
+    <links>
+      <item name="Common Hostmap Binding" href="http://horizon.jpl.nasa.gov/docs/common/common-gen/common-hostmap/index.html" />
+    </links>
+
+    <menu name="Software Documentation">
+      <item name="About Common Hostmap Binding" href="index.html"/>
+      <item name="XSD Docs" href="xsddoc/index.html"/>
+      <item name="JavaDoc" href="apidocs/index.html"/>
+    </menu>
+
+    <menu ref="reports"/>
+  </body>
+</project>

@@ -1,0 +1,14 @@
+~~ Copyright 2009, by the California Institute of Technology.
+~~ ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+~~
+~~ $Id: index.apt 2942 2009-05-03 22:20:03Z shardman $
+
+  ---
+  About Distribute GCMD DIF Binding
+  ---
+  Sean Hardman
+  ---
+  
+About Distribute GCMD DIF Binding
+
+  The Distribute GCMD DIF Binding module uses JAXB to generate Java classes for handling the GCMD submissions.

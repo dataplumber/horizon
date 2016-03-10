@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+   Copyright (c) 2008
+   Jet Propulsion Laboratory, California Institute of Technology
+   All rights reserved
+   
+   This XML schema defines PO.DAAC crawler file metadata cache structure
+   
+   @author T. Huang {Thomas.Huang@jpl.nasa.gov}
+   @version $Id: $
+-->
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+   xmlns:podaac.nasa="http://podaac.jpl.nasa.gov/webservice/schema"
+   targetNamespace="http://podaac.jpl.nasa.gov/webservice/schema"
+   elementFormDefault="qualified">
+   <xsd:element name="SubscriberCache">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="granule" minOccurs="0" maxOccurs="unbounded">
+               <xsd:complexType>
+               	 <xsd:sequence>
+                 	 <xsd:element name="GranuleInfo" minOccurs="1" maxOccurs="1">
+                 	 	<xsd:complexType>
+                 	 		<xsd:attribute name="Id" type="xsd:int" use="required"/>
+      			  			<xsd:attribute name="Name" type="xsd:string" use="required"/>
+      		      			<xsd:attribute name="Status" type="xsd:string" use="required"/>
+      		      			<xsd:attribute name="CreateTime" type="xsd:string" use="optional"/>
+      		      			<xsd:attribute name="AccessType" type="xsd:string" use="optional"/>
+      		      			<xsd:attribute name="startTime" type="xsd:string" use="optional"/>
+      		      			<xsd:attribute name="stopTime" type="xsd:string" use="optional"/>
+                 	 	</xsd:complexType>
+                 	 </xsd:element>
+                     <xsd:element name="Files" minOccurs="0" maxOccurs="unbounded">
+                     	<xsd:complexType>
+                     		<xsd:sequence>
+                     			<xsd:element name="File">
+   								 <xsd:complexType>
+      							  <xsd:attribute name="Name" type="xsd:string" use="required"/>
+      							  <xsd:attribute name="Path" type="xsd:string" use="required"/>
+      							  <xsd:attribute name="Status" type="xsd:string" use="required"/>
+      							  <xsd:attribute name="Type" type="xsd:string" use="required"/>
+   								 </xsd:complexType>
+								</xsd:element> 
+                     		</xsd:sequence>
+                     	</xsd:complexType>
+                     </xsd:element>
+                     <xsd:element name="References" minOccurs="0" maxOccurs="unbounded">
+                     	<xsd:complexType>
+                     		<xsd:sequence>
+                  			 <xsd:element name="Reference">
+   								 <xsd:complexType>
+      							  <xsd:attribute name="Path" type="xsd:string" use="required"/>
+      							  <xsd:attribute name="Status" type="xsd:string" use="required"/>
+      							  <xsd:attribute name="Type" type="xsd:string" use="required"/>
+   								 </xsd:complexType>
+								</xsd:element> 
+                     		</xsd:sequence>    
+                     	</xsd:complexType>
+                     </xsd:element>
+                  </xsd:sequence>
+               </xsd:complexType>
+            </xsd:element>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+</xsd:schema>

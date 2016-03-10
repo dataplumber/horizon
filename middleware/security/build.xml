@@ -1,0 +1,73 @@
+<project name="middleware" default="">
+
+   <property name="grails.home" value="/grails-1.3.3" />
+   <!--<property name="grails.home" value="/usr/local/grails" /> -->
+   <property name="grails.bin" value="${grails.home}/bin" />
+   <condition property="grails" value="${grails.bin}/grails.bat">
+      <os family="windows" />
+   </condition>
+
+   <macrodef name="grails">
+      <attribute name="command" default="help" />
+
+      <sequential>
+         <exec executable="${grails}" failonerror="true">
+            <arg value="@{command}" />
+            <env key="GRAILS_HOME" value="${grails.home}" />
+         </exec>
+      </sequential>
+   </macrodef>
+
+   <macrodef name="grails2">
+	<!--
+      <attribute name="groovyStarter"
+         default="org.codehaus.groovy.tools.GroovyStarter" />
+-->
+		<attribute name="groovyStarter"
+			default="org.codehaus.groovy.grails.cli.support.GrailsStarter" />
+      <attribute name="grailsScriptRunner"
+         default="org.codehaus.groovy.grails.cli.GrailsScriptRunner" />
+
+      <attribute name="command" default="help" />
+      <sequential>
+         <java fork="true" classname="@{groovyStarter}" dir="${basedir}">
+            <env key="GRAILS_HOME" value="${grails.home}" />
+
+            <sysproperty key="grails.home" value="${grails.home}" />
+            <sysproperty key="grails.env" value="${grails.env}" />
+            <sysproperty key="groovy.starter.conf"
+               value="${grails.home}/conf/groovy-starter.conf" />
+
+
+            <classpath>
+               <pathelement location="${grails.home}/dist/grails-bootstrap-1.3.3.jar" />
+					<pathelement location="${grails.home}/dist/grails-core-1.3.3.jar" />
+					<pathelement location="${grails.home}/dist/grails-spring-1.3.3.jar" />
+					<pathelement location="${grails.home}/lib/gant_groovy1.7-1.9.2.jar" />
+					<pathelement location="${grails.home}/lib/spring-2.5.6.jar" />
+					<pathelement location="${grails.home}/lib/servlet-api-2.5-6.1.14.jar" />
+               <pathelement location="${java.home}/lib/tools.jar"/>
+               <pathelement path="${compile_classpath}"/>
+               <pathelement location="${base_dir}/plugins/quartz-0.4.1-SNAPSHOT/lib/quartz-1.6.5.jar"/>
+            </classpath>
+
+            <arg line="--main org.codehaus.groovy.grails.cli.GrailsScriptRunner" />
+            <arg line="--conf ${grails.home}/conf/groovy-starter.conf" />
+            <arg line="--classpath ${grails.home}/dist/grails-bootstrap-1.1.1.jar;${grails.home}/dist/grails-spring-1.1.1.jar;${grails.home}/dist/grails-core-1.1.1.jar;${grails.home}/lib/gant_groovy1.6-1.6.0.jar;${grails.home}/lib/servlet-api-2.5-6.1.14.jar;${grails.home}/lib/spring-2.5.6.jar;." />
+
+            <arg value="@{command}" />
+         </java>
+
+      </sequential>
+   </macrodef>
+
+
+   <target name="war">
+      <grails2 command="war" />
+   </target>
+
+   <target name="clean">
+      <grails2 command="clean"/>
+   </target>
+
+</project>

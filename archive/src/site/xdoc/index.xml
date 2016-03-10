@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+   <properties>
+      <title>About Archive</title>
+   </properties>
+   <body>
+   <!-- Copyright 2009 by the California Institute of Technology. -->
+   <!-- ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged. -->
+      <section name="About Archive">
+         <p>The Archive program set provides the services and functions for the storage, maintenance and retrieval of Archival Information Packages (AIPs). The Archive program set's functions include receiving AIPs from Ingest and adding them to permanent storage, managing the storage hierarchy, refreshing the media on which archive holdings are stored, performing routine and special error and integrity checking, providing disaster recovery capabilities, and providing AIPs to other program sets with functions to retrieve data to fulfill their requirements. Data backups of the archived data are sent to the Deep Archive and AIPs are sent to the Long Term Archive.</p>
+      </section>
+   </body>
+</document>

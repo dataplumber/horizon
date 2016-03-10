@@ -1,0 +1,49 @@
+#
+# headings: [Generation] [QueuePolicy][Feed][Feed/Image][Feed/CustomElements][Item][Item/Extents]
+# use ${} notation to retrieve data from the dataset in the tool: 
+# feed.Feed.title = "${dataset.shortName} Datacasting Feed" grabs the dataset shortName for use in the title.
+# allowed syntax is dataset.FIELD datasetCoverage.FIELD and datasetPolicy.FIELD for datasets. 
+# allowed syntax is granule.FIELD for granules
+# allowed syntax is element.SHORTNAME for use in dataset/granule element substitution. 
+# Feed generation will use datasetElements, item generation will use granule elements. 
+#
+feed.Generation.itemPathRoot = "./items-xml"
+feed.Generation.queueDirectory = "./queue"
+feed.Generation.rssOutputFile = "./${dataset.shortName}.xml"
+feed.Generation.useXmllint = True
+feed.QueuePolicy.maxItems = 25
+feed.QueuePolicy.pastDays = 30
+feed.Feed.title = "${dataset.shortName} Datacasting Feed"
+feed.Feed.link = "http://podaac.jpl.nasa.gov"
+feed.Feed.description = "${dataset.description}"
+feed.Feed.channelUID = "${dataset.shortName}"
+feed.Feed.language = "en-us"
+feed.Feed.copyright = "Copyright 2006"
+feed.Feed.managingEditor = "J Q Example <example@datacasting.jpl.nasa.gov>"
+feed.Feed.webMaster = "webmaster@datacasting.jpl.nasa.gov"
+# feed.Feed.rating = "5 stars"
+feed.Feed.ttl = 30
+# feed.Feed.skipHours = 0, 1
+# feed.Feed.skipDays  = "Sunday", "Monday"
+feed.Feed.dataSource = "${dataset.longName}"
+feed.Feed/Image.title = "GHRSST Logo"
+feed.Feed/Image.url = "http://podaac.jpl.nasa.gov/~awb/datacasting/logo.gif"
+feed.Feed/Image.link = "http://ghrsst.jpl.nasa.gov"
+feed.Feed/Image.width = 88
+feed.Feed/Image.height = 31
+feed.Feed/Image.description = "Next Generation of SST Data"
+#   feed.Feed/CustomElements.customElement_n = ("<name>", "<type>"),
+#   feed.Feed/CustomElements.customElement_n = ("<name>", "<type>", "<displayName>"),
+#   feed.Feed/CustomElements.customElement_n = ("<name>", "<type>", "<displayName>", "<units>"),
+feed.Feed/CustomElements.customElement_1 = ("SoftwareVersion","character","software version" )
+#   feed.Item.itemSource = None
+feed.itemSource = ("GHRSST Feed", "http://ghrsst.jpl.nasa.gov/feed.xml")
+#   feed.Item.itemLink = None
+feed.Item.itemLink   = "http://ghrsst.jpl.nasa.gov"
+feed.Item.enclosureDelimiter = ","
+# feed.Item/Extents.simplifyPolygons = True
+# feed.Item/Extents.polyMaxPoints = 256
+# feed.Item/Extents.polyDistThresh = 5.0  # (km)
+#
+#
+item.customElement_1 = ${element.version}

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Copyright 2007-2013, by the California Institute of Technology. -->
+<!-- ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged. -->
+<!--  -->
+<!-- $Id: $ -->
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+   <properties>
+      <title>Operation</title>
+      <author>T. Huang</author>
+   </properties>
+   <body>
+      <section name="Operation">
+         <p>This document describes how to start and stop the Ingest Engine. The following sections
+            can be found in this document:</p>
+         <ul>
+            <li><a href="#Launch_the_Server">Launch the Server</a></li>
+            <li><a href="#PauseResume_the_Server">Pause/Resume the Server</a></li>
+            <li><a href="#Kill_the_Server">Kill the Server</a></li>
+         </ul>
+      </section>
+      <section name="Launch_the_Server">
+         <p>Once the Ingest Engine has been installed and configured as described in the <a
+               href="../install/index.html">Installation</a> document, the engine can be started
+            with the following commands:</p>
+         <source>
+% ingestserver help
+Copyright 2013, Jet Propulsion Laboratory, Caltech, NASA
+HORIZON Ingest Server Release 5.0.0b, November 2013
+
+Usage: ingestserver &lt;Options&gt; 
+where possible options include:
+  -f &lt;value&gt;  Federation name
+  -n &lt;value&gt;  Engine name
+  -t &lt;value&gt;  Stereotype (ingest, archive)
+  -s &lt;value&gt;  Storage Name
+  -w &lt;value&gt;  Maximum engine wait time in milliseconds
+  -u &lt;value&gt;  User name
+  -p &lt;value&gt;  Password
+  -r &lt;value&gt;  Registry URL
+  -e &lt;value&gt;  SigEvent URL
+  -z &lt;value&gt;  ZooKeeper URL
+  -h          Print usage
+         </source>
+         <p>Beginning with Version 4.0, &quot;Stereotype&quot; is required to identify whether the
+            engine will handle ingest or archive jobs and &quot;Storage Name&quot; is required to
+            identify which storage the engine will register with.</p>
+         <p>Startup the engine without using the keychain file</p>
+         <source>
+% source useHORIZON.csh
+
+% cd sbin
+% ingestserver -n horizonDev_1 -u thuang -p mypass -t ingest -s horizonIngestDev_1 &amp;
+         </source>
+         <p>Startup the engine using the keychain file created by the Horizon client
+            distribution</p>
+         <source>
+% source useHORIZON.csh
+
+% ingest login
+Copyright 2013, Jet Propulsion Laboratory, Caltech, NASA
+HORIZON Ingest Server Release 5.0.0b, November 2013
+
+Using default federation: horizonDev
+horizonDev:User name &gt;&gt; thuang
+horizonDev:Password &gt;&gt;  
+
+% cd sbin
+% ingestserver -n horizonDev_1 -t ingest -s horizonIngestDev_1 &amp;</source>
+         <p>To startup a sequence of engine, create and execute a script similar to the one below.
+            The script below will startup 10 ingest engines with name horizonDev_1, horizonDev_2, ... ,
+            horizonDev_10. All 10 engines are registered with storage horizonIngestDev_1. </p>
+         <source>
+#!/bin/csh
+
+source useHORIZON.csh
+
+set i=1
+while ( $i &lt;= 10 )
+   ingestserver -n horizonDev_$i -t ingest -s horizonIngestDev_1 &amp;
+   @ i = $i + 1
+end
+         </source>
+         <p>When the federation name is not specified, the default federation defined with in the
+            domain file will be used. The username and password are optional when the user keychain
+            is available.</p>
+      </section>
+
+      <section name="Pause Resume the Server" id="PauseResume_the_Server">
+         <p>To tell the engine to first finish its current job and then stop taking any more add,
+            move or delete jobs, locate the engine on the <a
+               href="../../../administer/operator/operate/index.html#StorageEngine_Management_Instructions"
+               >Operator Tool</a> Storage/Engine Management Tab and click the <i>Pause</i>
+            button.</p>
+         <p>To tell the engine to resume picking up jobs, click the <i>Resume</i> button.</p>
+      </section>
+
+      <section name="Kill the Server" id="Kill_the_Server">
+         <p>The Ingest engine may occasionally have to be stopped and restarted due to a
+            configuration modification. </p>
+         <p>The recommended way to gracefully shutdown the engine is to locate the engine on the <a
+               href="../../../administer/operator/operate/index.html#StorageEngine_Management_Instructions"
+               >Operator Tool</a> Storage/Engine Management Tab and click the <i>Stop</i> button.
+            Once you hit <i>Stop</i>, the engine will first finish its current job and then
+            shutdown.</p>
+         <p>Alternatively, the server may be killed by identifying the active processes on the host
+            machine and then using the <i>kill</i> command to stop those processes as in the example
+            that follows:</p>
+         <source>
+% ps -ef | grep thuang
+
+thuang    8789 32319 99 00:53 pts/3    00:32:25 /usr/bin/perl -w ./ingestserver -n ingest_lapinta
+thuang    8805  8789  0 00:53 pts/3    00:00:00 /usr/bin/perl -w ./ingestserver -n ingest_lapinta
+thuang    8806  8805  3 00:53 pts/3    00:01:13 /usr/local/java/bin/java -classpath \
+:/home/thuang/dev/ingest-server-0.4.0/config/../lib/activation-1.1.jar:/home/thuang/dev/ingest ...
+
+% kill 8789 8805
+         </source>
+         <p>The above example searches for the processes by the user name that launched them. There
+            should be a Perl process and Java process.</p>
+         <p>Note that there is a delay of up to 2 minutes in ZooKeeper registration node clean up if
+            the engine is shutdown using the <i>kill</i> command. Once a connection times out
+            without ZooKeeper being able to contact the client that opened it, ZooKeeper will clean
+            up the connection, watches, and any ephemeral nodes that the connection created. An
+            engine creates an ephemeral node to register itself as active. If it loses its
+            connection (the same as a kill on the process) the ephemeral node will be there until
+            the connection is cleaned up by ZooKeeper. As long as the registration node still
+            exists, an engine with the same name cannot be started. </p>
+      </section>
+   </body>
+</document>

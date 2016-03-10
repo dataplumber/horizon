@@ -1,0 +1,50 @@
+~~ Copyright 2008, by the California Institute of Technology.
+~~ ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+~~
+~~ $Id: index.apt 1614 2008-08-16 05:48:57Z shardman $
+
+  ---
+  Operation
+  ---
+  Lei Pan, Eric Rigor, Sean Hardman
+  ---
+  
+Operation
+
+  This document details any necessary setup and the commands for running the Jason-1 Streamline software. The following sections can be found in this document:
+
+   * {{{#Web_Interface}Web Interface}}
+
+   * {{{#BuildCatalog}BuildCatalog}}
+
+   * {{{#MakePublic}MakePublic}}
+
+{Web Interface}
+
+  Execution:  Via web browser access appropriate url.
+              (e.g., http://biaxin.jpl.nasa.gov:8080/streamlining)
+
+  Log File:   $CATALINA_HOME/logs/streamlining.log
+
+{BuildCatalog}
+
+  The BuildCatalog program is run via the cron job described in the {{{../install/index.html}Installation}} document. Alternatively, one could run using the following command assuming that the system requirements are satisfied:
+
++--
+pwd=/<deployment_dir>/trunk/src/updateCatalog/
+ant BuildCatalog
++--
+
+  The Log file for the BuildCatalog program is located in: /\<deployment_dir\>/streamlining/trunk/src/updateCatalog/log/updateJasonCatalog.log
+
+{MakePublic}
+
+  The MakePublic program is run via the cron job described in the {{{../install/index.html}Installation}} document. Alternatively, one could run using the following command assuming that the system requirements are satisfied:
+
++--
+pwd=/<deployment_dir>/trunk/src/updateCatalog/
+ant MakePublic
++--
+
+  The Log file for the MakePublic program is located in:  
+/\<deployment_dir\>/streamlining/trunk/src/updateCatalog/log/updateJasonCatalog.log

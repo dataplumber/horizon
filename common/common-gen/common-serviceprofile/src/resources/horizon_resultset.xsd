@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+   Copyright (c) 2013
+   Jet Propulsion Laboratory, California Institute of Technology
+   All rights reserved
+   
+   This XML schema defines product query resultset.
+   
+   @author T. Huang {Thomas.Huang@jpl.nasa.gov}
+   @version $Id: $
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:horizon.nasa="http://horizon.nasa.gov"
+   targetNamespace="http://horizon.nasa.gov" elementFormDefault="qualified">
+   <xsd:include schemaLocation="horizon_common.xsd"/>
+
+   <xsd:complexType name="Resultset">
+      <xsd:annotation>
+         <xsd:documentation> Defines the product query resultset message. </xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element name="pageIndex" type="xsd:integer" minOccurs="0"/>
+         <xsd:element name="totalPages" type="xsd:integer" minOccurs="0"/>
+         <xsd:element name="resultProduct" minOccurs="0" maxOccurs="unbounded">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="productTypeId" type="xsd:long" minOccurs="0"/>
+                  <xsd:element name="productType" type="xsd:string"/>
+                  <xsd:element name="productId" type="xsd:long" minOccurs="0"/>
+                  <xsd:element name="productName" type="xsd:string"/>
+                  <xsd:element name="productFiles" type="horizon.nasa:ProductFiles" minOccurs="0"
+                     maxOccurs="1"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+
+</xsd:schema>

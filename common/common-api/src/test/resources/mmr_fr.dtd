@@ -1,0 +1,108 @@
+
+<!ELEMENT MMR_FR ( Entry_ID, 
+                   File_Name, 
+                   File_Release_Date,  
+                   File_Version, 
+                   Related_URL*,                   
+                   Temporal_Coverage,  
+                   Spatial_Coverage,
+                   Personnel+,
+	   Metadata_History,
+	   File_Compression?
+ )  >
+ 
+<!-- DSD_Entry_ID (reference) ===================================== -->
+<!ELEMENT Entry_ID (#PCDATA)>
+
+
+<!ELEMENT File_Name  (#PCDATA)>
+<!ELEMENT File_Release_Date (#PCDATA)>
+<!ELEMENT File_Version (#PCDATA)>
+
+<!-- Related URL ================================================= -->
+<!ELEMENT Related_URL ( URL_Content_Type?,
+                        URL+,
+                        Description?
+                      )
+>
+
+<!ELEMENT URL_Content_Type (#PCDATA)>
+<!ELEMENT URL (#PCDATA)>
+<!ELEMENT Description (#PCDATA)>
+
+<!-- Temporal Coverage =========================================== -->
+<!ELEMENT Temporal_Coverage ( Start_Date?,
+                              Start_Time?,
+                              Stop_Date?,
+                              Stop_Time?
+                            )
+>
+
+<!ELEMENT Start_Date (#PCDATA)>
+<!ELEMENT Start_Time (#PCDATA)>
+<!ELEMENT Stop_Date (#PCDATA)>
+<!ELEMENT Stop_Time (#PCDATA)>
+
+
+<!-- Spatial Coverage ============================================ -->
+<!ELEMENT Spatial_Coverage ( Southernmost_Latitude,
+                             Northernmost_Latitude,
+                             Westernmost_Longitude,
+                             Easternmost_Longitude, 
+                             Minimum_Altitude?,
+                             Maximum_Altitude?,
+                             Minimum_Depth?,
+                             Maximum_Depth?
+                           )
+>
+
+<!ELEMENT Southernmost_Latitude (#PCDATA) >
+<!ELEMENT Northernmost_Latitude (#PCDATA) > 
+<!ELEMENT Westernmost_Longitude (#PCDATA) > 
+<!ELEMENT Easternmost_Longitude (#PCDATA) > 
+<!ELEMENT Minimum_Altitude (#PCDATA) >
+<!ELEMENT Maximum_Altitude (#PCDATA) > 
+<!ELEMENT Minimum_Depth (#PCDATA) > 
+<!ELEMENT Maximum_Depth (#PCDATA)>
+
+<!-- Personnel =================================================== -->
+<!ELEMENT Personnel ( Role+,
+                      First_Name,
+                      Middle_Name?,
+                      Last_Name,
+                      Email,
+                      Phone,
+                      Fax?,
+                      Address
+                    )
+>
+
+<!ELEMENT Role (#PCDATA)>
+<!ELEMENT First_Name (#PCDATA)>
+<!ELEMENT Middle_Name (#PCDATA)>
+<!ELEMENT Last_Name (#PCDATA)>
+<!ELEMENT Email (#PCDATA)>
+<!ELEMENT Phone (#PCDATA)>
+<!ELEMENT Fax (#PCDATA)>
+<!ELEMENT Address (#PCDATA)>
+
+<!-- Metadata_History ================================================ -->
+<!ELEMENT Metadata_History (FR_File_Version,
+ 			   FR_Creation_Date,
+			    FR_Last_Revision_Date,
+			    FR_Revision_History)>
+
+<!--  Creation Date =========================================== -->
+<!ELEMENT FR_File_Version (#PCDATA)>
+
+<!-- Creation Date =========================================== -->
+<!ELEMENT FR_Creation_Date (#PCDATA)>
+
+<!-- Last Revision Date ====================================== -->
+<!ELEMENT FR_Last_Revision_Date (#PCDATA)>
+
+<!--  Revision History ======================================== -->
+<!ELEMENT FR_Revision_History (#PCDATA)>
+
+<!--  Compression ======================================== -->
+<!ELEMENT File_Compression (#PCDATA)>

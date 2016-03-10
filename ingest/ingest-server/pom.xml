@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!--
+   Copyright 2007-2013, by the California Institute of Technology.
+   ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+
+   Build file for the Ingest Server.
+
+   @author Thomas Huang {Thomas.Huang@jpl.nasa.gov}
+   @version $Id: $
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+   http://maven.apache.org/xsd/maven-4.0.0.xsd">
+   <modelVersion>4.0.0</modelVersion>
+   <parent>
+      <groupId>gov.nasa.horizon</groupId>
+      <artifactId>ingest</artifactId>
+      <version>5.0.0e</version>
+      <relativePath>../pom.xml</relativePath>
+   </parent>
+   <artifactId>ingest-server</artifactId>
+   <packaging>jar</packaging>
+   <name>Ingest Server</name>
+   <description>The Ingest Server module contains the core ingest server
+      implementation, which includes messaging, concurrency logics, and file
+      retrieval and persistence. </description>
+   <url>http://horizon.jpl.nasa.gov/docs/horizon/ingest/ingest-server/</url>
+
+   <repositories>
+      <repository>
+         <id>maven-restlet</id>
+         <name>Public online Restlet repository</name>
+         <url>http://maven.restlet.org</url>
+      </repository>
+   </repositories>
+
+   <dependencies>
+      <dependency>
+         <groupId>org.codehaus.groovy</groupId>
+         <artifactId>groovy-all</artifactId>
+         <version>2.0.8</version>
+      </dependency>
+      <dependency>
+         <groupId>org.restlet</groupId>
+         <artifactId>org.restlet</artifactId>
+         <version>1.1.10</version>
+      </dependency>
+      <dependency>
+         <groupId>com.noelios.restlet</groupId>
+         <artifactId>com.noelios.restlet</artifactId>
+         <version>1.1.10</version>
+      </dependency>
+      <dependency>
+         <groupId>gov.nasa.horizon</groupId>
+         <artifactId>common-api</artifactId>
+         <version>5.0.0e</version>
+         <scope>compile</scope>
+      </dependency>
+      <dependency>
+         <groupId>gov.nasa.horizon</groupId>
+         <artifactId>common-groovy</artifactId>
+         <version>5.0.0e</version>
+         <scope>compile</scope>
+      </dependency>
+      <dependency>
+         <groupId>gov.nasa.horizon</groupId>
+         <artifactId>ingest-config</artifactId>
+         <version>5.0.0e</version>
+         <scope>compile</scope>
+         <exclusions>
+            <exclusion>
+               <groupId>xerces</groupId>
+               <artifactId>xercesImpl</artifactId>
+            </exclusion>
+            <exclusion>
+               <groupId>docflex-xml-kit</groupId>
+               <artifactId>docflex-xml-kit</artifactId>
+            </exclusion>
+         </exclusions>
+      </dependency>
+      <dependency>
+         <groupId>gov.nasa.horizon</groupId>
+         <artifactId>common-crawler</artifactId>
+         <version>5.0.0e</version>
+         <scope>compile</scope>
+      </dependency>
+      <dependency>
+         <groupId>gov.nasa.horizon</groupId>
+         <artifactId>ingest-api</artifactId>
+         <version>5.0.0e</version>
+         <scope>compile</scope>
+      </dependency>
+      <dependency>
+         <groupId>gov.nasa.horizon</groupId>
+         <artifactId>ingest-commons</artifactId>
+         <version>5.0.0e</version>
+         <scope>compile</scope>
+      </dependency>
+      <dependency>
+         <groupId>gov.nasa.horizon</groupId>
+         <artifactId>sigevent-api</artifactId>
+         <version>5.0.0e</version>
+      </dependency>
+      <dependency>
+         <groupId>junit</groupId>
+         <artifactId>junit</artifactId>
+         <version>4.8.1</version>
+         <scope>test</scope>
+      </dependency>
+      <dependency>
+         <groupId>commons-httpclient</groupId>
+         <artifactId>commons-httpclient</artifactId>
+         <version>3.1</version>
+         <scope>compile</scope>
+      </dependency>
+      <dependency>
+         <groupId>org.slf4j</groupId>
+         <artifactId>slf4j-log4j12</artifactId>
+         <version>1.6.1</version>
+         <scope>compile</scope>
+      </dependency>
+   </dependencies>
+
+   <build>
+      <sourceDirectory>${basedir}/src/main/groovy</sourceDirectory>
+      <testSourceDirectory>${basedir}/src/test/groovy</testSourceDirectory>
+      <pluginManagement>
+         <plugins>
+            <plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-antrun-plugin</artifactId>
+               <version>1.3</version>
+            </plugin>
+         </plugins>
+      </pluginManagement>
+
+      <plugins>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-site-plugin</artifactId>
+            <version>2.1.1</version>
+            <dependencies>
+               <dependency>
+                  <groupId>commons-httpclient</groupId>
+                  <artifactId>commons-httpclient</artifactId>
+                  <version>3.1</version>
+                  <exclusions>
+                     <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                     </exclusion>
+                  </exclusions>
+               </dependency>
+            </dependencies>
+         </plugin>
+         <plugin>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+               <execution>
+                  <id>compile</id>
+                  <phase>compile</phase>
+                  <configuration>
+                     <tasks>
+                        <taskdef name="groovyc" classname="org.codehaus.groovy.ant.Groovyc">
+                           <classpath refid="maven.compile.classpath"/>
+                        </taskdef>
+                        <mkdir dir="${project.build.outputDirectory}"/>
+                        <groovyc destdir="${project.build.outputDirectory}"
+                           srcdir="${basedir}/src/main/groovy/" listfiles="true">
+                           <classpath refid="maven.compile.classpath"/>
+                        </groovyc>
+                     </tasks>
+                  </configuration>
+                  <goals>
+                     <goal>run</goal>
+                  </goals>
+               </execution>
+               <execution>
+                  <id>test</id>
+                  <phase>test</phase>
+                  <configuration>
+                     <tasks>
+                        <taskdef name="groovyc" classname="org.codehaus.groovy.ant.Groovyc">
+                           <classpath refid="maven.test.classpath"/>
+                        </taskdef>
+                        <mkdir dir="${project.build.outputDirectory}"/>
+                        <groovyc destdir="${project.build.outputDirectory}"
+                           srcdir="${basedir}/src/test/groovy/" listfiles="true">
+                           <classpath refid="maven.test.classpath"/>
+                        </groovyc>
+                     </tasks>
+                  </configuration>
+                  <goals>
+                     <goal>run</goal>
+                  </goals>
+               </execution>
+               <execution>
+                  <phase>package</phase>
+                  <configuration>
+                     <tasks>
+                        <taskdef name="groovydoc" classname="org.codehaus.groovy.ant.Groovydoc">
+                           <classpath>
+                              <path refid="maven.compile.classpath"/>
+                           </classpath>
+                        </taskdef>
+                        <groovydoc destdir="target/site/apidocs" sourcepath="src/main/groovy"
+                           packagenames="**.*" use="true" windowtitle="Groovydoc" private="false"/>
+                     </tasks>
+                  </configuration>
+                  <goals>
+                     <goal>run</goal>
+                  </goals>
+               </execution>
+            </executions>
+         </plugin>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>2.5</version>
+            <configuration>
+               <argLine>-Xms75m -Xmx2048m</argLine>
+               <showSuccess>false</showSuccess>
+               <testClassesDirectory>${project.build.outputDirectory}</testClassesDirectory>
+               <excludes>
+                  <exclude>**/**</exclude>
+               </excludes>
+               <systemProperties>
+                  <property>
+                     <name>ingest.test.path</name>
+                     <value>${basedir}/src/test/resources</value>
+                  </property>
+                  <property>
+                     <name>log4j.configuration</name>
+                     <value>file://${basedir}/src/test/resources/horizonclient.lcf</value>
+                  </property>
+                  <property>
+                     <name>log4j.configuratorClass</name>
+                     <value>org.apache.log4j.xml.DOMConfigurator</value>
+                  </property>
+               </systemProperties>
+            </configuration>
+         </plugin>
+         <plugin>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <configuration>
+               <descriptor>src/main/assembly/ingest-server.xml</descriptor>
+            </configuration>
+            <executions>
+               <execution>
+                  <id>bin-release</id>
+                  <phase>package</phase>
+                  <goals>
+                     <goal>attached</goal>
+                  </goals>
+               </execution>
+            </executions>
+         </plugin>
+         <plugin>
+            <inherited>true</inherited>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>2.3.1</version>
+            <configuration>
+               <source>1.7</source>
+               <target>1.7</target>
+            </configuration>
+         </plugin>
+      </plugins>
+   </build>
+
+   <reporting>
+      <plugins>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-project-info-reports-plugin</artifactId>
+            <reportSets>
+               <reportSet>
+                  <reports>
+                     <report>dependencies</report>
+                     <report>summary</report>
+                  </reports>
+               </reportSet>
+            </reportSets>
+         </plugin>
+         <plugin>
+            <artifactId>maven-javadoc-plugin</artifactId>
+         </plugin>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-report-plugin</artifactId>
+         </plugin>
+      </plugins>
+   </reporting>
+</project>

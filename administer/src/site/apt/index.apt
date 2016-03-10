@@ -1,0 +1,15 @@
+~~ Copyright 2008, by the California Institute of Technology.
+~~ ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+~~
+~~ $Id: index.apt 2402 2008-12-17 01:29:58Z shardman $
+
+  ---
+  About Administer
+  ---
+  Sean Hardman
+  ---
+  
+About Administer
+
+  The Administer program set provides services and functions for configuring the system, monitoring the health and function of the system, capturing metrics and reporting those metrics.
+

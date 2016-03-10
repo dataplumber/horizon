@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Copyright 2013, by the California Institute of Technology. -->
+<!-- ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged. -->
+<!--  -->
+<!-- $Id: $ -->
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+   <properties>
+      <title>Installation</title>
+      <author>T. Huang</author>
+   </properties>
+   <body>
+      <section name="Installation">
+         <p>This document describes how to install and configure the SigEvent web application. The
+            following sections can be found in this document:</p>
+         <ul>
+            <li><a href="#Build_Instructions">Build Instructions</a></li>
+            <li><a href="#Data_Model">Data Model</a></li>
+         </ul>
+      </section>
+      <section name="Build_Instructions">
+         <p>SigEvent is a web application that is designed and built with the <a
+               class="externalLink" href="http://groovy.codehaus.org/">Groovy</a> programming
+            language and the <a class="externalLink" href="http://grails.org/">Grails</a> web
+            application framework. While both these technologies are fully developed on top of <a
+               class="externalLink" href="http://java.sun.com">Java</a> platform, its support from
+               <a class="externalLink" href="http://maven.apache.org">Maven</a> is still a little
+            behind. The prerequisite for building the SigEvent web application is the Grails web
+            framework must be installed. Below is the source tree of SigEvent distribution</p>
+
+         <img src="../images/source-tree.jpg" alt=""/>
+
+         <p>While the SigEvent's business logics are portable to various deployment environment,
+            bootstrap configurations must be made in order for the build to produce the correct WAR
+            (Web Archive) file. The SigEvent build configuration is divided in to three deployment
+            types: [development, test, production]. Depending on the target deployment, most of the
+            configuration files are being divided into three different configurable sections.</p>
+
+         <ul>
+            <li>JNDI Connection Configuration <p>The JNDI configuration information is located in
+                  the 'grails-app/conf/Config.groovy' file. The configuration is necessary for the
+                  SigEvent web application to be able to publish to JMS (Java Message Service) to
+                  communicate with any JMS-enabled components.</p>
+               <source>
+environments {
+   development {
+      dmas_email_host = 'smtp.jpl.nasa.gov'
+      dmas_provider_url = "jnp://localhost:1099"
+      dmas_jms_username = "user"
+      dmas_jms_password = "password"
+      sigevent_api_data_uri = "http://localhost:8100/sigevent/events/data"
+      sigevent_twitter_username = "user"
+      sigevent_twitter_password = 'password'
+      sigevent_twitter_characters_limit = 140
+      //SecurityServiceInfo
+      gov.nasa.dmas.security.service.enable = true
+      gov.nasa.dmas.security.host = "https://lanina.jpl.nasa.gov"
+      gov.nasa.dmas.security.port = 9197
+      gov.nasa.dmas.security.realm = "DMAS-SIGEVENT"
+      gov.nasa.dmas.security.role="ADMIN"
+   }
+
+   test {
+      ...
+   }
+   
+   operation {
+   ...
+   }
+}
+               </source>
+               <p>Hostname and port for &quot;sigevent_api_data_uri&quot; should be the hostname and
+                  port of where sigevent is to run.</p>
+               <p>sigevent_twitter_username, sigevent_twitter_password, and
+                  sigevent_twitter_haracters_limit are there but not used for 2.1. Please leave them
+                  as they are.</p>
+               <p>As of version 4.1.0, SigEvent can be configured to talk to the Security Web
+                  Service for authentication and authorization by setting
+                  &quot;gov.nasa.dmas.security.service.enable&quot; to true. </p>
+               <p>&quot;gov.nasa.dmas.security.host&quot; points to the host where Security web
+                  service is running on</p>
+               <p>&quot;gov.nasa.dmas.security.port&quot; points to the port where Security web
+                  service is running on</p>
+               <p>&quot;gov.nasa.dmas.security.realm&quot; is the name required by Security web
+                  service to determine the verifier and roles for SigEvent</p>
+               <p>&quot;gov.nasa.dmas.security.role&quot; is the role of users who have SigEvent
+                  delete privilege</p>
+               <p>For SigEvent, the Security Web Service utilizes LDAP. Refer to the <a
+                     href="../../security/operate/index.html">Security Web Service</a> operate guide
+                  for instructions on how to setup LDAP groups and roles for SigEvent.</p>
+               <p>Alternatively, SigEvent can use sys_user and sys_role tables for authentication
+                  and authorization by setting &quot;gov.nasa.dmas.security.service.enable&quot; to
+                  false.</p>
+            </li>
+            <li>SigEvent Database Connection Configuration <p>The Data Source configuration
+                  information is located in the <i>grails-app/conf/DataSource.groovy</i> file. The
+                  configuration is necessary for the SigEvent web application to connect to its data
+                  catalog, which is the operation registry for this web application. By default,
+                  SigEvent supports PostgreSQL database backend. The Grails application framework is
+                  built on the Groovy programming language, which is a dynamic scripting langurage
+                  for the Java Virtual Machine. One of the advantages of using Groovy is
+                  applications can fully take advantage of existing Java libraries and frameworks.
+                  For database connection, Grails uses Hibernate object-to-relational framework and
+                  the standard Java Database Connectivity (JDBC) architecture.</p>
+               <source>
+dataSource {
+   pooled = true
+   driverClassName = "org.postgresql.Driver"
+   url = "jdbc:postgresql://localhost:5432/gibs"
+   dialect = "org.hibernate.dialect.PostgreSQLDialect"
+}
+
+environments {
+   development {
+      dataSource {
+         dbCreate = 'update'
+         logSql = true
+         driverClassName = "org.postgresql.Driver"
+         dialect = "org.hibernate.dialect.PostgreSQLDialect"
+         url = "jdbc:postgresql://localhost:5432/gibs"
+         username = "user"
+         password = 'password'
+      }
+   }
+   test {
+   ...
+   }
+   production {
+   ...
+   }
+}
+            </source>
+            </li>
+            <li>SigEvent AJAX GUI Configuration <p>The SigEvent GUI configuration can be found in
+                  &quot;web-app/src/config.js&quot;. The location of the grails app must be
+                  specified here in order for the website to properly connect to the underneath
+                  grails app (by default). The rest of the fields correspond to SigEvent server API
+                  calls. Please only modify if the API has changed and does not match the given
+                  defaults.</p>
+               <source>
+//var BASE_URL = &quot;http://lanina:8100/sigevent/&quot;;        //for running with a proxy server from anywhere
+//var BASE_URL = &quot;http://localhost:9090/sigevent/&quot;;     //for running locally
+var BASE_URL = &quot;/sigevent/&quot;                             //for running with grails (default)
+
+var EVENTS = &quot;events/&quot;;
+var NOTIFIES = &quot;notifies/&quot;;
+var GROUPS = &quot;groups/&quot;;
+var LIST = &quot;list?format=DOJO_JSON&amp;&quot;;
+var SEARCH = &quot;search?format=DOJO_JSON&amp;&quot;;
+var CREATE = &quot;create?format=JSON&amp;&quot;;
+var DELETE = &quot;delete?format=JSON&amp;&quot;;
+var UPDATE = &quot;update?format=JSON&amp;&quot;;
+               </source></li>
+            <li>Memory Configuration <p>The default JavaVM memory allocation by Grails may not be
+                  sufficient. It is recommended to increase the PermGen memory space. This memory
+                  space is used for dynamically loading of Java classes.</p>
+               <source>
+% setenv JAVA_OPTS &quot;-Xms128m -Xmx512m -Dsun.rmi.dgc.client.gcInterval=3600000 -Dsun.rmi.dgc.server.gcInterval=3600000 -XX:PermSize=256m -XX:MaxPermSize=512m&quot;
+               </source>
+            </li>
+            <li>Data Model Setup Configuration
+               <p>This Data Model Setup files are located in the 'src/sql' directory. It contains
+                  SQL files to load and pre-populate the target environment. The source distribution
+                  only has development environment setup SQL files. <b>Please work with the
+                     development lead to render SQL setup file for target environment other than
+                     Development.</b> A shell script <i>sigevent_schema.sh</i> is developed to
+                  simplify loading of the SQL files. The following example commands demonstrate
+                  clearing and then setting up the data model, respectively:</p>
+               <source>
+% ./sigevent_schema.sh drop -Dusername=&lt;username&gt; -Dpassword=&lt;password&gt; 
+
+% ./sigevent_schema.sh create -Dusername=&lt;username&gt; -Dpassword=&lt;password&gt;
+               </source>
+               <p>Please work with the development lead on environment changes such as add/remove
+                  engine, product type, user, etc..</p>
+            </li>
+            <li>Data Model Setup Configuration <p>In this release, the data model is generated and
+                  loaded into the target DBMS at boot time. SQL schema definition will be added in
+                  next release.</p>
+            </li>
+            <li>Create and Deploy the Web Application <p>After modifying and loading the target
+                  environment information, building the SigEvent web application should be
+                  followed.</p>
+            </li>
+            <li>Grails Environment <p>Before begin the Maven build, the GRAILS_HOME environment
+                  variable must be set.</p>
+               <source>
+% setenv GRAILS_HOME /usr/local/grails
+               </source></li>
+            <li>Copy the Dependencies<p>Since a WAR (Web ARchive) is a self-contained component, it
+                  must be bundled with its own collection of dependencies.</p>
+               <source>
+% mvn dependency:copy-dependencies
+               </source><p>The command
+                  above will download the required JARs to the '<i>target/dependency</i>'
+                  directory</p>
+               <source>
+% cp target/dependency/* lib
+               </source>
+               <p>Grails expects all of its dependencies in the '<i>lib</i>' directory. The copy
+                  command above will satisfy this requirement.</p>
+            </li>
+            <li>Run as Grails application <p>Specific to 5.0.0b, sigevent needs to run as Grails
+                  application instead of creating WAR file and deploying to JBoss.</p>
+               <p>Below is the command to start the sigevent Grails application.</p>
+               <source>
+% grails -Dgrails.env=&lt;GRAILS_ENV&gt; -Dserver.port=&lt;SERVER_PORT&gt; -Dserver.port.https=&lt;HTTPS_SERVER_PORT&gt; -Dserver.host=&lt;SERVER_HOST&gt; run-app -https
+               </source>
+               <p>Here is an example on starting the SigEvent service for development</p>
+               <source>
+% grails -Dgrails.env=development -Dserver.port=8100 -Dserver.port.https=8101 -Dserver.host=lanina.jpl.nasa.gov run-app -https
+               </source>
+               <p>The command above will run sigevent as Grails application. GRAILS_ENV should be
+                  replaced with &quot;test&quot; for testing, and &quot;production&quot; for ops.
+                  SERVER_PORT should be replaced with a port number that sigevent should listen to.
+                  SERVER_HOST should be replaced with a hostname that sigevent should bind to. Note
+                  that it is necessary to open SERVER_HOST:SERVER_PORT to outside in order to to
+                  allow all clients to access to sigevent.</p>
+               <p>The &quot;-https&quot; command starts grails up in normal mode as well as a
+                  listener on an SSL port. To configure the SSL port, include the
+                     &quot;-Dserver.port.https=<i>HTTPS_SERVER_PORT</i>&quot; option.</p>
+               <p>When grails app starts up, it automatically installs the plugins needed. If grails
+                  does not ask to install them, following commands can be executed to install the
+                  plugins.</p>
+            </li>
+         </ul>
+      </section>
+      <section name="Data_Model">
+         <p>The SigEvent web application is built on a data model that supports user authentication,
+            service management, Job scheduling, and product tracking. The diagram below is the data
+            model created on the PostgreSQL database.</p>
+         <img src="../images/domains.jpg" alt=""/>
+         <p>Some key tables to look at</p>
+         <ul>
+            <li>Event Group: top level group of event. All events must have a user-defined category
+               and a type ['INFO', 'WARN', 'ERROR'] associate to it.</li>
+            <li>Event: the event including the source of event and any associated data of the
+               event.</li>
+            <li>Notify: subscriber information. Each subscriber must select a method for
+               notification ['EMAIL', 'JMS', 'MULTICAST'].</li>
+            <li>Outgoing: this is the outgoing service queue. Used by the time-triggered service to
+               publish the event to subscribers.</li>
+         </ul>
+      </section>
+   </body>
+</document>

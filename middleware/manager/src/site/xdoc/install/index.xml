@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Copyright 2013, by the California Institute of Technology. -->
+<!-- ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged. -->
+<!--  -->
+<!-- $Id: $ -->
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+   <properties>
+      <title>Installation</title>
+      <author>Thomas Huang</author>
+   </properties>
+   <body>
+      <section name="Installation">
+         <p>This document describes how to install and configure the Manager web application. </p>
+      </section>
+
+      <section name="Build Instructions">
+         <p>Manager is a web application that is designed and built with the <a class="externalLink"
+               href="http://groovy.codehaus.org/">Groovy</a> programming language and the <a
+               class="externalLink" href="http://grails.org/">Grails</a> web application framework.
+            While both these technologies are fully developed on top of <a class="externalLink"
+               href="http://java.sun.com">Java</a> platform, its support from <a
+               class="externalLink" href="http://maven.apache.org">Maven</a> is still a little
+            behind. The prerequisite for building the Manager web application is the Grails web
+            framework must be installed. Below is the source tree of Manager distribution</p>
+         <img src="../images/manager-source-tree.jpg" alt=""/>
+         <p>While the Manager's business logics are portable to various deployment environment,
+            bootstrap configurations must be made in order for the build to produce the correct WAR
+            (Web Archive) file. The Manager build configuration is divided in to three deployment
+            types: [development, test, production]. Depending on the target deployment, most of the
+            configuration files are being divided into three different configurable sections.</p>
+
+         <subsection name="Bootstrap Configuration">
+            <p>The Manager executes its <i>Bootstrap.groovy</i> script at startup. The script is
+               impelented to load the <i>manager.bootstrap.dev.xml</i> configuration file under the
+                  <i>grails-app/conf/resources</i> folder. It contains information specific to this
+               Manager web service instance, which includes its federation nane, user info, storage,
+               and product typs it supports.</p>
+            <source>
+&lt;bootstrap&gt;
+   &lt;federation&gt;localDev&lt;/federation&gt;
+   &lt;users&gt;
+      &lt;user&gt;
+         &lt;username&gt;thuang&lt;/username&gt;
+         &lt;password&gt;password&lt;/password&gt;
+         &lt;name&gt;Thomas Huang&lt;/name&gt;
+         &lt;email&gt;thomas.huang@jpl.nasa.gov&lt;/email&gt;
+         &lt;role&gt;devAddAndGet&lt;/role&gt;
+         &lt;capabilities&gt;7&lt;/capabilities&gt;
+         &lt;admin&gt;true&lt;/admin&gt;
+         &lt;readAll&gt;true&lt;/readAll&gt;
+         &lt;writeAll&gt;true&lt;/writeAll&gt;
+      &lt;/user&gt;
+      ...
+   &lt;/users&gt;
+   &lt;locations&gt;
+      &lt;location&gt;
+         &lt;stereotype&gt;ARCHIVE&lt;/stereotype&gt;
+         &lt;spaceReserved&gt;42949672960&lt;/spaceReserved&gt;
+         &lt;localPath&gt;/usr/local/tie_data/manager/
+         &lt;/localPath&gt;
+         &lt;protocol&gt;SFTP&lt;/protocol&gt;
+         &lt;hostname&gt;localhost&lt;/hostname&gt;
+         &lt;remotePath&gt;/usr/local/tie_data/manager/
+         &lt;/remotePath&gt;
+      &lt;/location&gt;
+   &lt;/locations&gt;
+   &lt;storages&gt;
+      &lt;storage&gt;
+         &lt;name&gt;localArchiveDev_1&lt;/name&gt;
+         &lt;localPath&gt;/usr/local/tie_data/manager/
+         &lt;/localPath&gt;
+         &lt;priority&gt;NORMAL&lt;/priority&gt;
+      &lt;/storage&gt;
+   &lt;/storages&gt;
+   &lt;remoteSystems&gt;
+      &lt;remoteSystem&gt;
+         &lt;rootUri&gt;ftp://localhost&lt;/rootUri&gt;
+         &lt;organization&gt;JPL&lt;/organization&gt;
+         &lt;maxConnection&gt;2&lt;/maxConnection&gt;
+         &lt;username&gt;ingest&lt;/username&gt;
+         &lt;password&gt;password&lt;/password&gt;
+      &lt;/remoteSystem&gt;
+      ...
+   &lt;/remoteSystems&gt;
+   &lt;productTypes&gt;
+      &lt;productType&gt;
+         &lt;name&gt;MORCR143LLDY_SRC&lt;/name&gt;
+         &lt;localStaged&gt;true&lt;/localStaged&gt;
+      &lt;/productType&gt;
+      ...
+   &lt;/productTypes&gt;
+&lt;/bootstrap&gt;
+            </source>
+            <ul>
+               <li><i>users</i> list of users who can access the Manager Web Serivce</li>
+               <li><i>locations</i> list of storage locations the Manager Web Service manages. A
+                  corresponding <i>stroages</i> entry must exists.</li>
+               <li><i>storages</i> list of physical storages. It is reference by <i>locations</i> to
+                  provide many-to-one relationship, that is, multiple <i>locations</i> could linked
+                  to the same physical storage.</li>
+               <li><i>remoteSystem</i> list of remote systems that requires authentication for
+                  remote ingestion by the Ingest Engines.</li>
+               <li><i>productTypes</i> list of product types to be managed by the Manager Web
+                  Servce</li>
+            </ul>
+         </subsection>
+
+         <subsection name="Database Connection Configuration">
+            <p>The Data Source configuration information is located in the
+                  <i>grails-app/conf/DataSource.groovy</i> file. The configuration is necessary for
+               the Manager web application to connect to its data catalog, which is the operation
+               registry for this web application. By default, Manager supports PostgreSQL database
+               backend. The Grails application framework is built on the Groovy programming
+               language, which is a dynamic scripting langurage for the Java Virtual Machine. One of
+               the advantages of using Groovy is applications can fully take advantage of existing
+               Java libraries and frameworks. For database connection, Grails uses Hibernate
+               object-to-relational framework and the standard Java Database Connectivity (JDBC)
+               architecture.</p>
+
+            <source>
+dataSource {
+   pooled = true
+   driverClassName = "org.postgresql.Driver"
+   url = "jdbc:postgresql://localhost:5432/gibs"
+   dialect = "org.hibernate.dialect.PostgreSQLDialect"
+}
+
+environments {
+   development {
+      dataSource {
+         dbCreate = 'update'
+         logSql = true
+         driverClassName = "org.postgresql.Driver"
+         dialect = "org.hibernate.dialect.PostgreSQLDialect"
+         url = "jdbc:postgresql://localhost:5432/gibs"
+         username = "user"
+         password = 'password'
+      }
+   }
+   test {
+   ...
+   }
+   production {
+   ...
+   }
+}
+            </source>
+         </subsection>
+
+         <subsection name="Connection Ports and Loggers">
+            <p>Details of Grails configuration is documented under <a
+                  href="http://grails.org/doc/2.2.4/guide/conf.html">Grails 2.2.4 Configuration
+                  Guide</a>. For the Manager Web Service, the <i>grails-app/conf/Config.groovy</i>
+               is used for configuring external services connection and logger </p>
+            <ul>
+               <li><i>External Services</i> List of external services (dependencies) the Managers
+                  needs to operate.
+                  <source>
+environments {
+   development {
+      dmas_sigevent_url = "http://localhost:8100/sigevent"
+      dmas_zookeeper_url = "localhost:2181"
+      dmas_zookeeper_ws_url = "localhost:9998"
+      dmas_discovery_url = "http://localhost:8983/solr.war"
+      dmas_dataset_update_federation = "localDev"
+      dmas_dataset_update_purge_rate = 1
+      dmas_dataset_update_sigevent = [[type: "INFO", purgeRate: 1], [type: "WARN", purgeRate: 1], [type: "ERROR", purgeRate: 1]]
+      //SecurityServiceInfo
+      gov.nasa.dmas.security.host = "https://localhost"
+      gov.nasa.dmas.security.port = 9197
+      gov.nasa.dmas.security.realm = "DMAS-MANAGER"
+      //Host and port of inventory service
+      gov.nasa.dmas.inventory.url = "http://localhost:9192"
+      gov.nasa.dmas.inventory.user = "user"
+      gov.nasa.dmas.inventory.pass = "1234"
+   }
+   test {
+   ...
+   }
+   operation {
+   ...
+   }
+}
+                     
+                  </source>
+               </li>
+               <li><i>Logger</i> Grails uses <a href="http://logging.apache.org/log4j/2.x/">Apache
+                     log4j framework</a> for message logging. Grails creates two important daily
+                  rolling log files: the service log and the stacktrace log.
+                  <source>
+log4j = {
+   appenders {
+      console name: 'stdoutLogger',
+            layout: pattern(
+                  conversionPattern: '%d{ABSOLUTE} %-5p [%c{1}:%L] {%t} %m%n')
+
+      appender new org.apache.log4j.DailyRollingFileAppender(
+            name: 'fileLogger',
+            fileName: 'manager.log',
+            layout: pattern(
+                  conversionPattern: '%d %-5p [%c{1}:%L] {%t} %m%n'),
+            datePattern: "'.'yyyy-MM-dd"
+      )
+
+      appender new org.apache.log4j.DailyRollingFileAppender(
+            name: 'stackTraceLogger',
+            fileName: 'manager.stacktrace',
+            layout: pattern(
+                  conversionPattern: '%d %-5p [%c{1}:%L] {%t} %m%n'),
+            datePattern: "'.'yyyy-MM-dd"
+      )
+   }
+
+   root {
+      trace 'stdoutLogger', 'fileLogger'
+      additivity = true
+   }
+
+   error stackTraceLogger: "StackTrace"
+
+   debug 'grails.app',
+         'org.quartz',
+         'gov.nasa.dmas.inventory.api.InventoryApi',
+         'gov.nasa.dmas.common.api.zookeeper',
+         'gov.nasa.dmas.security.client'
+
+
+   error 'org.codehaus.groovy.grails.web.servlet',        // controllers
+         'org.codehaus.groovy.grails.web.pages',          // GSP
+         'org.codehaus.groovy.grails.web.sitemesh',       // layouts
+         'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
+         'org.codehaus.groovy.grails.web.mapping',        // URL mapping
+         'org.codehaus.groovy.grails.commons',            // core / classloading
+         'org.codehaus.groovy.grails.plugins',            // plugins
+         'org.codehaus.groovy.grails.orm.hibernate',      // hibernate integration
+         'org.springframework',
+         'org.hibernate',
+         'net.sf.ehcache.hibernate'
+}                     
+                  </source>
+               </li>
+
+            </ul>
+         </subsection>
+         <subsection name="Memory Configuration">
+            <p>The default JavaVM memory allocation by JBoss may not be sufficient. It is
+               recommended to increase the PermGen memory space. This memory space is used for
+               dynamically loading of Java classes.</p>
+            <source>
+% setenv JAVA_OPTS "-Xms128m -Xmx512m -Dsun.rmi.dgc.client.gcInterval=3600000 -Dsun.rmi.dgc.server.gcInterval=3600000 -XX:PermSize=256m -XX:MaxPermSize=512m"               
+            </source>
+         </subsection>
+         <subsection name="Data Model Setup">
+            <p>The Manager Web Service is built on a data model that supports users authentication,
+               service management, job scheduling, and product tracking. The diagram below is the
+               data model created on the PostgreSQL database.</p>
+
+            <img src="../images/manager-datamodel.jpg" alt=""/>
+
+            <p>This Data Model Setup files are located in the <i>src/sql</i> directory. It contains
+               SQL files to load and pre-populate the target environment. The source distribution
+               only has development environment setup SQL files. <b>Please work with the development
+                  lead to render SQL setup file for target environment other than Development.</b> A
+               shell script manager_schema.sh is developed to simplify loading of the SQL files. The
+               following example commands demonstrate clearing and then setting up the data model
+               and storedprocedures, respectively:
+               <source>
+% ./manager_schema.sh drop-procs -Dusername=&lt;username&gt; -Dpassword=&lt;password&gt;
+
+% ./manager_schema.sh drop -Dusername=&lt;username&gt; -Dpassword=&lt;password&gt;
+
+% ./managert_schema.sh create -Dusername=&lt;username&gt; -Dpassword=&lt;password&gt;
+
+% ./managert_schema.sh create-procs -Dusername=&lt;username&gt; -Dpassword=&lt;password&gt;
+               </source>
+            </p>
+         </subsection>
+      </section>
+      <section name="Dependencies">
+         <p>Manager Web Services uses Apache Maven as it depencency resolution tool. After making
+            the necessary configuration changes, the service needs to have all the required
+            libraries before it can be started. The commands below downloads all the required
+            depencencies and install them into a directory where Grails application can see.</p>
+         <source>
+% cd manager
+% mvn depencency:copy-dependencies
+% cp target/dependency/*jar lib
+         </source>
+      </section>
+   </body>
+</document>

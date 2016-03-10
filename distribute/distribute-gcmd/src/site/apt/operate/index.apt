@@ -1,0 +1,70 @@
+~~ Copyright 2009, by the California Institute of Technology.
+~~ ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+~~
+~~ $Id: index.apt 5914 2010-09-19 01:01:28Z thuang $
+
+  ---
+  Operation
+  ---
+  Dawn Finney, Sean Hardman
+  ---
+  
+Operation
+
+  This document describes how to use the Distribute GCMD application. The following sections can be found in this document:
+
+   * {{{#GCMD_DIF_Generator}GCMD DIF Generator}}
+
+{GCMD DIF Generator}
+
+  The GCMD DIF Generator application reads in one or more specially formatted Excel spreadsheet files containing PO.DAAC product metadata and generates the correspond DIF XML files for submission to the Global Change Master Directory (GCMD). In order to execute the application, change directories to the extracted distribution directory and execute the application as follows (where X.X.X is the current version):
+
++--
+% cd distribute-gcmd-X.X.X
+% java -jar distribute-gcmd-X.X.X.jar [<file1> [<file2> [<filen>]]]
++--
+
+  The input files can include one or more Excel spreadsheet files <.xls> or may be a configuration file <.txt> like the following example:
+
++--
+INPUT PATH: ../input/input.xls
+OUTPUT PATH: ../output
+
+INCLUDE PRODUCT NUMBERS: 184, 185, 162, 163
+EXCLUDE PRODUCT NUMBERS: 
+
+GCMD VALIDATION (Y/N): Y
+XML SCHEMA VALIDATION (Y/N): N
++--
+
+  Assuming the above file was named <input.txt>, the application would be executed as follows:
+
++--
+% java -jar distribute-gcmd-X.X.X.jar input.txt
++--
+
+  The result is that the application would parse the <input.xls> file and generate DIF-formatted XML files for each of the products listed by number and then perform validation utilizing the GCMD web-based service.
+
+  The application also accepts the following arguments on the command-line:
+
+  * output : This argument allows specification of the output directory. If not specified, the output files are written to the local directory.
+
+  * flag : This argument toggles whether to include or exclude numbers specified in the <xlist> argument. Valid values are <include> and <exclude> or <i> and <e>.
+
+  * xlist : This argument allows specification of a list of product numbers, separated by commas, to be included or excluded from DIF generation.
+
+  * gcmd : This argument toggles whether or not to perform GCMD validation of the output content. Valid values are <true> and <false> or <t> and <f>.
+
+  * xml : This argument toggles whether or not to perform XML validation of the output content. Valid values are <true> and <false> or <t> and <f>.
+
+  * mainsave : This argument toggles whether or not to save the main report.
+
+
+  An equivalent execution using command-line arguments to the configuration file example above is the following:
+
++--
+% java -jar distribute-gcmd-X.X.X.jar -Doutput=../output -Dflag=include -Dxlist=184,185,162,163 \
+-Dgcmd=true -Dxml=false
++--
+
+  It is important to note that configuration file specifications hold precedence over command-line argument specifications.

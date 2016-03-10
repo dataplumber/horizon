@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Copyright 2008, by the California Institute of Technology. -->
+<!-- ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged. -->
+<!--  -->
+<!-- $Id: $ -->
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+   <properties>
+      <title>Compilation</title>
+      <author>T. Huang</author>
+   </properties>
+   <body>
+      <section name="Compilation">
+         <p>This document describes how to setup and build the Security API program set. The
+            following sections can be found in this document:</p>
+         <ul>
+            <li><a href="#Setup">Setup</a></li>
+            <li><a href="#Build">Build</a></li>
+         </ul>
+         <p>This document assumes that the Security-API program set source tree has already been
+            checked out to the local environment. See the <a class="externalLink"
+               href="https://horizon/docs/horizon/cm/subversion/index.html">Using Subversion</a> document
+            for details regarding the use of Subversion in HORIZON.</p>
+      </section>
+      <section name="Setup" id="Setup">
+         <p>This section contains the instructions for changing the system properties for the
+            runtime environment.</p>
+         <p>Before building the Security API (SAPI) distribution package, the
+               <i>sapi.filters.properties</i> filters properties file should be modified. Then,
+            Maven will build the configuration files and scripts with the changes embedded. Those
+            built configuration files and scripts will be included in the Archive distribution
+            package, which is described in the <a href="../install/index.html#Distribution_Contents"
+               >Distribution Contents</a> section of the <a href="../install/index.html"
+               >Installation</a> document.</p>
+         <p>From the top-level of the Archive program set source directory, perform the following
+            command to view the current settings in the properties file:</p>
+         <source>% more src/main/filters/archive.filters.properties
+
+sapi.home=/usr/local/daac</source>
+         <p>Using your favorite editor, modify the properties in the <i>sapi.filters.properties</i>
+            file for the target environment referencing the following table where necessary:</p>
+         <table align="center" border="1">
+            <tr valign="top">
+               <th align="left"><b>System Property </b></th>
+               <th align="left"><b>Description</b></th>
+               <th align="left"><b>Default Value</b></th>
+            </tr>
+            <tr valign="top">
+               <td align="left">sapi.home</td>
+               <td align="left">Root directory for SAPI Distribution</td>
+               <td align="left">/usr/local/daac</td>
+            </tr>
+         </table>
+         <p>Now that the properties are configured for the target environment, it is time to build
+            the Security API distribution package. To verify the above setup, follow the steps in
+            the <a href="../install/index.html#Setup_Verification">Setup Verification</a> section of
+            the <a href="../install/index.html">Installation</a> document after the distribution
+            package has been built.</p>
+      </section>
+      <section name="Build" id="Build">
+         <p>From the top-level of the Security-API program set source directory, perform the
+            following commands to clean up any artifacts and then build the Security API
+            distribution package.</p>
+         <source>% mvn clean
+% mvn package</source>
+         <p>After a successful build, the distribution package can be found in the <i>target</i>
+            directory named <i>security-api-X.X.X-sapi.tar.gz</i> where <i>X.X.X</i> is the current
+            version. See the <a href="../install/index.html#Distribution_Contents">Distribution
+               Contents</a> section of the <a href="../install/index.html">Installation</a> document
+            for a description of the distribution package contents.</p>
+      </section>
+   </body>
+</document>

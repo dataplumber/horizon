@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!--
+Copyright 2013, by the California Institute of Technology.
+ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+
+$Id: $
+-->
+
+<project xmlns="http://maven.apache.org/DECORATION/1.4.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/DECORATION/1.4.0 http://maven.apache.org/xsd/decoration-1.4.0.xsd"
+   name="Ingest Commons">
+   <bannerLeft>
+      <src>images/horizon_logo.jpg</src>
+      <href>http://horizon.jpl.nasa.gov/</href>
+   </bannerLeft>
+
+   <bannerRight>
+      <name>Ingest Commons</name>
+   </bannerRight>
+
+   <body>
+      <links>
+         <item name="Ingest Commons"
+            href="http://horizon.jpl.nasa.gov/docs/horizon/ingest/ingest-commons/index.html"/>
+      </links>
+
+      <menu name="Software Documentation">
+         <item name="About Ingest Commons" href="index.html"/>
+         <item name="GroovyDoc" href="apidocs/index.html"/>
+      </menu>
+
+      <menu ref="reports"/>
+   </body>
+</project>

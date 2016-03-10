@@ -1,0 +1,59 @@
+#!/usr/bin/perl -w
+# -*-Perl-*-
+#
+### =============================================================== ###
+#                                                                     #
+#  The MRF Subscriber Application                                     #
+#                                                                     #
+#  Function:                                                          #
+#  Query inventory for new products, post jobs to ZK.                 #
+#  Use the help command option to display usage.                      #
+#                                                                     #
+#  Assumptions:                                                       #
+#  - Perl 5 is installed on the target platform in /usr/bin/perl      #
+#  - The $HORIZON environment variable must point to the directory    #
+#    containing all the client configuration files                    #
+#                                                                     #
+#  Copyright (c) 2007-2013, Jet Propulsion Laboratory,                #
+#  California Institute of Technology.  All rights reserved           #
+#                                                                     #
+#  Created:                                                           #
+#  Dec. 9, 2013 C. Alarcon {Christian.Alarcon@jpl.nasa.gov}           #
+#                                                                     #
+#  Modifications:                                                     #
+#                                                                     #
+### =============================================================== ###
+#
+# $Id: $
+#
+
+use strict;
+use File::Spec;
+die "[ERROR] HORIZON environment variable is not set.\n" unless $ENV{HORIZON};
+require File::Spec->catdir($ENV{HORIZON}, 'horizon_config.pm');
+                                                                                
+#umask 077;
+
+#set $debug to 1 to turn on trace info
+my $debug=0;
+
+my $javaCmd = &getCmd ($debug);
+my $classpath = $ENV{CLASSPATH} ? $ENV{CLASSPATH} : "";
+my @args = &getJVMArgs($classpath, $debug);
+                                                                              
+my $logconfig = File::Spec->catdir($ENV{HORIZON}, 'horizon_client.lcf');
+my $logfile =  File::Basename::basename($0).".log";
+
+push @args, "-Dhorizon.home=".File::Spec->catdir($ENV{HORIZON}, '..');
+push @args, "-Dhorizon.logging.path=$ENV{HORIZON_LOGGING}";
+push @args, "-Dhorizon.logging.file=$logfile";
+push @args, "-Dlog4j.configuration=file://$logconfig";
+push @args, "-Dlog4j.configuratorClass=org.apache.log4j.xml.DOMConfigurator";
+push @args, "-Ddistribute.config.file=".File::Spec->catdir($ENV{HORIZON}, 'distribute.config');
+push @args, "-Ddistribute.source.lookup=".File::Spec->catdir($ENV{HORIZON}, 'source.lookup.config');
+push @args, "gov.nasa.gibs.distribute.subscriber.Subscriber";
+push @args, @ARGV;
+
+print "\n $javaCmd @args\n\n" if ($debug);
+my $returnValue = system $javaCmd, @args;
+exit $returnValue >> 8;

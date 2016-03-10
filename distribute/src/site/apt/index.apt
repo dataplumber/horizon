@@ -1,0 +1,14 @@
+~~ Copyright 2008, by the California Institute of Technology.
+~~ ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+~~
+~~ $Id: index.apt 819 2008-03-20 00:34:45Z shardman $
+
+  ---
+  About Distribute
+  ---
+  Sean Hardman
+  ---
+  
+About Distribute
+
+  The Distribute program set provides the user interface elements of the system that sends/makes available to users data from the Archive program set and/or metadata from the Inventory program set. The software will accept Orders from the Order/Subscribe program set and executes them to provide users the data/metadata of interest. The software will also perform transformations on the data (subsetting, reformatting, compressing, packaging) when requested.

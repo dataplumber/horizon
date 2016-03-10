@@ -1,0 +1,12 @@
+/* Browser specific (not valid) styles to make preformatted text wrap */
+pre { 
+ white-space: pre;            /* CSS2 */
+ white-space: pre-wrap;       /* css-3 */
+ white-space: pre-line;       /* CSS 3 (and 2.1) */
+ white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+ white-space: -hp-pre-wrap;   /* HP printers */
+ white-space: -pre-wrap;      /* Opera 4-6 */
+ white-space: -o-pre-wrap;    /* Opera 7 */
+ word-wrap: break-word;       /* Internet Explorer 5.5+ */
+ _white-space: pre; /* IE only hack to re-specify in addition to word-wrap */
+}

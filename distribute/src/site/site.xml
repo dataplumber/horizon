@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- 
+  Copyright 2008, by the California Institute of Technology.
+  ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+
+  $Id: site.xml 3733 2009-09-01 21:24:15Z thuang $
+-->
+
+<project name="Distribute Program Set">
+  <bannerLeft>
+    <src>images/podaac_logo.jpg</src>
+    <href>http://podaac-cm.jpl.nasa.gov/</href>
+  </bannerLeft>
+
+  <bannerRight>
+    <name>Distribute Program Set&nbsp;&nbsp;</name>
+  </bannerRight>
+
+  <body>
+    <links>
+      <item name="Distribute" href="http://podaac-cm.jpl.nasa.gov/docs/distribute/index.html" />
+    </links>
+
+    <menu name="Software Documentation">
+      <item name="About Distribute" href="index.html"/>
+      <item name="Release Description" href="release/index.html"/>
+    </menu>
+
+    <menu name="Modules">
+      <item name="Distribute Code Generation" href="distribute-gen/index.html"/>
+      <item name="Distribute Main" href="distribute-main/index.html"/>
+      <item name="Distribute GCMD" href="distribute-gcmd/index.html"/>
+      <item name="Distribute Subscriber" href="distribute-subscriber/index.html"/>
+    </menu>
+
+    <menu ref="reports"/>
+  </body>
+</project>

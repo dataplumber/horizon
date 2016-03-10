@@ -1,0 +1,2 @@
+45 0,6,12,18 * * * source /home/jason_ops/j1-streamline/trunk/src/updateCatalog/environment.sh; cd /home/jason_ops/j1-streamline/trunk/src/updateCatalog; ant BuildCatalog > /home/jason_ops/streamlining_BuildCatalog_error.log 2>&1
+55 0,6,12,18 * * * source /home/jason_ops/j1-streamline/trunk/src/updateCatalog/environment.sh; cd /home/jason_ops/j1-streamline/trunk/src/updateCatalog; ant MakePublic > /home/jason_ops/streamlining_MakePublic_error.log 2>&1

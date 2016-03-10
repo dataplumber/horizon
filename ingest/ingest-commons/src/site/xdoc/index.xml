@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Copyright 2013, by the California Institute of Technology. -->
+<!-- ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged. -->
+<!--  -->
+<!-- $Id: $ -->
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+   <properties>
+      <title>About Ingest Commons</title>
+      <author>T. Huang</author>
+   </properties>
+   <body>
+      <section name="About Ingest Commons">
+         <p>The Ingest Commons module contains common operations such as I/O, data
+            compression/decompression, checksum generation and validation, XML processing, email,
+            and so on.</p>
+      </section>
+   </body>
+</document>

@@ -1,0 +1,43 @@
+~~ Copyright 2008-2009, by the California Institute of Technology.
+~~ ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+~~
+~~ $Id: index.apt 2857 2009-04-30 02:07:51Z shardman $
+
+  ---
+  Installation
+  ---
+  Sean Hardman
+  ---
+  
+Installation
+
+  This document describes how to install and configure the Monitor module of the Administer program set. The following sections can be found in this document:
+
+   * {{{#Distribution_Contents}Distribution Contents}}
+
+{Distribution Contents}
+
+  The program set is packaged in a self-contained TAR/GZIP file. The package can be extracted with the following command (where X.X.X is the current version):
+
++--
+% tar -xzvf administer-X.X.X-administer.tar.gz
++--
+
+  Below is an illustration of the distribution after it has been extracted:
+
+[../images/admin-monitor_dist.jpg]
+
+  The contents of the package are as follows:
+
+  * <<<bin>>> - Directory containing the monitor scripts.
+
+      * <<<login.sql>>> - An SQL script containing default settings for the Oracle sqlplus utility.
+
+      * <<<monitor>>> - An executable Bourne Shell script for executing the monitor queries against a target database. This script executes the <monitor.xml> script.
+
+      * <<<monitor.xml>>> - An Ant script for executing the monitor queries against a target database. This script is executed via the <monitor> script.
+
+      * <<<sqlplus.sh>>> - An executable Bourne Shell script for executing the Oracle sqlplus utility.
+
+      * <<<*.sql>>> - SQL scripts for specific monitor functions.
+

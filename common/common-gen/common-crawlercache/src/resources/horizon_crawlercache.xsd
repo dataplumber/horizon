@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+   Copyright (c) 2008
+   Jet Propulsion Laboratory, California Institute of Technology
+   All rights reserved
+   
+   This XML schema defines HORIZON crawler file metadata cache structure
+   
+   @author T. Huang {Thomas.Huang@jpl.nasa.gov}
+   @version $Id: $
+-->
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+   xmlns:horizon.nasa="http://horizon.nasa.gov/webservice/schema"
+   targetNamespace="http://horizon.nasa.gov/webservice/schema" elementFormDefault="qualified">
+
+   <xsd:element name="crawlercache">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="fileinfo" minOccurs="0" maxOccurs="unbounded">
+               <xsd:complexType>
+                  <xsd:sequence>
+                     <xsd:element name="name" type="xsd:string"/>
+                     <xsd:element name="modified" type="xsd:nonNegativeInteger"/>
+                     <xsd:element name="size" type="xsd:nonNegativeInteger"/>
+                     <xsd:element name="checksum" minOccurs="0" maxOccurs="1">
+                        <xsd:complexType>
+                           <xsd:sequence>
+                              <xsd:element name="algorithm">
+                                 <xsd:simpleType>
+                                    <xsd:restriction base="xsd:string">
+                                       <xsd:enumeration value="MD2"/>
+                                       <xsd:enumeration value="MD5"/>
+                                       <xsd:enumeration value="SHA-1"/>
+                                       <xsd:enumeration value="SHA1"/>
+                                       <xsd:enumeration value="SHA-256"/>
+                                       <xsd:enumeration value="SHA256"/>
+                                       <xsd:enumeration value="SHA-384"/>
+                                       <xsd:enumeration value="SHA384"/>
+                                       <xsd:enumeration value="SHA-512"/>
+                                       <xsd:enumeration value="SHA512"/>
+                                    </xsd:restriction>
+                                 </xsd:simpleType>
+                              </xsd:element>
+                              <xsd:element name="value" type="xsd:string"/>
+                           </xsd:sequence>
+                        </xsd:complexType>
+                     </xsd:element>
+                  </xsd:sequence>
+               </xsd:complexType>
+            </xsd:element>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+
+</xsd:schema>

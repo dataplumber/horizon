@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+   Copyright (c) 2007
+   Jet Propulsion Laboratory, California Institute of Technology
+   All rights reserved
+   
+   This XML schema defines client application to the HORIZON ingestion services
+   
+   
+   @author T. Huang {Thomas.Huang@jpl.nasa.gov}
+   @version $Id: horizon_ingest_interface.xsd 205 2007-09-20 17:54:46Z thuang $
+-->
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+   xmlns:horizon.nasa="http://horizon.jpl.nasa.gov/webservice/schema"
+   targetNamespace="http://horizon.jpl.nasa.gov/webservice/schema" elementFormDefault="qualified">
+
+   <xsd:element name="ingestclient">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="group" type="horizon.nasa:groupType" maxOccurs="unbounded"/>
+         </xsd:sequence>
+         <xsd:attribute name="defaultgroup" type="xsd:string" use="required"/>
+      </xsd:complexType>
+   </xsd:element>
+
+   <xsd:complexType name="groupType">
+      <xsd:sequence>
+         <xsd:choice minOccurs="1" maxOccurs="unbounded">
+            <xsd:element name="server" type="horizon.nasa:serverType"/>
+         </xsd:choice>
+      </xsd:sequence>
+      <xsd:attribute name="name" type="xsd:string" use="required"/>
+   </xsd:complexType>
+
+   <xsd:element name="digest">
+      <xsd:complexType>
+         <xsd:sequence/>
+         <xsd:attribute name="compressed" type="xsd:boolean"/>
+         <xsd:attribute name="algorithm">
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:enumeration value="MD5"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:attribute>
+      </xsd:complexType>
+   </xsd:element>
+
+   <xsd:element name="encryption">
+      <xsd:simpleType>
+         <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="NONE"/>
+            <xsd:enumeration value="SSL"/>
+         </xsd:restriction>
+      </xsd:simpleType>
+   </xsd:element>
+
+   <xsd:complexType name="connectionType">
+      <xsd:sequence>
+         <xsd:element name="uri" type="xsd:anyURI"/>
+         <xsd:element name="publish" type="horizon.nasa:topicType"/>
+         <xsd:element name="subscribe" type="horizon.nasa:topicType"/>
+      </xsd:sequence>
+      <xsd:attribute name="timeout" use="optional">
+         <xsd:simpleType>
+            <xsd:restriction base="xsd:integer">
+               <xsd:minInclusive value="0"/>
+               <xsd:maxInclusive value="5"/>
+            </xsd:restriction>
+         </xsd:simpleType>
+      </xsd:attribute>
+   </xsd:complexType>
+
+   <xsd:simpleType name="topicType">
+      <xsd:restriction base="xsd:string">
+         <xsd:enumeration value="SOCKET"/>
+         <xsd:enumeration value="ALL"/>
+         <xsd:enumeration value="SIP_POST"/>
+         <xsd:enumeration value="SIP_ACK"/>
+         <xsd:enumeration value="SIP_COMPLETE"/>
+         <xsd:enumeration value="AIP_POST"/>
+         <xsd:enumeration value="AIP_ACK"/>
+         <xsd:enumeration value="DIP_POST"/>
+         <xsd:enumeration value="MANAGEMENT"/>
+         <xsd:enumeration value="SIGEVENTS"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+
+   <xsd:simpleType name="serverCatType">
+      <xsd:restriction base="xsd:string">
+         <xsd:enumeration value="TCP"/>
+         <xsd:enumeration value="JMS"/>
+         <xsd:enumeration value="HTTP"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+
+   <xsd:complexType name="serverType">
+      <xsd:sequence>
+         <xsd:element name="connection" type="horizon.nasa:connectionType"/>
+         <xsd:element ref="horizon.nasa:digest"/>
+         <xsd:element ref="horizon.nasa:encryption"/>
+      </xsd:sequence>
+      <xsd:attribute name="name" type="xsd:string"/>
+      <xsd:attribute name="type" type="horizon.nasa:serverCatType"/>
+   </xsd:complexType>
+
+</xsd:schema>

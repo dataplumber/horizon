@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- 
+Copyright 2007-2013, by the California Institute of Technology.
+ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+
+$Id: $
+-->
+
+<project xmlns="http://maven.apache.org/DECORATION/1.4.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/DECORATION/1.4.0 http://maven.apache.org/xsd/decoration-1.4.0.xsd"
+   name="Data Management and Archive System CM">
+
+   <bannerLeft>
+      <src>images/horizon_logo.jpg</src>
+      <href>https://horizon.jpl.nasa.gov/</href>
+   </bannerLeft>
+
+   <bannerRight>
+      <name>Data Management and Archive System CM</name>
+   </bannerRight>
+
+   <body>
+      <menu name="CM Documentation">
+         <item name="About HORIZON CM" href="index.html"/>
+         <item name="Using Subversion" href="subversion/index.html"/>
+         <item name="Using Maven" href="maven/index.html"/>
+         <item name="Package Release" href="package/index.html"/>
+      </menu>
+
+      <menu name="System Documentation">
+         <item name="Release Description" href="release/index.html"/>
+      </menu>
+
+      <menu name="Program Sets">
+         <item name="Archive" href="../archive/index.html"/>
+         <item name="Common" href="../common/index.html"/>
+         <item name="Data Handlers" href="../data-handlers/index.html"/>
+         <item name="Ingest" href="../ingest/index.html"/>
+         <item name="Middleware" href="../middleware/index.html"/>
+      </menu>
+
+      <menu ref="reports"/>
+   </body>
+</project>

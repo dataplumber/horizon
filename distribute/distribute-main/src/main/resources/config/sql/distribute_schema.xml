@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (c) 2008, by the California Institute of Technology.
+  ALL RIGHTS RESERVED. U.S. Government sponsorship acknowledged.
+
+  $Id: distribute_schema.xml 1503 2008-07-24 00:18:15Z shardman $
+-->
+
+<!--
+  This script allows the user to create or drop the Distribute
+  database schema by executing this script via ant or the 
+  distribute_schema.sh script.
+-->
+
+<project name="distribute" default="usage">
+
+  <!-- Load user-overriding properties. -->
+  <property file="${user.home}/.ant.properties"/>
+
+  <!--
+    Define local properties for all targets if they haven't already
+    been defined on the command-line or in the configuration file. 
+  -->
+  <property name="driver" 
+            value="oracle.jdbc.driver.OracleDriver"/>
+  <property name="url" 
+            value="jdbc:oracle:thin:@seadb.jpl.nasa.gov:1526:DAACDEV"/>
+  <property name="jar"
+            value="${user.home}/.m2/repository/com/oracle/ojdbc14/10.2.0.3.0/ojdbc14-10.2.0.3.0.jar"/>
+
+  <!-- Echo the connection properties. -->
+  <echo level="info" message="The connection properties are set as follows:"/>
+  <echo level="info" message="driver:  ${driver}"/>
+  <echo level="info" message="url:     ${url}"/>
+  <echo level="info" message="jar:     ${jar}"/>
+
+  <!-- Echo usage to the terminal. -->
+  <target name="usage">
+    <echo level="info" message="This script allows the user to create or drop the Distribute database schema."/>
+    <echo level="info"/>
+    <echo level="info" message="List all of the available targets as follows:"/>
+    <echo level="info" message="distribute_schema.sh [-p | -projecthelp]"/>
+    <echo level="info"/>
+    <echo level="info" message="Execute one or more of the targets as follows:"/>
+    <echo message="distribute_schema.sh [&lt;target&gt; [&lt;target&gt; [...]]]"/>
+    <echo level="info"/>
+    <echo level="info" message="Execute a target with user name and password as follows:"/>
+    <echo message="distribute_schema.sh &lt;target&gt; -Dusername=&lt;username&gt; -Dpassword=&lt;password&gt;"/>
+  </target>
+
+  <!-- Drop the Distribute schema. -->
+  <target name="drop"
+          description="Drop the Distribute schema.">	
+    <sql driver="${driver}" url="${url}" userid="${username}" password="${password}" keepformat="true" onerror="continue">
+      <classpath>
+        <pathelement path="${jar}"/>      
+      </classpath>
+      <transaction src="drop_echo_package.sql"/>
+    </sql>
+  </target>
+
+  <!-- Create the Distribute schema. -->
+  <target name="create"
+          description="Create the Distribute schema.">	
+    <sql driver="${driver}" url="${url}" userid="${username}" password="${password}" keepformat="true" delimiter="/" delimitertype="row">
+      <classpath>
+        <pathelement path="${jar}"/>      
+      </classpath>
+      <transaction src="create_echo_package.sql"/>
+    </sql>
+  </target>
+	    
+  <!-- Drop and create the Distribute schema. -->
+  <target name="reload"
+          description="Drop and create the Distribute schema."
+          depends="drop, create">
+  </target>
+
+</project>

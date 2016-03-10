@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+
+<!--
+   Copyright 2007, by the California Institute of Technology.
+   ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+
+   Assembly file used to create server distribution
+
+   @author Thomas Huang {Thomas.Huang@jpl.nasa.gov}
+   @version $Id: ingest-server.xml 1896 2008-09-18 18:44:56Z thuang $
+-->
+
+<assembly xmlns="http://maven.apache.org/POM/4.0.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+   http://maven.apache.org/xsd/assembly-1.0.0.xsd">
+   <id>ingest-server</id>
+   <formats>
+      <format>tar.gz</format>
+   </formats>
+   <fileSets>
+      <fileSet>
+         <directory>target</directory>
+         <outputDirectory>lib</outputDirectory>
+         <includes>
+            <include>*.jar</include>
+         </includes>
+      </fileSet>
+      <fileSet>
+         <directory>src/main/resources/sbin</directory>
+         <outputDirectory>sbin</outputDirectory>
+         <includes>
+            <include>*</include>
+         </includes>
+         <excludes>
+            <exclude>*.formatted</exclude>
+         </excludes>
+         <fileMode>755</fileMode>
+         <lineEnding>unix</lineEnding>
+      </fileSet>
+      <fileSet>
+         <directory>src/main/resources/config</directory>
+         <outputDirectory>config</outputDirectory>
+         <includes>
+            <include>*</include>
+         </includes>
+         <excludes>
+            <exclude>*.formatted</exclude>
+         </excludes>
+         <lineEnding>unix</lineEnding>
+         <fileMode>600</fileMode>
+      </fileSet>
+      <fileSet>
+         <directory>src/main/resources</directory>
+         <outputDirectory/>
+         <includes>
+            <include>useHORIZON.csh</include>
+         </includes>
+         <excludes>
+            <exclude>*.formatted</exclude>
+         </excludes>
+         <lineEnding>unix</lineEnding>
+         <fileMode>744</fileMode>
+      </fileSet>
+   </fileSets>
+   <dependencySets>
+      <dependencySet>
+         <outputDirectory>lib</outputDirectory>
+         <unpack>false</unpack>
+         <scope>runtime</scope>
+         <excludes>
+            <exclude>ant-*.jar</exclude>
+            <exclude>xerces*.jar</exclude>
+            <exclude>xml-api*.jar</exclude>
+            <exclude>junit*.jar</exclude>
+         </excludes>
+      </dependencySet>
+   </dependencySets>
+</assembly>

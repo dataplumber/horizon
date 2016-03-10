@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+
+<!-- 
+  Copyright 2008, by the California Institute of Technology.
+  ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+ 
+  $Id: distribute-main.xml 2369 2008-12-05 05:44:59Z clwong $
+-->
+
+<assembly xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+  http://maven.apache.org/xsd/assembly-1.0.0.xsd">
+  <id>distribute-main</id>
+  <formats>
+    <format>tar.gz</format>
+  </formats>
+  <fileSets>
+     <fileSet>
+        <directory>target</directory>
+        <outputDirectory>lib</outputDirectory>
+        <includes>
+           <include>*.jar</include>
+        </includes>
+     </fileSet>
+     <fileSet>
+        <directory>target/test-classes/bin</directory>
+        <outputDirectory>bin</outputDirectory>
+        <includes>
+           <include>*</include>
+        </includes>
+        <fileMode>755</fileMode>
+        <lineEnding>unix</lineEnding>
+     </fileSet>
+     <fileSet>
+        <directory>target/test-classes/config</directory>
+        <outputDirectory>config</outputDirectory>
+        <includes>
+           <include>*</include>
+        </includes>
+        <lineEnding>unix</lineEnding>
+        <fileMode>644</fileMode>
+     </fileSet>
+     <fileSet>
+        <directory>target/test-classes/config/schemas</directory>
+        <outputDirectory>config/schemas</outputDirectory>
+        <includes>
+           <include>*.xsd</include>
+        </includes>
+        <lineEnding>unix</lineEnding>
+        <fileMode>644</fileMode>
+     </fileSet>
+     <fileSet>
+        <directory>target/test-classes/config/sql</directory>
+        <outputDirectory>config/sql</outputDirectory>
+        <includes>
+           <include>*.sql</include>
+           <include>*.xml</include>
+        </includes>
+        <lineEnding>unix</lineEnding>
+        <fileMode>644</fileMode>
+     </fileSet>
+     <fileSet>
+        <directory>target/test-classes/config/sql</directory>
+        <outputDirectory>config/sql</outputDirectory>
+        <includes>
+           <include>*.sh</include>
+        </includes>
+        <lineEnding>unix</lineEnding>
+        <fileMode>755</fileMode>
+     </fileSet>
+  </fileSets>
+  <dependencySets>
+    <dependencySet>
+      <outputDirectory>lib</outputDirectory>
+      <unpack>false</unpack>
+      <scope>runtime</scope>
+    </dependencySet>
+  </dependencySets>
+</assembly>

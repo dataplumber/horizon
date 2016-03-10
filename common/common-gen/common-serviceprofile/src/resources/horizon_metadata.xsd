@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+   Copyright (c) 2008-2013
+   Jet Propulsion Laboratory, California Institute of Technology
+   All rights reserved
+   
+   This XML schema defines the Metadata for data product.
+   
+   @author T. Huang {Thomas.Huang@jpl.nasa.gov}
+   @version $Id: $
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:horizon.nasa="http://horizon.nasa.gov"
+   targetNamespace="http://horizon.nasa.gov" elementFormDefault="qualified">
+   <xsd:include schemaLocation="horizon_common.xsd"/>
+   <xsd:include schemaLocation="horizon_spatial.xsd"/>
+
+   <xsd:complexType name="Metadata">
+      <xsd:annotation>
+         <xsd:documentation> Defines the product metadata that will be catalogged into the HORIZON
+            inventory. </xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element name="batch" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation> The batch name/identifier that is unique for the specific
+                  project. </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+
+         <xsd:element name="temporalCoverage" type="horizon.nasa:TimeStamp" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation> The start and stop time for data within this product.
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+
+         <xsd:element name="ancillaryName" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation> Used to group files when more than one type of data are stored
+                  within a single product type, such as with ancillary or auxiliary data.
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="revolution" type="xsd:nonNegativeInteger" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation> Revolution count. Used when data files are divided into revs or
+                  smaller. For OCO this maps to 'Orbit range'.</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+
+         <xsd:element name="cycle" type="xsd:nonNegativeInteger" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation> A designated interval of time, usually a repeat cycle where the
+                  spacecraft begins to repeat the same coverage path. </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+
+         <xsd:element name="pass" type="xsd:nonNegativeInteger" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation> Half-revolution count. Usually count repeats for each cycle
+                  number of other repeating interval. </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+
+         <xsd:element name="passType" type="horizon.nasa:DataPass" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation> Indicates whether the pass was ascending or descending.
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+
+         <xsd:element name="dayNightMode" type="horizon.nasa:DayNight" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation> Day or Night orbit mode of this product. </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+
+         <xsd:element name="dayOfYearStart" type="xsd:nonNegativeInteger" minOccurs="0"
+            maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation> Day of the year for the start of this product (normally used for
+                  daily or multi-day products). </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+
+         <xsd:element name="observationMode" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>For OCO this maps to 'Observation mode' {Glint, Nadir, Target,
+                  Calibration, All}</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+
+         <xsd:element name="latitudeUnits" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation> Units used in all latitude values </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+
+         <xsd:element name="longitudeUnits" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation> Units used in all longitude values </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+
+         <xsd:element name="latitudeStep" type="xsd:double" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation> Latitudinal distance between lines </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+
+         <xsd:element name="longitudeStep" type="xsd:double" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation> Longitudinal distance between lines </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+
+         <xsd:element name="numberOfLines" type="xsd:nonNegativeInteger" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation> Number of points in the vertical (longitudinal) direction
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+
+         <xsd:element name="numberOfColumns" type="xsd:nonNegativeInteger" minOccurs="0"
+            maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation> Number of points in the horizontal (latitudinal) direction
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+
+         <xsd:element name="spatialCoverage" type="horizon.nasa:SpatialDomain" minOccurs="0"
+            maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation> Spatial attributes. </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+
+         <xsd:element name="extras" type="horizon.nasa:DomainAttribute" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation> List of domain-specific attributes and values.
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="history" type="horizon.nasa:ProductHistory" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>Historical information on the product</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="comment" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation> A comment pertaining to the product. </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         
+         <xsd:element name="dataDays" minOccurs="0" maxOccurs="1">
+             <xsd:annotation>
+                 <xsd:documentation>The list of data days associated with this
+                     product.</xsd:documentation>
+             </xsd:annotation>
+             <xsd:complexType>
+                 <xsd:sequence>
+                     <xsd:element name="dataDay" type="xsd:nonNegativeInteger" minOccurs="1"
+                     maxOccurs="unbounded"/>
+                 </xsd:sequence>
+             </xsd:complexType>
+         </xsd:element>
+         
+         <xsd:element name="partialId" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation> Uniquely identifies a tiled image within its data day's worth of imagery. </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="ProductHistory">
+      <xsd:sequence>
+         <xsd:element name="version" type="xsd:string">
+            <xsd:annotation>
+               <xsd:documentation> The version of the product</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="createDate" type="xsd:nonNegativeInteger">
+            <xsd:annotation>
+               <xsd:documentation> The creation date of the product </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="lastRevisionDate" type="xsd:nonNegativeInteger">
+            <xsd:annotation>
+               <xsd:documentation>The latest revision date of the product.</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="revisionHistory" type="xsd:string">
+            <xsd:annotation>
+               <xsd:documentation>Revision history of the product</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="sources" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>The list of source products used in creating this
+                  product.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="source" type="horizon.nasa:SourceProduct" minOccurs="0"
+                     maxOccurs="unbounded"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="SourceProduct">
+      <xsd:annotation>
+         <xsd:documentation>This captures the source product used in creating this
+            product.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:sequence>
+            <xsd:element name="productType" type="xsd:string"/>
+            <xsd:element name="product" type="xsd:string"/>
+            <xsd:element name="metadataRepo" minOccurs="0" maxOccurs="1">
+               <xsd:simpleType>
+                  <xsd:restriction base="xsd:string">
+                     <xsd:enumeration value="ECHO_REST"/>
+                     <xsd:enumeration value="ECHO_OPENSEARCH"/>
+                     <xsd:enumeration value="PODAAC_OPENSEARCH"/>
+                  </xsd:restriction>
+               </xsd:simpleType>
+            </xsd:element>
+         </xsd:sequence>
+      </xsd:sequence>
+   </xsd:complexType>
+
+</xsd:schema>

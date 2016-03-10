@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Copyright 2008-2009, by the California Institute of Technology. -->
+<!-- ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged. -->
+<!--  -->
+<!-- $Id: $ -->
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+   <properties>
+      <title>Installation</title>
+      <author>T. Huang</author>
+   </properties>
+   <body>
+      <section name="Installation">
+         <p>This document describes how to install and configure the Security API program set. The
+            following sections can be found in this document:</p>
+         <ul>
+            <li><a href="#Distribution_Contents">Distribution Contents</a></li>
+            <li><a href="#Configuration">Configuration</a></li>
+         </ul>
+      </section>
+      <section name="Distribution Contents" id="Distribution_Contents">
+         <p>The program set is packaged in a self-contained TAR/GZIP file. The package can be
+            extracted with the following command (where X.X.X is the current version):</p>
+         <source>% tar -xzvf security-api-X.X.X-Security API.tar.gz</source>
+         <p>Below is an illustration of the distribution after it has been extracted:</p>
+         <img src="../images/security-api_dist.png" alt=""/>
+         <p>The contents of the package are as follows:</p>
+         <ul>
+            <li><i>bin</i> - Directory containing the client executables.<ul>
+                  <li><i>sapi</i> - Executable script to create tokens for the security
+                     service.</li>
+               </ul></li>
+            <li><i>config</i> - Directory containing the configuration files.<ul>
+                  <li><i>sapi.properties</i> - Property file for automatically setting up host/port
+                     information for the command line tool.</li>
+                  <li><i>log4j.properties</i> - Configuration file containing properties used by the
+                     Logging system</li>
+               </ul></li>
+            <li><i>lib</i> - Directory containing the run-time libraries for the executables.</li>
+         </ul>
+      </section>
+      <section name="Configuration" id="Configuration">
+         <p>There is very little configuration needed for the security api standalone command line
+            tool. The only entries that can be entered (but are not required) are the below
+            entries.</p>
+         <source>
+% cd /usr/local/daac/config
+% more sapi.config
+
+security.service.host=&quot;https://localhost&quot;
+security.service.port=9197
+security.service.realm=&quot;HORIZON-INVENTORY&quot;
+
+         </source>
+         <p>The above installation items can be removed completely, and the sapi command line tool
+            will prompt users for input. The realm information is of no consequence at this point,
+            but might be useful in future uses of the tool.</p>
+      </section>
+   </body>
+</document>

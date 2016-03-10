@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+
+<project name="report" basedir="../../" default="usage">
+    <property file="build.properties"/>
+
+    <path id="master-classpath">
+        <fileset dir="${deploy.path}/report/WEB-INF/lib">
+            <include name="*.jar"/>
+        </fileset>
+        <!-- We need the servlet API classes:        -->
+        <!--   for Tomcat 4.1 use servlet.jar        -->
+        <!--   for Tomcat 5.0 use servlet-api.jar    -->
+        <!--   for Other app server - check the docs -->
+        <fileset dir="${appserver.home}/common/lib">
+            <include name="servlet*.jar"/>
+        </fileset>
+        <pathelement path="${deploy.path}/report/WEB-INF/classes"/>
+    </path>
+
+    <target name="usage">
+        <echo message=""/>
+        <echo message="user.home is ${user.home}"/>
+        <echo message=""/>
+        <echo message="${name} build file"/>
+        <echo message="-----------------------------------"/>
+        <echo message=""/>
+        <echo message="Available targets are:"/>
+        <echo message=""/>
+        <echo message="run     --> Run the application do_archive.class"/>
+        <echo message=""/>
+    </target>
+
+  <target name="run" description="Run do_archive">
+    <echo message="Running do_archive ..." />
+    <java classname="util/do_archive" fork="true">
+      <classpath refid="master-classpath" />
+    </java>
+  </target>
+
+<!-- End Tomcat tasks -->
+
+</project>

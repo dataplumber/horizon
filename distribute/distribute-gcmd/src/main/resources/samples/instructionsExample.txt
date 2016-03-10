@@ -1,0 +1,8 @@
+INPUT PATH: test_files/workbook6.xls
+OUTPUT PATH: /net/ftp/pub/users/dfinney/gcmd/
+
+INCLUDE PRODUCT NUMBERS: 184, 185, 162, 163
+EXCLUDE PRODUCT NUMBERS: 
+
+GCMD VALIDATION (Y/N): Y
+XML SCHEMA VALIDATION (Y/N): N

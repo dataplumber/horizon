@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!--
+Copyright 2009, by the California Institute of Technology.
+ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+
+$Id: $
+-->
+
+<project name="Dataset Rollout Tool">
+  <bannerLeft>
+    <src>images/podaac_logo.jpg</src>
+    <href>http://podaac-cm.jpl.nasa.gov/</href>
+  </bannerLeft>
+
+  <bannerRight>
+    <name>Dataset Rollout Tool&nbsp;&nbsp;</name>
+  </bannerRight>
+
+  <body>
+    <links>
+      <item name="PO.DAAC CM" href="http://podaac-cm.jpl.nasa.gov/" />
+    </links>
+
+    <menu name="Software Documentation">
+      <item name="About Dataset Rollout" href="index.html"/>
+      <item name="Installation" href="install/index.html"/>
+      <item name="Operation" href="operate/index.html"/>
+    </menu>
+
+    <menu ref="reports"/>
+  </body>
+</project>

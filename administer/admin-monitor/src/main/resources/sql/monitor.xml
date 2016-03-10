@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (c) 2008-2009, by the California Institute of Technology.
+  ALL RIGHTS RESERVED. U.S. Government sponsorship acknowledged.
+
+  $Id: monitor.xml 2857 2009-04-30 02:07:51Z shardman $
+-->
+
+<!--
+  This script allows the operator to execute queries against the database
+  for the purpose of monitoring operations.
+-->
+
+<project name="monitor" default="usage">
+
+  <!-- Load user-overriding properties. -->
+  <property file="${user.home}/.ant.properties"/>
+
+  <!--
+    Define local properties for all targets if they haven't already
+    been defined on the command-line or in the configuration file. 
+  -->
+  <property name="sqlplus" value="./sqlplus.sh"/>
+
+  <!-- Echo usage to the terminal. -->
+  <target name="usage">
+    <echo level="info" message="This script allows the operator ..."/>
+    <echo level="info"/>
+    <echo level="info" message="List all of the available targets as follows:"/>
+    <echo level="info" message="monitor [-p | -projecthelp]"/>
+    <echo level="info"/>
+    <echo level="info" message="Execute one or more of the targets as follows:"/>
+    <echo message="monitor &lt;target&gt; [-Darg=&lt;arg1&gt; [-Darg=&lt;arg2&gt; [-Darg=&lt;arg3&gt;]]]"/>
+    <echo level="info"/>
+    <echo level="info" message="Execute a target with user name, password and SID as follows:"/>
+    <echo message="monitor &lt;target&gt; -Dusername=&lt;username&gt; -Dpassword=&lt;password&gt; -Dsid=&lt;sid&gt;"/>
+  </target>
+
+  <!-- Monitor all granule ingestion activity. -->
+  <target name="ing-granule-count"
+          description="This target returns the number of granules ingested by product type."> 
+    <exec executable="${sqlplus}">
+      <arg value="${username}"/>
+      <arg value="${password}"/>
+      <arg value="${sid}"/>
+      <arg value="ing_granule_count.sql"/>
+    </exec>
+  </target>
+
+  <!-- Monitor recent granule ingestion activity. -->
+  <target name="ing-granule-count-since"
+          description="This target returns the number of granules ingested by product type for the last number of hours as specified in argument &lt;arg1&gt;."> 
+    <exec executable="${sqlplus}">
+      <arg value="${username}"/>
+      <arg value="${password}"/>
+      <arg value="${sid}"/>
+      <arg value="ing_granule_count_since.sql"/>
+      <arg value="${arg1}"/>
+    </exec>
+  </target>
+
+  <!-- Monitor granules by state. -->
+  <target name="ing-granule-list-by-state"
+          description="This target returns a list of granules for the state specified in argument &lt;arg1&gt;. Valid state values include: PENDING-STORAGE, PENDING, ASSIGNED, STAGED, INVENTORIED, PENDING-ARCHIVE, ARCHIVED and ABORTED."> 
+    <exec executable="${sqlplus}">
+      <arg value="${username}"/>
+      <arg value="${password}"/>
+      <arg value="${sid}"/>
+      <arg value="ing_granule_list_by_state.sql"/>
+      <arg value="${arg1}"/>
+    </exec>
+  </target>
+
+  <!-- Monitor overdue granule ingestion. -->
+  <target name="inv-granule-overdue"
+          description="This target returns each dataset where granules have not been received within the policy's specified frequency."> 
+    <exec executable="${sqlplus}">
+      <arg value="${username}"/>
+      <arg value="${password}"/>
+      <arg value="${sid}"/>
+      <arg value="inv_granule_overdue.sql"/>
+    </exec>
+  </target>
+
+  <!-- Report granule ingestion metrics. -->
+  <target name="inv-granule-metrics-since"
+          description="This target returns the ingested granule count and average amount of hours from ingest to archive per day for the last number of days as specified in the argument &lt;arg1&gt;."> 
+    <exec executable="${sqlplus}">
+      <arg value="${username}"/>
+      <arg value="${password}"/>
+      <arg value="${sid}"/>
+      <arg value="inv_granule_metrics_since.sql"/>
+      <arg value="${arg1}"/>
+    </exec>
+  </target>
+
+</project>

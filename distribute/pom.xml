@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- 
+  Copyright 2008, by the California Institute of Technology.
+  ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+  
+  $Id: pom.xml 10506 2012-08-28 22:16:30Z thuang $
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+   http://maven.apache.org/xsd/maven-4.0.0.xsd">
+   <modelVersion>4.0.0</modelVersion>
+   <parent>
+      <groupId>gov.nasa.horizon</groupId>
+      <artifactId>horizon</artifactId>
+      <version>0.0.0</version>
+   </parent>
+
+   <groupId>gov.nasa.horizon</groupId>
+   <artifactId>distribute</artifactId>
+   <version>5.0.0e</version>
+   <packaging>pom</packaging>
+
+   <name>Distribute Program Set</name>
+   <description> The Distribute program set provides services for accessing and distributing data and
+    metadata from the HORIZON holdings. </description>
+
+   <properties>
+      <project.build.sourceEncoding> UTF-8 </project.build.sourceEncoding>
+      <project.reporting.outputEncoding> UTF-8 </project.reporting.outputEncoding>
+   </properties>
+
+   <modules>
+      <!-- <module>distribute-gcmd</module> -->
+      <!-- <module>distribute-gen</module> -->
+      <module>distribute-main</module>
+      <module>distribute-subscriber</module>
+   </modules>
+
+   <build>
+      <plugins>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-site-plugin</artifactId>
+            <version>2.1.1</version>
+            <dependencies>
+               <dependency>
+                  <groupId>commons-httpclient</groupId>
+                  <artifactId>commons-httpclient</artifactId>
+                  <version>3.1</version>
+                  <exclusions>
+                     <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                     </exclusion>
+                  </exclusions>
+               </dependency>
+            </dependencies>
+         </plugin>
+         <plugin>
+            <inherited>true</inherited>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>2.3.1</version>
+            <configuration>
+               <source>1.6</source>
+               <target>1.6</target>
+            </configuration>
+         </plugin>
+      </plugins>
+   </build>
+
+<!--
+   <repositories>
+      <repository>
+         <id>podaac-repo</id>
+         <name>PO.DAAC Repository</name>
+         <url>http://podaac-cm.jpl.nasa.gov/maven2</url>
+         <releases>
+            <updatePolicy>always</updatePolicy>
+            <checksumPolicy>warn</checksumPolicy>
+         </releases>
+         <snapshots>
+            <enabled>false</enabled>
+         </snapshots>
+      </repository>
+   </repositories>
+-->
+   <reporting>
+      <plugins>
+         <plugin>
+            <artifactId>maven-project-info-reports-plugin</artifactId>
+            <reportSets>
+               <reportSet>
+                  <reports>
+                     <report>dependencies</report>
+                     <report>summary</report>
+                  </reports>
+               </reportSet>
+            </reportSets>
+         </plugin>
+         <plugin>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <configuration>
+               <use>false</use>
+            </configuration>
+         </plugin>
+         <plugin>
+            <artifactId>maven-surefire-report-plugin</artifactId>
+         </plugin>
+      </plugins>
+   </reporting>
+</project>

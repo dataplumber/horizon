@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Copyright 2013, by the California Institute of Technology. -->
+<!-- ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged. -->
+<!--  -->
+<!-- $Id: $ -->
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+   <properties>
+      <title>Operation</title>
+      <author>T. Huang</author>
+   </properties>
+   <body>
+      <section name="Overview">
+         <p>The Security Service WS is a middleware application implemented using the <a
+               class="externalLink" href="http://grails.org">Grails</a> web framework. The purpose
+            of this middleware application is to be the centralized service for Authorization and
+            Authentication.</p>
+         <ul>
+            <li><a href="#Intro">Intro</a></li>
+            <li><a href="#Authentication_and_Authorization">Authentication and
+               Authorization</a></li>
+            <li><a href="#Realms">Realms</a></li>
+            <li><a href="#Verifiers">Verifiers</a></li>
+            <li><a href="#Roles">Roles</a></li>
+            <li><a href="#Tokens">Tokens</a></li>
+            <li><a href="#Front_Page">Front Page</a></li>
+            <li><a href="#Use_Case">Use Cases</a></li>
+            <li><a href="#External_API">External API</a>
+            </li>
+         </ul>
+      </section>
+      <section name="Introduction" id="Intro">
+         <p>The Security service is created to remove disparate forms of Authentication and
+            Authorization in DMAS services, and provide a single point of management for A&amp;A.
+            Using the security service allows for a variety of authentication and authorization
+            mechanisms and token based authentication (no more passwords in the config file).</p>
+         <p>The Security service, however, is not meant to be a user management area. Backwards
+            compatability for creating and editing the Database users (The current users stored in
+            Oracle) is supported, but creation of LDAP user or group entries is not.</p>
+         <p>Because user names, passwords, and role information is transmitted to and from the
+            security service and other services and tools, all traffic is done via SSL, and users
+            must login to the service for any type of role or password management. The bootstrap
+            should be modified as follows:</p>
+         <source>   
+[name:&quot;DMAS-SECURITY&quot;,description:&quot;Security realm&quot;, verifier:&quot;LDAP&quot;, tokenExpire:0,
+   roles:[
+      [name:&quot;ADMIN&quot;, group:&quot;DMAS.dev.security.admin&quot;]
+   ]
+],
+         </source>
+         <p>The 'group' entry should point at an operational LDAP group. Users that are in this LDAP
+            group will be considered 'Administrators' of the security service. They can create,
+            delete and edit realms, change passwords, and delete tokens. These operations are
+            covered below.</p>
+      </section>
+      <section name="Authentication and Authorization" id="Authentication_and_Authorization">
+         <p>It's important to note what authentication and authorization really mean. Authentication
+            simply means that a user is who they say they are. This is commonly done by giving an
+            identifier (user name) and some known secret (password). Once it has been decided that
+            this is the correct secret, we can be reasonably sure that the user is who they say they
+            are. This lets us do a lot of cool things, like personalize content, save configuration
+            states (user settings), and associate a user with other application actions (user X
+            approved this Jason-1 cylce). The Security service allows authentication via LDAP (jpl
+            user name and password check) or through the existing database (DMAS User/password for
+            manager, dmt, etc).</p>
+         <p>Authoirzation is a separate step that says User X can perform an action. One usually
+            needs to authenticate that a user really is user X before it starts granting
+            permissions, otherwise anyone can say they are X, and become an admin. Some applicatinos
+            won't even need authorization, because logging in is enough, but for those that do, the
+            Security Service can store and check information for applications on what roles exist
+            and how to associate a user with a role.</p>
+         <p>Authorization in the Security service does not say 'User X can do the following
+            application actions', but rather, the service says 'User X has the following roles:
+            User, Admin, Guest, etc'. It is then up to the application to decide what actions to bin
+            in the USER, ADMIN, and GUEST states.</p>
+      </section>
+      <section name="Realms" id="Realms">
+         <p>Realms are the fundamental building block of the security service. A realm can be
+            thought of as the domain for which you are seeking security. Default realms include
+            DMAS-MANAGER, DMAS-INVENTRY, and DMAS-J1SLX. These allow for different A&amp;A schemese
+            to be used for those realms. For example, J1SLX uses LDAP for authentication, but has no
+            authorization built in. Inventory uses the Database for authentication, and Manager uses
+            the Database for both authentication and authorization.</p>
+         <p>Realms also supports the idea of roles. Roles are a mapping of a common name, like ADMIN
+            or USER to some representation in LDAP or the Database. Roles are discussed further down
+            in this documentation, but are unique to each realm. Different criteria for 'ADMIN' can
+            be set for each realm. Roles cannot be shared between realms, so you cannot reuse them,
+            other than entering the same information twice.</p>
+         <p>When creating a realm, the below information is what is seen:</p>
+         <img src="../images/fe_realm.png" alt=""/>
+         <p>Name is the name of the realm, Description is just a simple desciption of what the realm
+            is for, the expiration is how many days a token can be used, And the verifier, described
+            below, is how A&amp;A will be handled.</p>
+         <p>It's important to note that there are no concepts of 'users' when it comes to realms.
+            You do not create or assign users to realms. Roles are how users either belong or don't
+            belong to a role associated with a realm. This is important to know, because if you set
+            up an application for authentication only, anyone with a JPL Username and password (in
+            the case of LDAP) will have access to use the application. Authentication simply lets
+            the application know that the user is who they say they are. Likewise, any application
+            setup for using the database information will immediately see and authenticate users as
+            they are added to the database.</p>
+      </section>
+      <section name="Verifiers" id="Verifiers">
+         <p>Each realm chooses how it is to verify users for A&amp;A. There are currently two
+            verifiers available, LDAP and DATABASE. LDAP verifiers will authenticate users agains
+            the JPL LDAP, and will match role information to LDAP groups. If a users is a memeber of
+            an LDAP group specified in a role, they will have access to that role. Similarly, the
+            Database verifier checks the Oracle database for user/password combinations and fields
+            and rows for role information.</p>
+         <p>Verifiers cannot be created during run time, rather they must be configured and tested
+            before being used in the system. This is a development task. Once a verifier is created,
+            however, it can be used by any realm and changed at any time, as long as the apropriate
+            roles are setup.</p>
+         <p>New verifiers can be created for different purposes, including user registration and an
+            upcoming LDAP Authentication/Database Authorization hybrid which has been requested by
+            Operations.</p>
+      </section>
+      <section name="Roles" id="Roles">
+         <p>Roles are useful only for authorization. If your domain does not have role based access,
+            the authentcation may be enough. For example, the Inventory tool simply authenticates
+            against the Database, and if that succeeds, it allows the operation to continue. It is
+            up to the application to determine what roles may perform what functions, the security
+            service simply manages what user belongs to what role.</p>
+         <ul>
+            <li>LDAP<p>LDAP roles map a common name, ADMIN, to an LDAP group, like 'DMAS.dev.j1slx'.
+                  If a user exists in the LDAP group, they will be considered an admin user. Below
+                  is an example of the frontend mapping of a role in LDAP</p><img
+                  src="../images/fe_ldap_role.png" alt=""/></li>
+            <li>DATABASE<p>Database roles are bit more tricky. There is a shorthand system used to
+                  determine how to check for role applicability.</p>
+               <source>
+[name:&quot;ADMIN&quot;, group:&quot;field:read_all&quot;],
+[name:&quot;READ_ALL&quot;, group:&quot;field:read_all&quot;],
+[name:&quot;WRITE_ALL&quot;, group:&quot;field:read_all&quot;],
+[name:&quot;DEV&quot;, group:&quot;ar:devAddAndGet&quot;],
+[name:&quot;DE&quot;, group:&quot;ar:deAddAndGet&quot;]
+               </source>
+               <p>The above maps to the following in the Security Service Front End:</p>
+               <img src="../images/database_fields.png" alt=""/>
+               <p>You can see above, that the ADMIN roles is set to 'field:read_all' for a DATABASE
+                  entry. 'Field' refers to an entry in the IngSystemUser table in Oracle, of whice
+                  there are 3 posibilities: field:admin, field:read_all, and field:write_all. You
+                  can see the mapping below:</p>
+               <img src="../images/database_user.png" alt=""/>
+               <p>The other entries, 'ar:devAddAndGet' map to the database access roles. Access
+                  roles are defined and then a mapping with a user is created. Below is an example
+                  of the role in the database:</p>
+               <img src="../images/database_ar.png" alt=""/>
+               <p>The above roles cna be added, edited, and deleted from the database by using the
+                  front end tools:</p><img src="../images/fe_create_role.png" alt=""/>
+               <p>Name is the name of the role, while capabilities is an integer which means
+                  something more application specific. Usually it is a bit mask to certain
+                  permission, so '7' would map to '1','1','1', and like in a unix operating system,
+                  could correspond to read/write/execute permissions.</p>
+               <p>Once a role is defined, they can be associated with users. Below is an image of
+                  how this is done:</p>
+               <img src="../images/fe_roles.png" alt=""/>
+               <p>Simply select the user you want to apply a role to, and then select the role to
+                  assign them. There is currently no bulk role management system in place. Roles
+                  must be defined one at a time.</p>
+            </li>
+         </ul>
+      </section>
+      <section name="Tokens" id="Tokens">
+         <p>Tokens are used to authenticate with domains without supplying an actual password. Users
+            don't want LDAP usernames/passwords stored in config files or on the command line. These
+            are genereated using the users user/pass combo, and then a realm-specific token is
+            created. This means a token created for INVENTORY cannot be used to authenticate with
+            the MANAGER.</p>
+         <p>Tokens, currently, can only be genereated, via the sapi tool in the common program set.
+            Tokens also expire after a set amount of time. When creating a realm, a token expiration
+            value is set, which is the number of days a token can last before being expired. A
+            notification system for token expiration will be built into future releases.</p>
+      </section>
+      <section name="Front Page" id="Front_Page">
+         <p>There are different pages setup for admins of the system and users who log in. </p>
+         <ul>
+            <li>user<p>Users, upon logging into the system have few options. They are allowed to
+                  change their password if their LDAP username matches the username in the Database.
+                  If their name matches, their list of tokens will also appear at the bottom of the
+                  screen. </p>
+               <p>Users have the ability to change their password as long as their login user
+                  credential is the same as their user name in the database.</p>
+               <img src="../images/fe_change_pass.png" alt=""/>
+            </li>
+            <li>admin <p>Admins, upon login will get more options for the system.</p>
+               <img src="../images/landing_page_admin.png" alt=""/>
+               <p>These options will allow administrators to create, edit and delete realms, roles,
+                  and tokens if they so choose. It also allows them to create, edit and delete users
+                  in the database at this time. Admins also have the ability to reset user passwords
+                  when they are forgotten.</p>
+            </li>
+         </ul>
+      </section>
+      <section name="Use Case" id="Use_Case">
+         <ul>
+            <li>Use ldap to authenicate a new domain:<ol style="list-style-type: decimal">
+                  <li>Create a new realm with the information of your new domain. Set the verifier
+                     to LDAP.</li>
+                  <li>That's it! If all you're needing is authentication, the LDAP verifier will
+                     check a supplied username and pass for authenticity with the JPL LDAP.</li>
+               </ol></li>
+            <li>Use ldap to authenicate a new domain, and have two groups for Admins and USers:<ol
+                  style="list-style-type: decimal">
+                  <li>Create a new realm with the information of your new domain. Set the verifier
+                     to LDAP.</li>
+                  <li>After saving the realm, click 'edit' and then click 'Add Role'</li>
+                  <li>Enter a role name in the 'role name' text box that says 'ADMIN'. Enter in the
+                     ldap group in 'role group' that will designate the admin users, i.e.
+                        'DMAS.ops.<i>domain</i>.admin'</li>
+                  <li>Enter a role name in the 'role name' text box that says 'USER'. Enter in the
+                     ldap group in 'role group' that will designate the admin users, i.e.
+                        'DMAS.ops.<i>domain</i>.user'</li>
+                  <li>That's it. When a client checks for authentication, it will check LDAP against
+                     the user name and password to authenticate the user. After authentication, the
+                     client should either authorize against a particular role or ask for all roles
+                     the member has access to. IF the client asks if user JDOE is authorized as an
+                     ADMIN, the verifier will query LDAP to see if JDOE is a memeber of the ldap
+                     group 'DMAS.ops.<i>domain</i>.admin' and returns true if they are, false if
+                     they are not.</li>
+               </ol></li>
+         </ul>
+      </section>
+      <section name="External API" id="External_API">
+         <p>Coming soon.</p>
+      </section>
+   </body>
+</document>

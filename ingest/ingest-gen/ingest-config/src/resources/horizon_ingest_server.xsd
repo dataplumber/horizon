@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+   Copyright (c) 2007-2013
+   Jet Propulsion Laboratory, California Institute of Technology
+   All rights reserved
+   
+   This XML schema defines HORIZON ingest server configuration.
+   
+   
+   @author T. Huang {Thomas.Huang@jpl.nasa.gov}
+   @version $Id: $
+-->
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+   xmlns:horizon.nasa="http://horizon.nasa.gov/webservice/schema"
+   targetNamespace="http://horizon.nasa.gov/webservice/schema" elementFormDefault="qualified">
+
+   <xsd:include schemaLocation="horizon_ingest_server_components.xsd"/>
+
+   <xsd:element name="ingestServer">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="socketEndpoints">
+               <xsd:complexType>
+                  <xsd:sequence>
+                     <xsd:element name="socket" maxOccurs="unbounded">
+                        <xsd:complexType>
+                           <xsd:attribute name="name" type="xsd:string" use="required"/>
+                           <xsd:attribute name="port" type="xsd:nonNegativeInteger" use="required"/>
+                        </xsd:complexType>
+                     </xsd:element>
+                  </xsd:sequence>
+               </xsd:complexType>
+            </xsd:element>
+
+            <xsd:element name="jmsEndpoints">
+               <xsd:complexType>
+                  <xsd:sequence>
+                     <xsd:element name="authenticate">
+                        <xsd:complexType>
+                           <xsd:sequence>
+                              <xsd:element name="username" type="xsd:string"/>
+                              <xsd:element name="password" type="xsd:string"/>
+                           </xsd:sequence>
+                        </xsd:complexType>
+                     </xsd:element>
+                     <xsd:element name="publish" maxOccurs="unbounded">
+                        <xsd:complexType>
+                           <xsd:sequence>
+                              <xsd:element name="topic" type="horizon.nasa:topicType"/>
+                              <xsd:element name="queue" type="xsd:string"/>
+                           </xsd:sequence>
+                        </xsd:complexType>
+                     </xsd:element>
+                     <xsd:element name="subscribe" maxOccurs="unbounded">
+                        <xsd:complexType>
+                           <xsd:sequence>
+                              <xsd:element name="topic" type="horizon.nasa:topicType"/>
+                              <xsd:element name="queue" type="xsd:string"/>
+                           </xsd:sequence>
+                        </xsd:complexType>
+                     </xsd:element>
+                  </xsd:sequence>
+                  <xsd:attribute name="naming" type="xsd:anyURI" use="required"/>
+               </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="emailEndpoint">
+               <xsd:complexType>
+                  <xsd:sequence>
+                     <xsd:element name="uri" type="xsd:anyURI"/>
+                     <xsd:element name="serverAdmin">
+                        <xsd:complexType>
+                           <xsd:sequence>
+                              <xsd:element name="name" type="xsd:string"/>
+                              <xsd:element name="email" type="xsd:string"/>
+                           </xsd:sequence>
+                        </xsd:complexType>
+                     </xsd:element>
+                  </xsd:sequence>
+               </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="repository">
+               <xsd:complexType>
+                  <xsd:sequence>
+                     <xsd:element name="sip">
+                        <xsd:complexType>
+                           <xsd:sequence>
+                              <xsd:element name="post" type="xsd:string"/>
+                              <xsd:element name="complete" type="xsd:string"/>
+                           </xsd:sequence>
+                        </xsd:complexType>
+                     </xsd:element>
+                     <xsd:element name="staging" type="xsd:string"/>
+                  </xsd:sequence>
+                  <xsd:attribute name="digest" use="required">
+                     <xsd:simpleType>
+                        <xsd:restriction base="xsd:string">
+                           <xsd:enumeration value="MD2"/>
+                           <xsd:enumeration value="MD5"/>
+                           <xsd:enumeration value="SHA-1"/>
+                           <xsd:enumeration value="SHA-256"/>
+                           <xsd:enumeration value="SHA-384"/>
+                           <xsd:enumeration value="SHA-512"/>
+                        </xsd:restriction>
+                     </xsd:simpleType>
+                  </xsd:attribute>
+               </xsd:complexType>
+            </xsd:element>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+
+   <xsd:simpleType name="topicType">
+      <xsd:restriction base="xsd:string">
+         <xsd:enumeration value="EMAIL"/>
+         <xsd:enumeration value="SOCKET"/>
+         <xsd:enumeration value="ALL"/>
+         <xsd:enumeration value="SIP_POST"/>
+         <xsd:enumeration value="SIP_ACK"/>
+         <xsd:enumeration value="SIP_COMPLETE"/>
+         <xsd:enumeration value="AIP_POST"/>
+         <xsd:enumeration value="AIP_ACK"/>
+         <xsd:enumeration value="DIP_POST"/>
+         <xsd:enumeration value="MANAGEMENT"/>
+         <xsd:enumeration value="SIGEVENTS"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+
+</xsd:schema>

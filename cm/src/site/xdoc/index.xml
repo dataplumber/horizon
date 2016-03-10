@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+   Copyright 2013, by the California Institute of Technology.
+   ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+    
+   $Id$
+-->
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+
+   <properties>
+      <title>About HORIZON CM</title>
+      <author>Thomas Huang</author>
+   </properties>
+
+   <body>
+      <section name="About HORIZON CM">
+         <p>This web site serves as the entry point for the Data Management and Archive System
+            (HORIZON) Configuration Management (CM) environment. Links to the individual program set
+            sites can be found in the menu on the left along with links to tutorials and other
+            resources. </p>
+      </section>
+   </body>
+</document>

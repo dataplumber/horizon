@@ -1,0 +1,17 @@
+#!/bin/sh
+#
+# Copyright (c) 2008, by the California Institute of Technology.
+# ALL RIGHTS RESERVED. U.S. Government sponsorship acknowledged.
+#
+# $Id$
+
+#
+# This script allows the operator ...
+#
+
+if [ $# = "0" ]; then
+  ant -f monitor.xml
+  exit 1
+fi
+
+ant -f monitor.xml $*

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2013, by the California Institute of Technology. -->
+<!-- ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged. -->
+<!--  -->
+<!-- $Id: $ -->
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+
+   <properties>
+      <title>Archive Installation Guide</title>
+      <author email="Christian.Alarcon@jpl.nasa.gov">Christian Alarcon</author>
+   </properties>
+
+   <body>
+
+      <!-- The body of the document contains a number of sections -->
+      <section name="Installation">
+
+         <!-- Within sections, any XHTML can be used -->
+         <p>This document describes how to install and configure the Archive program set. The following sections can be found in this document:</p>
+         <ul>
+            <li><a href="#Distribution_Contents">Distribution Contents</a></li>
+            <li><a href="#Setup_Verification">Setup Verification</a></li>
+         </ul>
+
+      </section>
+
+      <section name="Distribution Contents" id="Distribution_Contents">
+         <p>The program set is packaged in a self-contained TAR/GZIP file. The package can be extracted with the following command (where X.X.X is the current version):</p>
+         <source>
+% tar -xzvf archive-X.X.X-archive.tar.gz
+         </source>
+         <p>Below is an illustration of the distribution after it has been extracted:</p>
+         <img src="../images/archive_dist.jpl" alt="Archive distribution contents"/>
+         <p>The contents of the package are as follows:</p>
+         <ul>
+            <li>bin - Directory containing the client executables.
+               <ul>
+                  <li>archive_tool - Script for archive command-line tool to manipulate the archive data and inventory metadata.</li>
+               </ul>
+            </li>
+            <li>config - Directory containing the configuration files.
+               <ul>
+                  <li>archive.config - Configuration file containing properties used by Archive Program Set.</li>
+                  <li>archive.log.properties - Configuration file containing logging properties.</li>
+               </ul>
+            </li>
+            <li>lib - Directory containing the run-time libraries for the executables.</li>
+         </ul>
+      </section>
+      <section name="Setup Verification">
+         <p>After the distribution package has been extracted and its contents moved to the target delivery directory, verify the setup in the configuration files located in the config directory. This can be accomplished with the following commands (assuming the target directory was /usr/local/daac):</p>
+         <source>
+% cd /usr/local/daac/config
+% more archive.config
+
+log4j.configuration=file:///usr/local/daac/config/archive.log.properties
+archive.trash=/usr/local/daac/temp/archive-trash
+
+% more archive.log.properties
+ ...
+log4j.appender.file.File=/usr/local/daac/logs/archive.log
+ ...
+
+% more archivemonitor.log.properties
+ ...
+log4j.appender.file.File=/usr/local/daac/logs/archivemonitor.log
+...
+         </source>
+         <p>The values in the example above represent the default values. Your values should represent the results of your actions performed during setup as described in the setup section of the compilation document or changed to appropriate values for the deployment environment.</p>
+      </section>
+   </body>
+
+</document>

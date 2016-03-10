@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE MMR_FR SYSTEM "mmr_fr.dtd"> 
+<MMR_FR>
+   <Entry_ID>JPL-L2P-MODIS_A</Entry_ID>
+   <File_Name>20070801-MODIS_A-JPL-L2P-A2007213074500.L2_LAC_GHRSST-v01.nc</File_Name>
+   <File_Release_Date>20070801T121528Z</File_Release_Date>
+   <File_Version>1</File_Version>
+   <Temporal_Coverage>
+      <Start_Date>20070801T074508Z</Start_Date>
+      <Stop_Date>20070801T075006Z</Stop_Date>
+   </Temporal_Coverage>
+   <Spatial_Coverage>
+      <Southernmost_Latitude>-22.541</Southernmost_Latitude>
+      <Northernmost_Latitude>-1.600</Northernmost_Latitude>
+      <Westernmost_Longitude>76.309</Westernmost_Longitude>
+      <Easternmost_Longitude>101.738</Easternmost_Longitude>
+   </Spatial_Coverage>
+   <Personnel>
+      <Role>Technical Contact</Role>
+      <First_Name>Ed</First_Name>
+      <Last_Name>Armstrong</Last_Name>
+      <Email>ghrsst@podaac.jpl.nasa.gov</Email>
+      <Phone>818-393-6710</Phone>
+      <Fax>818-393-2718</Fax>
+      <Address>Jet Propulsion Laboratory, 4800 Oak Grove Dr, Pasadena, CA 91109
+         USA</Address>
+   </Personnel>
+   <Metadata_History>
+      <FR_File_Version>1</FR_File_Version>
+      <FR_Creation_Date>20070801T121539Z</FR_Creation_Date>
+      <FR_Last_Revision_Date>20070801T121539Z</FR_Last_Revision_Date>
+      <FR_Revision_History>Quicklook MODIS L2P created at the GHRSST Global Data
+         Assembly Center (GDAC), Wed Aug 1 12:15:39 2007</FR_Revision_History>
+   </Metadata_History>
+   <File_Compression>bzip</File_Compression>
+</MMR_FR>

@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+   Copyright (c) 2008 - 2013
+   Jet Propulsion Laboratory, California Institute of Technology
+   All rights reserved
+   
+   This XML schema defines XML protocol for HORIZON system
+   
+   @author T. Huang {Thomas.Huang@jpl.nasa.gov}
+   @version $Id: $
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:horizon.nasa="http://horizon.nasa.gov"
+    targetNamespace="http://horizon.nasa.gov" elementFormDefault="qualified">
+
+    <xsd:element name="horizon">
+        <xsd:complexType>
+            <xsd:annotation>
+                <xsd:documentation>Defnition of horizon client/server protocol format.
+                </xsd:documentation>
+            </xsd:annotation>
+            <xsd:sequence>
+                <xsd:element name="operation" type="xsd:string"/>
+                <xsd:element name="errno" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="description" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="sessionId" type="xsd:nonNegativeInteger" minOccurs="0"
+                    maxOccurs="1"/>
+                <xsd:element name="sessionToken" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="userId" type="xsd:long" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="user" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="userType" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="federationId" type="xsd:nonNegativeInteger" minOccurs="0"
+                    maxOccurs="1"/>
+                <xsd:element name="federation" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="productTypeId" type="xsd:nonNegativeInteger" minOccurs="0"
+                    maxOccurs="1"/>
+                <xsd:element name="productType" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="productId" type="xsd:nonNegativeInteger" minOccurs="0"
+                    maxOccurs="1"/>
+                <xsd:element name="product" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="modifier" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="notify" type="xsd:boolean" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="jobId" type="xsd:nonNegativeInteger" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="stereotype" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                <xsd:choice minOccurs="0" maxOccurs="1">
+                    <xsd:element name="login" type="horizon.nasa:LoginType"/>
+                    <xsd:element name="add">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:group ref="horizon.nasa:CommonAddType"/>
+                            </xsd:sequence>
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="list" type="horizon.nasa:ListType"/>
+                    <xsd:element name="move" type="horizon.nasa:MoveType"/>
+                    <xsd:element name="delete" type="horizon.nasa:DeleteType"/>
+                    <xsd:element name="boot" type="horizon.nasa:EngineBootType"/>
+                    <xsd:element name="hotBoot" type="horizon.nasa:EngineBootType"/>
+                    <xsd:element name="ping" type="horizon.nasa:EngineBootType"/>
+                    <xsd:element name="job" type="horizon.nasa:EngineJobQueryType"/>
+                </xsd:choice>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:complexType name="CommonTimeStampType">
+        <xsd:annotation>
+            <xsd:documentation> Defines general time stamp type that is reusable.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="start" type="xsd:nonNegativeInteger"/>
+            <xsd:element name="stop" type="xsd:nonNegativeInteger" minOccurs="0" maxOccurs="1"
+                default="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CommonFileType">
+        <xsd:sequence>
+            <xsd:element name="name" type="xsd:string"/>
+            <xsd:element name="source" type="xsd:anyURI"/>
+            <xsd:element name="sourceUsername" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="sourcePassword" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="maxConnections" type="xsd:nonNegativeInteger" minOccurs="0"
+                maxOccurs="1"/>
+            <xsd:element name="destination" type="horizon.nasa:CommonDestinationType" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="size" type="xsd:nonNegativeInteger"/>
+            <xsd:element name="checksum" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="processTime" type="horizon.nasa:CommonTimeStampType" minOccurs="0"
+                maxOccurs="1"/>
+            <xsd:element name="description" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+   
+   <xsd:complexType name="CommonDestinationType">
+      <xsd:sequence>
+         <xsd:element name="location" type="xsd:anyURI" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="link" type="xsd:anyURI" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+
+    <xsd:complexType name="LoginType">
+        <xsd:sequence>
+            <xsd:element name="password" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="issueTime" type="xsd:nonNegativeInteger" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="expireTime" type="xsd:nonNegativeInteger" minOccurs="0" maxOccurs="1"
+            />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:group name="ProductOperationType">
+        <xsd:sequence>
+            <xsd:element name="operationTime" type="horizon.nasa:CommonTimeStampType" minOccurs="0"
+                maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:group>
+
+    <xsd:group name="CommonAddType">
+        <xsd:sequence>
+            <xsd:group ref="horizon.nasa:ProductOperationType"/>
+            <xsd:element name="originalProduct" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="files">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="file" type="horizon.nasa:CommonFileType" minOccurs="1"
+                            maxOccurs="unbounded"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="metadata" type="xsd:string" minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation> The string encoded metadata record associated with this add
+                        request. This is field is required for all client add requests, but it is
+                        optional for the ingest engines. </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:group>
+
+    <xsd:complexType name="DeleteType">
+        <xsd:sequence>
+            <xsd:group ref="horizon.nasa:ProductOperationType"/>
+            <xsd:element name="totalSize" type="xsd:nonNegativeInteger" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="delete" type="xsd:anyURI" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation> The list of files to be deleted. This is not required by the
+                        client software, but it is required by the ingest engine in order for it to
+                        carry out the delete operation. </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ListType">
+        <xsd:sequence>
+            <xsd:group ref="horizon.nasa:ProductOperationType"/>
+            <xsd:element name="expression" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="timeRange" minOccurs="0" maxOccurs="1">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="start" type="xsd:nonNegativeInteger"/>
+                        <xsd:element name="stop" type="xsd:nonNegativeInteger" minOccurs="0"
+                            maxOccurs="1"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="productTypeResult" type="horizon.nasa:ListProductType" minOccurs="0"
+                maxOccurs="1"/>
+            <xsd:element name="productResult" type="horizon.nasa:ListProductInfoType" minOccurs="0"
+                maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ListProductType">
+        <xsd:sequence>
+            <xsd:element name="productType" minOccurs="0" maxOccurs="unbounded">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="name" type="xsd:string"/>
+                        <xsd:element name="spaceUsed" type="xsd:nonNegativeInteger"/>
+                        <xsd:element name="spaceReserved" type="xsd:nonNegativeInteger"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ListProductInfoType">
+        <xsd:sequence>
+            <xsd:element name="product" minOccurs="0" maxOccurs="unbounded">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="name" type="xsd:string"/>
+                        <xsd:element name="state" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                        <xsd:element name="lock" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                        <xsd:element name="metadataText" type="xsd:string" minOccurs="0"
+                            maxOccurs="1"/>
+                        <xsd:element name="note" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                        <xsd:element name="archiveNote" type="xsd:string" minOccurs="0"
+                            maxOccurs="1"/>
+                        <xsd:element name="createdTime" type="xsd:nonNegativeInteger" minOccurs="0"
+                            maxOccurs="1"/>
+                        <xsd:element name="stagedTime" type="xsd:nonNegativeInteger" minOccurs="0"
+                            maxOccurs="1"/>
+                        <xsd:element name="archivedTime" type="xsd:nonNegativeInteger" minOccurs="0"
+                            maxOccurs="1"/>
+                        <xsd:element name="files" minOccurs="0" maxOccurs="1">
+                            <xsd:complexType>
+                                <xsd:sequence>
+                                    <xsd:element name="file" minOccurs="0" maxOccurs="unbounded">
+                                        <xsd:complexType>
+                                            <xsd:sequence>
+                                                <xsd:element name="name" type="xsd:string"/>
+                                                <xsd:element name="size"
+                                                  type="xsd:nonNegativeInteger"/>
+                                                <xsd:element name="checksum" type="xsd:string"/>
+                                            </xsd:sequence>
+                                        </xsd:complexType>
+                                    </xsd:element>
+                                </xsd:sequence>
+                            </xsd:complexType>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+
+    <xsd:group name="EngineOperationType">
+        <xsd:sequence>
+            <xsd:element name="engineId" type="xsd:nonNegativeInteger" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="engine" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:group>
+
+    <xsd:complexType name="EngineBootType">
+        <xsd:sequence>
+            <xsd:group ref="horizon.nasa:EngineOperationType"/>
+            <xsd:element name="bind" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="userPort" type="xsd:integer" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="adminPort" type="xsd:integer" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="protocol" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="urlPattern" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="maxUserConnections" type="xsd:integer" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="maxAdminConnections" type="xsd:integer" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="storageLocation" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="received" type="xsd:nonNegativeInteger" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EngineJobQueryType">
+        <xsd:sequence>
+            <xsd:group ref="horizon.nasa:EngineOperationType"/>
+            <xsd:element name="jobOperation" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="MoveType">
+        <xsd:sequence>
+            <xsd:element name="metadataInfo" minOccurs="0" maxOccurs="1">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="filename" type="xsd:string"/>
+                        <xsd:element name="text" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="source" type="xsd:string"/>
+            <xsd:element name="destination" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+</xsd:schema>

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2013, by the California Institute of Technology. -->
+<!-- ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged. -->
+<!--  -->
+<!-- $Id: $ -->
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+
+   <properties>
+      <title>Zookeeper Installation/Operation Guide</title>
+      <author email="Christian.Alarcon@jpl.nasa.gov">Christian Alarcon</author>
+   </properties>
+
+   <body>
+
+      <!-- The body of the document contains a number of sections -->
+      <section name="ZooKeeper">
+
+         <!-- Within sections, any XHTML can be used -->
+         <p>The Apache Zookeeper was adapted as the job tracking service for the Data Management and
+            Archive System (DMAS). It offers a horizontally scaled concurrency, configuration
+            management, and message passing. </p>
+         <p>This document describes how to install and configure the Apache Zookeeper program. The
+            following sections can be found in this document:</p>
+
+         <ul>
+            <li><a href="#Installation">Installation</a></li>
+            <li><a href="#Operation">Operation</a></li>
+         </ul>
+
+      </section>
+
+      <section name="Installation" id="Installation">
+         <p>Zookeeper has it's own installation guide and procedures which can be found
+            {{{http://zookeeper.apache.org/doc/trunk/zookeeperStarted.html}here}}. It is a good idea
+            to look through the official documentation, but this guide will cover everything needed
+            for DMAS.</p>
+         <subsection name="Download">
+            <p>Download Zookeeper from <a
+                  href="http://apache.mirrors.tds.net//zookeeper/zookeeper-3.4.5">here</a>. The
+               latest version tested with DMAS is Zookeeper 3.4.5. Once downloaded, unzip the
+               tarball to the desired Zookeeper installation location.</p>
+            <source>tar -zxvf zookeeper-3.4.5.tar.gz</source>
+         </subsection>
+         <subsection name="Configuration">
+            <p>Zookeeper comes with an example config file, but we'll need to modify it:</p>
+            <source>
+$> cd conf/
+$> ls
+configuration.xsl       log4j.properties        zoo_sample.cfg
+$> cp  zoo_sample.cfg zoo.cfg
+         </source>
+            <p>Edit the zoo.cfg file (leave zoo_sample.cfg as is)</p>
+            <source>
+# The number of milliseconds of each tick
+tickTime=6000
+# The number of ticks that the initial 
+# synchronization phase can take
+initLimit=10
+# The number of ticks that can pass between 
+# sending a request and getting an acknowledgement
+syncLimit=5
+# the directory where the snapshot is stored.
+dataDir=/var/zookeeper/server1/data
+# the port at which the clients will connect
+clientPort=2181
+#server.1=zoo1:2888:3888
+#server.2=zoo2:2888:3888
+#server.3=zoo3:2888:3888
+         </source>
+            <ul>
+               <li>Set tickTime to 6000 (2000 by default). This allows us to set longer timeouts for
+                  the zookeepr clients.</li>
+               <li>Set dataDir to a local disk. It can be done on a mounted disk, but it isn't as
+                  fast. Each zookeeper server should write to its own disk space, and it shouldn't
+                  be "/tmp"</li>
+               <li>server.1 - 3 are how zookeeper is setup in replicated mode. For more information
+                  on replicating zookeeper (which is a good practice), see <a
+                     href="http://zookeeper.apache.org/doc/trunk/zookeeperStarted.html#sc_RunningReplicatedZooKeeper"
+                     >Running Replicated Zookeeper</a></li>
+               <li>The server.1-3 values are the servers used when creating the quorum field for
+                  clients to connect to.</li>
+            </ul>
+         </subsection>
+         <subsection name="REST Service Plugin Build">
+            <p>In order for the Operator Tool and other external services to connect to Zookeeper
+               via a RESTful web service, the bundled rest module needs to be compiled, packaged,
+               and unzipped. First start by compiling all bundled source. Under the Zookeeper root
+               directory run:</p>
+            <source>
+$> ant jar
+Buildfile: build.xml
+
+init:
+
+...
+
+jar:
+      [jar] Building jar: /home/tietest/gibs/thirdparty/zookeeper-3.4.5/build/zookeeper-3.4.5.jar
+
+BUILD SUCCESSFUL
+Total time: 3 seconds
+         </source>
+
+            <p>Next, package the REST module:</p>
+            <source>
+$> cd src/contrib/rest
+$> ant jar
+Buildfile: build.xml
+
+clean:
+     [echo] contrib: rest
+   [delete] Deleting directory /home/tietest/gibs/thirdparty/zookeeper-3.4.5/build/contrib/rest
+
+...
+
+tar:
+     [echo] building tar.gz: rest
+      [tar] Building tar: /home/tietest/gibs/thirdparty/zookeeper-3.4.5/build/contrib/rest/zookeeper-dev-rest.tar.gz
+
+BUILD SUCCESSFUL
+Total time: 3 seconds
+         </source>
+            <p>Finally, cd into the build/contrib/rest directory and unpack the generated tarball in
+               the same directory it resides.</p>
+            <source>
+$> cd ../../../build/contrib/rest/
+$> tar xvzf zookeeper-dev-rest.tar.gz
+         </source>
+         </subsection>
+      </section>
+
+      <section name="Operation" id="Operation">
+         <subsection name="Startup">
+            <p>Zookeeper comes with simple startup scripts that make all of this simple. From the
+               root Zookeeper directory::</p>
+            <source>
+$> cd bin
+$> ls
+README.txt  zkCleanup.sh   zkCli.cmd   zkCli.sh zkEnv.cmd   zkEnv.sh zkServer.cmd   zkServer.sh
+
+$> ./zkServer.sh start
+         </source>
+            <p>In order to start the REST server, cd into directory where you unzipped the tarball
+               mentioned above and run the packaged startup script.</p>
+            <source>
+$> cd ../build/contrib/rest
+$> ./rest.sh start
+         </source>
+         </subsection>
+
+         <subsection name="Verification">
+            <p>To verify that zookeeper is setup, go to the zookeeper home directory, cd into the
+               bin directory, and run the provided client program. From the Zookeeper root
+               directory:</p>
+            <source>
+$> cd bin
+$> ./zkCli.sh
+Connecting to localhost:2181
+[zk: localhost:2181(CONNECTED) 0]
+[zk: localhost:2181(CONNECTED) 0] ls /
+[zookeeper]
+         </source>
+            <p>Being able to list the contents of the ZK root is enough to validate its correct
+               installation/configuration/execution. To verify the REST server simply curl or browse
+               to the following URL: </p>
+            <source>
+$> curl 'http://localhost:9998/znodes/v1/?view=children'
+         </source>
+         </subsection>
+      </section>
+   </body>
+
+</document>

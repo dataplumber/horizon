@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Copyright 2013, by the California Institute of Technology. -->
+<!-- ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged. -->
+<!--  -->
+<!-- $Id: $ -->
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+   <properties>
+      <title>Release Description 5.0.0b</title>
+      <author>T. Huang</author>
+   </properties>
+   <body>
+      <section name="Release Description 5.0.0b">
+         <p>This release of the HORIZON System is the horizontal scaling workflow data system for
+            ingestion, cataloging, and generation of data products. The following sections can be
+            found in this document:</p>
+         <ul>
+            <li><a href="#Reference_Documents">Reference Documents</a></li>
+            <li><a href="#System_Requirements">System Requirements</a></li>
+            <li><a href="#Compilation">Compilation</a></li>
+            <li><a href="#Installation_Operation">Installation/Operation</a></li>
+         </ul>
+      </section>
+
+      <section name="Reference Documents" id="Reference_Documents">
+         <p>This section details the controlling and applicable documents to be referenced for this
+            release.</p>
+         <p>The controlling documents are as follows:</p>
+         <ul>
+            <li><a href="../docs/RDD_5.0.0b.pdf">RDD Presentation Slides</a> - T. Huang, June 14,
+               2012.</li>
+         </ul>
+      </section>
+
+      <section name="System Requirements" id="System_Requirements">
+         <p>This section details the system requirements for compiling, installing and operating the
+            software. The software contained in this release was developed using Java and will run
+            on any platform with a supported Java Runtime Environment (JRE). The software was
+            specifically developed under Sun Java version 1.6 and has only been tested with this
+            version.</p>
+         <ul>
+            <li>HORIZON Standard Computing Environment <p>This will eventually be documented on the
+                  Wiki and linked to in future releases. For now, the following software and tools
+                  should be available in the current environment:</p>
+               <ul>
+                  <li>Apache Ant 1.8.2</li>
+                  <li>Apache Maven 2.2.1</li>
+                  <li>Grails 2.2.4</li>
+                  <li>Groovy 2.0.8</li>
+                  <li>PostgreSQL Client 9.1-901</li>
+                  <li>Perl 5.12.4</li>
+                  <li>Python 2.7.2</li>
+                  <li>Sun Java Standard Edition (J2SE) 1.7.0_25</li>
+               </ul>
+               <p></p>
+            </li>
+            <li>PostgreSQL Database Server <p>This release requires an instance of the PostgreSQL
+                  Database Server (9.1) to be installed, configured for HORIZON and running in the
+                  current environment. This requirement should be satisfied by the HORIZON PostgreSQL
+                  database administrator.</p>
+            </li>
+         </ul>
+      </section>
+
+      <section name="Compilation" id="Compilation">
+         <p>This section details the procedures for retrieving the source code from the HORIZON CM
+            repository and building the distribution packages for each program set.</p>
+         <subsection name="Setup">
+            <p>Beyond the system requirements listed above, there are two environmental requirements
+               for compiling the source code. The first is to setup access to the HORIZON Maven
+               repository. This can be accomplished by following the instructions in the <a
+                  href="../maven/index.html#Setup">Setup</a> section of the <a
+                  href="../maven/index.html">Using Maven</a> document.</p>
+            <p>The second is to clear out the local Maven repository for the user account that will
+               be building the distribution packages. Although, this is not a required step, it is
+               suggested to guarantee a clean build from scratch. The result of this step is that
+               all dependent components will be downloaded from their host repositories and stored
+               in the local Maven repository. Because of this, the machine where the build is being
+               performed does require Internet access. The local repository can be cleaned with the
+               following commands:</p>
+            <source> 
+% cd ~/.m2 
+% rm -rf repository 
+            </source>
+            <p>Now that the environmental requirements are satisfied, it is time to compile. This
+               release has been tagged with version <i>5.0.0b</i> and is available from the
+               top-level <i>tags</i> directory in the main software repository. The source code can
+               be checked out from CM with the following command:</p>
+            <source>
+% svn checkout https://podaac-cm/repo/tags/5.0.0b/
+            </source>
+            <p>Prior to building the distribution packages, some setup needs to be performed for the
+               Archive program set for the target environment. This can be accomplished by following
+               the steps detailed in the <a href="../../archive/compile/index.html#Setup">Setup</a>
+               section of the <a href="../../archive/compile/index.html">Compilation</a> document
+               for Archive.</p>
+            <p><b>Note:</b> Don't follow the steps in the <i>Build</i> section of that same
+               document, that will be accomplished below.</p>
+         </subsection>
+
+         <subsection name="Build">
+            <p>Now that the source code for the release is in your local directory and your
+               environment is setup, change directories to the <i>5.0.0b</i> directory and clean the
+               source tree with the following commands:</p>
+            <source> 
+% cd 5.0.0b
+% mvn clean &gt;&amp; clean.log 
+% grep ERROR clean.log 
+% grep WARNING clean.log
+            </source>
+            <p>The <i>mvn clean</i> command above will clear out any temporary files or artifacts
+               from the source tree directory structure and will download any dependent components
+               required by Maven. The <i>grep</i> commands above should not produce any hits from
+               the log file. The log file should end with lines that look similar to the lines
+               below:</p>
+            <source>
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary:
+[INFO] ------------------------------------------------------------------------
+[INFO] Data Management and Archive System .................... SUCCESS [0.394s]
+[INFO] Common Program Set .................................... SUCCESS [0.107s]
+[INFO] Common Code Generation ................................ SUCCESS [0.124s]
+[INFO] Common Service Profile Binding ........................ SUCCESS [0.287s]
+[INFO] Common MMR Binding .................................... SUCCESS [0.046s]
+[INFO] Common Hostmap Binding ................................ SUCCESS [0.080s]
+[INFO] Common Crawler Cache Binding .......................... SUCCESS [0.039s]
+[INFO] Common Metadata Manifest .............................. SUCCESS [0.053s]
+[INFO] Common API ............................................ SUCCESS [0.172s]
+[INFO] Common Crawler ........................................ SUCCESS [0.090s]
+[INFO] Common Groovy ......................................... SUCCESS [0.042s]
+[INFO] WebService API ........................................ SUCCESS [0.014s]
+[INFO] Inventory API ......................................... SUCCESS [0.037s]
+[INFO] SigEvent API .......................................... SUCCESS [0.028s]
+[INFO] Security API .......................................... SUCCESS [0.035s]
+[INFO] Common HTTP Fetch ..................................... SUCCESS [0.028s]
+[INFO] Ingest Program Set .................................... SUCCESS [0.017s]
+[INFO] Ingest Code Generation ................................ SUCCESS [0.004s]
+[INFO] Ingest Domain Binding ................................. SUCCESS [0.080s]
+[INFO] Ingest Server Config Binding .......................... SUCCESS [0.054s]
+[INFO] Ingest Wire Protocol Structure ........................ SUCCESS [0.073s]
+[INFO] Ingest Keychain Binding ............................... SUCCESS [0.035s]
+[INFO] Ingest Commons ........................................ SUCCESS [0.049s]
+[INFO] Ingest API ............................................ SUCCESS [0.069s]
+[INFO] Ingest Client ......................................... SUCCESS [0.112s]
+[INFO] Ingest Server ......................................... SUCCESS [0.135s]
+[INFO] Data Handlers Program Set ............................. SUCCESS [0.004s]
+[INFO] Handlers Framework .................................... SUCCESS [0.018s]
+[INFO] ------------------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESSFUL
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 2 seconds
+[INFO] Finished at: Tue Nov 12 00:26:31 PST 2013
+[INFO] Final Memory: 18M/618M
+[INFO] ------------------------------------------------------------------------
+            </source>
+            <p>For this release, the unit test execution is being skipped during the build due to
+               some remaining environmental dependencies. The distribution packages can now be built
+               with the following command:</p>
+
+            <source> 
+% mvn package -Dmaven.test.skip=true &gt;&amp; package.log 
+% grep ERROR package.log 
+% grep WARNING package.log 
+            </source>
+            <p>The <i>grep</i> command above looking for <i>ERROR</i> strings should not produce any
+               hits from the log file but the same command looking for <i>WARNING</i> strings will
+               produce a few hits similar to the examples below:</p>
+            <source> 
+               [WARNING] DEPRECATED [descriptor]: Please use descriptors instead 
+               ... 
+               [WARNING]The following patterns were never triggered in this artifact exclusion filter: 
+               ...
+               [WARNING] DEPRECATED [descriptor]: Please use descriptors instead 
+               ... 
+               [WARNING] The following patterns were never triggered in this artifact exclusion filter: 
+               ...
+               [WARNING] Attempting to build MavenProject instance for Artifact \
+               (org.apache.commons:commons-io:1.3.2) of type: jar; constructing POM artifact
+               instead. 
+            </source>
+            <p>There are no issues with the messages above except for the last one. We are still not
+               sure what is causing the message but it is not affecting the final packages. The log
+               file should end with lines that look similar to the lines below:</p>
+            <source> 
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary:
+[INFO] ------------------------------------------------------------------------
+[INFO] Data Management and Archive System .................... SUCCESS [1.160s]
+[INFO] Common Program Set .................................... SUCCESS [0.889s]
+[INFO] Common Code Generation ................................ SUCCESS [0.013s]
+[INFO] Common Service Profile Binding ........................ SUCCESS [4.730s]
+[INFO] Common MMR Binding .................................... SUCCESS [0.872s]
+[INFO] Common Hostmap Binding ................................ SUCCESS [0.792s]
+[INFO] Common Crawler Cache Binding .......................... SUCCESS [0.609s]
+[INFO] Common Metadata Manifest .............................. SUCCESS [0.660s]
+[INFO] Common API ............................................ SUCCESS [5.044s]
+[INFO] Common Crawler ........................................ SUCCESS [3.652s]
+[INFO] Common Groovy ......................................... SUCCESS [2.188s]
+[INFO] WebService API ........................................ SUCCESS [0.018s]
+[INFO] Inventory API ......................................... SUCCESS [2.177s]
+[INFO] SigEvent API .......................................... SUCCESS [1.609s]
+[INFO] Security API .......................................... SUCCESS [3.131s]
+[INFO] Common HTTP Fetch ..................................... SUCCESS [1.922s]
+[INFO] Ingest Program Set .................................... SUCCESS [0.014s]
+[INFO] Ingest Code Generation ................................ SUCCESS [0.010s]
+[INFO] Ingest Domain Binding ................................. SUCCESS [1.218s]
+[INFO] Ingest Server Config Binding .......................... SUCCESS [0.798s]
+[INFO] Ingest Wire Protocol Structure ........................ SUCCESS [1.269s]
+[INFO] Ingest Keychain Binding ............................... SUCCESS [0.396s]
+[INFO] Ingest Commons ........................................ SUCCESS [0.591s]
+[INFO] Ingest API ............................................ SUCCESS [6.749s]
+[INFO] Ingest Client ......................................... SUCCESS [6.952s]
+[INFO] Ingest Server ......................................... SUCCESS [8.506s]
+[INFO] Data Handlers Program Set ............................. SUCCESS [0.019s]
+[INFO] Handlers Framework .................................... SUCCESS [0.784s]
+[INFO] ------------------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESSFUL
+[INFO] ------------------------------------------------------------------------
+            </source>
+            <p><b>Note:</b> Depending on whether the local Maven repository was cleaned out, Maven
+               will need to download several dependencies from the local HORIZON repository and other
+               remote repositories. The times in the example output above will vary drastically
+               based on how many dependencies need to be downloaded.</p>
+
+            <p>In this release, the Manager, SigEvent, and Security components of the Middleware
+               Program Set must be built separately due to an issue with Maven and Grails. So,
+               please see the Manager <a href="../../middleware/manager/install/index.html"
+                  >Installation</a>, SigEvent <a href="../../middleware/sigevent/install/index.html"
+                  >Installation</a>, and Security <a
+                  href="../../middleware/security/install/index.html">Installation</a> documents for
+               build instructions.</p>
+            <p>After a successful build, as indicated in the examples above, several packages are
+               created and are located as follows:</p>
+            <source>
+common-crawler-5.0.0b-common-crawler.tar.gz
+common-httpfetch-5.0.0b-common-httpfetch.tar.gz
+security-api-5.0.0b-sapi.tar.gz
+ingest-client-5.0.0b-ingest-client.tar.gz
+ingest-server-5.0.0b-ingest-server.tar.gz
+            </source>
+         </subsection>
+      </section>
+
+      <section name="Installation Operation" id="Installation_Operation">
+         <p>This section details the installation and operation of the software in this release.
+            This release is intended for deployment in the Integration &amp; Test environment as
+            well as the Operations environment. Details regarding the release for each of these
+            components, including installation of the packages listed above and operation of the
+            associated software, can be found in the following program set release documents:</p>
+         <ul>
+            <li><a href="../../common/release/index-5.0.0b.html">Common Program Set - Release
+                  5.0.0b</a>
+               <p>The Common software does not require installation for this release.</p>
+            </li>
+            <li><a href="../../data-handlers/release/index-5.0.0b.html">Data Handlers Program Set -
+                  Release 5.0.0b</a>
+               <p>The framework for building product-specific data handlers.</p>
+            </li>
+            <li><a href="../../ingest/release/index-5.0.0b.html">Ingest Program Set - Release
+                  5.0.0b</a>
+               <p>The Ingest Server software should be installed on each target ingest machine. The
+                  Ingest Client software should be installed on the designated client machine. </p>
+            </li>
+            <li><a href="../../middleware/release/index-5.0.0b.html">Middleware Program Set -
+                  Release 5.0.0b</a>
+               <p>This release of the Middleware software contains a collection of web services.</p>
+            </li>
+         </ul>
+      </section>
+   </body>
+</document>

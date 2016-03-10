@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+   Copyright (c) 2008-2013
+   Jet Propulsion Laboratory, California Institute of Technology
+   All rights reserved
+   
+   This XML schema defines Submission Information Package message for HORIZON
+   ingestion services
+   
+   @author T. Huang {Thomas.Huang@jpl.nasa.gov}
+   @version $Id: $
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:horizon.nasa="http://horizon.nasa.gov"
+    targetNamespace="http://horizon.nasa.gov" elementFormDefault="qualified">
+    <xsd:include schemaLocation="horizon_common.xsd"/>
+
+    <xsd:complexType name="Ingest">
+        <xsd:annotation>
+            <xsd:documentation>Define the ingest element. Ingestion defines files movement, which
+                contians source and destination. The souce could be local or remote. The destination
+                should be somewhere the HORIZON system has write acess to. </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="deletes" minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>If this ingestion job is to replace an existing product, this
+                        list of files to be removed should be listed here.</xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="delete" type="horizon.nasa:FileDestination" minOccurs="1"
+                            maxOccurs="unbounded"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            
+            <xsd:element name="productFiles" type="horizon.nasa:IngestProductFiles">
+                <xsd:annotation>
+                    <xsd:documentation> The list of file to be ingested. </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+
+            <xsd:element name="operationSuccess" type="xsd:boolean" default="false">
+                <xsd:annotation>
+                    <xsd:documentation> Flag to indicate if the operation was successful or not.
+                        Default should be false. </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+
+            <xsd:element name="operationNote" type="xsd:string" minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation> Operation note. </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+
+        </xsd:sequence>
+    </xsd:complexType>
+
+</xsd:schema>

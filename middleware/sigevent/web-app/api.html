@@ -1,0 +1,1616 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>SigEvent API Documentation</title>
+        <style type="text/css">
+            .page {
+                margin: 20px;
+            }
+            
+            .section {
+            }
+            
+            .sectionHeader {
+            }
+            
+            .sectionContainer {
+                margin: 10px;
+            }
+            
+            .subsectionHeader {
+                font-weight: bold;
+            }
+            
+            .subsectionContainer {
+                #margin: 10px;
+                #padding: 10px;
+            }
+            
+            .parameter {
+                margin: 5px;
+                padding: 10px;
+                background-color: #f9f9f9;
+            }
+            
+            .parameterName {
+                color: #000000;
+                font-weight: bold;
+            }
+            
+            .parameterOptional {
+            }
+            
+            .parameterValue {
+                color: #808080;
+            }
+            
+            .categoryName {
+                font-weight: bold;
+            }
+            
+            .categoryValue {
+                color: #808080;
+            }
+            
+            .category {
+                margin: 5px;
+                padding: 10px;
+                background-color: #fbfbfb;
+                border: 1px solid #ebebeb;
+            }
+            
+            .sectionContent {
+                padding: 10px;
+                margin: 10px;
+                background-color: #dbf4fe;
+                border: 1px solid #cbe4ee;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="page">
+            <div><h1>SigEvent API</h1></div>
+            <div>
+                <div class="section">
+                    <div class="sectionHeader"><h2>Events</h2></div>
+                    <div class="sectionContainer">
+                        <div class="sectionContent">
+                            <div class="subsectionHeader"><h3>events/create</h3></div>
+                            <div class="subsectionContainer">
+                                <div class="category">
+                                    <div class="categoryName">Url</div>
+                                    <div class="categoryValue">events/create</div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">HTTP Method</div>
+                                    <div class="categoryValue">GET, POST</div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">Parameters</div>
+                                    <div class="categoryValue">
+                                        <ul>
+                                            <li>
+                                                <span class="parameterName">format</span>
+                                                <span class="parameterOptional"> [required]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">type</span>
+                                                <span class="parameterOptional"> [required]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">category</span>
+                                                <span class="parameterOptional"> [required]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">source</span>
+                                                <span class="parameterOptional"> [required]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">provider</span>
+                                                <span class="parameterOptional"> [required]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">computer</span>
+                                                <span class="parameterOptional"> [required]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">description</span>
+                                                <span class="parameterOptional"> [required]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">pid</span>
+                                                <span class="parameterOptional"> [optional]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">data</span>
+                                                <span class="parameterOptional"> [optional]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">Return Values</div>
+                                    <div class="categoryValue">
+                                        <ul>
+                                            <li>
+                                                <span class="parameterName">XML</span>
+                                                <span class="parameterOptional"></span>
+                                                <span class="parameterValue">
+                                                    <pre>
+                                                        <code>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;Response&gt;&lt;Content&gt;&lt;SysEvents&gt;
+  &lt;SysEvent&gt;
+    &lt;Id&gt;147&lt;/Id&gt;
+    &lt;DataSize&gt;4&lt;/DataSize&gt;
+    &lt;Computer&gt;podaac&lt;/Computer&gt;
+    &lt;Description&gt;FirstMessage&lt;/Description&gt;
+    &lt;FirstReceived&gt;2009-08-06T00:07:32.319&lt;/FirstReceived&gt;
+
+    &lt;LastReceived&gt;2009-08-06T00:07:32.319&lt;/LastReceived&gt;
+    &lt;Occurrence&gt;1&lt;/Occurrence&gt;
+    &lt;Pid&gt;&lt;/Pid&gt;
+    &lt;Provider&gt;me&lt;/Provider&gt;
+    &lt;Resolution&gt;N/A&lt;/Resolution&gt;
+    &lt;ResolvedAt&gt;&lt;/ResolvedAt&gt;
+    &lt;Source&gt;192.168.1.1&lt;/Source&gt;
+
+  &lt;/SysEvent&gt;
+&lt;/SysEvents&gt;&lt;/Content&gt;&lt;Type&gt;OK&lt;/Type&gt;&lt;/Response&gt;
+                                                        </code>
+                                                    </pre>
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">JSON</span>
+                                                <span class="parameterOptional"></span>
+                                                <span class="parameterValue">
+                                                    <pre>
+                                                        <code>
+{
+    "Response": {
+        "Content": {
+            "SysEvents":[
+                {
+                    "Id":152,
+                    "DataSize":4,
+                    "Computer":"podaac",
+                    "Data":"DATA",
+                    "Description":"FirstMessage",
+                    "FirstReceived":"2009-08-06T00:13:49.985",
+                    "LastReceived":"2009-08-06T00:13:49.985",
+                    "Occurrence":1,
+                    "Pid":"",
+                    "Provider":"me",
+                    "Resolution":"N/A",
+                    "ResolvedAt":"",
+                    "Source":"192.168.1.1"
+                }
+            ]
+        },
+        "Type": "OK"
+    }
+}
+                                                        </code>
+                                                    </pre>
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sectionContent">
+                            <div class="subsectionHeader"><h3>events/list</h3></div>
+                            <div class="subsectionContainer">
+                                <div class="category">
+                                    <div class="categoryName">Url</div>
+                                    <div class="categoryValue">events/list</div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">HTTP Method</div>
+                                    <div class="categoryValue">GET, POST</div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">Parameters</div>
+                                    <div class="categoryValue">
+                                        <ul>
+                                            <li>
+                                                <span class="parameterName">format</span>
+                                                <span class="parameterOptional"> [required]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">page</span>
+                                                <span class="parameterOptional"> [optional]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">sort</span>
+                                                <span class="parameterOptional"> [optional]: </span>
+                                                <span class="parameterValue">lastReceived, computer, description, firstReceived, occurrence, pid, provider, resolution, resolvedAt, source, category, type</span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">order</span>
+                                                <span class="parameterOptional"> [optional]: asc, desc</span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">computer</span>
+                                                <span class="parameterOptional"> [optional]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">description</span>
+                                                <span class="parameterOptional"> [optional]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">pid</span>
+                                                <span class="parameterOptional"> [optional]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">provider</span>
+                                                <span class="parameterOptional"> [optional]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">source</span>
+                                                <span class="parameterOptional"> [optional]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">category</span>
+                                                <span class="parameterOptional"> [optional]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">type</span>
+                                                <span class="parameterOptional"> [optional]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">Return Values</div>
+                                    <div class="categoryValue">
+                                        <ul>
+                                            <li>
+                                                <span class="parameterName">XML</span>
+                                                <span class="parameterOptional"></span>
+                                                <span class="parameterValue">
+                                                    <pre>
+                                                        <code>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;Response&gt;&lt;AvailablePages&gt;1&lt;/AvailablePages&gt;&lt;Content&gt;&lt;SysEvents&gt;
+  &lt;SysEvent&gt;
+    &lt;Id&gt;145&lt;/Id&gt;
+    &lt;DataSize&gt;4&lt;/DataSize&gt;
+    &lt;Computer&gt;podaac&lt;/Computer&gt;
+    &lt;Description&gt;FirstMessage&lt;/Description&gt;
+    &lt;FirstReceived&gt;2009-08-06T00:02:04.134&lt;/FirstReceived&gt;
+
+    &lt;LastReceived&gt;2009-08-06T00:02:04.134&lt;/LastReceived&gt;
+    &lt;Occurrence&gt;1&lt;/Occurrence&gt;
+    &lt;Pid&gt;&lt;/Pid&gt;
+    &lt;Provider&gt;me&lt;/Provider&gt;
+    &lt;Resolution&gt;N/A&lt;/Resolution&gt;
+    &lt;ResolvedAt&gt;&lt;/ResolvedAt&gt;
+    &lt;Source&gt;192.168.1.1&lt;/Source&gt;
+
+  &lt;/SysEvent&gt;
+  &lt;SysEvent&gt;
+    &lt;Id&gt;147&lt;/Id&gt;
+    &lt;DataSize&gt;4&lt;/DataSize&gt;
+    &lt;Computer&gt;podaac&lt;/Computer&gt;
+    &lt;Description&gt;FirstMessage&lt;/Description&gt;
+    &lt;FirstReceived&gt;2009-08-06T00:07:32.319&lt;/FirstReceived&gt;
+
+    &lt;LastReceived&gt;2009-08-06T00:07:32.319&lt;/LastReceived&gt;
+    &lt;Occurrence&gt;1&lt;/Occurrence&gt;
+    &lt;Pid&gt;&lt;/Pid&gt;
+    &lt;Provider&gt;me&lt;/Provider&gt;
+    &lt;Resolution&gt;N/A&lt;/Resolution&gt;
+    &lt;ResolvedAt&gt;&lt;/ResolvedAt&gt;
+    &lt;Source&gt;192.168.1.1&lt;/Source&gt;
+
+  &lt;/SysEvent&gt;
+&lt;/SysEvents&gt;&lt;/Content&gt;&lt;CurrentPage&gt;0&lt;/CurrentPage&gt;&lt;Type&gt;OK&lt;/Type&gt;&lt;/Response&gt;
+                                                        </code>
+                                                    </pre>
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">JSON</span>
+                                                <span class="parameterOptional"></span>
+                                                <span class="parameterValue">
+                                                    <pre>
+                                                        <code>
+{
+    "Response": {
+        "AvailablePages": "1",
+        "Content": {
+            "SysEvents":[
+                {
+                    "Id":147,
+                    "DataSize":4,
+                    "Computer":"podaac",
+                    "Data":"DATA",
+                    "Description":"FirstMessage",
+                    "FirstReceived":"2009-08-06T00:07:32.319",
+                    "LastReceived":"2009-08-06T00:07:32.319",
+                    "Occurrence":1,
+                    "Pid":"",
+                    "Provider":"me",
+                    "Resolution":"N/A",
+                    "ResolvedAt":"",
+                    "Source":"192.168.1.1"
+                },
+                {
+                    "Id":149,
+                    "DataSize":4,
+                    "Computer":"podaac",
+                    "Data":"DATA",
+                    "Description":"FirstMessage",
+                    "FirstReceived":"2009-08-06T00:12:03.664",
+                    "LastReceived":"2009-08-06T00:12:03.664",
+                    "Occurrence":1,
+                    "Pid":"",
+                    "Provider":"me",
+                    "Resolution":"N/A",
+                    "ResolvedAt":"",
+                    "Source":"192.168.1.1"
+                }
+            ]
+        },
+        "CurrentPage": "0",
+        "Type": "OK"
+    }
+}
+                                                        </code>
+                                                    </pre>
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sectionContent">
+                            <div class="subsectionHeader"><h3>events/update</h3></div>
+                            <div class="subsectionContainer">
+                                <div class="category">
+                                    <div class="categoryName">Url</div>
+                                    <div class="categoryValue">events/update</div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">HTTP Method</div>
+                                    <div class="categoryValue">GET, POST</div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">Parameters</div>
+                                    <div class="categoryValue">
+                                        <ul>
+                                            <li>
+                                                <span class="parameterName">format</span>
+                                                <span class="parameterOptional"> [required]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">id</span>
+                                                <span class="parameterOptional"> [required]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">any parameter to be updated</span>
+                                                <span class="parameterOptional"> [optional]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">Return Values</div>
+                                    <div class="categoryValue">
+                                        <ul>
+                                            <li>
+                                                <span class="parameterName">XML</span>
+                                                <span class="parameterOptional"></span>
+                                                <span class="parameterValue">
+                                                    <pre>
+                                                        <code>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;Response&gt;&lt;Content&gt;&lt;SysEvents&gt;
+  &lt;SysEvent&gt;
+    &lt;Id&gt;152&lt;/Id&gt;
+    &lt;DataSize&gt;4&lt;/DataSize&gt;
+    &lt;Computer&gt;podaac&lt;/Computer&gt;
+    &lt;Description&gt;FirstMessage&lt;/Description&gt;
+    &lt;FirstReceived&gt;2009-08-06T00:13:49.985&lt;/FirstReceived&gt;
+
+    &lt;LastReceived&gt;2009-08-06T00:13:49.985&lt;/LastReceived&gt;
+    &lt;Occurrence&gt;1&lt;/Occurrence&gt;
+    &lt;Pid&gt;&lt;/Pid&gt;
+    &lt;Provider&gt;me&lt;/Provider&gt;
+    &lt;Resolution&gt;N/A&lt;/Resolution&gt;
+    &lt;ResolvedAt&gt;&lt;/ResolvedAt&gt;
+    &lt;Source&gt;aaa&lt;/Source&gt;
+
+  &lt;/SysEvent&gt;
+&lt;/SysEvents&gt;&lt;/Content&gt;&lt;Type&gt;OK&lt;/Type&gt;&lt;/Response&gt;
+                                                        </code>
+                                                    </pre>
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">JSON</span>
+                                                <span class="parameterOptional"></span>
+                                                <span class="parameterValue">
+                                                    <pre>
+                                                        <code>
+{
+    "Response": {
+        "Content": {
+            "SysEvents":[
+                {
+                    "Id":152,
+                    "DataSize":4,
+                    "Computer":"podaac",
+                    "Data":"DATA",
+                    "Description":"FirstMessage",
+                    "FirstReceived":"2009-08-06T00:13:49.985",
+                    "LastReceived":"2009-08-06T00:13:49.985",
+                    "Occurrence":1,
+                    "Pid":"",
+                    "Provider":"me",
+                    "Resolution":"N/A",
+                    "ResolvedAt":"",
+                    "Source":"aaa"
+                }
+            ]
+        },
+        "Type": "OK"
+    }
+}                                                        </code>
+                                                    </pre>
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sectionContent">
+                            <div class="subsectionHeader"><h3>events/delete</h3></div>
+                            <div class="subsectionContainer">
+                                <div class="category">
+                                    <div class="categoryName">Url</div>
+                                    <div class="categoryValue">events/delete</div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">HTTP Method</div>
+                                    <div class="categoryValue">GET, POST</div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">Parameters</div>
+                                    <div class="categoryValue">
+                                        <ul>
+                                            <li>
+                                                <span class="parameterName">format</span>
+                                                <span class="parameterOptional"> [required]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">id</span>
+                                                <span class="parameterOptional"> [required]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">Return Values</div>
+                                    <div class="categoryValue">
+                                        <ul>
+                                            <li>
+                                                <span class="parameterName">XML</span>
+                                                <span class="parameterOptional"></span>
+                                                <span class="parameterValue">
+                                                    <pre>
+                                                        <code>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;Response&gt;&lt;Content&gt;&lt;SysEvents&gt;
+  &lt;SysEvent&gt;
+    &lt;Id&gt;152&lt;/Id&gt;
+    &lt;DataSize&gt;4&lt;/DataSize&gt;
+    &lt;Computer&gt;podaac&lt;/Computer&gt;
+    &lt;Description&gt;FirstMessage&lt;/Description&gt;
+    &lt;FirstReceived&gt;2009-08-06T00:13:49.985&lt;/FirstReceived&gt;
+
+    &lt;LastReceived&gt;2009-08-06T00:13:49.985&lt;/LastReceived&gt;
+    &lt;Occurrence&gt;1&lt;/Occurrence&gt;
+    &lt;Pid&gt;&lt;/Pid&gt;
+    &lt;Provider&gt;me&lt;/Provider&gt;
+    &lt;Resolution&gt;N/A&lt;/Resolution&gt;
+    &lt;ResolvedAt&gt;&lt;/ResolvedAt&gt;
+    &lt;Source&gt;aaa&lt;/Source&gt;
+
+  &lt;/SysEvent&gt;
+&lt;/SysEvents&gt;&lt;/Content&gt;&lt;Type&gt;OK&lt;/Type&gt;&lt;/Response&gt;
+                                                        </code>
+                                                    </pre>
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">JSON</span>
+                                                <span class="parameterOptional"></span>
+                                                <span class="parameterValue">
+                                                    <pre>
+                                                        <code>
+{
+    "Response": {
+        "Content": {
+            "SysEvents":[
+                {
+                    "Id":152,
+                    "DataSize":4,
+                    "Computer":"podaac",
+                    "Data":"DATA",
+                    "Description":"FirstMessage",
+                    "FirstReceived":"2009-08-06T00:13:49.985",
+                    "LastReceived":"2009-08-06T00:13:49.985",
+                    "Occurrence":1,
+                    "Pid":"",
+                    "Provider":"me",
+                    "Resolution":"N/A",
+                    "ResolvedAt":"",
+                    "Source":"aaa"
+                }
+            ]
+        },
+        "Type": "OK"
+    }
+}                                                        </code>
+                                                    </pre>
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sectionContent">
+                            <div class="subsectionHeader"><h3>events/show</h3></div>
+                            <div class="subsectionContainer">
+                                <div class="category">
+                                    <div class="categoryName">Url</div>
+                                    <div class="categoryValue">events/show</div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">HTTP Method</div>
+                                    <div class="categoryValue">GET, POST</div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">Parameters</div>
+                                    <div class="categoryValue">
+                                        <ul>
+                                            <li>
+                                                <span class="parameterName">format</span>
+                                                <span class="parameterOptional"> [required]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">id</span>
+                                                <span class="parameterOptional"> [required]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">Return Values</div>
+                                    <div class="categoryValue">
+                                        <ul>
+                                            <li>
+                                                <span class="parameterName">XML</span>
+                                                <span class="parameterOptional"></span>
+                                                <span class="parameterValue">
+                                                    <pre>
+                                                        <code>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;Response&gt;&lt;Content&gt;&lt;SysEvents&gt;
+  &lt;SysEvent&gt;
+    &lt;Id&gt;152&lt;/Id&gt;
+    &lt;DataSize&gt;4&lt;/DataSize&gt;
+    &lt;Computer&gt;podaac&lt;/Computer&gt;
+    &lt;Description&gt;FirstMessage&lt;/Description&gt;
+    &lt;FirstReceived&gt;2009-08-06T00:13:49.985&lt;/FirstReceived&gt;
+
+    &lt;LastReceived&gt;2009-08-06T00:13:49.985&lt;/LastReceived&gt;
+    &lt;Occurrence&gt;1&lt;/Occurrence&gt;
+    &lt;Pid&gt;&lt;/Pid&gt;
+    &lt;Provider&gt;me&lt;/Provider&gt;
+    &lt;Resolution&gt;N/A&lt;/Resolution&gt;
+    &lt;ResolvedAt&gt;&lt;/ResolvedAt&gt;
+    &lt;Source&gt;aaa&lt;/Source&gt;
+
+    &lt;Data&gt;DATA&lt;/Data&gt;
+  &lt;/SysEvent&gt;
+&lt;/SysEvents&gt;&lt;/Content&gt;&lt;Type&gt;OK&lt;/Type&gt;&lt;/Response&gt;
+                                                        </code>
+                                                    </pre>
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">JSON</span>
+                                                <span class="parameterOptional"></span>
+                                                <span class="parameterValue">
+                                                    <pre>
+                                                        <code>
+{
+    "Response": {
+        "Content": {
+            "SysEvents":[
+                {
+                    "Id":152,
+                    "DataSize":4,
+                    "Computer":"podaac",
+                    "Data":"DATA",
+                    "Description":"FirstMessage",
+                    "FirstReceived":"2009-08-06T00:13:49.985",
+                    "LastReceived":"2009-08-06T00:13:49.985",
+                    "Occurrence":1,
+                    "Pid":"",
+                    "Provider":"me",
+                    "Resolution":"N/A",
+                    "ResolvedAt":"",
+                    "Source":"aaa"
+                }
+            ]
+        },
+        "Type": "OK"
+    }
+}                                                        </code>
+                                                    </pre>
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="sectionHeader"><h2>EventGroup</h2></div>
+                    <div class="sectionContainer">
+                        <div class="sectionContent">
+                            <div class="subsectionHeader"><h3>groups/create</h3></div>
+                            <div class="subsectionContainer">
+                                <div class="category">
+                                    <div class="categoryName">Url</div>
+                                    <div class="categoryValue">groups/create</div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">HTTP Method</div>
+                                    <div class="categoryValue">GET, POST</div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">Parameters</div>
+                                    <div class="categoryValue">
+                                        <ul>
+                                            <li>
+                                                <span class="parameterName">format</span>
+                                                <span class="parameterOptional"> [required]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">type</span>
+                                                <span class="parameterOptional"> [required]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">category</span>
+                                                <span class="parameterOptional"> [required]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">purgeRate</span>
+                                                <span class="parameterOptional"> [required]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sectionContent">
+                            <div class="subsectionHeader"><h3>groups/list</h3></div>
+                            <div class="subsectionContainer">
+                                <div class="category">
+                                    <div class="categoryName">Url</div>
+                                    <div class="categoryValue">groups/list</div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">HTTP Method</div>
+                                    <div class="categoryValue">GET, POST</div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">Parameters</div>
+                                    <div class="categoryValue">
+                                        <ul>
+                                            <li>
+                                                <span class="parameterName">format</span>
+                                                <span class="parameterOptional"> [required]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">page</span>
+                                                <span class="parameterOptional"> [optional]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">sort</span>
+                                                <span class="parameterOptional"> [optional]: </span>
+                                                <span class="parameterValue">category, type, purgeRate</span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">order</span>
+                                                <span class="parameterOptional"> [optional]: </span>
+                                                <span class="parameterValue">asc, desc</span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">category</span>
+                                                <span class="parameterOptional"> [optional]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">type</span>
+                                                <span class="parameterOptional"> [optional]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">purgeRate</span>
+                                                <span class="parameterOptional"> [optional]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sectionContent">
+                            <div class="subsectionHeader"><h3>groups/update</h3></div>
+                            <div class="subsectionContainer">
+                                <div class="category">
+                                    <div class="categoryName">Url</div>
+                                    <div class="categoryValue">groups/update</div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">HTTP Method</div>
+                                    <div class="categoryValue">GET, POST</div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">Parameters</div>
+                                    <div class="categoryValue">
+                                        <ul>
+                                            <li>
+                                                <span class="parameterName">format</span>
+                                                <span class="parameterOptional"> [required]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">id</span>
+                                                <span class="parameterOptional"> [required]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">any parameter to be updated</span>
+                                                <span class="parameterOptional"> [optional]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sectionContent">
+                            <div class="subsectionHeader"><h3>groups/delete</h3></div>
+                            <div class="subsectionContainer">
+                                <div class="category">
+                                    <div class="categoryName">Url</div>
+                                    <div class="categoryValue">groups/delete</div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">HTTP Method</div>
+                                    <div class="categoryValue">GET, POST</div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">Parameters</div>
+                                    <div class="categoryValue">
+                                        <ul>
+                                            <li>
+                                                <span class="parameterName">format</span>
+                                                <span class="parameterOptional"> [required]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">id</span>
+                                                <span class="parameterOptional"> [required]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sectionContent">
+                            <div class="subsectionHeader"><h3>groups/show</h3></div>
+                            <div class="subsectionContainer">
+                                <div class="category">
+                                    <div class="categoryName">Url</div>
+                                    <div class="categoryValue">groups/show</div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">HTTP Method</div>
+                                    <div class="categoryValue">GET, POST</div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">Parameters</div>
+                                    <div class="categoryValue">
+                                        <ul>
+                                            <li>
+                                                <span class="parameterName">format</span>
+                                                <span class="parameterOptional"> [required]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">id</span>
+                                                <span class="parameterOptional"> [required]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="sectionHeader"><h2>Notify</h2></div>
+                    <div class="sectionContainer">
+                        <div class="sectionContent">
+                            <div class="subsectionHeader"><h3>notifies/create</h3></div>
+                            <div class="subsectionContainer">
+                                <div class="category">
+                                    <div class="categoryName">Url</div>
+                                    <div class="categoryValue">notifies/create</div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">HTTP Method</div>
+                                    <div class="categoryValue">GET, POST</div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">Parameters</div>
+                                    <div class="categoryValue">
+                                        <ul>
+                                            <li>
+                                                <span class="parameterName">format</span>
+                                                <span class="parameterOptional"> [required]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">type</span>
+                                                <span class="parameterOptional"> [required]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">category</span>
+                                                <span class="parameterOptional"> [required]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">method</span>
+                                                <span class="parameterOptional"> [required]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">contact</span>
+                                                <span class="parameterOptional"> [required]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">rate</span>
+                                                <span class="parameterOptional"> [required]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">messageFormat</span>
+                                                <span class="parameterOptional"> [required]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">content</span>
+                                                <span class="parameterOptional"> [required]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">note</span>
+                                                <span class="parameterOptional"> [required]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sectionContent">
+                            <div class="subsectionHeader"><h3>notifies/list</h3></div>
+                            <div class="subsectionContainer">
+                                <div class="category">
+                                    <div class="categoryName">Url</div>
+                                    <div class="categoryValue">notifies/list</div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">HTTP Method</div>
+                                    <div class="categoryValue">GET, POST</div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">Parameters</div>
+                                    <div class="categoryValue">
+                                        <ul>
+                                            <li>
+                                                <span class="parameterName">format</span>
+                                                <span class="parameterOptional"> [required]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">page</span>
+                                                <span class="parameterOptional"> [optional]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">sort</span>
+                                                <span class="parameterOptional"> [optional]: </span>
+                                                <span class="parameterValue">contact, content, lastNotified, lastReport, messageFormat, method, note, rate, category, type</span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">order</span>
+                                                <span class="parameterOptional"> [optional]: </span>
+                                                <span class="parameterValue">asc, desc</span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">contact</span>
+                                                <span class="parameterOptional"> [optional]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">content</span>
+                                                <span class="parameterOptional"> [optional]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">lastNotified</span>
+                                                <span class="parameterOptional"> [optional]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">lastReport</span>
+                                                <span class="parameterOptional"> [optional]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">messageFormat</span>
+                                                <span class="parameterOptional"> [optional]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">method</span>
+                                                <span class="parameterOptional"> [optional]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">note</span>
+                                                <span class="parameterOptional"> [optional]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">rate</span>
+                                                <span class="parameterOptional"> [optional]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">category</span>
+                                                <span class="parameterOptional"> [optional]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">type</span>
+                                                <span class="parameterOptional"> [optional]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sectionContent">
+                            <div class="subsectionHeader"><h3>notifies/update</h3></div>
+                            <div class="subsectionContainer">
+                                <div class="category">
+                                    <div class="categoryName">Url</div>
+                                    <div class="categoryValue">notifies/update</div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">HTTP Method</div>
+                                    <div class="categoryValue">GET, POST</div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">Parameters</div>
+                                    <div class="categoryValue">
+                                        <ul>
+                                            <li>
+                                                <span class="parameterName">format</span>
+                                                <span class="parameterOptional"> [required]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">id</span>
+                                                <span class="parameterOptional"> [required]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">any parameter to be updated</span>
+                                                <span class="parameterOptional"> [optional]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sectionContent">
+                            <div class="subsectionHeader"><h3>notifies/delete</h3></div>
+                            <div class="subsectionContainer">
+                                <div class="category">
+                                    <div class="categoryName">Url</div>
+                                    <div class="categoryValue">notifies/delete</div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">HTTP Method</div>
+                                    <div class="categoryValue">GET, POST</div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">Parameters</div>
+                                    <div class="categoryValue">
+                                        <ul>
+                                            <li>
+                                                <span class="parameterName">format</span>
+                                                <span class="parameterOptional"> [required]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">id</span>
+                                                <span class="parameterOptional"> [required]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sectionContent">
+                            <div class="subsectionHeader"><h3>notifies/show</h3></div>
+                            <div class="subsectionContainer">
+                                <div class="category">
+                                    <div class="categoryName">Url</div>
+                                    <div class="categoryValue">notifies/show</div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">HTTP Method</div>
+                                    <div class="categoryValue">GET, POST</div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">Parameters</div>
+                                    <div class="categoryValue">
+                                        <ul>
+                                            <li>
+                                                <span class="parameterName">format</span>
+                                                <span class="parameterOptional"> [required]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">id</span>
+                                                <span class="parameterOptional"> [required]: </span>
+                                                <span class="parameterValue"></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="sectionHeader"><h2>Constant</h2></div>
+                    <div class="sectionContainer">
+                        <div class="sectionContent">
+                            <div class="subsectionHeader"><h3>constants/eventTypes/list</h3></div>
+                            <div class="subsectionContainer">
+                                <div class="category">
+                                    <div class="categoryName">Url</div>
+                                    <div class="categoryValue">constants/eventTypes/list</div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">HTTP Method</div>
+                                    <div class="categoryValue">GET, POST</div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">Parameters</div>
+                                    <div class="categoryValue">
+                                        <ul>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">Return Values</div>
+                                    <div class="categoryValue">
+                                        <ul>
+                                            <li>
+                                                <span class="parameterName">XML</span>
+                                                <span class="parameterOptional"></span>
+                                                <span class="parameterValue">
+                                                    <pre>
+                                                        <code>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;Response&gt;&lt;Content&gt;&lt;SysConstants&gt;
+  &lt;SysConstant&gt;
+    &lt;Value&gt;INFO&lt;/Value&gt;
+  &lt;/SysConstant&gt;
+  &lt;SysConstant&gt;
+    &lt;Value&gt;WARN&lt;/Value&gt;
+  &lt;/SysConstant&gt;
+  &lt;SysConstant&gt;
+
+    &lt;Value&gt;ERROR&lt;/Value&gt;
+  &lt;/SysConstant&gt;
+&lt;/SysConstants&gt;&lt;/Content&gt;&lt;Type&gt;OK&lt;/Type&gt;&lt;/Response&gt;
+                                                        </code>
+                                                    </pre>
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">JSON</span>
+                                                <span class="parameterOptional"></span>
+                                                <span class="parameterValue">
+                                                    <pre>
+                                                        <code>
+{
+    "Response": {
+        "Content": {
+            "SysConstants":[
+                {
+                    "Value":"INFO"
+                },
+                {
+                    "Value":"WARN"
+                },
+                {
+                    "Value":"ERROR"
+                }
+            ]
+        },
+        "Type": "OK"
+    }
+}
+                                                        </code>
+                                                    </pre>
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sectionContent">
+                            <div class="subsectionHeader"><h3>constants/messageFormats/list</h3></div>
+                            <div class="subsectionContainer">
+                                <div class="category">
+                                    <div class="categoryName">Url</div>
+                                    <div class="categoryValue">constants/messageFormats/list</div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">HTTP Method</div>
+                                    <div class="categoryValue">GET, POST</div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">Parameters</div>
+                                    <div class="categoryValue">
+                                        <ul>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">Return Values</div>
+                                    <div class="categoryValue">
+                                        <ul>
+                                            <li>
+                                                <span class="parameterName">XML</span>
+                                                <span class="parameterOptional"></span>
+                                                <span class="parameterValue">
+                                                    <pre>
+                                                        <code>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;Response&gt;&lt;Content&gt;&lt;SysConstants&gt;
+  &lt;SysConstant&gt;
+    &lt;Value&gt;TEXT&lt;/Value&gt;
+  &lt;/SysConstant&gt;
+  &lt;SysConstant&gt;
+    &lt;Value&gt;XML&lt;/Value&gt;
+  &lt;/SysConstant&gt;
+  &lt;SysConstant&gt;
+
+    &lt;Value&gt;JSON&lt;/Value&gt;
+  &lt;/SysConstant&gt;
+&lt;/SysConstants&gt;&lt;/Content&gt;&lt;Type&gt;OK&lt;/Type&gt;&lt;/Response&gt;
+                                                        </code>
+                                                    </pre>
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">JSON</span>
+                                                <span class="parameterOptional"></span>
+                                                <span class="parameterValue">
+                                                    <pre>
+                                                        <code>
+{
+    "Response": {
+        "Content": {
+            "SysConstants":[
+                {
+                    "Value":"TEXT"
+                },
+                {
+                    "Value":"XML"
+                },
+                {
+                    "Value":"JSON"
+                }
+            ]
+        },
+        "Type": "OK"
+    }
+}
+                                                        </code>
+                                                    </pre>
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sectionContent">
+                            <div class="subsectionHeader"><h3>constants/notifyContents/list</h3></div>
+                            <div class="subsectionContainer">
+                                <div class="category">
+                                    <div class="categoryName">Url</div>
+                                    <div class="categoryValue">constants/notifyContents/list</div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">HTTP Method</div>
+                                    <div class="categoryValue">GET, POST</div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">Parameters</div>
+                                    <div class="categoryValue">
+                                        <ul>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">Return Values</div>
+                                    <div class="categoryValue">
+                                        <ul>
+                                            <li>
+                                                <span class="parameterName">XML</span>
+                                                <span class="parameterOptional"></span>
+                                                <span class="parameterValue">
+                                                    <pre>
+                                                        <code>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;Response&gt;&lt;Content&gt;&lt;SysConstants&gt;
+  &lt;SysConstant&gt;
+    &lt;Value&gt;COMPLETE&lt;/Value&gt;
+  &lt;/SysConstant&gt;
+  &lt;SysConstant&gt;
+    &lt;Value&gt;DESCRIPTION&lt;/Value&gt;
+  &lt;/SysConstant&gt;
+&lt;/SysConstants&gt;&lt;/Content&gt;&lt;Type&gt;OK&lt;/Type&gt;&lt;/Response&gt;
+                                                        </code>
+                                                    </pre>
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">JSON</span>
+                                                <span class="parameterOptional"></span>
+                                                <span class="parameterValue">
+                                                    <pre>
+                                                        <code>
+{
+    "Response": {
+        "Content": {
+            "SysConstants":[
+                {
+                    "Value":"COMPLETE"
+                },
+                {
+                    "Value":"DESCRIPTION"
+                }
+            ]
+        },
+        "Type": "OK"
+    }
+}
+                                                        </code>
+                                                    </pre>
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sectionContent">
+                            <div class="subsectionHeader"><h3>constants/notifyMethods/list</h3></div>
+                            <div class="subsectionContainer">
+                                <div class="category">
+                                    <div class="categoryName">Url</div>
+                                    <div class="categoryValue">constants/notifyMethods/list</div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">HTTP Method</div>
+                                    <div class="categoryValue">GET, POST</div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">Parameters</div>
+                                    <div class="categoryValue">
+                                        <ul>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">Return Values</div>
+                                    <div class="categoryValue">
+                                        <ul>
+                                            <li>
+                                                <span class="parameterName">XML</span>
+                                                <span class="parameterOptional"></span>
+                                                <span class="parameterValue">
+                                                    <pre>
+                                                        <code>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;Response&gt;&lt;Content&gt;&lt;SysConstants&gt;
+  &lt;SysConstant&gt;
+    &lt;Value&gt;EMAIL&lt;/Value&gt;
+  &lt;/SysConstant&gt;
+  &lt;SysConstant&gt;
+    &lt;Value&gt;JMS&lt;/Value&gt;
+  &lt;/SysConstant&gt;
+  &lt;SysConstant&gt;
+
+    &lt;Value&gt;MULTICAST&lt;/Value&gt;
+  &lt;/SysConstant&gt;
+&lt;/SysConstants&gt;&lt;/Content&gt;&lt;Type&gt;OK&lt;/Type&gt;&lt;/Response&gt;
+                                                        </code>
+                                                    </pre>
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">JSON</span>
+                                                <span class="parameterOptional"></span>
+                                                <span class="parameterValue">
+                                                    <pre>
+                                                        <code>
+{
+    "Response": {
+        "Content": {
+            "SysConstants":[
+                {
+                    "Value":"EMAIL"
+                },
+                {
+                    "Value":"JMS"
+                },
+                {
+                    "Value":"MULTICAST"
+                }
+            ]
+        },
+        "Type": "OK"
+    }
+}
+                                                        </code>
+                                                    </pre>
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sectionContent">
+                            <div class="subsectionHeader"><h3>constants/responseFormats/list</h3></div>
+                            <div class="subsectionContainer">
+                                <div class="category">
+                                    <div class="categoryName">Url</div>
+                                    <div class="categoryValue">constants/responseFormats/list</div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">HTTP Method</div>
+                                    <div class="categoryValue">GET, POST</div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">Parameters</div>
+                                    <div class="categoryValue">
+                                        <ul>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">Return Values</div>
+                                    <div class="categoryValue">
+                                        <ul>
+                                            <li>
+                                                <span class="parameterName">XML</span>
+                                                <span class="parameterOptional"></span>
+                                                <span class="parameterValue">
+                                                    <pre>
+                                                        <code>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;Response&gt;&lt;Content&gt;&lt;SysConstants&gt;
+  &lt;SysConstant&gt;
+    &lt;Value&gt;XML&lt;/Value&gt;
+  &lt;/SysConstant&gt;
+  &lt;SysConstant&gt;
+    &lt;Value&gt;JSON&lt;/Value&gt;
+  &lt;/SysConstant&gt;
+  &lt;SysConstant&gt;
+
+    &lt;Value&gt;DOJO_JSON&lt;/Value&gt;
+  &lt;/SysConstant&gt;
+  &lt;SysConstant&gt;
+    &lt;Value&gt;TEXT&lt;/Value&gt;
+  &lt;/SysConstant&gt;
+&lt;/SysConstants&gt;&lt;/Content&gt;&lt;Type&gt;OK&lt;/Type&gt;&lt;/Response&gt;
+                                                        </code>
+                                                    </pre>
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">JSON</span>
+                                                <span class="parameterOptional"></span>
+                                                <span class="parameterValue">
+                                                    <pre>
+                                                        <code>
+{
+    "Response": {
+        "Content": {
+            "SysConstants":[
+                {
+                    "Value":"XML"
+                },
+                {
+                    "Value":"JSON"
+                },
+                {
+                    "Value":"DOJO_JSON"
+                },
+                {
+                    "Value":"TEXT"
+                }
+            ]
+        },
+        "Type": "OK"
+    }
+}
+                                                        </code>
+                                                    </pre>
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sectionContent">
+                            <div class="subsectionHeader"><h3>constants/categories/list</h3></div>
+                            <div class="subsectionContainer">
+                                <div class="category">
+                                    <div class="categoryName">Url</div>
+                                    <div class="categoryValue">constants/categories/list</div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">HTTP Method</div>
+                                    <div class="categoryValue">GET, POST</div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">Parameters</div>
+                                    <div class="categoryValue">
+                                        <ul>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="category">
+                                    <div class="categoryName">Return Values</div>
+                                    <div class="categoryValue">
+                                        <ul>
+                                            <li>
+                                                <span class="parameterName">XML</span>
+                                                <span class="parameterOptional"></span>
+                                                <span class="parameterValue">
+                                                    <pre>
+                                                        <code>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;Response&gt;&lt;Content&gt;&lt;SysConstants&gt;
+  &lt;SysConstant&gt;
+    &lt;Value&gt;XML&lt;/Value&gt;
+  &lt;/SysConstant&gt;
+  &lt;SysConstant&gt;
+    &lt;Value&gt;JSON&lt;/Value&gt;
+  &lt;/SysConstant&gt;
+  &lt;SysConstant&gt;
+
+    &lt;Value&gt;DOJO_JSON&lt;/Value&gt;
+  &lt;/SysConstant&gt;
+  &lt;SysConstant&gt;
+    &lt;Value&gt;TEXT&lt;/Value&gt;
+  &lt;/SysConstant&gt;
+&lt;/SysConstants&gt;&lt;/Content&gt;&lt;Type&gt;OK&lt;/Type&gt;&lt;/Response&gt;
+                                                        </code>
+                                                    </pre>
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <span class="parameterName">JSON</span>
+                                                <span class="parameterOptional"></span>
+                                                <span class="parameterValue">
+                                                    <pre>
+                                                        <code>
+{
+    "Response": {
+        "Content": {
+            "SysConstants":[
+                {
+                    "Value":"XML"
+                },
+                {
+                    "Value":"JSON"
+                },
+                {
+                    "Value":"DOJO_JSON"
+                },
+                {
+                    "Value":"TEXT"
+                }
+            ]
+        },
+        "Type": "OK"
+    }
+}
+                                                        </code>
+                                                    </pre>
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

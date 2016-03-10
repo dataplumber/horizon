@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+
+<!-- 
+   Copyright 2008, by the California Institute of Technology.
+   ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+   
+   $Id: inventory.xml 1669 2008-08-23 01:52:31Z shardman $
+-->
+
+<assembly xmlns="http://maven.apache.org/POM/4.0.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+   http://maven.apache.org/xsd/assembly-1.0.0.xsd">
+   <id>sapi</id>
+   <formats>
+      <format>tar.gz</format>
+   </formats>
+   <fileSets>
+   	<fileSet>
+         <directory>target</directory>
+         <outputDirectory>lib</outputDirectory>
+         <includes>
+            <include>*.jar</include>
+         </includes>
+      </fileSet>
+      <fileSet>
+         <directory>target/classes</directory>
+         <outputDirectory>config</outputDirectory>
+         <includes>
+            <include>sapi.properties</include>
+            <include>log4j.properties</include>
+         </includes>
+         <fileMode>644</fileMode>
+         <lineEnding>unix</lineEnding>
+      </fileSet>
+      <fileSet>
+         <directory>target/classes</directory>
+         <outputDirectory>bin</outputDirectory>
+         <includes>
+            <include>sapi</include>
+         </includes>
+         <fileMode>755</fileMode>
+         <lineEnding>unix</lineEnding>
+      </fileSet>
+   </fileSets>
+   <dependencySets>
+      <dependencySet>
+         <outputDirectory>lib</outputDirectory>
+         <unpack>false</unpack>
+         <scope>runtime</scope>
+      </dependencySet>
+   </dependencySets>
+   
+</assembly>

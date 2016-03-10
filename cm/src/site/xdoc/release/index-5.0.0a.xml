@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Copyright 2013, by the California Institute of Technology. -->
+<!-- ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged. -->
+<!--  -->
+<!-- $Id: $ -->
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+   <properties>
+      <title>Release Description 5.0.0a</title>
+      <author>T. Huang</author>
+   </properties>
+   <body>
+      <section name="Release Description 5.0.0a">
+         <p>This release of the HORIZON System is the horizontal scaling workflow data system for
+            ingestion, cataloging, and generation of data products. The following sections can be
+            found in this document:</p>
+         <ul>
+            <li><a href="#System_Requirements">System Requirements</a></li>
+            <li><a href="#Compilation">Compilation</a></li>
+            <li><a href="#Installation_Operation">Installation/Operation</a></li>
+         </ul>
+      </section>
+
+      <section name="System Requirements" id="System_Requirements">
+         <p>This section details the system requirements for compiling, installing and operating the
+            software. The software contained in this release was developed using Java and will run
+            on any platform with a supported Java Runtime Environment (JRE). The software was
+            specifically developed under Sun Java version 1.6 and has only been tested with this
+            version.</p>
+         <ul>
+            <li>HORIZON Standard Computing Environment <p>This will eventually be documented on the
+                  Wiki and linked to in future releases. For now, the following software and tools
+                  should be available in the current environment:</p>
+               <ul>
+                  <li>Apache Ant 1.8.2</li>
+                  <li>Apache Maven 2.2.1</li>
+                  <li>Grails 2.2.4</li>
+                  <li>Groovy 2.0.8</li>
+                  <li>PostgreSQL Client 9.1-901</li>
+                  <li>Perl 5.12.4</li>
+                  <li>Python 2.7.2</li>
+                  <li>Sun Java Standard Edition (J2SE) 1.7.0_25</li>
+               </ul>
+               <p/>
+            </li>
+            <li>PostgreSQL Database Server <p>This release requires an instance of the PostgreSQL
+                  Database Server (9.1) to be installed, configured for HORIZON and running in the
+                  current environment. This requirement should be satisfied by the HORIZON PostgreSQL
+                  database administrator.</p>
+            </li>
+         </ul>
+      </section>
+
+      <section name="Compilation" id="Compilation">
+         <p>This section details the procedures for retrieving the source code from the HORIZON CM
+            repository and building the distribution packages for each program set.</p>
+         <subsection name="Setup">
+            <p>Beyond the system requirements listed above, there are two environmental requirements
+               for compiling the source code. The first is to setup access to the HORIZON Maven
+               repository. This can be accomplished by following the instructions in the <a
+                  href="../maven/index.html#Setup">Setup</a> section of the <a
+                  href="../maven/index.html">Using Maven</a> document.</p>
+            <p>The second is to clear out the local Maven repository for the user account that will
+               be building the distribution packages. Although, this is not a required step, it is
+               suggested to guarantee a clean build from scratch. The result of this step is that
+               all dependent components will be downloaded from their host repositories and stored
+               in the local Maven repository. Because of this, the machine where the build is being
+               performed does require Internet access. The local repository can be cleaned with the
+               following commands:</p>
+            <source> 
+% cd ~/.m2 
+% rm -rf repository 
+            </source>
+            <p>Now that the environmental requirements are satisfied, it is time to compile. This
+               release has been tagged with version <i>5.0.0a</i> and is available from the
+               top-level <i>tags</i> directory in the main software repository. The source code can
+               be checked out from CM with the following command:</p>
+            <source>
+% svn checkout https://podaac-cm/repo/tags/5.0.0a/
+            </source>
+            <p>Prior to building the distribution packages, some setup needs to be performed for the
+               Archive program set for the target environment. This can be accomplished by following
+               the steps detailed in the <a href="../../archive/compile/index.html#Setup">Setup</a>
+               section of the <a href="../../archive/compile/index.html">Compilation</a> document
+               for Archive.</p>
+            <p><b>Note:</b> Don't follow the steps in the <i>Build</i> section of that same
+               document, that will be accomplished below.</p>
+         </subsection>
+
+         <subsection name="Build">
+            <p>Now that the source code for the release is in your local directory and your
+               environment is setup, change directories to the <i>5.0.0a</i> directory and clean the
+               source tree with the following commands:</p>
+            <source> 
+% cd 5.0.0a
+% mvn clean &gt;&amp; clean.log 
+% grep ERROR clean.log 
+% grep WARNING clean.log
+            </source>
+            <p>The <i>mvn clean</i> command above will clear out any temporary files or artifacts
+               from the source tree directory structure and will download any dependent components
+               required by Maven. The <i>grep</i> commands above should not produce any hits from
+               the log file. The log file should end with lines that look similar to the lines
+               below:</p>
+            <source>
+               [INFO] ------------------------------------------------------------------------
+               [INFO] Physical Oceanography DAAC ............................ SUCCESS [11.882s]
+               [INFO] Common Program Set .................................... SUCCESS [2.482s]
+               [INFO] Common Code Generation ................................ SUCCESS [0.006s]
+               [INFO] Common Service Profile Binding ........................ SUCCESS [6.489s]
+               [INFO] Common MMR Binding .................................... SUCCESS [0.007s]
+               [INFO] Common Hostmap Binding ................................ SUCCESS [2.989s]
+               [INFO] Common Crawler Cache Binding .......................... SUCCESS [0.005s]
+               [INFO] Common Metadata Manifest .............................. SUCCESS [0.006s]
+               [INFO] Common API ............................................ SUCCESS [3.988s]
+               [INFO] Common Crawler ........................................ SUCCESS [1.288s]
+               [INFO] Common Groovy ......................................... SUCCESS [0.007s]
+               [INFO] WebService API ........................................ SUCCESS [0.005s]
+               [INFO] SigEvent API .......................................... SUCCESS [0.006s]
+               [INFO] Security API .......................................... SUCCESS [0.014s]
+               [INFO] Common HTTP Fetch ..................................... SUCCESS [0.009s]
+               [INFO] Inventory Program Set ................................. SUCCESS [1.460s]
+               [INFO] Ingest Program Set .................................... SUCCESS [0.005s]
+               [INFO] Ingest Code Generation ................................ SUCCESS [0.004s]
+               [INFO] Ingest Domain Binding ................................. SUCCESS [0.005s]
+               [INFO] Ingest Server Config Binding .......................... SUCCESS [0.005s]
+               [INFO] Ingest Wire Protocol Structure ........................ SUCCESS [0.007s]
+               [INFO] Ingest Keychain Binding ............................... SUCCESS [0.005s]
+               [INFO] Ingest Commons ........................................ SUCCESS [0.007s]
+               [INFO] Ingest API ............................................ SUCCESS [0.007s]
+               [INFO] Ingest Client ......................................... SUCCESS [0.007s]
+               [INFO] Ingest Server ......................................... SUCCESS [0.956s]
+               [INFO] Archive Program Set ................................... SUCCESS [0.008s]
+               [INFO] Data-Handlers Program Set ............................. SUCCESS [0.004s]
+               [INFO] Data-Handler Common ................................... SUCCESS [0.007s]
+               [INFO] Common Groovy ......................................... SUCCESS [0.006s]
+               [INFO] SPM Data-Handler ...................................... SUCCESS [0.007s]
+               [INFO] Aquarius Data-Handler ................................. SUCCESS [0.008s]
+               [INFO] ASCAT Data-Handler .................................... SUCCESS [0.007s]
+               [INFO] AVHRR Data-Handler .................................... SUCCESS [0.008s]
+               [INFO] Beckly Data-Handler ................................... SUCCESS [0.007s]
+               [INFO] CCMP Data-Handler ..................................... SUCCESS [0.007s]
+               [INFO] ECMWF Data-Handler .................................... SUCCESS [0.008s]
+               [INFO] GHRSST GDS2 Data-Handler .............................. SUCCESS [0.007s]
+               [INFO] GHRSST Data-Handler ................................... SUCCESS [0.007s]
+               [INFO] GRACE Data-Handler .................................... SUCCESS [0.008s]
+               [INFO] JASON-1 Data-Handler .................................. SUCCESS [0.007s]
+               [INFO] JMR Data-Handler ...................................... SUCCESS [0.007s]
+               [INFO] MODIS Data-Handler .................................... SUCCESS [0.008s]
+               [INFO] OSCAR Data-Handler .................................... SUCCESS [0.007s]
+               [INFO] OSU Data-Handler ...................................... SUCCESS [0.007s]
+               [INFO] PCMDI Data-Handler .................................... SUCCESS [0.008s]
+               [INFO] Quikscat Level 3 Data-Handler ......................... SUCCESS [0.007s]
+               [INFO] WindSat Data-Handler .................................. SUCCESS [0.007s]
+               [INFO] Distribute Program Set ................................ SUCCESS [0.004s]
+               [INFO] Distribute GCMD ....................................... SUCCESS [0.867s]
+               [INFO] Distribute Code Generation ............................ SUCCESS [0.004s]
+               [INFO] Distribute ECHO Collection Binding .................... SUCCESS [0.005s]
+               [INFO] Distribute ECHO Granule Binding ....................... SUCCESS [0.006s]
+               [INFO] Distribute GCMD DIF Binding ........................... SUCCESS [0.005s]
+               [INFO] Distribute Main ....................................... SUCCESS [0.009s]
+               [INFO] Distribute Subscriber ................................. SUCCESS [0.010s]
+               [INFO] ------------------------------------------------------------------------
+               [INFO] ------------------------------------------------------------------------
+               [INFO] BUILD SUCCESSFUL [INFO]
+               ------------------------------------------------------------------------ [INFO] Total
+               time: 1 minute 10 seconds [INFO] Finished at: Fri Jun 08 14:57:40 PDT 2012 [INFO]
+               Final Memory: 28M/618M [INFO]
+               ------------------------------------------------------------------------ </source>
+            <p>For this release, the unit test execution is being skipped during the build due to
+               some remaining environmental dependencies. The distribution packages can now be built
+               with the following command:</p>
+
+            <source> 
+% mvn package -Dmaven.test.skip=true &gt;&amp; package.log 
+% grep ERROR package.log 
+% grep WARNING package.log 
+            </source>
+            <p>The <i>grep</i> command above looking for <i>ERROR</i> strings should not produce any
+               hits from the log file but the same command looking for <i>WARNING</i> strings will
+               produce a few hits similar to the examples below:</p>
+            <source> 
+               [WARNING] DEPRECATED [descriptor]: Please use descriptors instead 
+               ... 
+               [WARNING]The following patterns were never triggered in this artifact exclusion filter: 
+               ...
+               [WARNING] DEPRECATED [descriptor]: Please use descriptors instead 
+               ... 
+               [WARNING] The following patterns were never triggered in this artifact exclusion filter: 
+               ...
+               [WARNING] Attempting to build MavenProject instance for Artifact \
+               (org.apache.commons:commons-io:1.3.2) of type: jar; constructing POM artifact
+               instead. 
+            </source>
+            <p>There are no issues with the messages above except for the last one. We are still not
+               sure what is causing the message but it is not affecting the final packages. The log
+               file should end with lines that look similar to the lines below:</p>
+            <source> 
+               [INFO] ------------------------------------------------------------------------
+               [INFO] Reactor Summary: [INFO]
+               ------------------------------------------------------------------------ [INFO]
+               Physical Oceanography DAAC ............................ SUCCESS [27.498s] [INFO]
+               Common Program Set .................................... SUCCESS [23.343s] [INFO]
+               Common Code Generation ................................ SUCCESS [0.032s] [INFO]
+               Common Service Profile Binding ........................ SUCCESS [54.348s] [INFO]
+               Common MMR Binding .................................... SUCCESS [1.469s] [INFO]
+               Common Hostmap Binding ................................ SUCCESS [28.569s] [INFO]
+               Common Crawler Cache Binding .......................... SUCCESS [1.458s] [INFO]
+               Common Metadata Manifest .............................. SUCCESS [1.914s] [INFO]
+               Common API ............................................ SUCCESS [19.461s] [INFO]
+               Common Crawler ........................................ SUCCESS [26.569s] [INFO]
+               Common Groovy ......................................... SUCCESS [13.306s] [INFO]
+               WebService API ........................................ SUCCESS [0.018s] [INFO]
+               SigEvent API .......................................... SUCCESS [4.643s] [INFO]
+               Security API .......................................... SUCCESS [16.864s] [INFO]
+               Common HTTP Fetch ..................................... SUCCESS [4.224s] [INFO]
+               Inventory Program Set ................................. SUCCESS [22.585s] [INFO]
+               Ingest Program Set .................................... SUCCESS [0.035s] [INFO]
+               Ingest Code Generation ................................ SUCCESS [0.036s] [INFO]
+               Ingest Domain Binding ................................. SUCCESS [1.249s] [INFO]
+               Ingest Server Config Binding .......................... SUCCESS [1.900s] [INFO]
+               Ingest Wire Protocol Structure ........................ SUCCESS [2.176s] [INFO]
+               Ingest Keychain Binding ............................... SUCCESS [0.991s] [INFO]
+               Ingest Commons ........................................ SUCCESS [2.431s] [INFO]
+               Ingest API ............................................ SUCCESS [15.445s] [INFO]
+               Ingest Client ......................................... SUCCESS [13.536s] [INFO]
+               Ingest Server ......................................... SUCCESS [28.204s] [INFO]
+               Archive Program Set ................................... SUCCESS [6.643s] [INFO]
+               Data-Handlers Program Set ............................. SUCCESS [0.029s] [INFO]
+               Data-Handler Common ................................... SUCCESS [11.576s] [INFO]
+               Common Groovy ......................................... SUCCESS [6.134s] [INFO] SPM
+               Data-Handler ...................................... SUCCESS [16.638s] [INFO] Aquarius
+               Data-Handler ................................. SUCCESS [5.057s] [INFO] ASCAT
+               Data-Handler .................................... SUCCESS [4.902s] [INFO] AVHRR
+               Data-Handler .................................... SUCCESS [4.861s] [INFO] Beckly
+               Data-Handler ................................... SUCCESS [4.701s] [INFO] CCMP
+               Data-Handler ..................................... SUCCESS [4.990s] [INFO] ECMWF
+               Data-Handler .................................... SUCCESS [4.951s] [INFO] GHRSST GDS2
+               Data-Handler .............................. SUCCESS [4.579s] [INFO] GHRSST
+               Data-Handler ................................... SUCCESS [6.100s] [INFO] GRACE
+               Data-Handler .................................... SUCCESS [4.863s] [INFO] JASON-1
+               Data-Handler .................................. SUCCESS [20.034s] [INFO] JMR
+               Data-Handler ...................................... SUCCESS [5.427s] [INFO] MODIS
+               Data-Handler .................................... SUCCESS [5.192s] [INFO] OSCAR
+               Data-Handler .................................... SUCCESS [4.925s] [INFO] OSU
+               Data-Handler ...................................... SUCCESS [4.353s] [INFO] PCMDI
+               Data-Handler .................................... SUCCESS [4.710s] [INFO] Quikscat
+               Level 3 Data-Handler ......................... SUCCESS [4.778s] [INFO] WindSat
+               Data-Handler .................................. SUCCESS [5.462s] [INFO] Distribute
+               Program Set ................................ SUCCESS [0.049s] [INFO] Distribute GCMD
+               ....................................... SUCCESS [2.532s] [INFO] Distribute Code
+               Generation ............................ SUCCESS [0.019s] [INFO] Distribute ECHO
+               Collection Binding .................... SUCCESS [4.044s] [INFO] Distribute ECHO
+               Granule Binding ....................... SUCCESS [2.932s] [INFO] Distribute GCMD DIF
+               Binding ........................... SUCCESS [4.997s] [INFO] Distribute Main
+               ....................................... SUCCESS [6.501s] [INFO] Distribute Subscriber
+               ................................. SUCCESS [4.537s] [INFO]
+               ------------------------------------------------------------------------ [INFO]
+               ------------------------------------------------------------------------ [INFO] BUILD
+               SUCCESSFUL [INFO]
+               ------------------------------------------------------------------------ [INFO] Total
+               time: 8 minutes 2 seconds [INFO] Finished at: Fri Jun 08 15:06:21 PDT 2012 [INFO]
+               Final Memory: 354M/714M [INFO]
+               ------------------------------------------------------------------------ 
+            </source>
+            <p><b>Note:</b> Depending on whether the local Maven repository was cleaned out, Maven
+               will need to download several dependencies from the local HORIZON repository and other
+               remote repositories. The times in the example output above will vary drastically
+               based on how many dependencies need to be downloaded.</p>
+            <p>In this release, the Manager, SigEvent, and Security components of the Middleware
+               Program Set must be built separately due to an issue with Maven and Grails. So,
+               please see the Manager <a href="../../middleware/manager/install/index.html"
+                  >Installation</a>, SigEvent <a href="../../middleware/sigevent/install/index.html"
+                  >Installation</a>, and Security <a
+                  href="../../middleware/security/install/index.html">Installation</a> documents for
+               build instructions.</p>
+            <p>After a successful build, as indicated in the examples above, several packages are
+               created and are located as follows:</p>
+            <source>
+            archive-5.0.0a-archive.tar.gz
+            common-crawler-5.0.0a-common-crawler.tar.gz
+            common-httpfetch-5.0.0a-common-httpfetch.tar.gz
+            security-api-5.0.0a-sapi.tar.gz
+            aquarius-5.0.0a-aquarius.tar.gz
+            ascat-5.0.0a-ascat.tar.gz
+            avhrr-5.0.0a-avhrr.tar.gz
+            beckly-5.0.0a-beckly.tar.gz
+            ccmp-5.0.0a-ccmp.tar.gz
+            ecmwf-5.0.0a-ecmwf.tar.gz
+            gds2-5.0.0a-gds2.tar.gz
+            ghrsst-5.0.0a-ghrsst.tar.gz
+            grace-5.0.0a-grace.tar.gz
+            handlers-common-5.0.0a-handlers-common.tar.gz
+            jason-1-5.0.0a-jason1.tar.gz
+            jmr-5.0.0a-jmr.tar.gz
+            modis-5.0.0a-modis.tar.gz
+            oscar-5.0.0a-oscar.tar.gz
+            osu-5.0.0a-osu.tar.gz
+            pcmdi-5.0.0a-pcmdi.tar.gz
+            quikscat-5.0.0a-quikscat.tar.gz
+            windsat-5.0.0a-windsat.tar.gz
+            distribute-gcmd-5.0.0a-distribute-gcmd.tar.gz
+            distribute-main-5.0.0a-distribute-main.tar.gz
+            distribute-subscriber-5.0.0a-distribute-subscriber.tar.gz
+            ingest-client-5.0.0a-ingest-client.tar.gz
+            ingest-server-5.0.0a-ingest-server.tar.gz
+            inventory-5.0.0a-inventory.tar.gz
+         </source>
+         </subsection>
+      </section>
+
+      <section name="Installation Operation" id="Installation_Operation">
+         <p>This section details the installation and operation of the software in this release.
+            This release is intended for deployment in the Integration &amp; Test environment as
+            well as the Operations environment. Details regarding the release for each of these
+            components, including installation of the packages listed above and operation of the
+            associated software, can be found in the following program set release documents:</p>
+         <ul>
+            <li><a href="../../common/release/index-5.0.0a.html">Common Program Set - Release
+                  5.0.0a</a>
+               <p>The Common software does not require installation for this release.</p>
+            </li>
+            <li><a href="../../data-handlers/release/index-5.0.0a.html">Data Handlers Program Set -
+                  Release 5.0.0a</a>
+               <p>The framework for building product-specific data handlers.</p>
+            </li>
+            <li><a href="../../ingest/release/index-5.0.0a.html">Ingest Program Set - Release
+                  5.0.0a</a>
+               <p>The Ingest Server software should be installed on each target ingest machine. The
+                  Ingest Client software should be installed on the designated client machine. </p>
+            </li>
+            <li><a href="../../middleware/release/index-5.0.0a.html">Middleware Program Set -
+                  Release 5.0.0a</a>
+               <p>This release of the Middleware software contains a collection of web services.</p>
+            </li>
+         </ul>
+      </section>
+   </body>
+</document>

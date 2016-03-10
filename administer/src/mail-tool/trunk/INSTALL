@@ -1,0 +1,17 @@
+Installation instructions for Mailing List Tool
+
+
+src/default.css 	/www/seabat/doc/ops/mailinglist/default.css
+src/importlist.php	/www/seabat/doc/ops/mailinglist/importlist.php
+src/mailinglist.php	/www/seabat/doc/ops/mailinglist/mailinglist.php
+src/mailout.php		/www/seabat/doc/ops/mailinglist/mailout.php
+src/managelist.php	/www/seabat/doc/ops/mailinglist/managelist.php
+src/modifylist.php	/www/seabat/doc/ops/mailinglist/modifylist.php
+
+
+A side note:
+/www/podaac-stage/cgi-bin/emailremoval.pl
+is to be moved to /www/podaac/cgi-bin for this release to go operational
+
+The code references an image directory located under 
+/www/seabat/doc/ops/mailinglist/images RELATIVELY... just a heads up.

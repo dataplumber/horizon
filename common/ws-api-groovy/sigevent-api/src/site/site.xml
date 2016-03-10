@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- 
+Copyright 2008, by the California Institute of Technology.
+ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+
+$Id: $
+-->
+
+<project xmlns="http://maven.apache.org/DECORATION/1.4.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/DECORATION/1.4.0 http://maven.apache.org/xsd/decoration-1.4.0.xsd"
+   name="SigEvent API">
+   <bannerLeft>
+      <src>images/horizon_logo.jpg</src>
+      <href>http://horizon.jpl.nasa.gov/</href>
+   </bannerLeft>
+
+   <bannerRight>
+      <name>SigEvent API</name>
+   </bannerRight>
+
+   <body>
+      <links>
+         <item name="SigEvent API"
+            href="http://horizon.jpl.nasa.gov/docs/ws-api-groovy/sigevent-api/index.html"/>
+      </links>
+
+      <menu name="Software Documentation">
+         <item name="About SigEvent API" href="index.html"/>
+         <item name="GroovyDoc" href="apidocs/index.html"/>
+      </menu>
+
+      <menu ref="reports"/>
+   </body>
+</project>

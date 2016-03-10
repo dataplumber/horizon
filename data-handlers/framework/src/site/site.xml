@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!--
+Copyright 2013, by the California Institute of Technology.
+ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+
+$Id: site.xml 5898 2010-09-18 00:24:10Z thuang $
+-->
+
+<project xmlns="http://maven.apache.org/DECORATION/1.4.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/DECORATION/1.4.0 http://maven.apache.org/xsd/decoration-1.4.0.xsd"
+   name="Data Handler Framework">
+   <bannerLeft>
+      <src>images/horizon_logo.jpg</src>
+      <href>http://horizon.jpl.nasa.gov/</href>
+   </bannerLeft>
+
+   <bannerRight>
+      <name>Data Handler Framework</name>
+   </bannerRight>
+
+   <body>
+      <links>
+         <item name="Data Handler Framework"
+            href="http://horizon.jpl.nasa.gov/docs/horizon/data-handlers/framework/index.html"/>
+      </links>
+
+      <menu name="Software Documentation">
+         <item name="About Data Handler Framework" href="index.html"/>
+         <item name="JavaDocs" href="apidocs/index.html"/>
+      </menu>
+
+      <menu ref="reports"/>
+   </body>
+</project>

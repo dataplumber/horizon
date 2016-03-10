@@ -1,0 +1,16 @@
+~~ Copyright 2009, by the California Institute of Technology.
+~~ ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+~~
+~~ $Id: index.apt 2941 2009-05-03 20:35:52Z shardman $
+
+  ---
+  About Distribute GCMD
+  ---
+  Sean Hardman
+  ---
+  
+About Distribute GCMD
+
+  This module contains the GCMD DIF generator application. The GCMD DIF Generator application reads in one or more specially formatted Excel spreadsheet files containing PO.DAAC product metadata and generates the correspond DIF XML files for submission to the Global Change Master Directory (GCMD). The templates and latest versions of these spreadsheets can be found in {{{https://bravo-lib.jpl.nasa.gov/docushare/dsweb/View/Collection-82538}DocuShare}}.
+
+  The plan is to eventually replace this application with an application that follows the model of the ECHO distribution applications contained in this program set.

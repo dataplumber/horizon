@@ -1,0 +1,74 @@
+~~ Copyright 2008, by the California Institute of Technology.
+~~ ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+~~
+~~ $Id: index.apt 3143 2009-06-15 18:10:56Z thuang $
+
+  ---
+  Operation
+  ---
+  Mike Gangl
+  ---
+  
+Operation
+
+  This document describes how to use the Distribute Subscription software. Each section corresponds with an available application. The following sections can be found in this document:
+
+   * {{{#dataSubscriber.sh}dataSubscriber.sh}}
+
+
+{dataSubscriber.sh}
+
+  dataSubscriber.sh is a subscription utility for pulling over granule information after it has been archived.
+
++--
+     sh dataSubscriber.sh -help
+     usage: dataSubscriber.sh [-d <arg>] [-s <arg>]
+     dataSubscriber
+     -d <arg>   The name of the dataset you wish to subscribe to, or a coma
+                delimited set of database names
+     -s <arg>   The start time for the crawler to use. Defaults to the current
+                time if not specified. Format: yyyy-MM-dd'T'HH:mm:ss.SSS
+
++--
+
+  The subscriber will subscribe to a dataset -d starting from time -s. If no time is given, the present time is used to start the subscription. Multiple datasets can be listed , i.e. -d TESTDS1,TESTDS2,TESTDS3.
+
+  For example, the command below will subscribt to data from the TESTDATASET starting August 31st, 2008 at 12:34:56.789pm.
++--
+% sh dataSubscriber.sh -d TESTDATASET -s 2008-08-31'T'12:34:56.789
++--
+
+  There are also options set in the configuration file, listed as follows:
+
++--
+  log4j.configuration: path to the log4j configuration file.
+  inventory.hibernate.config.file: path to the hibernate configuration file.
+  distribute.output.base.path: the base path to which the subscribed data will be written.
+  distribute.exec.cmd: The command to execute when a granule is received and written locally.
+  sig.event.url: the url of the sigevent service to send info, warning and error messages to.
+  execution.sig.category: the error category to which errors in external execution are reported.
+  distribute.sleep.minutes: time, in minutes, the subscriber should slepe ebfore attempting to retreive or poll for data.
+  distribute.subscriber.class: the plugin class which handles the polling for new data.
+  distribute.data.retriever.class: the plugin class which handles the data retrieval found in the subscriber class.
+  inventory.host: the inventory host, i.e. https://lanina
+  inventory.port: the inventory port on which the service is running, i.e. 9192
+
++--
+
+  The subscribder class has two options, currently:
+  
++--
+#distribute.subscriber.class=gov.nasa.podaac.distribute.subscriber.plugins.BasicSubscriber
+distribute.subscriber.class=gov.nasa.podaac.distribute.subscriber.plugins.IWSSubscriber
+inventory.host=http://localhost:9191/inventory
++--
+
+  IWSSubscriber uses the inventory Web Service, basic uses the legacy hibernate connections. If using the IWS Subscriber, the "inventory.host" parameter must be set.
+
+  The exec command takes the following paramters:
+
++--
+  $gDir: the granule directory location
+  $gName: the granule name
+  $dsName: the name of the dataset which the granule belongs to.
++--

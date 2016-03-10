@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+   Copyright (c) 2008-2013
+   Jet Propulsion Laboratory, California Institute of Technology
+   All rights reserved
+   
+   This XML schema defines the Submission message header
+   
+   @author T. Huang {Thomas.Huang@jpl.nasa.gov}
+   @version $Id: $
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:horizon.nasa="http://horizon.nasa.gov"
+   targetNamespace="http://horizon.nasa.gov" elementFormDefault="qualified">
+   <xsd:include schemaLocation="horizon_common.xsd"/>
+   <xsd:complexType name="Header">
+      <xsd:annotation>
+         <xsd:documentation> Definition of product submission header. This contains the relevent
+            elements for HORIZON to identify the product to be handled. </xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element name="productTypeId" type="xsd:long" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>This is the internal machine-generated product type
+                  identifer</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+
+         <xsd:element name="productType">
+            <xsd:annotation>
+               <xsd:documentation>The Product Type this Product is registered
+                  under.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="160"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         
+         <xsd:element name="productTypeInventoryId" type="xsd:long" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>The inventory identifer for this product type.</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+
+         <xsd:element name="productId" type="xsd:long" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>An automatically generated identifier which is unique within a
+                  product type.</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+
+         <xsd:element name="productName">
+            <xsd:annotation>
+               <xsd:documentation>The name of the product. This could be the same as the origial
+                  product file name.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="120"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+         
+         <xsd:element name="productInventoryId" type="xsd:long" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>The inventory identifer for this product.</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+
+         <xsd:element name="officialName" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation> The official name of the product. This could be the same as the
+                  product name. For versioning support where the version is part of the product file
+                  name, this field can be use to associate various versions of the product. This is
+                  an optional element. If it is missing, it is assumed the official name of the
+                  product is the same as the product name. </xsd:documentation>
+            </xsd:annotation>
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="120"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+
+         <xsd:element name="version" type="xsd:string">
+            <xsd:annotation>
+               <xsd:documentation>The version of this given product.</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+
+         <xsd:element name="createTime" type="xsd:nonNegativeInteger">
+            <xsd:annotation>
+               <xsd:documentation>The product creation time.</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+
+         <xsd:element name="submissionId" minOccurs="0" maxOccurs="1" type="xsd:long">
+            <xsd:annotation>
+               <xsd:documentation>The internal job submission identifier.</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+
+         <xsd:element name="status" type="horizon.nasa:submitStatusValue" default="READY">
+            <xsd:annotation>
+               <xsd:documentation>Submission status value.</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+
+         <xsd:element name="replace" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>The name of the product to be replaced by this
+                  entry.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:simpleType>
+               <xsd:restriction base="xsd:string">
+                  <xsd:maxLength value="120"/>
+               </xsd:restriction>
+            </xsd:simpleType>
+         </xsd:element>
+
+         <xsd:element name="catalogOnly" type="xsd:boolean" default="false">
+            <xsd:annotation>
+               <xsd:documentation> Flag to indicate the submission only require metadata catalogging
+                  only. That is, if it is set to 'true', then on file ingestion job will be created.
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+
+         <xsd:element name="operations">
+            <xsd:annotation>
+               <xsd:documentation> Captures the list of operations and time spent. Some of the
+                  common metrics includes ('ACQUIRED": time spent on acquiring product from
+                  provider; "REQUESTED": time spent on submitting the ingest/archive job; "INGEST":
+                  time spent on ingesting the product into staging area; "INVENTORY": time spent on
+                  inventory the product; "ARCHIVE": time spent on transfering the product into
+                  archive location) </xsd:documentation>
+            </xsd:annotation>
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="operation" type="horizon.nasa:Operation" minOccurs="0"
+                     maxOccurs="unbounded"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+</xsd:schema>

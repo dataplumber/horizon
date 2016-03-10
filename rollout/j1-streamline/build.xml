@@ -1,0 +1,260 @@
+<?xml version="1.0"?>
+
+<project name="streamlining" basedir="." default="usage">
+    <property file="build.properties"/>
+
+    <property name="src.dir" value="src"/>
+    <property name="web.dir" value="war"/>
+    <property name="build.dir" value="${web.dir}/WEB-INF/classes"/>
+    <property name="name" value="streamlining"/>
+
+    <path id="master-classpath">
+        <fileset dir="${web.dir}/WEB-INF/lib">
+            <include name="*.jar"/>
+        </fileset>
+        <!-- We need the servlet API classes:        -->
+        <!--   for Tomcat 4.1 use servlet.jar        -->
+        <!--   for Tomcat 5.0 use servlet-api.jar    -->
+        <!--   for Other app server - check the docs -->
+        <fileset dir="${appserver.home}/common/lib">
+            <include name="servlet*.jar"/>
+        </fileset>
+        <pathelement path="${build.dir}"/>
+    </path>
+
+    <target name="usage">
+        <echo message=""/>
+        <echo message="user.home is ${user.home}"/>
+        <echo message=""/>
+        <echo message="${name} build file"/>
+        <echo message="-----------------------------------"/>
+        <echo message=""/>
+        <echo message="Available targets are:"/>
+        <echo message=""/>
+        <echo message="build     --> Build the application"/>
+        <echo message="clean     --> Clean output directories"/>
+        <echo message="deploy    --> Deploy application as directory"/>
+        <echo message="deploywar --> Deploy application as a WAR file"/>
+        <echo message="createTables --> Create tables in DB"/>
+        <echo message="dropTables --> Remove tables in DB"/>
+        <echo message="printData --> Print out data in DB"/>
+        <echo message="clearData --> Clear out data in DB"/>
+        <echo message="loadData  --> Load init. data in DB"/>
+        <echo message=""/>
+    </target>
+
+    <taskdef name="list" classname="org.apache.catalina.ant.ListTask">
+        <classpath>
+            <path location="${appserver.home}/server/lib/catalina-ant.jar"/>
+        </classpath>
+    </taskdef>
+
+    <target name="build" description="Compile main source tree java files">
+        <mkdir dir="${build.dir}"/>
+        <javac destdir="${build.dir}" target="1.5" debug="true"
+               deprecation="false" optimize="false" failonerror="true">
+            <src path="${src.dir}"/>
+            <classpath refid="master-classpath"/>
+        </javac>
+        <copy todir="${build.dir}" preservelastmodified="true">
+            <fileset dir="${web.dir}/WEB-INF">
+                <include name="*.properties"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="deploy" depends="build" description="Deploy application">
+        <copy todir="${deploy.path}/${name}" preservelastmodified="true">
+            <fileset dir="${web.dir}">
+                <include name="**/*.*"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="deploywar" depends="build" description="Deploy application as a WAR file">
+        <war destfile="${name}.war"
+             webxml="${web.dir}/WEB-INF/web.xml">
+            <fileset dir="${web.dir}">
+                <include name="**/*.*"/>
+            </fileset>
+        </war>
+        <copy todir="${deploy.path}" preservelastmodified="true">
+            <fileset dir=".">
+                <include name="*.war"/>
+            </fileset>
+        </copy>
+        <chmod file="${deploy.path}/${name}.war" perm="a+r"/>
+    </target>
+
+    <target name="list" description="List Tomcat applications">
+        <list url="${tomcat.manager.url}"
+                 username="${tomcat.manager.username}"
+                 password="${tomcat.manager.password}"/>
+    </target>
+
+    <target name="clean" description="Clean output directories">
+        <delete>
+            <fileset dir="${build.dir}">
+                <include name="**/*.class"/>
+            </fileset>
+        </delete>
+        <delete>
+            <fileset dir="${basedir}">
+                <include name="*.war"/>
+            </fileset>
+        </delete>
+    </target>
+
+    <target name="undeploy" description="Un-Deploy application">
+        <delete>
+            <fileset dir="${deploy.path}/${name}">
+                <include name="**/*.*"/>
+            </fileset>
+        </delete>
+    </target>
+
+    <target name="junit" depends="build,clearData,loadData" description="Run JUnit Tests">
+        <junit printsummary="on"
+               fork="false"
+               haltonfailure="false"
+               failureproperty="tests.failed"
+               showoutput="true">
+            <classpath refid="master-classpath"/>
+            <formatter type="brief" usefile="false"/>
+
+            <batchtest>
+                <fileset dir="${build.dir}">
+                    <include name="**/Test*.*"/>
+                </fileset>
+            </batchtest>
+
+        </junit>
+
+        <fail if="tests.failed">
+        tests.failed=${tests.failed}
+        ***********************************************************
+        ***********************************************************
+        ****  One or more tests failed!  Check the output ...  ****
+        ***********************************************************
+        ***********************************************************
+        </fail>
+    </target>
+
+    <target name="createTables">
+        <echo message="CREATE TABLES USING: ${db.driver} ${db.url}"/>
+        <sql driver="${db.driver}"
+             url="${db.url}"
+             userid="${db.user}"
+             password="${db.pw}"
+             onerror="continue">  
+            <classpath refid="master-classpath"/>
+
+        CREATE TABLE catalog (
+          id INTEGER NOT NULL PRIMARY KEY,
+          Cycle char(3),
+          Version char(1),
+          Data_Author varchar(255),
+          CNES_Approved char(1),
+          NASA_Approved char(1),
+          GDR_Release_Date varchar(255),
+          SGDR_Staged char(1),
+          SGDR_Release_Date varchar(255),
+          GDRnetCDF_Staged char(1),
+          GDRnetCDF_Release_Date varchar(255),
+          SGDRnetCDF_Staged char(1),
+          SGDRnetCDF_Release_Date varchar(255),
+          SSHAnetCDF_Staged char(1),
+          SSHAnetCDF_Release_Date varchar(255),
+          Email_ID varchar(255)
+        );
+      
+	<!-- CREATE INDEX description ON catalog(section1); -->
+
+	COMMIT;
+
+        </sql> 
+    </target>
+	
+    <target name="dropTables">
+        <echo message="DROP TABLES USING: ${db.driver} ${db.url}"/>
+        <sql driver="${db.driver}"
+             url="${db.url}"
+             userid="${db.user}"
+             password="${db.pw}"
+             onerror="continue">  
+            <classpath refid="master-classpath"/>
+
+        DROP TABLE catalog;
+	COMMIT;
+
+        </sql> 
+    </target>
+
+    <target name="loadData">
+        <echo message="LOAD DATA USING: ${db.driver} ${db.url}"/>
+        <sql driver="${db.driver}"
+             url="${db.url}"
+             userid="${db.user}"
+             password="${db.pw}"
+             onerror="continue">  
+            <classpath refid="master-classpath"/>
+
+        INSERT INTO catalog (id, Cycle, Version, Data_Author, CNES_Approved, NASA_Approved, GDR_Release_Date, SGDR_Staged, SGDR_Release_Date, GDRnetCDF_Staged, GDRnetCDF_Release_Date, SGDRnetCDF_Staged, SGDRnetCDF_Release_Date, SSHAnetCDF_Staged, SSHAnetCDF_Release_Date, Email_ID) values(1, '201', 'C', 'NASA', 'Y', 'Y', '2007-07-07', 'N', '(N/A)', 'Y', '2007-07-15', 'Y', '2008-07-25', 'N', '(N/A)', '(N/A)');
+        INSERT INTO catalog (id, Cycle, Version, Data_Author, CNES_Approved, NASA_Approved, GDR_Release_Date, SGDR_Staged, SGDR_Release_Date, GDRnetCDF_Staged, GDRnetCDF_Release_Date, SGDRnetCDF_Staged, SGDRnetCDF_Release_Date, SSHAnetCDF_Staged, SSHAnetCDF_Release_Date, Email_ID) values(2, '201', 'C', 'CNES', 'N', 'N', '(N/A)', 'N', '(N/A)', 'N', '(N/A)', 'Y', '2008-09-12', 'N', '(N/A)', '(N/A)');
+        INSERT INTO catalog (id, Cycle, Version, Data_Author, CNES_Approved, NASA_Approved, GDR_Release_Date, SGDR_Staged, SGDR_Release_Date, GDRnetCDF_Staged, GDRnetCDF_Release_Date, SGDRnetCDF_Staged, SGDRnetCDF_Release_Date, SSHAnetCDF_Staged, SSHAnetCDF_Release_Date, Email_ID) values(3, '200', 'C', 'NASA', 'N', 'Y', '2007-07-09', 'N', '(N/A)', 'N', '(N/A)', 'N', '(N/A)', 'N', '(N/A)','(N/A)');
+        INSERT INTO catalog (id, Cycle, Version, Data_Author, CNES_Approved, NASA_Approved, GDR_Release_Date, SGDR_Staged, SGDR_Release_Date, GDRnetCDF_Staged, GDRnetCDF_Release_Date, SGDRnetCDF_Staged, SGDRnetCDF_Release_Date, SSHAnetCDF_Staged, SSHAnetCDF_Release_Date, Email_ID) values(4, '090', 'B', 'CNES', 'N', 'N', '(N/A)', 'N', '(N/A)', 'N', '(N/A)', 'Y', '2008-07-15', 'N', '(N/A)', '(N/A)');
+        INSERT INTO catalog (id, Cycle, Version, Data_Author, CNES_Approved, NASA_Approved, GDR_Release_Date, SGDR_Staged, SGDR_Release_Date, GDRnetCDF_Staged, GDRnetCDF_Release_Date, SGDRnetCDF_Staged, SGDRnetCDF_Release_Date, SSHAnetCDF_Staged, SSHAnetCDF_Release_Date, Email_ID) values(5, '020', 'B', 'NASA', 'N', 'Y', '', 'N', '', 'Y', '(N/A)', 'N', '(N/A)', 'N', '(N/A)', '(N/A)');
+        	
+        COMMIT;
+
+        </sql> 
+    </target>
+
+    <target name="printData">
+        <echo message="PRINT DATA USING: ${db.driver} ${db.url}"/>
+        <sql driver="${db.driver}"
+             url="${db.url}"
+             userid="${db.user}"
+             password="${db.pw}"
+             onerror="continue"
+             print="true">  
+            <classpath refid="master-classpath"/>
+
+        SELECT * FROM catalog;
+
+        </sql> 
+    </target>
+
+    <target name="clearData">
+        <echo message="CLEAR DATA USING: ${db.driver} ${db.url}"/>
+        <sql driver="${db.driver}"
+             url="${db.url}"
+             userid="${db.user}"
+             password="${db.pw}"
+             onerror="continue">  
+            <classpath refid="master-classpath"/>
+
+        DELETE FROM catalog;
+        COMMIT;
+
+        </sql> 
+    </target>
+	
+	 <target name="testQuery">
+          <echo message="test SQL query USING: ${db.driver} ${db.url}"/>
+		        <sql driver="${db.driver}"
+		             url="${db.url}"
+		             userid="${db.user}"
+		             password="${db.pw}"
+		             onerror="continue"
+			     print="true">
+		            <classpath refid="master-classpath"/>
+
+          select id, Cycle, Version, Data_Author, CNES_Approved, NASA_Approved, GDR_Release_Date, SGDR_Staged, SGDR_Release_Date, Email_ID from catalog where id = 1;
+
+                       </sql> 
+        </target>
+
+<!-- End Tomcat tasks -->
+
+</project>

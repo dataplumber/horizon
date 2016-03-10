@@ -1,0 +1,32 @@
+<!-- 
+    Copyright (c) 2008
+    Jet Propulsion Laboratory, California Institute of Technology
+    All rights reserved
+    
+    VFS provider configuration file.
+    
+    @author T. Huang {Thomas.Huang@jpl.nasa.gov}
+    @version $Id: $
+-->
+<providers>
+    <default-provider class-name="org.apache.commons.vfs2.provider.url.UrlFileProvider" />
+
+    <provider class-name="org.apache.commons.vfs2.provider.local.DefaultLocalFileProvider">
+        <scheme name="file"/>
+    </provider>
+
+    <provider class-name="org.apache.commons.vfs2.provider.ftp.FtpFileProvider">
+        <scheme name="ftp"/>
+        <if-available class-name="org.apache.commons.net.ftp.FTPFile"/>
+    </provider>
+
+    <provider class-name="org.apache.commons.vfs2.provider.sftp.SftpFileProvider">
+        <scheme name="sftp"/>
+        <if-available class-name="javax.crypto.Cipher"/>
+        <if-available class-name="com.jcraft.jsch.JSch"/>
+    </provider>
+
+    <provider class-name="org.apache.commons.vfs2.provider.http.HttpFileProvider">
+        <scheme name="http"/>
+    </provider>
+</providers>

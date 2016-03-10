@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<domain xmlns="http://horizon.jpl.nasa.gov">
+   <default>horizonDev</default>
+   <federation>
+      <name>horizonDev</name>
+      <url>http://lanina.jpl.nasa.gov:8080/ingest-grails-1.1.0/ingest</url>
+   </federation>
+</domain>

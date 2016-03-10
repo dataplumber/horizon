@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Copyright 2013, by the California Institute of Technology. -->
+<!-- ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged. -->
+<!--  -->
+<!-- $Id: $ -->
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+   <properties>
+      <title>Installation</title>
+      <author>T. Huang</author>
+   </properties>
+   <body>
+      <section name="Installation">
+         <p>This document describes how to install and configure the Security Service web
+            application. The following sections can be found in this document:</p>
+         <ul>
+            <li><a href="#Build_Instructions">Build Instructions</a></li>
+         </ul>
+      </section>
+      <section name="Build Instructions" id="Build_Instructions">
+         <p>Security Service is a web application that is designed and built with the <a
+               class="externalLink" href="http://groovy.codehaus.org/">Groovy</a> programming
+            language and the <a class="externalLink" href="http://grails.org/">Grails</a> web
+            application framework. While both these technologies are fully developed on top of <a
+               class="externalLink" href="http://java.sun.com">Java</a> platform, its support from
+               <a class="externalLink" href="http://maven.apache.org">Maven</a> is still a little
+            behind. The prerequisite for building the Security web application is the Grails web
+            framework must be installed. Below is the source tree of Security Service
+            distribution</p>
+         <ul>
+            <li>Security Service Configuration<p>The Security Service sets two parameters in the
+                  $APP/conf/BuildConfig.groovy file</p>
+               <source>
+//These are the ports the security service will start on
+//They must also be defined in config.groovy, so the security plugin 
+//will know how to forward https requests to https
+grails.server.port.http=9196
+grails.server.port.https=9197
+               </source>
+               <p>These two configurations set the ports on which http and https traffic will flow.
+                  All traffic to the security service is forced to go over https, for security
+                  reasons.</p>
+               <p>The rest of the configuration can be seen and set in the Config.groovy and
+                  Datasource.groovy files. The Security Service has several general purpose
+                  configurations, deliniated as follows </p>
+               <source>
+//sigevent info
+gov.nasa.dmas.security.sig.category=&quot;TOOL_SECURITY&quot;
+gov.nasa.dmas.security.sig.url=&quot;http://lanina:8100/sigevent/&quot;
+               </source>
+               <p>This sets the sig event information for the Security Service</p>
+               <source>
+security{
+        token{
+                /*
+                 * A job exists to expire tokens after a certain amount of time, which is set in the &quot;Realm&quot;.
+                 */
+                jobStartDelay =5 //seconds before the jobs kickoff
+                jobInterval = 900 // second between job. 900 = 15 minutes.
+        }
+        caching{
+                /*
+                 * a job exists to purge the cache every so often. This keeps the in memory cache from growing too large.
+                 * 
+                 */
+                jobStartDelay =10 //seconds before the jobs kickoff
+                jobInterval = 60 //seconds between the job
+                
+                /*
+                 * Cache specific configuration
+                 * The cache is used so we don't keep hammering LDAP/Oracle for consecutive requests for authentication.
+                 * It's also used to track requests from ipaddress/realm to lock accounts/prevent denial of service requests.
+                 * The parameters are as follows. 
+                 */
+                cacheTimeLimit = 120 // Time, in minutes, that a cached entry is usable for. 
+                misses = 10 // Number of consecutive misses before a user is locked from authenticating
+                lockTimeLimit = 15 // Amount of time, in minutes, that a entry is locked from authentication once consecutive misses are hit(Can't authenticate via the service)
+        }
+        plugins {
+                LDAP{
+                        host = 'ldap://ldap.jpl.nasa.gov:636'
+                        searchDn = 'ou=personnel,dc=dir,dc=jpl,dc=nasa,dc=gov'
+                        //group = 'dmas.j1slx.dev'
+                }
+                DATABASE{
+                        //no database specific config
+                }
+//              OTHER{
+//              //future plugins/A&amp;A mechanisms (user reg?))    
+//              }
+        }
+}
+               </source>
+               <p>The above configurations specify properties for various parts of the Security
+                  Service. They are broken down below:</p>
+               <source>
+token{
+                /*
+                 * A job exists to expire tokens after a certain amount of time, which is set in the &quot;Realm&quot;.
+                 */
+                jobStartDelay =5 //seconds before the jobs kickoff
+                jobInterval = 900 // second between job. 900 = 15 minutes.
+        }
+               </source>
+               <p>Tokens are expired after a certain amount of days. jobStartDelay sets how long
+                  after startup this job should start checking data. jobInterval is the amount of
+                  time, in seconds, between runs of the job.</p>
+               <source>
+caching{
+                /*
+                 * a job exists to purge the cache every so often. This keeps the in memory cache from growing too large.
+                 * 
+                 */
+                jobStartDelay =10 //seconds before the jobs kickoff
+                jobInterval = 60 //seconds between the job
+                
+                /*
+                 * Cache specific configuration
+                 * The cache is used so we don't keep hammering LDAP/Oracle for consecutive requests for authentication.
+                 * It's also used to track requests from ipaddress/realm to lock accounts/prevent denial of service requests.
+                 * The parameters are as follows. 
+                 */
+                cacheTimeLimit = 120 // Time, in minutes, that a cached entry is usable for. 
+                misses = 10 // Number of consecutive misses before a user is locked from authenticating
+                lockTimeLimit = 15 // Amount of time, in minutes, that a entry is locked from authentication once consecutive misses are hit(Can't authenticate via the service)
+        }
+               </source>
+               <p>To prevent too many requests to LDAP and the database, we've implemented a caching
+                  system. A job exists to clear the cache of entries every so often. It should be
+                  run often so the in memory cache doesn't grow too large.</p><p>The cacheTimeLimit
+                  is how long an entry can live in the cache. </p><p>Misses is how many consecutive,
+                  incorrect attempts at authentication can come from the same IP address.</p>
+               <p>Lastly, the locktimeLimit is how many minutes an account is locked from
+                  authenticating for.</p>
+               <source>
+plugins {
+                LDAP{
+                        host = 'ldap://ldap.jpl.nasa.gov:636'
+                        searchDn = 'ou=personnel,dc=dir,dc=jpl,dc=nasa,dc=gov'
+                        //group = 'dmas.j1slx.dev'
+                }
+                DATABASE{
+                        //no database specific config
+                }
+
+        }
+               </source>
+               <p>The above information are the plugin parameters for the Verifiers in the Security
+                  Service. Currently there are two verifiers, one using LDAP, and one supporting the
+                  legacy A&amp;A using the Oracle Database.</p>
+               <p>The LDAP parameters should not be changed unless KPL changes their LDAP
+                  configuration. The Database verifiers have no specific onfiguration other than the
+                  Datasources listed below.</p>
+            </li>
+            <li>Security Service Database Connection Configuration <p>The Data Source configuration
+                  information is located in the &quot;grails-app/conf/DataSource.groovy&quot; file.
+                  The configuration is necessary for the Security Service web application to connect
+                  to its data catalog, which is the operation registry for this web application.</p>
+               <source>
+environments {
+   development {
+      dataSource {
+         pooled = true
+         driverClassName = &quot;oracle.jdbc.driver.OracleDriver&quot;
+         url = &quot;jdbc:oracle:thin:@seadb.jpl.nasa.gov:1526:DAACDEV&quot;
+         dialect = &quot;org.hibernate.dialect.Oracle10gDialect&quot;
+         username = '${db username}'
+         password = '${db password}'
+
+      }
+   }
+
+   test {
+      dataSource {
+         pooled = true
+         driverClassName = &quot;oracle.jdbc.driver.OracleDriver&quot;
+         url = &quot;jdbc:oracle:thin:@seadb.jpl.nasa.gov:1526:DAACDEV&quot;
+         dialect = &quot;org.hibernate.dialect.Oracle10gDialect&quot;
+         username = '${db_username}'
+         password = '${db_password}'
+      }
+   }
+   
+   ...
+}
+               </source>
+            </li>
+            <li>Log Configuration<p>In $SECURITY-WS-HOME/grails-app/conf/Config.groovy there is a
+                  section for the log4j configuration that looks like the following:</p>
+               <source>
+// log4j configuration
+log4j = {
+    // Example of changing the log pattern for the default console
+    // appender:
+    //
+    appenders {
+        rollingFile name:'catalinaOut', maxFileSize:102400, fileName:&quot;&lt;FILE PATH&gt;&quot;, file:&quot;&lt;FILE PATH&gt;&quot;
+        file name: 'stacktrace', file: &quot;&lt;FILE PATH&gt;&quot;, layout: pattern(conversionPattern: '%c{2} %m%n')
+    }
+    root {
+        error 'catalinaOut'
+        additivity = true
+    }
+    //appenders {
+    //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
+    //}
+
+
+debug  'gov.nasa.dmas.security.server',
+                   'grails.app.controller.gov.nasa.dmas.security.server',
+                   'grails.app.controllers.gov.nasa.dmas.security.server',
+                   'gov.nasa.dmas.security.server.*',
+                   'grails.app.service',
+                   'grails.app.services',
+                   'grails.app.conf',
+                   'grails.app.utils',
+                   'gov.nasa.tpds.torchws',
+                   'grails.app.bootstrap',
+                   'grails.app.job',
+                   'grails.app.jobs',
+                   'grails.app.task',
+                   'grails.app.controller',
+                   'grails.app.controllers',
+                   'grails.app.filter',
+                   'grails.app.filters'
+    error  'org.codehaus.groovy.grails.web.servlet',  //  controllers
+           'org.codehaus.groovy.grails.web.pages', //  GSP
+           'org.codehaus.groovy.grails.web.sitemesh', //  layouts
+           'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
+           'org.codehaus.groovy.grails.web.mapping', // URL mapping
+           'org.codehaus.groovy.grails.commons', // core / classloading
+           'org.codehaus.groovy.grails.plugins', // plugins
+           'org.codehaus.groovy.grails.orm.hibernate', // hibernate integration
+           'org.springframework',
+           //'org.hibernate',
+                   'org.hibernate.tool.hbm2ddl',
+           'net.sf.ehcache.hibernate'
+
+    warn   'org.mortbay.log'}
+               </source>
+               <p>The appenders must be changed to log to a more suitable location for dev, test and
+                  ops. </p>
+            </li>
+            <li>Memory Configuration <p>The default JavaVM memory allocation by JBoss may not be
+                  sufficient. It is recommended to increase the PermGen memory space. This memory
+                  space is used for dynamically loading of Java classes.</p>
+               <source>
+% setenv JAVA_OPTS &quot;-Xms128m -Xmx512m -Dsun.rmi.dgc.client.gcInterval=3600000 -Dsun.rmi.dgc.server.gcInterval=3600000 -XX:PermSize=256m -XX:MaxPermSize=512m&quot;
+               </source>
+            </li>
+            <li>Create and Deploy the Web Application <p>After modifying and loading the target
+                  environment information, building the Manager web application should be
+                  followed.</p>
+            </li>
+            <li>Grails Environment <p>Before begin the Maven build, the GRAILS_HOME environment
+                  variable must be set.</p>
+               <source>
+% setenv GRAILS_HOME /usr/local/grails
+               </source>
+            </li>
+            <li>Copy the Dependencies <p>Since a WAR (Web ARchive) is a self-contained component, it
+                  must be bundled with its own collection of dependencies.</p>
+               <source>
+% mvn dependency:copy-dependencies
+               </source>
+               <p>The command above will download the required JARs to the
+                  '<i>target/dependency</i>' directory</p>
+               <source>
+% cp target/dependency/* lib
+               </source>
+               <p>Grails expects all of its dependencies in the '<i>lib</i>' directory. The copy
+                  command above will satisfy this requirement.</p>
+            </li>
+            <li>Run as Grails application <p>Below is the command to start the Manager Grails
+                  application.</p>
+               <source>
+% grails -Dgrails.env=&lt;GRAILS_ENV&gt; -Dserver.port=&lt;SERVER_PORT&gt; -Dserver.host=&lt;SERVER_HOST&gt; -Drun-app -https
+               </source>
+               <p>Here is an example to start the Manager for Development</p>
+               <source>
+                  % grails -Dgrails.env=development -Dserver.port=8090 -Dserver.host=lanina.jpl.nasa.gov -Dinventory.config.file=./inventory.config run-app
+               </source>
+               <p>The command above will run the Security WS as Grails application. GRAILS_ENV
+                  should be replaced with &quot;test&quot; for testing, and &quot;production&quot;
+                  for ops. SERVER_PORT should be replaced with a port number that sigevent should
+                  listen to. SERVER_HOST should be replaced with a hostname that sigevent should
+                  bind to. Note that it is necessary to open SERVER_HOST:SERVER_PORT to outside in
+                  order to allow all clients to access to manager. </p>
+               <p>The -Dinventory.config.file points to a file continaing inventory configuration.
+                  Currently only the sig event url is in this file, and should be changed for
+                  testing and ops deployment. </p>
+               <p>When grails app starts up, it automatically installs the plugins needed. If grails
+                  does not ask to install them, following commands can be executed to install he
+                  plugins.</p>
+               <source>
+% grails install-plugin http://cloud.github.com/downloads/nebolsin/grails-quartz/grails-quartz-0.4.2.zip
+               </source>
+            </li>
+            <li>Assemble the Web Archive <b>NOT SUPPORTED FOR CURRENT RELEASE</b>
+               <source>
+% mvn -Dgrails.env=development compile
+               </source>
+               <p>The command above will produce a WAR file that is specific to the development
+                  environment. If the '-Dgrails.env' argument is missing, the WAR produced would be
+                  for the production environment. For the test environment, the '-Dgrails.env=test'
+                  should be used.</p>
+            </li>
+            <li>Deploy to JBoss <b>NOT SUPPORTED FOR CURRENT RELEASE</b><p>All web component to be
+                  serve by JBoss must be installed under
+                  '<i>$JBOSS_HOME/server/&lt;instance</i>/deploy&gt;' directory.</p></li>
+         </ul>
+      </section>
+   </body>
+</document>

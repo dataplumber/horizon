@@ -1,0 +1,843 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Copyright 2013, by the California Institute of Technology. -->
+<!-- ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged. -->
+<!--  -->
+<!-- $Id: $ -->
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+   <properties>
+      <title>SigEvent API</title>
+      <author>T. Huang</author>
+   </properties>
+   <body>
+      <section name="API">
+         <p>This document describes the API that SigEvents provides:</p>
+         <ul>
+            <li><a href="#Event">Event</a></li>
+            <li><a href="#EventGroup">EventGroup</a></li>
+            <li><a href="#Notify">Notify</a></li>
+            <li><a href="#Constant">Constant</a></li>
+            <li><a href="#User">User</a></li>
+         </ul>
+      </section>
+      <section name="Event">
+         <subsection name="events/create">
+            <h4>Url</h4>
+            <p>events/create</p>
+            <h4>HTTP Method</h4>
+            <p>GET, POST</p>
+            <h4>Parameters</h4>
+            <ul>
+               <li>format [required]:</li>sc
+               <li>type [required]:</li>
+               <li>category [required]:</li>
+               <li>source [required]:</li>
+               <li>provider [required]:</li>
+               <li>computer [required]:</li>
+               <li>description [required]:</li>
+               <li>pid [optional]:</li>
+               <li>data [optional]:</li>
+            </ul>
+            <h4>Return Values</h4>
+            <h5>XML</h5>
+            <source>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;Response&gt;&lt;Content&gt;&lt;SysEvents&gt;
+  &lt;SysEvent&gt;
+    &lt;Id&gt;147&lt;/Id&gt;
+    &lt;Category&gt;DMAS&lt;/Category&gt;
+    &lt;Type&gt;WARN&lt;/Type&gt;
+    &lt;DataSize&gt;4&lt;/DataSize&gt;
+    &lt;DataUrl&gt;http://lanina.jpl.nasa.gov:8100/sigevent/events/data?id=147&lt;/DataUrl&gt;
+    &lt;Computer&gt;dmas&lt;/Computer&gt;
+    &lt;Description&gt;FirstMessage&lt;/Description&gt;
+    &lt;FirstReceived&gt;1313528412955&lt;/FirstReceived&gt;
+    &lt;LastReceived&gt;1313528412955&lt;/LastReceived&gt;
+    &lt;Occurrence&gt;1&lt;/Occurrence&gt;
+    &lt;Pid&gt;&lt;/Pid&gt;
+    &lt;Provider&gt;me&lt;/Provider&gt;
+    &lt;Resolution&gt;N/A&lt;/Resolution&gt;
+    &lt;ResolvedAt&gt;&lt;/ResolvedAt&gt;
+    &lt;Source&gt;192.168.1.1&lt;/Source&gt;
+  &lt;/SysEvent&gt;
+&lt;/SysEvents&gt;&lt;/Content&gt;&lt;Type&gt;OK&lt;/Type&gt;&lt;/Response&gt;</source>
+            <h5>JSON</h5>
+            <source>{
+    &quot;Response&quot;: {
+        &quot;Content&quot;: {
+            &quot;SysEvents&quot;:[
+                {
+                    &quot;Id&quot;:152,
+                    &quot;Category&quot;:&quot;DMAS&quot;,
+                    &quot;Type&quot;:&quot;WARN&quot;,
+                    &quot;DataSize&quot;:4,
+                    &quot;DataUrl&quot;:&quot;http://lanina.jpl.nasa.gov:8100/sigevent/events/data?id=152&quot;,
+                    &quot;Computer&quot;:&quot;dmas&quot;,
+                    &quot;Data&quot;:&quot;DATA&quot;,
+                    &quot;Description&quot;:&quot;FirstMessage&quot;,
+                    &quot;FirstReceived&quot;:1313532013407,
+                    &quot;LastReceived&quot;:1313532013407,
+                    &quot;Occurrence&quot;:1,
+                    &quot;Pid&quot;:&quot;&quot;,
+                    &quot;Provider&quot;:&quot;me&quot;,
+                    &quot;Resolution&quot;:&quot;N/A&quot;,
+                    &quot;ResolvedAt&quot;:&quot;&quot;,
+                    &quot;Source&quot;:&quot;192.168.1.1&quot;
+                }
+            ]
+        },
+        &quot;Type&quot;: &quot;OK&quot;
+    }
+}</source>
+         </subsection>
+         <subsection name="events/list">
+            <h4>Url</h4>
+            <p>events/list</p>
+            <h4>HTTP Method</h4>
+            <p>GET, POST</p>
+            <h4>Parameters</h4>
+            <ul>
+               <li>format [required]:</li>
+               <li>page [optional]:</li>
+               <li>sort [optional]: lastReceived, computer, description, firstReceived, occurrence,
+                  pid, provider, resolution, resolvedAt, source, category, type</li>
+               <li>order [optional]: asc, desc</li>
+               <li>computer [optional]:</li>
+               <li>description [optional]:</li>
+               <li>pid [optional]:</li>
+               <li>provider [optional]:</li>
+               <li>source [optional]:</li>
+               <li>category [optional]:</li>
+               <li>type [optional]:</li>
+            </ul>
+            <h4>Return Values</h4>
+            <h5>XML</h5>
+            <source>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;Response&gt;&lt;AvailablePages&gt;1&lt;/AvailablePages&gt;&lt;Content&gt;&lt;SysEvents&gt;
+  &lt;SysEvent&gt;
+    &lt;Id&gt;145&lt;/Id&gt;
+    &lt;Category&gt;DMAS&lt;/Category&gt;
+    &lt;Type&gt;WARN&lt;/Type&gt;
+    &lt;DataSize&gt;4&lt;/DataSize&gt;
+    &lt;DataUrl&gt;http://lanina.jpl.nasa.gov:8100/sigevent/events/data?id=145&lt;/DataUrl&gt;
+    &lt;Computer&gt;dmas&lt;/Computer&gt;
+    &lt;Description&gt;FirstMessage&lt;/Description&gt;
+    &lt;FirstReceived&gt;1313532013407&lt;/FirstReceived&gt;
+    &lt;LastReceived&gt;1313532013407&lt;/LastReceived&gt;
+    &lt;Occurrence&gt;1&lt;/Occurrence&gt;
+    &lt;Pid&gt;&lt;/Pid&gt;
+    &lt;Provider&gt;me&lt;/Provider&gt;
+    &lt;Resolution&gt;N/A&lt;/Resolution&gt;
+    &lt;ResolvedAt&gt;&lt;/ResolvedAt&gt;
+    &lt;Source&gt;192.168.1.1&lt;/Source&gt;
+  &lt;/SysEvent&gt;
+  &lt;SysEvent&gt;
+    &lt;Id&gt;147&lt;/Id&gt;
+    &lt;Category&gt;DMAS&lt;/Category&gt;
+    &lt;Type&gt;WARN&lt;/Type&gt;
+    &lt;DataSize&gt;4&lt;/DataSize&gt;
+    &lt;DataUrl&gt;http://lanina.jpl.nasa.gov:8100/sigevent/events/data?id=147&lt;/DataUrl&gt;
+    &lt;Computer&gt;dmas&lt;/Computer&gt;
+    &lt;Description&gt;FirstMessage&lt;/Description&gt;
+    &lt;FirstReceived&gt;1313528412955&lt;/FirstReceived&gt;
+    &lt;LastReceived&gt;1313528412955&lt;/LastReceived&gt;
+    &lt;Occurrence&gt;1&lt;/Occurrence&gt;
+    &lt;Pid&gt;&lt;/Pid&gt;
+    &lt;Provider&gt;me&lt;/Provider&gt;
+    &lt;Resolution&gt;N/A&lt;/Resolution&gt;
+    &lt;ResolvedAt&gt;&lt;/ResolvedAt&gt;
+    &lt;Source&gt;192.168.1.1&lt;/Source&gt;
+  &lt;/SysEvent&gt;
+&lt;/SysEvents&gt;&lt;/Content&gt;&lt;CurrentPage&gt;0&lt;/CurrentPage&gt;&lt;Type&gt;OK&lt;/Type&gt;&lt;/Response&gt;</source>
+            <h5>JSON</h5>
+            <source>{
+    &quot;Response&quot;: {
+        &quot;AvailablePages&quot;: &quot;1&quot;,
+        &quot;Content&quot;: {
+            &quot;SysEvents&quot;:[
+                {
+                    &quot;Id&quot;:147,
+                    &quot;Category&quot;:&quot;DMAS&quot;,
+                    &quot;Type&quot;:&quot;WARN&quot;,
+                    &quot;DataSize&quot;:4,
+                    &quot;DataUrl&quot;:&quot;http://lanina.jpl.nasa.gov:8100/sigevent/events/data?id=147&quot;,
+                    &quot;Computer&quot;:&quot;dmas&quot;,
+                    &quot;Data&quot;:&quot;DATA&quot;,
+                    &quot;Description&quot;:&quot;FirstMessage&quot;,
+                    &quot;FirstReceived&quot;:1313528412955,
+                    &quot;LastReceived&quot;:1313528412955,
+                    &quot;Occurrence&quot;:1,
+                    &quot;Pid&quot;:&quot;&quot;,
+                    &quot;Provider&quot;:&quot;me&quot;,
+                    &quot;Resolution&quot;:&quot;N/A&quot;,
+                    &quot;ResolvedAt&quot;:&quot;&quot;,
+                    &quot;Source&quot;:&quot;192.168.1.1&quot;
+                },
+                {
+                    &quot;Id&quot;:149,
+                    &quot;Category&quot;:&quot;DMAS&quot;,
+                    &quot;Type&quot;:&quot;WARN&quot;,
+                    &quot;DataSize&quot;:4,
+                    &quot;DataUrl&quot;:&quot;http://lanina.jpl.nasa.gov:8100/sigevent/events/data?id=149&quot;,
+                    &quot;Computer&quot;:&quot;dmas&quot;,
+                    &quot;Data&quot;:&quot;DATA&quot;,
+                    &quot;Description&quot;:&quot;FirstMessage&quot;,
+                    &quot;FirstReceived&quot;:1313532013407,
+                    &quot;LastReceived&quot;:1313532013407,
+                    &quot;Occurrence&quot;:1,
+                    &quot;Pid&quot;:&quot;&quot;,
+                    &quot;Provider&quot;:&quot;me&quot;,
+                    &quot;Resolution&quot;:&quot;N/A&quot;,
+                    &quot;ResolvedAt&quot;:&quot;&quot;,
+                    &quot;Source&quot;:&quot;192.168.1.1&quot;
+                }
+            ]
+        },
+        &quot;CurrentPage&quot;: &quot;0&quot;,
+        &quot;Type&quot;: &quot;OK&quot;
+    }
+}</source>
+         </subsection>
+         <subsection name="events/update">
+            <h4>Url</h4>
+            <p>events/update</p>
+            <h4>HTTP Method</h4>
+            <p>GET, POST</p>
+            <h4>Parameters</h4>
+            <ul>
+               <li>format [required]:</li>
+               <li>id [required]:</li>
+               <li>any parameter to be updated [optional]:</li>
+            </ul>
+            <h4>Return Values</h4>
+            <h5>XML</h5>
+            <source>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;Response&gt;&lt;Content&gt;&lt;SysEvents&gt;
+  &lt;SysEvent&gt;
+    &lt;Id&gt;152&lt;/Id&gt;
+    &lt;Category&gt;DMAS&lt;/Category&gt;
+    &lt;Type&gt;WARN&lt;/Type&gt;
+    &lt;DataSize&gt;4&lt;/DataSize&gt;
+    &lt;DataUrl&gt;http://lanina.jpl.nasa.gov:8100/sigevent/events/data?id=152&lt;/DataUrl&gt;
+    &lt;Computer&gt;dmas&lt;/Computer&gt;
+    &lt;Description&gt;FirstMessage&lt;/Description&gt;
+    &lt;FirstReceived&gt;1313532013407&lt;/FirstReceived&gt;
+    &lt;LastReceived&gt;1313532013407&lt;/LastReceived&gt;
+    &lt;Occurrence&gt;1&lt;/Occurrence&gt;
+    &lt;Pid&gt;&lt;/Pid&gt;
+    &lt;Provider&gt;me&lt;/Provider&gt;
+    &lt;Resolution&gt;N/A&lt;/Resolution&gt;
+    &lt;ResolvedAt&gt;&lt;/ResolvedAt&gt;
+    &lt;Source&gt;aaa&lt;/Source&gt;
+  &lt;/SysEvent&gt;
+&lt;/SysEvents&gt;&lt;/Content&gt;&lt;Type&gt;OK&lt;/Type&gt;&lt;/Response&gt;</source>
+            <h5>JSON</h5>
+            <source>{
+    &quot;Response&quot;: {
+        &quot;Content&quot;: {
+            &quot;SysEvents&quot;:[
+                {
+                    &quot;Id&quot;:152,
+                    &quot;Category&quot;:&quot;DMAS&quot;,
+                    &quot;Type&quot;:&quot;WARN&quot;,
+                    &quot;DataSize&quot;:4,
+                    &quot;DataUrl&quot;:&quot;http://lanina.jpl.nasa.gov:8100/sigevent/events/data?id=152&quot;,
+                    &quot;Computer&quot;:&quot;dmas&quot;,
+                    &quot;Data&quot;:&quot;DATA&quot;,
+                    &quot;Description&quot;:&quot;FirstMessage&quot;,
+                    &quot;FirstReceived&quot;:1313532013407,
+                    &quot;LastReceived&quot;:1313532013407,
+                    &quot;Occurrence&quot;:1,
+                    &quot;Pid&quot;:&quot;&quot;,
+                    &quot;Provider&quot;:&quot;me&quot;,
+                    &quot;Resolution&quot;:&quot;N/A&quot;,
+                    &quot;ResolvedAt&quot;:&quot;&quot;,
+                    &quot;Source&quot;:&quot;aaa&quot;
+                }
+            ]
+        },
+        &quot;Type&quot;: &quot;OK&quot;
+    }
+}</source>
+         </subsection>
+         <subsection name="events/delete">
+            <h4>Url</h4>
+            <p>events/delete</p>
+            <h4>HTTP Method</h4>
+            <p>GET, POST</p>
+            <h4>Parameters</h4>
+            <ul>
+               <li>format [required]:</li>
+               <li>id [required]:</li>
+               <li>username [required]:</li>
+               <li>password [required]:</li>
+            </ul>
+            <h4>Return Values</h4>
+            <h5>XML</h5>
+            <source>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;Response&gt;&lt;Content&gt;&lt;SysEvents&gt;
+  &lt;SysEvent&gt;
+    &lt;Id&gt;152&lt;/Id&gt;
+    &lt;Category&gt;DMAS&lt;/Category&gt;
+    &lt;Type&gt;WARN&lt;/Type&gt;
+    &lt;DataSize&gt;4&lt;/DataSize&gt;
+    &lt;DataUrl&gt;http://lanina.jpl.nasa.gov:8100/sigevent/events/data?id=152&lt;/DataUrl&gt;
+    &lt;Computer&gt;dmas&lt;/Computer&gt;
+    &lt;Description&gt;FirstMessage&lt;/Description&gt;
+    &lt;FirstReceived&gt;1313532013407&lt;/FirstReceived&gt;
+    &lt;LastReceived&gt;1313532013407&lt;/LastReceived&gt;
+    &lt;Occurrence&gt;1&lt;/Occurrence&gt;
+    &lt;Pid&gt;&lt;/Pid&gt;
+    &lt;Provider&gt;me&lt;/Provider&gt;
+    &lt;Resolution&gt;N/A&lt;/Resolution&gt;
+    &lt;ResolvedAt&gt;&lt;/ResolvedAt&gt;
+    &lt;Source&gt;aaa&lt;/Source&gt;
+  &lt;/SysEvent&gt;
+&lt;/SysEvents&gt;&lt;/Content&gt;&lt;Type&gt;OK&lt;/Type&gt;&lt;/Response&gt;</source>
+            <h5>JSON</h5>
+            <source>{
+    &quot;Response&quot;: {
+        &quot;Content&quot;: {
+            &quot;SysEvents&quot;:[
+                {
+                    &quot;Id&quot;:152,
+                    &quot;Category&quot;:&quot;DMAS&quot;,
+                    &quot;Type&quot;:&quot;WARN&quot;,
+                    &quot;DataSize&quot;:4,
+                    &quot;DataUrl&quot;:&quot;http://lanina.jpl.nasa.gov:8100/sigevent/events/data?id=152&quot;,
+                    &quot;Computer&quot;:&quot;dmas&quot;,
+                    &quot;Data&quot;:&quot;DATA&quot;,
+                    &quot;Description&quot;:&quot;FirstMessage&quot;,
+                    &quot;FirstReceived&quot;:1313532013407,
+                    &quot;LastReceived&quot;:1313532013407,
+                    &quot;Occurrence&quot;:1,
+                    &quot;Pid&quot;:&quot;&quot;,
+                    &quot;Provider&quot;:&quot;me&quot;,
+                    &quot;Resolution&quot;:&quot;N/A&quot;,
+                    &quot;ResolvedAt&quot;:&quot;&quot;,
+                    &quot;Source&quot;:&quot;aaa&quot;
+                }
+            ]
+        },
+        &quot;Type&quot;: &quot;OK&quot;
+    }
+}</source>
+         </subsection>
+         <subsection name="events/show">
+            <h4>Url</h4>
+            <p>events/show</p>
+            <h4>HTTP Method</h4>
+            <p>GET, POST</p>
+            <h4>Parameters</h4>
+            <ul>
+               <li>format [required]:</li>
+               <li>id [required]:</li>
+            </ul>
+            <h4>Return Values</h4>
+            <h5>XML</h5>
+            <source>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;Response&gt;&lt;Content&gt;&lt;SysEvents&gt;
+  &lt;SysEvent&gt;
+    &lt;Id&gt;152&lt;/Id&gt;
+    &lt;Category&gt;DMAS&lt;/Category&gt;
+    &lt;Type&gt;WARN&lt;/Type&gt;
+    &lt;DataSize&gt;4&lt;/DataSize&gt;
+    &lt;DataUrl&gt;http://lanina.jpl.nasa.gov:8100/sigevent/events/data?id=152&lt;/DataUrl&gt;
+    &lt;Computer&gt;dmas&lt;/Computer&gt;
+    &lt;Description&gt;FirstMessage&lt;/Description&gt;
+    &lt;FirstReceived&gt;1313532013407&lt;/FirstReceived&gt;
+    &lt;LastReceived&gt;1313532013407&lt;/LastReceived&gt;
+    &lt;Occurrence&gt;1&lt;/Occurrence&gt;
+    &lt;Pid&gt;&lt;/Pid&gt;
+    &lt;Provider&gt;me&lt;/Provider&gt;
+    &lt;Resolution&gt;N/A&lt;/Resolution&gt;
+    &lt;ResolvedAt&gt;&lt;/ResolvedAt&gt;
+    &lt;Source&gt;aaa&lt;/Source&gt;
+
+    &lt;Data&gt;DATA&lt;/Data&gt;
+  &lt;/SysEvent&gt;
+&lt;/SysEvents&gt;&lt;/Content&gt;&lt;Type&gt;OK&lt;/Type&gt;&lt;/Response&gt;</source>
+            <h5>JSON</h5>
+            <source>{
+    &quot;Response&quot;: {
+        &quot;Content&quot;: {
+            &quot;SysEvents&quot;:[
+                {
+                    &quot;Id&quot;:152,
+                    &quot;Category&quot;:&quot;DMAS&quot;,
+                    &quot;Type&quot;:&quot;WARN&quot;,
+                    &quot;DataSize&quot;:4,
+                    &quot;DataUrl&quot;:&quot;http://lanina.jpl.nasa.gov:8100/sigevent/events/data?id=152&quot;,
+                    &quot;Computer&quot;:&quot;dmas&quot;,
+                    &quot;Data&quot;:&quot;DATA&quot;,
+                    &quot;Description&quot;:&quot;FirstMessage&quot;,
+                    &quot;FirstReceived&quot;:1313532013407,
+                    &quot;LastReceived&quot;:1313532013407,
+                    &quot;Occurrence&quot;:1,
+                    &quot;Pid&quot;:&quot;&quot;,
+                    &quot;Provider&quot;:&quot;me&quot;,
+                    &quot;Resolution&quot;:&quot;N/A&quot;,
+                    &quot;ResolvedAt&quot;:&quot;&quot;,
+                    &quot;Source&quot;:&quot;aaa&quot;
+                }
+            ]
+        },
+        &quot;Type&quot;: &quot;OK&quot;
+    }
+}</source>
+         </subsection>
+      </section>
+      <section name="EventGroup">
+         <subsection name="groups/create">
+            <h4>Url</h4>
+            <p>groups/create</p>
+            <h4>HTTP Method</h4>
+            <p>GET, POST</p>
+            <h4>Parameters</h4>
+            <ul>
+               <li>format [required]:</li>
+               <li>type [required]:</li>
+               <li>category [required]:</li>
+               <li>purgeRate [required]:</li>
+            </ul>
+         </subsection>
+         <subsection name="groups/list">
+            <h4>Url</h4>
+            <p>groups/list</p>
+            <h4>HTTP Method</h4>
+            <p>GET, POST</p>
+            <h4>Parameters</h4>
+            <ul>
+               <li>format [required]:</li>
+               <li>page [optional]:</li>
+               <li>sort [optional]: category, type, purgeRate</li>
+               <li>order [optional]: asc, desc</li>
+               <li>category [optional]:</li>
+               <li>type [optional]:</li>
+               <li>purgeRate [optional]:</li>
+            </ul>
+         </subsection>
+         <subsection name="groups/update">
+            <h4>Url</h4>
+            <p>groups/update</p>
+            <h4>HTTP Method</h4>
+            <p>GET, POST</p>
+            <h4>Parameters</h4>
+            <ul>
+               <li>format [required]:</li>
+               <li>id [required]:</li>
+               <li>any parameter to be updated [optional]:</li>
+            </ul>
+         </subsection>
+         <subsection name="groups/delete">
+            <h4>Url</h4>
+            <p>groups/delete</p>
+            <h4>HTTP Method</h4>
+            <p>GET, POST</p>
+            <h4>Parameters</h4>
+            <ul>
+               <li>format [required]:</li>
+               <li>id [required]:</li>
+               <li>username [required]:</li>
+               <li>password [required]:</li>
+            </ul>
+         </subsection>
+         <subsection name="groups/show">
+            <h4>Url</h4>
+            <p>groups/show</p>
+            <h4>HTTP Method</h4>
+            <p>GET, POST</p>
+            <h4>Parameters</h4>
+            <ul>
+               <li>format [required]:</li>
+               <li>id [required]:</li>
+            </ul>
+         </subsection>
+         <subsection name="groups/showByCategory">
+            <h4>Url</h4>
+            <p>groups/showByCategory</p>
+            <h4>HTTP Method</h4>
+            <p>GET, POST</p>
+            <h4>Parameters</h4>
+            <ul>
+               <li>format [required]:</li>
+               <li>category [required]:</li>
+            </ul>
+         </subsection>
+      </section>
+      <section name="Notify">
+         <subsection name="notifies/create">
+            <h4>Url</h4>
+            <p>notifies/create</p>
+            <h4>HTTP Method</h4>
+            <p>GET, POST</p>
+            <h4>Parameters</h4>
+            <ul>
+               <li>format [required]:</li>
+               <li>type [required]:</li>
+               <li>category [required]:</li>
+               <li>method [required]:</li>
+               <li>contact [required]:</li>
+               <li>rate [required]:</li>
+               <li>messageFormat [required]:</li>
+               <li>content [required]:</li>
+               <li>note [required]:</li>
+               <li>remindRate [optional]: </li>
+            </ul>
+         </subsection>
+         <subsection name="notifies/list">
+            <h4>Url</h4>
+            <p>notifies/list</p>
+            <h4>HTTP Method</h4>
+            <p>GET, POST</p>
+            <h4>Parameters</h4>
+            <ul>
+               <li>format [required]:</li>
+               <li>page [optional]:</li>
+               <li>sort [optional]: contact, content, lastNotified, lastReport, messageFormat,
+                  method, note, rate, category, type, remindRate, lastRemind</li>
+               <li>order [optional]: asc, desc</li>
+               <li>contact [optional]:</li>
+               <li>content [optional]:</li>
+               <li>lastNotified [optional]:</li>
+               <li>lastReport [optional]:</li>
+               <li>messageFormat [optional]:</li>
+               <li>method [optional]:</li>
+               <li>note [optional]:</li>
+               <li>rate [optional]:</li>
+               <li>category [optional]:</li>
+               <li>type [optional]:</li>
+               <li>remindRate [optional]:</li>
+               <li>lastRemind [optional]:</li>
+            </ul>
+         </subsection>
+         <subsection name="notifies/update">
+            <h4>Url</h4>
+            <p>notifies/update</p>
+            <h4>HTTP Method</h4>
+            <p>GET, POST</p>
+            <h4>Parameters</h4>
+            <ul>
+               <li>format [required]:</li>
+               <li>id [required]:</li>
+               <li>any parameter to be updated [optional]:</li>
+            </ul>
+         </subsection>
+         <subsection name="notifies/delete">
+            <h4>Url</h4>
+            <p>notifies/delete</p>
+            <h4>HTTP Method</h4>
+            <p>GET, POST</p>
+            <h4>Parameters</h4>
+            <ul>
+               <li>format [required]:</li>
+               <li>id [required]:</li>
+               <li>username [required]:</li>
+               <li>password [required]:</li>
+            </ul>
+         </subsection>
+         <subsection name="notifies/show">
+            <h4>Url</h4>
+            <p>notifies/show</p>
+            <h4>HTTP Method</h4>
+            <p>GET, POST</p>
+            <h4>Parameters</h4>
+            <ul>
+               <li>format [required]:</li>
+               <li>id [required]:</li>
+            </ul>
+         </subsection>
+      </section>
+      <section name="Constant">
+         <subsection name="constants/eventTypes/list">
+            <h4>Url</h4>
+            <p>constants/eventTypes/list</p>
+            <h4>HTTP Method</h4>
+            <p>GET, POST</p>
+            <h4>Parameters</h4>
+            <h4>Return Values</h4>
+            <h5>XML</h5>
+            <source>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;Response&gt;&lt;Content&gt;&lt;SysConstants&gt;
+  &lt;SysConstant&gt;
+    &lt;Value&gt;INFO&lt;/Value&gt;
+  &lt;/SysConstant&gt;
+  &lt;SysConstant&gt;
+    &lt;Value&gt;WARN&lt;/Value&gt;
+  &lt;/SysConstant&gt;
+  &lt;SysConstant&gt;
+
+    &lt;Value&gt;ERROR&lt;/Value&gt;
+  &lt;/SysConstant&gt;
+&lt;/SysConstants&gt;&lt;/Content&gt;&lt;Type&gt;OK&lt;/Type&gt;&lt;/Response&gt;</source>
+            <h5>JSON</h5>
+            <source>{
+    &quot;Response&quot;: {
+        &quot;Content&quot;: {
+            &quot;SysConstants&quot;:[
+                {
+                    &quot;Value&quot;:&quot;INFO&quot;
+                },
+                {
+                    &quot;Value&quot;:&quot;WARN&quot;
+                },
+                {
+                    &quot;Value&quot;:&quot;ERROR&quot;
+                }
+            ]
+        },
+        &quot;Type&quot;: &quot;OK&quot;
+    }
+}</source>
+         </subsection>
+         <subsection name="constants/messageFormats/list">
+            <h4>Url</h4>
+            <p>constants/messageFormats/list</p>
+            <h4>HTTP Method</h4>
+            <p>GET, POST</p>
+            <h4>Parameters</h4>
+            <h4>Return Values</h4>
+            <h5>XML</h5>
+            <source>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;Response&gt;&lt;Content&gt;&lt;SysConstants&gt;
+  &lt;SysConstant&gt;
+    &lt;Value&gt;TEXT&lt;/Value&gt;
+  &lt;/SysConstant&gt;
+  &lt;SysConstant&gt;
+    &lt;Value&gt;XML&lt;/Value&gt;
+  &lt;/SysConstant&gt;
+  &lt;SysConstant&gt;
+
+    &lt;Value&gt;JSON&lt;/Value&gt;
+  &lt;/SysConstant&gt;
+&lt;/SysConstants&gt;&lt;/Content&gt;&lt;Type&gt;OK&lt;/Type&gt;&lt;/Response&gt;</source>
+            <h5>JSON</h5>
+            <source>{
+    &quot;Response&quot;: {
+        &quot;Content&quot;: {
+            &quot;SysConstants&quot;:[
+                {
+                    &quot;Value&quot;:&quot;TEXT&quot;
+                },
+                {
+                    &quot;Value&quot;:&quot;XML&quot;
+                },
+                {
+                    &quot;Value&quot;:&quot;JSON&quot;
+                }
+            ]
+        },
+        &quot;Type&quot;: &quot;OK&quot;
+    }
+}</source>
+         </subsection>
+         <subsection name="constants/notifyContents/list">
+            <h4>Url</h4>
+            <p>constants/notifyContents/list</p>
+            <h4>HTTP Method</h4>
+            <p>GET, POST</p>
+            <h4>Parameters</h4>
+            <h4>Return Values</h4>
+            <h5>XML</h5>
+            <source>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;Response&gt;&lt;Content&gt;&lt;SysConstants&gt;
+  &lt;SysConstant&gt;
+    &lt;Value&gt;COMPLETE&lt;/Value&gt;
+  &lt;/SysConstant&gt;
+  &lt;SysConstant&gt;
+    &lt;Value&gt;DESCRIPTION&lt;/Value&gt;
+  &lt;/SysConstant&gt;
+&lt;/SysConstants&gt;&lt;/Content&gt;&lt;Type&gt;OK&lt;/Type&gt;&lt;/Response&gt;</source>
+            <h5>JSON</h5>
+            <source>{
+    &quot;Response&quot;: {
+        &quot;Content&quot;: {
+            &quot;SysConstants&quot;:[
+                {
+                    &quot;Value&quot;:&quot;COMPLETE&quot;
+                },
+                {
+                    &quot;Value&quot;:&quot;DESCRIPTION&quot;
+                }
+            ]
+        },
+        &quot;Type&quot;: &quot;OK&quot;
+    }
+}</source>
+         </subsection>
+         <subsection name="constants/notifyMethods/list">
+            <h4>Url</h4>
+            <p>constants/notifyMethods/list</p>
+            <h4>HTTP Method</h4>
+            <p>GET, POST</p>
+            <h4>Parameters</h4>
+            <h4>Return Values</h4>
+            <h5>XML</h5>
+            <source>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;Response&gt;&lt;Content&gt;&lt;SysConstants&gt;
+  &lt;SysConstant&gt;
+    &lt;Value&gt;EMAIL&lt;/Value&gt;
+  &lt;/SysConstant&gt;
+  &lt;SysConstant&gt;
+    &lt;Value&gt;JMS&lt;/Value&gt;
+  &lt;/SysConstant&gt;
+  &lt;SysConstant&gt;
+
+    &lt;Value&gt;MULTICAST&lt;/Value&gt;
+  &lt;/SysConstant&gt;
+&lt;/SysConstants&gt;&lt;/Content&gt;&lt;Type&gt;OK&lt;/Type&gt;&lt;/Response&gt;</source>
+            <h5>JSON</h5>
+            <source>{
+    &quot;Response&quot;: {
+        &quot;Content&quot;: {
+            &quot;SysConstants&quot;:[
+                {
+                    &quot;Value&quot;:&quot;EMAIL&quot;
+                },
+                {
+                    &quot;Value&quot;:&quot;JMS&quot;
+                },
+                {
+                    &quot;Value&quot;:&quot;MULTICAST&quot;
+                }
+            ]
+        },
+        &quot;Type&quot;: &quot;OK&quot;
+    }
+}</source>
+         </subsection>
+         <subsection name="constants/responseFormats/list">
+            <h4>Url</h4>
+            <p>constants/responseFormats/list</p>
+            <h4>HTTP Method</h4>
+            <p>GET, POST</p>
+            <h4>Parameters</h4>
+            <h4>Return Values</h4>
+            <h5>XML</h5>
+            <source>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;Response&gt;&lt;Content&gt;&lt;SysConstants&gt;
+  &lt;SysConstant&gt;
+    &lt;Value&gt;XML&lt;/Value&gt;
+  &lt;/SysConstant&gt;
+  &lt;SysConstant&gt;
+    &lt;Value&gt;JSON&lt;/Value&gt;
+  &lt;/SysConstant&gt;
+  &lt;SysConstant&gt;
+
+    &lt;Value&gt;DOJO_JSON&lt;/Value&gt;
+  &lt;/SysConstant&gt;
+  &lt;SysConstant&gt;
+    &lt;Value&gt;TEXT&lt;/Value&gt;
+  &lt;/SysConstant&gt;
+&lt;/SysConstants&gt;&lt;/Content&gt;&lt;Type&gt;OK&lt;/Type&gt;&lt;/Response&gt;</source>
+            <h5>JSON</h5>
+            <source>{
+    &quot;Response&quot;: {
+        &quot;Content&quot;: {
+            &quot;SysConstants&quot;:[
+                {
+                    &quot;Value&quot;:&quot;XML&quot;
+                },
+                {
+                    &quot;Value&quot;:&quot;JSON&quot;
+                },
+                {
+                    &quot;Value&quot;:&quot;DOJO_JSON&quot;
+                },
+                {
+                    &quot;Value&quot;:&quot;TEXT&quot;
+                }
+            ]
+        },
+        &quot;Type&quot;: &quot;OK&quot;
+    }
+}</source>
+         </subsection>
+         <subsection name="constants/categories/list">
+            <h4>Url</h4>
+            <p>constants/categories/list</p>
+            <h4>HTTP Method</h4>
+            <p>GET, POST</p>
+            <h4>Parameters</h4>
+            <h4>Return Values</h4>
+            <h5>XML</h5>
+            <source>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;Response&gt;&lt;Content&gt;&lt;SysConstants&gt;
+  &lt;SysConstant&gt;
+    &lt;Value&gt;ABOM-L4HRfnd-AUS-RAMSSA_09km&lt;/Value&gt;
+  &lt;/SysConstant&gt;
+  &lt;SysConstant&gt;
+    &lt;Value&gt;ABOM-L4LRfnd-GLOB-GAMSSA_28km&lt;/Value&gt;
+  &lt;/SysConstant&gt;
+  &lt;SysConstant&gt;
+    &lt;Value&gt;ALL&lt;/Value&gt;
+  &lt;/SysConstant&gt;
+  &lt;SysConstant&gt;
+    &lt;Value&gt;ALT_TIDE_GAUGE_L4_OST_SLA_US_WEST_COAST&lt;/Value&gt;
+  &lt;/SysConstant&gt;
+&lt;/SysConstants&gt;&lt;/Content&gt;&lt;Type&gt;OK&lt;/Type&gt;&lt;/Response&gt;</source>
+            <h5>JSON</h5>
+            <source>{
+    &quot;Response&quot;: {
+        &quot;Content&quot;: {
+            &quot;SysConstants&quot;:[
+                {
+                    &quot;Value&quot;:&quot;ABOM-L4HRfnd-AUS-RAMSSA_09km&quot;
+                },
+                {
+                    &quot;Value&quot;:&quot;ABOM-L4LRfnd-GLOB-GAMSSA_28km&quot;
+                },
+                {
+                    &quot;Value&quot;:&quot;ALL&quot;
+                },
+                {
+                    &quot;Value&quot;:&quot;ALT_TIDE_GAUGE_L4_OST_SLA_US_WEST_COAST&quot;
+                }
+            ]
+        },
+        &quot;Type&quot;: &quot;OK&quot;
+    }
+}</source>
+         </subsection>
+      </section>
+      <section name="User">
+         <subsection name="users/update">
+            <h4>Url</h4>
+            <p>users/update</p>
+            <h4>HTTP Method</h4>
+            <p>GET, POST</p>
+            <h4>Parameters</h4>
+            <ul>
+               <li>username [required]:</li>
+               <li>password [required]:</li>
+               <li>setting [required]:</li>
+            </ul>
+            <h4>Return Values</h4>
+            <h5>XML</h5>
+            <source>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;Response&gt;&lt;Content&gt;&lt;SysUserSettings&gt;
+  &lt;SysUserSetting&gt;
+    &lt;Id&gt;2&lt;/Id&gt;
+    &lt;Username&gt;axt&lt;/Username&gt;
+    &lt;Setting&gt;test&lt;/Setting&gt;
+  &lt;/SysUserSetting&gt;
+&lt;/SysUserSettings&gt;&lt;/Content&gt;&lt;Type&gt;OK&lt;/Type&gt;&lt;/Response&gt;</source>
+            <h5>JSON</h5>
+            <source>{
+    &quot;Response&quot;: {
+        &quot;Content&quot;: {
+            &quot;SysUserSettings&quot;:[
+                {
+                    &quot;Id&quot;:2,
+                    &quot;Username&quot;:&quot;axt&quot;,
+                    &quot;Setting&quot;:&quot;test&quot;,
+                }
+            ]
+        },
+        &quot;Type&quot;: &quot;OK&quot;
+    }
+}
+            </source>
+         </subsection>
+         <subsection name="users/show">
+            <h4>Url</h4>
+            <p>users/show</p>
+            <h4>HTTP Method</h4>
+            <p>GET, POST</p>
+            <h4>Parameters</h4>
+            <ul>
+               <li>format [required]:</li>
+               <li>username [required]:</li>
+            </ul>
+         </subsection>
+      </section>
+   </body>
+</document>

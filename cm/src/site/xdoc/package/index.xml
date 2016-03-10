@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Copyright 2013, by the California Institute of Technology. -->
+<!-- ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged. -->
+<!--  -->
+<!-- $Id: $ -->
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+   <properties>
+      <title>Package Release</title>
+      <author>Thomas Huang</author>
+   </properties>
+   <body>
+      <section name="Package Release">
+         <p>This document details the steps necessary to build and deliver the system or a single
+            program set so that it is ready for Integration &amp; Test. For general information
+            regarding the use of <a href="../subversion/index.html">Subversion</a> or <a
+               href="../maven/index.html">Maven</a>, see their respective documents on this site.
+            The following sections can be found in this document:</p>
+         <ul>
+            <li><a href="#System_Release">System Release</a></li>
+            <li><a href="#Program_Set_Release">Program Set Release</a></li>
+         </ul>
+      </section>
+      <section name="System Release" id="System_Release" >
+         <p>This section details the steps for performing a system release, which will probably
+            consist of the release of one or more program sets which is covered in the next section.
+            The first step to performing a system release is to create a tags directory in the
+            Subversion repository. This can be accomplished with the following command (where X.X.X
+            is the current release version):</p>
+         <source>
+% svn mkdir http://horizon.jpl.nasa.gov/repo/horizon/tags/X.X.X -m &quot;Release comment.&quot;
+         </source>
+         <p>Although it is stored in the Subversion repository like a program set, the HORIZON
+            parent Project Object Model (POM) dictates the system build and defines properties that
+            the program sets inherit. The parent POM can be checked out from the Subversion
+            repository with the following command:</p>
+         <source>
+% svn checkout http://horizon/repo/trunk/horizon/trunk horizon
+         </source>
+         <p>Alternatively, if there is a local copy on your machine, you can perform the following
+            two commands to verify that you have not made any changes to your local copy and that
+            changes made by others are incorporated into your local copy:</p>
+         <source>
+% svn status % svn update
+         </source>
+         <p>The above two commands and the following commands should be executed from within the
+            top-level directory of the parent POM (where the <i>pom.xml</i> file resides). Perform
+            the following commands to clean old artifacts, build/deploy the current artifacts to the
+            Maven repository and copy the <i>pom.xml</i> file to the tags directory for the current
+            system release:</p>
+         <source>
+% mvn clean --non-recursive
+% mvn deploy --non-recursive
+% svn copy pom.xml http://horizon/repo/tags/X.X.X \ 
+-m &quot;Deploy the system-level POM for system release X.X.X.&quot;
+         </source>
+         <p>You are now ready to prepare a program set release for each program set that makes up
+            the current system release.</p>
+      </section>
+      <section name="Program Set Release" id="Program_Set_Release">
+         <p>This section details the steps for performing a program set release. If this is part of
+            a system release, then these steps will need to be performed for each program set that
+            makes up the current system release. The program set can be checked out from the
+            Subversion repository with the following command:</p>
+         <source>
+% svn checkout http://horizon/repo/trunk/&lt;program-set&gt;/trunk&lt;program-set&gt;
+         </source>
+         <p>Alternatively, if there is a local copy on your machine, you can perform the following
+            two commands to verify that you have not made any changes to your local copy and that
+            changes made by others are incorporated into your local copy:</p>
+         <source>
+% svn status
+% svn update
+         </source>
+         <p>The above two commands and the following commands should be executed from within the
+            top-level directory of the program set (where the <i>pom.xml</i> file resides). Perform
+            the following commands to clean old artifacts and build/deploy the current artifacts to
+            the Maven repository:</p>
+         <source>
+% mvn clean
+% mvn deploy
+         </source>
+         <p><b>Note:</b> Current policy is that program sets only need to be deployed to the Maven
+            repository if other programs sets are dependent on the artifacts.</p>
+         <p>Perform the following command to deploy the site pages to the HORIZON Oceanography DAAC
+            CM web site:</p>
+         <source>
+% mvn site-deploy
+         </source>
+         <p>For program sets that contain modules (e.g., Common, Ingest and Search) the following
+            commands should be performed instead to deploy the site pages:</p>
+         <source>
+% cd util 
+% ./mvn-site-deploy.sh
+         </source>
+         <p>Perform the following command to make a copy of the current source tree for the program
+            set under the program set's tags directory (where X.X.X is the current release version
+            for the program set):</p>
+         <source>
+% svn copy http://horizon/repo/trunk/&lt;program-set&gt;/trunk \
+http://horizon/repo/trunk/&lt;program-set&gt;/tags/X.X.X \ 
+-m &quot;This release of the &lt;program-set&gt; Program Set is a component of the \ 
+integrated release (X.X.X) of the HORIZON System.&quot;
+         </source>
+         <p>Perform the following command to make a copy of the tagged program set under the system
+            release's tags directory (where the first X.X.X is the program release version and the
+            second X.X.X is the system release version):</p>
+         <source>
+% svn copy http://horizon/repo/trunk/&lt;program-set&gt;/tags/X.X.X \
+http://horizon/repo/tags/X.X.X/&lt;program-set&gt; \ 
+-m &quot;This release of the &lt;program-set&gt; Program Set is a component of the \ 
+integrated release (X.X.X) of the HORIZON System.&quot;
+         </source>
+         <p>Now that you have deployed artifacts and tagged the release, the current release version
+            should be bumped so that the official release does not get overwritten in the Maven
+            repository by accident. This can be accomplished by editing the <i>pom.xml</i> file for
+            the program set with your favorite editor. Look for the following in the <i>pom.xml</i>
+            file:</p>
+         <source>
+...
+&lt;groupId&gt;gov.nasa.horizon&lt;/groupId&gt;
+&lt;artifactId&gt;&lt;program-set&gt;&lt;/artifactId&gt;
+&lt;version&gt;X.X.X&lt;/version&gt;
+...
+         </source>
+         <p>Bump the version by a point (e.g. X.X.1) and save the file. Perform the following
+            command to commit the changes in the Subversion repository:</p>
+         <source>
+% svn commit
+         </source>
+         <p>Now onto the next program set if this is a system release.</p>
+      </section>
+   </body>
+</document>

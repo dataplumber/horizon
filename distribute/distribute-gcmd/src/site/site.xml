@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- 
+  Copyright 2009, by the California Institute of Technology.
+  ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+
+  $Id: site.xml 5914 2010-09-19 01:01:28Z thuang $
+-->
+
+<project name="Distribute GCMD">
+  <bannerLeft>
+    <src>images/podaac_logo.jpg</src>
+    <href>http://podaac-cm.jpl.nasa.gov/</href>
+  </bannerLeft>
+
+  <bannerRight>
+    <name>Distribute GCMD&nbsp;&nbsp;</name>
+  </bannerRight>
+
+  <body>
+    <links>
+      <item name="Distribute GCMD" href="http://podaac-cm.jpl.nasa.gov/docs/distribute/distribute-gcmd/index.html" />
+    </links>
+
+    <menu name="Software Documentation">
+      <item name="About Distribute GCMD" href="index.html"/>
+      <item name="Release Description" href="release/index.html"/>
+      <item name="Installation" href="install/index.html"/>
+      <item name="Operation" href="operate/index.html"/>
+      <item name="JavaDoc" href="apidocs/index.html"/>
+    </menu>
+
+    <menu ref="reports"/>
+  </body>
+</project>

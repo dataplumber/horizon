@@ -1,0 +1,191 @@
+From ingest@mako.jpl.nasa.gov Mon Jul 16 13:58:28 2007
+Received: from mako.jpl.nasa.gov (localhost [127.0.0.1])
+	by mako.jpl.nasa.gov (8.12.10/8.12.10) with ESMTP id l6GKwStM106227;
+	Mon, 16 Jul 2007 13:58:28 -0700 (PDT)
+Received: (from ingest@localhost)
+	by mako.jpl.nasa.gov (8.12.10/8.12.5/Submit) id l6GKwSSw113170;
+	Mon, 16 Jul 2007 13:58:28 -0700 (PDT)
+Date: Mon, 16 Jul 2007 13:58:28 -0700 (PDT)
+From: Data Ingestor <Atsuya.Takagi@jpl.nasa.gov>
+Message-Id: <200707162058.l6GKwSSw113170@mako.jpl.nasa.gov>
+To: richard.chen@jpl.nasa.gov, ingest@mako.jpl.nasa.gov
+Subject: Submission Package QSCAT Batch 0922 q=nas-archive
+
+
+GROUP = SUBMISSION_PACKAGE_ACK
+product_name = "QSCAT ANCILLARY"
+product_type = "DATA"
+delivery_version_number = "0"
+internet_host_name = "mako.jpl.nasa.gov"
+internet_address = "127.0.0.1"
+ftp_transfer_mode = "binary"
+path_name = "./"
+submission_status = READY
+file_name_list = {
+    "QS_Q0A20071910154.20071910435",
+    "QS_Q0A20071921557.20071921924",
+    "QS_Q0A20071970022.20071970343"
+}
+files = 3
+submission_comment = "QSCAT BATCH 0922"
+END_GROUP = SUBMISSION_PACKAGE_ACK
+
+GROUP = SUBMISSION_PACKAGE_ACK
+product_name = "QSCAT INVENTORY ENTRY"
+product_type = "DATA"
+delivery_version_number = "0"
+internet_host_name = "mako.jpl.nasa.gov"
+internet_address = "127.0.0.1"
+ftp_transfer_mode = "binary"
+path_name = "./"
+submission_status = READY
+file_name_list = {
+    "qscat_L0_test.lod",
+    "qscat_L3_test.lod",
+    "qscat_L1A_test.lod",
+    "qscat_L1B_test.lod",
+    "qscat_L2A_test.lod",
+    "qscat_L2B_test.lod",
+    "qscat_anc_test.lod",
+    "qscat_L2ACP12_test.lod",
+    "qscat_L2BCP12_test.lod"
+}
+files = 10
+submission_comment = "QSCAT BATCH 0922"
+END_GROUP = SUBMISSION_PACKAGE_ACK
+
+GROUP = SUBMISSION_PACKAGE_ACK
+product_name = "QSCAT LEVEL 0"
+product_type = "DATA"
+delivery_version_number = "0"
+internet_host_name = "mako.jpl.nasa.gov"
+internet_address = "127.0.0.1"
+ftp_transfer_mode = "binary"
+path_name = "./"
+submission_status = READY
+file_name_list = {
+    "QS_S0A20071910154.20071910435",
+    "QS_S0A20071930048.20071930343",
+    "QS_S0A20071970022.20071970343",
+    "QS_S0B20071910154.20071910435",
+    "QS_S0B20071940839.20071941134",
+    "QS_S0B20071970022.20071970343"
+}
+files = 6
+submission_comment = "QSCAT BATCH 0922"
+END_GROUP = SUBMISSION_PACKAGE_ACK
+
+GROUP = SUBMISSION_PACKAGE_ACK
+product_name = "QSCAT LEVEL 1A"
+product_type = "DATA"
+delivery_version_number = "0"
+internet_host_name = "mako.jpl.nasa.gov"
+internet_address = "127.0.0.1"
+ftp_transfer_mode = "binary"
+path_name = "./"
+submission_status = READY
+file_name_list = {
+    "QS_S1A41948.20071910319",
+    "QS_S1A41976.20071930206",
+    "QS_S1A42033.20071970155"
+}
+files = 3
+submission_comment = "QSCAT BATCH 0922"
+END_GROUP = SUBMISSION_PACKAGE_ACK
+
+GROUP = SUBMISSION_PACKAGE_ACK
+product_name = "QSCAT LEVEL 1B"
+product_type = "DATA"
+delivery_version_number = "0"
+internet_host_name = "mako.jpl.nasa.gov"
+internet_address = "127.0.0.1"
+ftp_transfer_mode = "binary"
+path_name = "./"
+submission_status = READY
+file_name_list = {
+    "QS_S1B41948.20071910937"
+}
+files = 1
+submission_comment = "QSCAT BATCH 2007/190"
+END_GROUP = SUBMISSION_PACKAGE_ACK
+
+GROUP = SUBMISSION_PACKAGE_ACK
+product_name = "QSCAT LEVEL 2A"
+product_type = "DATA"
+delivery_version_number = "0"
+internet_host_name = "mako.jpl.nasa.gov"
+internet_address = "127.0.0.1"
+ftp_transfer_mode = "binary"
+path_name = "./"
+submission_status = READY
+file_name_list = {
+    "QS_S2A41948.20071921253"
+}
+files = 1
+submission_comment = "QSCAT BATCH 2007/190"
+END_GROUP = SUBMISSION_PACKAGE_ACK
+
+GROUP = SUBMISSION_PACKAGE_ACK
+product_name = "QSCAT LEVEL 2A COMP 12"
+product_type = "DATA"
+delivery_version_number = "0"
+internet_host_name = "mako.jpl.nasa.gov"
+internet_address = "127.0.0.1"
+ftp_transfer_mode = "binary"
+path_name = "./"
+submission_status = READY
+file_name_list = {
+    "QS_S2A41948.20071921253.CP12"
+}
+files = 1
+submission_comment = "QSCAT BATCH 2007/190"
+END_GROUP = SUBMISSION_PACKAGE_ACK
+
+GROUP = SUBMISSION_PACKAGE_ACK
+product_name = "QSCAT LEVEL 2B"
+product_type = "DATA"
+delivery_version_number = "0"
+internet_host_name = "mako.jpl.nasa.gov"
+internet_address = "127.0.0.1"
+ftp_transfer_mode = "binary"
+path_name = "./"
+submission_status = READY
+file_name_list = {
+    "QS_S2B41948.20071921305"
+}
+files = 1
+submission_comment = "QSCAT BATCH 2007/190"
+END_GROUP = SUBMISSION_PACKAGE_ACK
+
+GROUP = SUBMISSION_PACKAGE_ACK
+product_name = "QSCAT LEVEL 2B COMP 12"
+product_type = "DATA"
+delivery_version_number = "0"
+internet_host_name = "mako.jpl.nasa.gov"
+internet_address = "127.0.0.1"
+ftp_transfer_mode = "binary"
+path_name = "./"
+submission_status = READY
+file_name_list = {
+    "QS_S2B41948.20071921315.CP12"
+}
+files = 1
+submission_comment = "QSCAT BATCH 2007/190"
+END_GROUP = SUBMISSION_PACKAGE_ACK
+
+GROUP = SUBMISSION_PACKAGE_ACK
+product_name = "QSCAT LEVEL 3"
+product_type = "DATA"
+delivery_version_number = "0"
+internet_host_name = "mako.jpl.nasa.gov"
+internet_address = "127.0.0.1"
+ftp_transfer_mode = "binary"
+path_name = "./"
+submission_status = READY
+file_name_list = {
+    "QS_XWGRD3_2007191.20071971736",
+    "QS_XWGRD3_2007194.20071971737"
+}
+files = 2
+submission_comment = "QSCAT BATCH 2007"
+END_GROUP = SUBMISSION_PACKAGE_ACK

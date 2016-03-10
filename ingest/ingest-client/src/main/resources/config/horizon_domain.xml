@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<domain xmlns="http://horizon.nasa.gov">
+   <default>localDev</default>
+   <federation>
+      <name>localDev</name>
+      <url>http://localhost:8080/manager/ingest</url>
+   </federation>
+   <sigevent>http://localhost:9090/sigevent</sigevent>
+   <jobkeeper>
+      <server>localhost:2181</server>
+      <webservice>localhost:9998</webservice>
+   </jobkeeper>
+   <inventory>http://localhost:9191</inventory>
+</domain>

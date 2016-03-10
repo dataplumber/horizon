@@ -1,0 +1,13 @@
+#
+# Sample File for item generation. If you want to map custom elements for a hand genereated 
+# form (i.e., you're not using the datacast tool to genereate the feed files)
+# Then simply use a file like this one. It maps customElements_X with some data information
+# to whatever you define. In the example below, we're creating customElement_1 which will display 
+# the SoftwareVersion. We get this data from the granule_character element called 'version'.
+# 
+# The config format of 'feed.Feed/CustomElements.*' is required, as well as the format
+# 'item.*' so that the tool can find these elements correctly.
+#
+feed.Feed/CustomElements.customElement_1 = ("SoftwareVersion","character","software version" )
+
+item.customElement_1 = ${element.version}

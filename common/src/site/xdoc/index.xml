@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+   Copyright 2008, by the California Institute of Technology.
+   ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+    
+   $Id$
+-->
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+
+   <properties>
+      <title>About Common</title>
+      <author email="Thomas.Huang@jpl.nasa.gov">Thomas Huang</author>
+   </properties>
+
+   <body>
+      <section name="About Common">
+         <p>The Common program set captures the collection of commonly reusable programming modules
+            for use by other program set in the HORIZON system. This includes modules for SIP XML
+            manipulation, FTP/SFTP/HTTP data crawler, file and date/time utilities.</p>
+      </section>
+   </body>
+
+</document>

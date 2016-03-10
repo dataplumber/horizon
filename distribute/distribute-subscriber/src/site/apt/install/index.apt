@@ -1,0 +1,49 @@
+~~ Copyright 2008-2009, by the California Institute of Technology.
+~~ ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+~~
+~~ $Id: index.apt 3142 2009-06-15 17:46:58Z gangl $
+
+  ---
+  Installation
+  ---
+  Mike Gangl
+  ---
+  
+Installation
+
+  This document describes how to install and configure the Distribute-Subscriber software of the Distribute program set. The following sections can be found in this document:
+
+  * {{{#Distribution_Contents}Distribution Contents}}
+
+  * {{{#Configuration}Configuration}}
+
+{Distribution Contents}
+
+  The program set is packaged in a self-contained TAR/GZIP file. The package can be extracted with the following command (where X.X.X is the current version):
+
++--
+% tar -xzvf distribute-subscriber-X.X.X-distribute-subscriber.tar.gz
++--
+
+  Below is an illustration of the distribution after it has been extracted:
+
+[../images/distribute-main_sub.jpg]
+
+  The contents of the package are as follows:
+
+  * <<<bin>>> - Directory containing the executables.
+
+    * <<<dataSubscriber.sh>>> - Script for starting a subscription
+
+  * <<<config>>> - Directory containing the configuration files.
+
+    *<<<distribute.config>>> - Configuration for the distribute software.
+
+    *<<<distribute.log.properties>>> - Configuration file containing logging properties.
+
+    *<<<hibernate.cfg.xml>>> - Configuration file containing properties used by Inventory API with Hibernate implementation.
+
+    *<<<hostmap.cfg>>> - Configuration file containing host/authentication mappings.
+
+  * <<<lib>>> - Directory containing the run-time libraries for the executables.
+

@@ -1,0 +1,231 @@
+~~ Copyright 2008, by the California Institute of Technology.
+~~ ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+~~
+~~ $Id: index.apt 4817 2010-04-23 21:45:43Z rigor $
+
+  ---
+  Installation
+  ---
+  Lei Pan, Eric Rigor, Sean Hardman
+  ---
+  
+Installation
+
+  This document describes how to install and configure the Jason-1 Streamline software. The following sections can be found in this document:
+
+   * {{{#Web_Interface}Web Interface}}
+
+   * {{{#BuildCatalog_and_MakePublic}BuildCatalog and MakePublic}}
+
+{Web Interface}
+
+  The following instructions are for the deployment of the Jason Streamlining web interface.
+
+  <<Ownership>>: Tomcat will own these files since tomcat will unzip them.
+
+  <<Permissions>>: Tomcat user must be able to read this war file.
+
+  The source code should have been checked out to the local directory per the instructions in the RDD. The code and other build files can be found in the following directories:
+
+    * /j1-streamline/
+
+    * /j1-streamline/src
+
+    * /j1-streamline/war
+
+  These files need to be modified to comply with the environment in which the tool will be deployed.
+
+  * /j1-streamline/build.properties in which:
+  
+    * <appserver.home> should point to the current $CATALINA_HOME (or in other words where Tomcat is installed).
+
+    * <tomcat.manager.url> should point to the URL of the current Tomcat manager.
+
+    * <tomcat.manager.username> and <tomcat.manager.password> should be current.
+
+    * <db.url> should point to an instance of the Oracle database.
+
+    * <db.user> and <db.pw> should be current.
+    
+  * /j1-streamline/war/WEB-INF/messages.properties in which:
+
+    * <db.url>, <db.user>, and <db.pw> should be consistent with what are in the above <build.properties> file.
+
+  * /j1-streamline/war/WEB-INF/classes/log4j.properties in which:
+  
+    * <log4j.appender.logfile> should point to: $CATALINA_HOME/logs/streamlining.log
+
+[]
+
+  Once the above files are modified the war needs to be built and database table needs to be created.
+
+  To build database table "catalog" please run:
+
++--
+pwd = /<deployed_base_path>/streamlining/
+ant createTables
++--
+
+  Please note this only needs to be run if the "catalog" table does not yet exist.
+
+  Other available test tools are available by simply typing ant in the above pwd.
+
++--
+Buildfile: build.xml
+usage:
+     Available targets are:
+     build     --> Build the application
+     clean     --> Clean output directories
+     deploy    --> Deploy application as directory
+     deploywar --> Deploy application as a WAR file
+     createTables --> Create tables in DB
+     dropTables --> Remove tables in DB
+     printData --> Print out data in DB
+     clearData --> Clear out data in DB
+     loadData  --> Load init. data in DB
++--
+
+  To build the war file for deployment, perform the following commands: 
+
++--
+cd /j1-streamline/ 
+ant deploywar
++--
+
+  A war file <streamlining.war> will be created in that directory and will be copied to <deploy.path> as defined in the /j1-streamline/build.properties file. The property <deploy.path> should really be the same as $CATALINA_HOME/webapps.
+
+{BuildCatalog and MakePublic}
+
+  These instructions detail how to install the BuildCatalog and MakePublic components of the Jason Streamlining software.
+  
+  <<Ownership>>: Specific ownership is not needed for these components.
+
+  <<Permissions>>: The <jason_ops> user must be able to execute and read these components.  The <jason_ops> user must also be part of groups "nrt" and "cahoots" in order to move data files.
+
+  The three files need to be modified to accommodate deployment environment. The files can be found in the /j1-streamline/src/updateCatalog directory.
+
+  The three files are <build.xml>, <paths.properties> and <crontab>. A detailed description of the necessary modification follows.
+
+  <<Data Store Expectations>>: 
+  Brief data store explanation.
+  
++--
+  Source data stream directories. (operational)
+  
+  /store/jason1/private/sgdr_[a|b|c....]_[nasa|cnes] SGDR binary source
+  /store/jason1/private/sgdr_netcdf_[c|d...]_[nasa|cnes] SGDR netCDF source
+  /store/jason1/restricted/gdr_[cnes|nasa]_[a|b|c...] GDR binary source
+  /store/jason1/restricted/gdr_netcdf_[c|d....]_[nasa|cnes] GDR netCDF source
+  /store/jason1/restricted/gdr_ssha_netcdf_[c|d...]_[nasa|cnes] SSHA netCDF source
+  
+  Destination
+  
+  /store/restricted/sgdr_[a|b|c...] SGDR binary destination
+  /store/restricted/sgdr_netcdf_[c|d...] SGDR netCDF destination
+  /store/jason1/public/gdr_[a|b|c..] GDR binary destination
+  /store/jason1/public/gdr_netcdf_[c|d..] GDR netCDF destination
+  /store/jason/public/gdr_ssha_netcdf_[c|d..] SSHA netCDF destination
+  
++--
+  
+  There are two expectations that must be met for this suit of tools to work properly.  
+  
+  The first is that below "gdr_dir" defined in paths.properties, one GDR binary directory with at lease one cycle's worth of data must exist.  For example gdr_[cnes|nasa]_[a|b|c|...]/data/c[nnn] must exist and contain Jason GDR binary pass files.
+  
+  The second is that for whatever data you are trying to release i) from restricted to public or ii) from private to restricted, the release directory must exist.  This tool only creates/moves the cycle sub-directory that is associated with a particular dataset.  For example, if one were trying to release data from "restricted/gdr_cnes_c/data"  the directory
+  "public/gdr_c/data" must already exist or the file move will fail.
+  
+  
+
+  [[1]] build.xml
+
+    This file used by ant to compile and run the insert and releaseData tools. Line 10 needs to be modified to point to the "lib" directory. The "lib" directory contains the following files:
+
+    * ojdbc14-10.2.0.3.0.jar
+
+    * log4j-1.2.14.jar
+
+    * commons-logging.jar
+
+    * jstl.jar
+
+    * junit.jar
+
+    * spring.jar
+
+    * standard.jar
+
+    []
+
+    An example path is: /j1-streamline/war/WEB-INF/lib
+
+  [[2]] paths.properties
+
+  This file lists the complete paths to the following directories. Please note that the format used in the example file located in the repository must be followed since this is a java "properties" file.
+
+    * gdr_dir = \<full path to Jason restricted access directory\>
+        (e.g., \</store/jason1/restricted\>)
+
+    * sgdr_dir = \<full path to Jason private access directory\>
+        (e.g., \</store/jason1/private\>)
+
+    * gdrRelease = \<full path to Jason public access directory\>
+        (e.g., \</store public/public\>)
+
+    * sgdrRelease = \<full path to Jason restricted access directory\>
+        (e.g., \</store/jason1/restricted\>)
+
+    * dbURL = \<oracle JDBC url\>
+        (e.g., \<jdbc:oracle:thin:@seadb.jpl.nasa.gov:1526:DAACDEV\>)
+        
+    * dbUser = \<oracle Username\>
+        (e.g., \<daac_dev\>)
+      
+    * dbPass = \<oracle Password\>
+        (e.g., \<daac$dev\>)
+
+    * log4jproperties = \<full path to log4jproperties file\>
+        (e.g., \<j1-streamline/streamlining/src/updateCatalog\>)
+        
+    []        
+        
+    \*\*Please take special care when defining the dbURL, dbUser and dbPass to keep development and operational database references seprate.
+
+
+  [[3]] crontab
+
+  This file has the crontab schedule information to run the insert and releaseData tools. There is one line for each of the program MakePublic and BuildCatalog. Below is an example line for the BuildCatalog program. The same line can be used for the MakePublic program, just change the name of the program. 
+
+  The file <environment.sh> assumes that the bash shell is used as the default shell in <crontab>. This is defined in the /etc/crontab file on your system.
+
+  Thus the following example works under the assumption that bash will used:
+
++--
+55 0,6,12,18 * * * source [<deployment_dir>/src/updateCatalog/environment.sh];
+cd [/<deployment_dir>/src/updateCatalog]; 
+ant BuildCatalog > [/home/jason_ops/error.log] 2>&1
++--
+                                
+  Each point below corresponds to each path denoted by "\[...\]" above.
+
+    * \[/\<deployment_dir\>/src/updateCatalog/environment.sh\]
+
+      This should point to <environment.sh> found in the updateCatalog directory. This is needed to ensure that the appropriate environment variables are set.
+
+    * \[/\<deployment_dir\>/streamlining/src/updateCatalog\]
+
+      This should point to the deployed directory of these tools.
+
+    * \[/home/jason_ops/error.log\]
+
+      This is optional to catch the crontab standard error and output into some file. Note that ant will produce standard output.
+
+  \*\*Please note than an explicit build or compile is not needed to run BuildCatalog or MakePublic since run depends on build. If an explicit compile is needed please run the following.
+
++--
+pwd = <deployment_dir>/src/updateCatalog
+ant compile
++--
+
+  For command-line operation of these components please see the {{{../operate/index.html}Operation}} document. 
+

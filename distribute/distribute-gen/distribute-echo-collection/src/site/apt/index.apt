@@ -1,0 +1,14 @@
+~~ Copyright 2008, by the California Institute of Technology.
+~~ ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+~~
+~~ $Id: index.apt 1507 2008-07-24 00:30:58Z shardman $
+
+  ---
+  About Distribute ECHO Collection Binding
+  ---
+  Sean Hardman
+  ---
+  
+About Distribute ECHO Collection Binding
+
+  The Distribute ECHO Collection Binding module uses JAXB to generate Java classes for handling the ECHO submissions.

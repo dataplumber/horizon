@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- 
+   Copyright 2007-2008, by the California Institute of Technology.
+   ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+   
+   Ingest Program Set Parent POM
+   
+   @author Thomas Huang {Thomas.Huang@jpl.nasa.gov}
+   @version $Id: pom.xml 2633 2009-02-12 22:33:44Z thuang $
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+   http://maven.apache.org/xsd/maven-4.0.0.xsd">
+   <modelVersion>4.0.0</modelVersion>
+   <parent>
+      <groupId>gov.nasa.horizon</groupId>
+      <artifactId>horizon</artifactId>
+      <version>0.0.0</version>
+   </parent>
+   <artifactId>middleware</artifactId>
+   <version>5.0.0e</version>
+   <packaging>pom</packaging>
+   <name>Middleware Program Set</name>
+   <description>The Middleware program set </description>
+   <url>http://horizon.jpl.nasa.gov/docs/horizon/middleware/</url>
+
+   <modules>
+      <module>manager</module>
+      <module>sigevent</module>
+      <module>security</module>
+   </modules>
+
+   <build>
+      <plugins>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-site-plugin</artifactId>
+            <version>2.1.1</version>
+            <dependencies>
+               <dependency>
+                  <groupId>commons-httpclient</groupId>
+                  <artifactId>commons-httpclient</artifactId>
+                  <version>3.1</version>
+                  <exclusions>
+                     <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                     </exclusion>
+                  </exclusions>
+               </dependency>
+            </dependencies>
+         </plugin>
+      </plugins>
+   </build>
+
+   <reporting>
+      <plugins>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-project-info-reports-plugin</artifactId>
+            <reportSets>
+               <reportSet>
+                  <reports>
+                     <report>summary</report>
+                  </reports>
+               </reportSet>
+            </reportSets>
+         </plugin>
+         <plugin>
+            <artifactId>maven-javadoc-plugin</artifactId>
+         </plugin>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-report-plugin</artifactId>
+         </plugin>
+      </plugins>
+   </reporting>
+</project>

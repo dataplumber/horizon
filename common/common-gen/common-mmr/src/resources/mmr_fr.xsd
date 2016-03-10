@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+   Copyright (c) 2008-2013
+   Jet Propulsion Laboratory, California Institute of Technology
+   All rights reserved
+   
+   XML schema for the GHRSST-PP MMR_FR data.  The file was converted from mmr_fr.dtd.   
+   
+   @author T. Huang {Thomas.Huang@jpl.nasa.gov}
+   @version $Id:$
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="MMR_FR">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Entry_ID" type="xs:string"/>
+                <xs:element name="File_Name" type="xs:string"/>
+                <xs:element name="File_Release_Date" type="xs:string"/>
+                <xs:element name="File_Version" type="xs:string"/>
+                <xs:element name="Related_URL" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="URL_Content_Type" minOccurs="0" maxOccurs="1"/>
+                            <xs:element name="URL" type="xs:anyURI" minOccurs="1"
+                                maxOccurs="unbounded"/>
+                            <xs:element name="Description" type="xs:string" minOccurs="0"
+                                maxOccurs="1"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Temporal_Coverage">
+                    <xs:complexType>
+                        <xs:all>
+                            <xs:element name="Start_Date" type="xs:string"/>
+                            <xs:element name="Stop_Date" type="xs:string"/>
+                        </xs:all>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Spatial_Coverage">
+                    <xs:complexType>
+                        <xs:all>
+                            <xs:element name="Southernmost_Latitude" type="xs:string"/>
+                            <xs:element name="Northernmost_Latitude" type="xs:string"/>
+                            <xs:element name="Westernmost_Longitude" type="xs:string"/>
+                            <xs:element name="Easternmost_Longitude" type="xs:string"/>
+                            <xs:element name="Minimum_Altitude" type="xs:string" minOccurs="0"
+                                maxOccurs="1"/>
+                            <xs:element name="Maximum_Altitude" type="xs:string" minOccurs="0"
+                                maxOccurs="1"/>
+                            <xs:element name="Minimum_Depth" type="xs:string" minOccurs="0"
+                                maxOccurs="1"/>
+                            <xs:element name="Maximum_Depth" type="xs:string" minOccurs="0"
+                                maxOccurs="1"/>
+                        </xs:all>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Personnel" minOccurs="1" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:all>
+                            <xs:element name="Role" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                            <xs:element name="First_Name" type="xs:string"/>
+                            <xs:element name="Middle_Name" type="xs:string" minOccurs="0"
+                                maxOccurs="1"/>
+                            <xs:element name="Last_Name" type="xs:string"/>
+                            <xs:element name="Email" type="xs:string"/>
+                            <xs:element name="Phone" type="xs:string"/>
+                            <xs:element name="Fax" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                            <xs:element name="Address" type="xs:string"/>
+                        </xs:all>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Metadata_History">
+                    <xs:complexType>
+                        <xs:all>
+                            <xs:element name="FR_File_Version" type="xs:string" minOccurs="1"
+                                maxOccurs="1"/>
+                            <xs:element name="FR_Creation_Date" type="xs:string" minOccurs="1"
+                                maxOccurs="1"/>
+                            <xs:element name="FR_Last_Revision_Date" type="xs:string" minOccurs="1"
+                                maxOccurs="1"/>
+                            <xs:element name="FR_Revision_History" type="xs:string" minOccurs="1"
+                                maxOccurs="1"/>
+                        </xs:all>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="File_Compression" type="xs:string" minOccurs="0" maxOccurs="1"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

@@ -1,0 +1,55 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+ <xsd:element name="Packet">
+  <xsd:complexType>
+   <xsd:choice>
+
+    <xsd:element name="IdList">
+     <xsd:complexType>
+      <xsd:sequence>
+       <xsd:element name="ids" type="xsd:int" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+     </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="DatasetList">
+     <xsd:complexType>
+      <xsd:sequence>
+       <xsd:element name="encodedDataset" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+     </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="GranuleList">
+     <xsd:complexType>
+      <xsd:sequence>
+       <xsd:element name="encodedGranule" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+     </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="GranuleReferencetList">
+     <xsd:complexType>
+      <xsd:sequence>
+       <xsd:element name="encodedGranuleRef" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+     </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="Error">
+     <xsd:complexType>
+      <xsd:sequence>
+       <xsd:element name="message" type="xsd:normalizedString"/>
+       <xsd:element name="stack_trace" type="xsd:string" minOccurs="0"/>
+      </xsd:sequence>
+     </xsd:complexType>
+    </xsd:element>
+
+   </xsd:choice>
+   <xsd:attribute name="page" type="xsd:int" default="1"/>
+   <xsd:attribute name="of" type="xsd:int" default="1"/>
+  </xsd:complexType>
+ </xsd:element>
+
+</xsd:schema>
+

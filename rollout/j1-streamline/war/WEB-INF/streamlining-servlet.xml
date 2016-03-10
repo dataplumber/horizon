@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<!--
+  - Application context definition for "streamlining" DispatcherServlet.
+  -->
+
+<beans>
+
+    <bean id="streamliningForm" class="web.StreamliningController">
+        <property name="sessionForm"><value>true</value></property>
+        <property name="commandName"><value>catalog</value></property>
+        <property name="commandClass"><value>bus.Catalog</value></property>
+        <property name="formView"><value>webTool</value></property>
+        <property name="successView"><value>htmlSummary.htm</value></property>
+        <property name="catalogManager">
+            <ref bean="catMan"/>
+        </property>
+    </bean>
+
+    <bean id="htmlForm" class="web.HtmlController">
+        <property name="sessionForm"><value>true</value></property>
+        <property name="commandName"><value>catalog</value></property>
+        <property name="commandClass"><value>bus.Catalog</value></property>
+        <property name="formView"><value>htmlSummary</value></property>
+        <property name="successView"><value>htmlSummary.htm</value></property>
+        <property name="catalogManager">
+            <ref bean="catMan"/>
+        </property>
+    </bean>
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+      <property name="driverClassName"><value>org.hsqldb.jdbcDriver</value></property>
+      <property name="url">
+       <!-- for WIN
+       <value>jdbc:hsqldb:/Users/msun/work/webapps/report/db/test</value>
+       -->
+       <!-- for MAC
+        <value>jdbc:hsqldb:/Users/pan/work/jpl/PODAAC/webapps/streamlining/db/streamlining</value>
+       -->
+       <!-- for LINUX
+       -->
+        <value>jdbc:hsqldb:/home/tomcat/dbs/streamlining/db/streamlining</value>
+      </property>
+      <property name="username"><value>sa</value></property>
+      <property name="password"><value></value></property>
+    </bean>
+
+    <bean id="catManDao" class="db.CatalogDaoJdbc">
+        <property name="dataSource">
+            <ref bean="dataSource"/>
+        </property>
+    </bean>
+
+    <bean id="catMan" class="bus.CatalogManager">
+        <property name="catalogDao">
+            <ref bean="catManDao"/>
+        </property>
+    </bean>
+
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename"><value>messages</value></property>
+    </bean>
+
+    <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <props>
+                <prop key="/webTool.htm">streamliningForm</prop>
+                <prop key="/htmlSummary.htm">htmlForm</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass"><value>org.springframework.web.servlet.view.JstlView</value></property>
+        <property name="prefix"><value>/WEB-INF/jsp/</value></property>
+        <property name="suffix"><value>.jsp</value></property>
+    </bean>
+
+</beans>

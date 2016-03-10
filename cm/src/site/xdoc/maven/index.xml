@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+   Copyright 2008, by the California Institute of Technology.
+   ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+    
+   $Id$
+-->
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+
+   <properties>
+      <title>Using Maven</title>
+      <author email="Thomas.Huang@jpl.nasa.gov">Thomas Huang</author>
+   </properties>
+
+   <body>
+      <section name="Using Maven">
+         <p>The Next Generation development effort will be using <a href="http://maven.apache.org/"
+               >Maven</a> for managing the build environment. Maven is an open source product from
+            the <a href="http://www.apache.org/">Apache Software Foundation</a> that improves on <a
+               href="http://ant.apache.org/">Ant</a> in the area of build management, which it turn
+            was an improvement on Make. This document describes the use of Maven for HORIZON build
+            management. The following sections can be found in this document:</p>
+         <ul>
+            <li><a href="#Setup">Setup</a></li>
+            <li><a href="#Project Structure">Project Structure</a></li>
+            <li><a href="#Standard Commands">Standard Commands</a></li>
+            <li><a href="#Advanced Commands">Advanced Commands</a></li>
+            <li><a href="#Common Errors">Common Errors</a></li>
+            <li><a href="#References">References</a></li>
+         </ul>
+      </section>
+
+         <section name="Setup" id="Setup">
+            <p>The Maven software should be installed on the HORIZON machines. If the software is
+               required on a user's local desktop machine, it can be downloaded from the <a
+                  href="http://maven.apache.org/download.html">Maven Download</a> page. HORIZON is
+               using version 2.0 and above. Maven was developed in Java so it will run on the
+               popular platforms (e.g., Windows, Mac OSX, etc.). Beyond making sure the &lt;mvn&gt;
+               executable is in your path, there is very little setup required.</p>
+
+            <p>Maven is based on the concept of a Project Object Model (POM) which is contained in
+               the &lt;pom.xml&gt; file found at the root of each project. The POM allows Maven to
+               manage a project's build, reporting and documentation. For HORIZON, much of the default
+               information for managing the projects is contained in a parent POM, which is located
+               in the &lt;horizon&gt; project. So, in order to build any of the other projects (e.g.,
+               inventory, ingest, etc.) the parent POM must be downloaded from the HORIZON Maven
+               repository. The local &lt;pom.xml&gt; files for each of the projects have been
+               configured to retrieve the parent POM automatically. In addition, the developer must
+               have a &lt;settings.xml&gt; file located in the &lt;$HOME/.m2/&gt; directory with the
+               following content:</p>
+
+            <source>
+&lt;settings xmlns="http://maven.apache.org/POM/4.0.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+                       http://maven.apache.org/xsd/settings-1.0.0.xsd"&gt;
+&lt;servers&gt;
+   &lt;server&gt;
+      &lt;id&gt;horizon-repo&lt;/id&gt;
+      &lt;username&gt;username&lt;/username&gt;
+      &lt;password&gt;password&lt;/password&gt;
+      &lt;filePermissions&gt;664&lt;/filePermissions&gt;
+      &lt;directoryPermissions&gt;775&lt;/directoryPermissions&gt;
+      &lt;/server&gt;
+   &lt;/servers&gt;
+&lt;/settings&gt;
+            </source>
+
+            <p>This is required because Maven has been configured to use &lt;sftp&gt; to access the
+               HORIZON Maven repository. The &lt;username&gt; and &lt;password&gt; elements should
+               correspond with the developer's account on the HORIZON Maven repository host machine.
+               Since the password is stored in clear text (Maven will address this in a future
+               release), make sure the permissions on this file are set so that only your account
+               can access the file. Something like &lt;600&gt; should suffice.</p>
+
+            <p> Once Maven has been setup, the first step to building a project with Maven is to
+               checkout a project's source code into the developer's work area. See the <a
+                  href="../subversion/index.html">Using Subversion</a> document for how to check out
+               projects from the CM repository.</p>
+         </section>
+
+         <section name="Project Structure" id="Project_Structure">
+            <p>In order for default Maven functions to operate properly, there is a suggested
+               project directory structure. The structure is as follows:</p>
+            
+            <source>
+/
+   src/                   Source Code (everything)
+      main/               Program Source
+         assembly/        Package Descriptor
+         java/            Java Source
+         groovy/          Groovy Source
+         resources/       Scripts, Config File, etc.
+      ...
+      test/               Test Source
+         java/
+         resources/
+      ...
+      site/               Site Documentation
+         apt/             Docs in APT Format
+         index.xml        index.xml
+      ...
+         xdoc/            Docs in XDOC Format
+         ...
+         resources/
+            images/
+         site.xml         Menu Structure
+               
+   target/                Build Results (binaries, docs and packages)
+      ...
+               
+   pom.xml                Project Object Model (POM)
+            </source>
+         </section>
+         
+         <section name="Standard Commands" id="Standard_Commands">
+            <p>There are few standard commands that developers will use on a daily basis and they are related to building and cleaning a project.</p>
+            
+            <subsection name="Build a Project">
+               <p>Build the project's libraries and executables with the following command:</p>
+               <source>
+mvn compile
+               </source>
+               <p>The above command will generate the artifacts in the target/ directory.</p>
+            </subsection>
+            
+            <subsection name="Install a Project">
+               <p>Install the project's artifacts locally with the following command:</p>
+               <source>
+mvn install
+               </source>
+               <p>Prior to installation, the above command will compile the source code, if necessary, and execute the unit tests. The result of the above command is to install the generated artifacts (e.g. pom, jar, etc.) in the user's local Maven repository ($HOME/.m2/repository/). This is useful when the artifact is a dependency for another project but has yet to be deployed to the HORIZON Maven repository. See the <a href="#Advanced_Commands">Advanced Commands</a> section for details on how to deploy to the repository.</p>
+            </subsection>
+            
+            <subsection name="Package a Project">
+               <p>Create the project's distribution package with the following command:</p>
+               <source>
+mvn package
+               </source>
+               <p>Prior to package creation, the above command will compile the source code, if necessary, and execute the unit tests. The above command will create the package(s) in the target/ directory.</p>
+            </subsection>
+            
+            <subsection name="Build a Project's Web Site">
+               <p>Build the project's web site with the following command:</p>
+               <source>
+mvn site
+               </source>
+               <p>The above command will generate the web site in the <i>target/site/ directory</i>. View the site by pointing your web browser at the <i>index.html</i> file within that directory. Another option is to build the site locally and view it from a local web server with the following command:</p>
+               <source>
+mvn site:run
+               </source>
+               <p>The above command will generate the web site and host it on a <a href="http://jetty.mortbay.org/">Jetty</a> server which is accessible at http://localhost:8080. While the Jetty server is running, the terminal process will be suspended. Just enter &lt;Control&gt;&lt;C&gt; in the terminal to shutdown the Jetty server and complete the site generation task. See the <a href="#Advanced_Commands">Advanced Commands</a> section for details on how to deploy the web site to the HORIZON CM web server.</p>
+            </subsection>
+            
+            <subsection name="Clean a Project">
+               <p>Clean out the project directory of generated artifacts with the following command:</p>
+               <source>
+mvn clean
+               </source>
+               <p>The above command will remove the <i>target/</i> directory and its contents.</p>
+            </subsection>
+            
+            <subsection name="Useful Command Arguments">
+               <p>There a couple of useful arguments which can be appended to the commands above to limit the scope of the command.</p>
+               <p>In order to skip unit test execution, add the following argument:</p>
+               <source>
+mvn &lt;command&gt; -Dmaven.test.skip=true
+               </source>
+               <p>The above command is most useful with the install, package and site commands.</p>
+               <p>When a project has modules defined in the POM, the command can be performed against the top level of the project instead of the modules by adding the following argument:</p>
+               <source>
+mvn &lt;command&gt; --non-recursive
+               </source> 
+               <p>The above argument is most useful with the <i>deploy</i> command.</p>
+            </subsection>
+         </section>
+      
+      <section name="Advanced Commands" id="Advanced_Commands">
+         <p>The current set of advanced commands detail how to deploy artifacts to the HORIZON Maven repository. The repository can be viewed with a standard browser. In order to deploy artifacts to the <a href="http://horizon.jpl.nasa.gov/maven2">repository</a>, the <i>settings.xml</i> file must be configured as detailed in the <a href="#Setup">Setup</a> section above.</p>
+      
+         <subsection name="Deploy a Project's Artifact">
+            <p>The main artifact of a given project is specified in the <i>pom.xml</i> file for the project and could be <i>pom, jar, etc.</i> The following command will deploy that artifact to the repository with its supporting metadata:</p>
+            <source>
+mvn deploy
+            </source>
+            <p>To build the site and deploy to the repository in a single command, perform the following command:</p>
+            <source>
+mvn site-deploy
+            </source>
+            <p>Note: Upon completion of the command to deploy, an error occurs regarding execution of the chmod command. This is the result of passing a flag that is not supported by IRIX. The error may be ignored for now because it occurs after the deployment is complete.</p>     
+         </subsection>
+         
+         <subsection name="Deploy a Dependency/Plugin">
+            <p>When a dependency or plugin is listed in the pom.xml file of a project, the associated artifact is usually downloaded to the developer's environment from the <a href="http://repo1.maven.org/maven2/">Maven Central Repository</a>. If for some reason the artifact is not available from the central repository, it can be downloaded manually by the developer and then deployed to the HORIZON Maven repository. Here is an example of the command to upload the postgresql JDBC JAR file to the repository:</p>
+            <source>
+mvn deploy:deploy-file -DgroupId=com.postgresql -DartifactId=ojdbc14 \
+-Dversion=10.2.0.3.0 -Dpackaging=jar -Dfile=/$HOME/lib/ojdbc14-10.2.0.3.0.jar \
+-DrepositoryId=horizon-repo -Durl=sftp://horizon.jpl.nasa.gov/www/horizon/doc/maven2
+            </source>
+            <p>In the above example, the PostgreSQL JAR file did not have a corresponding POM, so one was generated at the time of deployment. The next example details the deployment of a Maven plugin to the repository which does have a corresponding POM:</p>
+            <source>
+mvn deploy:deploy-file -DgroupId=com.sun.tools.xjc.maven2 \
+-DartifactId=maven-jaxb-plugin -Dversion=1.0 -Dpackaging=maven-plugin \
+-Dfile=/$HOME/com/sun/tools/xjc/maven2/maven-jaxb-plugin/1.0/maven-jaxb-plugin-1.0.jar \
+-DpomFile=/$HOME/com/sun/tools/xjc/maven2/maven-jaxb-plugin/1.0/maven-jaxb-plugin-1.0.pom \
+-DrepositoryId=horizon-repo -Durl=sftp://horizon.jpl.nasa.gov/www/horizon/doc/maven2
+            </source>
+            <p>The <i>groupId</i>, <i>artifactId</i> and <i>version</i> determine the directory hierarchy for where the JAR file is uploaded to the repository. The <i>artifactId</i> and version should mimic the JAR file name separated by a dash.</p>
+         </subsection>
+      </section>
+      
+      <section name="Common Errors" id="Common_Errors">
+         <p>There are a couple of common errors that have shown up in the development environment regarding the use of Maven. Oddly enough they both have appeared while performing the mvn site command and are related to generating the Change Log Report.</p>
+         <subsection name="Change Log Page Generation Error">
+            <p>The following error occurs near the completion of a <i>mvn site</i> execution:</p>
+            <source>
+[INFO] Executing: svn --non-interactive log -v -r "{2007-06-11 00:39:40 +0000}:\
+{2007-10-10 00:39:40 +0000}" https://horizon.jpl.nasa.gov/repo/trunk/ingest
+[INFO] Working directory: /Users/shardman/dev/horizon/ingest/.
+[ERROR] Provider message:
+[ERROR] The svn command failed.
+[ERROR] Command output:
+[ERROR] svn: error: cannot set LC_ALL locale
+svn: error: environment variable LANG is not set
+svn: error: please check that your locale name is correct
+               
+[INFO] ------------------------------------------------------------------------
+[ERROR] BUILD ERROR
+[INFO] ------------------------------------------------------------------------
+[INFO] Error during page generation
+               
+Embedded error: Error rendering Maven report: An error has occurred during changelog command : 
+Command failed.
+            </source>
+            <p>The above error can be remedied by settting the following environment variable:</p>
+            <source>
+% setenv LC_ALL en_US
+            </source>
+         </subsection>
+         
+         <subsection name="Authentication Error">
+            <p>The following error occurs near the completion of a <i>mvn site</i> execution:</p>
+            <source>
+[INFO] Executing: svn --non-interactive log -v -r "{2007-06-11 20:34:51 +0000}:\
+{2007-10-10 20:34:51 +0000}" https://horizon.jpl.nasa.gov/repo/trunk/ingest
+[INFO] Working directory: /Users/shardman/dev/horizon/ingest/.
+[ERROR] Provider message:
+[ERROR] The svn command failed.
+[ERROR] Command output:
+[ERROR] subversion/libsvn_ra_dav/util.c:826: (apr_err=170001)
+svn: PROPFIND request failed on '/repo/trunk/ingest'
+subversion/libsvn_ra_dav/util.c:296: (apr_err=170001)
+svn: PROPFIND of '/repo/trunk/ingest': authorization failed (https://horizon.jpl.nasa.gov)
+               
+[INFO] ------------------------------------------------------------------------
+[ERROR] BUILD ERROR
+[INFO] ------------------------------------------------------------------------
+[INFO] Error during page generation
+               
+Embedded error: Error rendering Maven report: An error has occurred during changelog command : 
+Command failed.
+            </source>
+            <p>This error, along with an expired certificate error, appear to crop up when the user changes their JPL password and that password does not match their HORIZON system password. The certificate error is most likely related to a certificate update on the CM repository machine. The first step is to remove your local Subversion auth directory (.subversion/auth). In the majority of cases the following command can then correct the problem:</p>
+            <source>
+               % svn list http://horizon.jpl.nasa.gov/repo/horizon/trunk/ingest
+            </source>
+            <p>You will be promted to accept the certificate and then to enter your password, which is the CM repository password.</p>
+         </subsection>
+         
+         <subsection name="Out Of Memory Error">
+            <p>The following could occure during site generation</p>
+            <source>
+[INFO] Trace
+java.lang.OutOfMemoryError: Java heap space
+        at java.util.Arrays.copyOfRange(Arrays.java:3209)
+        at java.lang.String.&lt;init&gt;(String.java:215)
+        at java.io.DataInputStream.readUTF(DataInputStream.java:644)
+        at java.io.DataInputStream.readUTF(DataInputStream.java:547)
+        at org.apache.bcel.classfile.ConstantUtf8.&lt;init&gt;(ConstantUtf8.java:54)
+        at org.apache.bcel.classfile.Constant.readConstant(Constant.java:144)
+   ...
+            </source>
+            <p>The JavaVM is running out of heap space to process large number of Java files. The solution is to increase the JavaVM heap space as follow</p>
+            <source>
+% setenv MAVEN_OPTS '-Xmx1024m -Xms512m -XX:PermSize=256m -XX:MaxPermSize=1024m'
+% setenv JAVA_OPTS '-Xms128m -Xmx1024m -Dsun.rmi.dgc.client.gcInterval=3600000 -Dsun.rmi.dgc.server.gcInterval=3600000 -XX:PermSize=256m -XX:MaxPermSize=1024m'
+% mvn site
+            </source>
+         </subsection>
+      </section>
+      
+      <section name="References" id="References">
+         <p>Here is a list of Maven resources:</p>
+         <ul>
+            <li><a href="http://maven.apache.org/guides/index.html">Online Documentation Index</a></li>
+         </ul>
+      </section>
+   </body>
+</document>

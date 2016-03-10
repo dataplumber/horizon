@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Copyright 2013, by the California Institute of Technology. -->
+<!-- ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged. -->
+<!--  -->
+<!-- $Id: $ -->
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+
+   <properties>
+      <title>Release Description 5.0.0d</title>
+      <author>T. Huang</author>
+   </properties>
+
+   <body>
+      <section name="Release Description 5.0.0d">
+         <p>This release of the Data Handlers Program Set is a component of the integrated release
+               (<a href="../../cm/release/index-5.0.0d.html">5.0.0d</a>) of the HORIZON System. This
+            release is intended as an operational release. The following sections can be found in
+            this document:</p>
+         <ul>
+            <li><a href="#Capabilities">Capabilities</a></li>
+            <li><a href="#Liens">Liens</a></li>
+            <li><a href="#System_Requirements">System Requirements</a></li>
+            <li><a href="#Installation">Installation</a></li>
+            <li><a href="#Operation">Operation</a></li>
+         </ul>
+      </section>
+
+      <section name="Capabilities" id="Capabilities">
+         <p>This section details the new, modified and corrected capabilities that comprise this
+            release of the Data Handlers Program Set. In lieu of listing the capabilities by
+            requirement they have been summarized.</p>
+         <subsection name="New Capabilities">
+            <ul>
+               <li>NONE</li>
+            </ul>
+         </subsection>
+         <subsection name="Modified Capabilities">
+            <ul>
+               <li>NONE</li>
+            </ul>
+         </subsection>
+         <subsection name="Corrected Capabilities">
+            <ul>
+               <li>NONE</li>
+            </ul>
+         </subsection>
+      </section>
+
+      <section name="Liens" id="Liens">
+         <p>This section details the liens against the capabilities that have yet to be implemented
+            or are partially implemented. In lieu of listing the liens by requirement they have been
+            summarized.</p>
+         <p>There are no liens for this release.</p>
+      </section>
+
+      <section name="System Requirements" id="System_Requirements">
+         <p>The software contained in this program set was developed using Java and will run on any
+            platform with a supported Java Runtime Environment (JRE). The software was specifically
+            developed under Sun Java version 1.5 and has only been tested with this version.</p>
+         <ul>
+            <li>Apache Ant 1.8.2</li>
+            <li>Apache Maven 2.2.1</li>
+            <li>Grails 2.2.4</li>
+            <li>Groovy 2.0.8</li>
+            <li>Sun Java Standard Edition (J2SE) 1.7.0_25</li>
+         </ul>
+      </section>
+
+      <section name="Installation" id="Installation">
+         <p>The Data Handlers Program Set consists solely of Application Program Interfaces (APIs)
+            and applications that are included in the distributions of other program sets that are
+            dependent on them. Because of this, installation of this software is covered in the
+            Installation documents associated with those dependent program sets.</p>
+      </section>
+
+      <section name="Operation" id="Operation">
+         <p>The Data Handlers Program Set consists solely of Application Program Interfaces (APIs)
+            and applications that are included in the distributions of other program sets that are
+            dependent on them. Because of this, operation of this software is covered in the
+            Operation documents associated with those dependent program sets.</p>
+      </section>
+   </body>
+
+</document>

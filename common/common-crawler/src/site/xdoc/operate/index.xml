@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+Copyright 2008, by the California Institute of Technology.
+ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+
+$Id: $
+-->
+
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+   <properties>
+      <title>Operation Common Crawler</title>
+      <author>T. Huang</author>
+   </properties>
+   <body>
+      <section name="Operation">
+         <p>This document describes how to use the Common Crawler application. The applications
+            detailed in this document allow the user to specify two directories, remote (FTP or
+            SFTP) or local, and crawl the files of one and write them to the other. Options and
+            instructions are listed below.</p>
+         <p>Each section corresponds with an available application. The following sections can be
+            found in this document:</p>
+         <ul>
+            <li><a href="#Generic_Crawler">Generic Crawler</a></li>
+         </ul>
+      </section>
+
+      <section name="Generic Crawler" id="Generic_Crawler">
+         <p>As mentioned above, the Generic Crawler allows the crawling of a local or remote
+            directory, and either write the files to another directory (local or remote) or list
+            them for the user. Other options include custom date ranges, cleaning files of a certain
+            age in the write directory, and defining a frequency with which to run the crawler.</p>
+
+         <subsection name="Environment Setup">
+            <p>In the extracted folder, there is a command useCommon.csh.</p>
+            <source>
+% source useCommon.csh                
+            </source>
+            <p>This will set the environment variable COMMONC to your current directory, and will
+               add the required *.jar files in /lib to your CLASSPATH.</p>
+         </subsection>
+
+         <subsection name="Execution">
+            <p>The execution of the crawler is not dependent on I&amp;T or OPS, so the same commands
+               can be used for both. "cd" into the /bin directory from where you unarchived the
+               common-crawler program set.</p>
+            <source>
+% csh start_crawler.csh         
+         </source>
+            <p>Running the command without options is the same as running it with the -h (--help
+               otpion):</p>
+            <source>
+% csh start_crawler.csh 
+Missing option: r
+usage: start_crawler.pl [-c &lt;arg&gt;] [-E &lt;arg&gt;] [-f &lt;arg&gt;] [-h] [-home
+       &lt;arg&gt;] [-l] [-log &lt;arg&gt;] [-n &lt;arg&gt;] [-p &lt;arg&gt;] [-R] [-r &lt;arg&gt;] [-ru &lt;arg&gt;]
+       [-rup &lt;arg&gt;] [-S &lt;arg&gt;] [-s &lt;arg&gt;] [-w &lt;arg&gt;] [-wu &lt;arg&gt;] [-wup &lt;arg&gt;]
+start_crawler
+ -A,--Active                  Set the crawlers FTP mode to "active"
+ -c,--Clean &lt;arg&gt;             The Cleaning frequency, in days, for
+                              deleting files from the write directory. For example -c 5 means any file
+                              that is more than 5 days old in the write directory will be deleted.
+ -cmd                         Command to run when a new file is received. Pass parameters to the 
+                              command using $fileName, $fileSize, $modified, $checksum, $providerURL,
+                              $outputPath 
+ -E,--enddate &lt;arg&gt;           The end date for the crawler to filter files
+                              on, in yyyy-MM-dd'T'HH:mm:ss.SSS format.
+ -f,--frequency &lt;arg&gt;         Frequency, in minutes, with which to run the
+                              crawler
+ -h,--help                    Print this usage information
+ -home,--home &lt;arg&gt;           Absolute path to users home directory
+ -l,--list                    List the files from the target (read)
+                              location that have not yet been crawled.
+ -log,--log &lt;arg&gt;             Path + name of logfile to output information
+                              to
+ -n,--name &lt;arg&gt;              Name for the crawler. Must be uniuque to any
+                              other crawlers running on the current system
+ -p,--pattern &lt;arg&gt;           Pattern for filtering the read directory
+ -R,--Recursive               Set crawler to Recursive mode
+ -r,--readdir &lt;arg&gt;           Properties file name
+ -ru,--readuser &lt;arg&gt;         User's name for read directory
+                              authentication
+ -rup,--readuserpass &lt;arg&gt;    User's password for read directory
+                              authentication
+ -S,--startdate &lt;arg&gt;         The start date for the crawler to filter
+                              files on, in yyyy-MM-dd'T'HH:mm:ss.SSS format.
+ -save,--save-after &lt;arg&gt;     Number of files to process before saving to
+                              the registry.
+ -s,--states &lt;arg&gt;            State file name
+ -tz, --timezone &lt;arg&gt;            The timezone for which start/stop times apply.
+                                                          GMT or PST are examples. Local Timezone is the default.
+ -w,--writedir &lt;arg&gt;          Message Level
+ -wu,--writeuser &lt;arg&gt;        User's name for write directory
+                              authentication
+ -wup,--writeuserpass &lt;arg&gt;   User's password for write directory
+                              authentication 
+            </source>
+         </subsection>
+      </section>
+
+      <section name="Run Commands" id="Run_Commands">
+         <subsection name="Running the crawler once, recursively (SFTP - Local)">
+            <source>
+% csh start_crawler.csh -home /Users/homedir -s /Users/homedir/statefile.state -r sftp://lapinta.jpl.nasa.gov/home/data/ -n CrawlerName -ru username -w file:///Users/date/temp3 -R               
+            </source>
+         </subsection>
+         <subsection name="Running the crawler 12 times/day (SFTP - SFTP)">
+            <source>
+% csh start_crawler.csh -home /Users/homedir -s /Users/homedir/statefile.state -r sftp://lapinta.jpl.nasa.gov/home/data/ -n CrawlerName -ru username -w sftp://lapinta.jpl.nasa.gov/home/date/temp3 -wu writeUser -f 120                
+            </source>
+         </subsection>
+         <subsection name="Listing files remoteley (SFTP)">
+            <source>
+% csh start_crawler.csh -home /Users/homedir -s /Users/homedir/statefile.state -r sftp://lapinta.jpl.nasa.gov/home/data/ -n CrawlerName -l -ru username -rup userpass -S 2009-04-23T00:00:00
+            </source>
+         </subsection>
+         <subsection name="Cleaning files that are five days old days (SFTP - Local)">
+            <source>
+% csh start_crawler.csh -home /Users/homedir -s /Users/homedir/statefile.state -r sftp://lapinta.jpl.nasa.gov/home/data/ -n CrawlerName -ru username -w file:///Users/date/temp3 -C 5     
+            </source>
+         </subsection>
+      </section>
+      <section name="Important Information" id="Important_Information">
+         <subsection name="Stopping the crawler">
+            <p>If you're running the crawler continuously (-f) you'll want to know a clean way of
+               shutting it down. upon startup, you must give the "home" and "name" options. These
+               together create a file in the home directory called '.crawler.crawnername' where
+               crawlername is the name specified. As long as this file exists, the crawler will
+               still run. Delete this file to stop the crawler after its current run, or before it
+               runs again if it is sleeping.</p>
+            <source>
+[User-mac:~] user% ls -al .crawler.*
+-rw-r--r--  1 user  staff      18 Apr 23 10:40 .crawler.crawlername
+-rw-r--r--  1 user  staff  164857 Apr 23 10:40 .crawler.log
+[User-mac:~] user% rm .crawler.crawlername
+[User-mac:~] user%  
+         </source>
+         </subsection>
+         <subsection name="Patterns">
+            <p>The pattern expression is only slightly different than normal regular Expressions.
+               Due to the commands being interpreted by both java and the cshell, and ease of use,
+               the '*' is replaced by the # for specifying the pattern.</p>
+            <p>.txt matches all files ending in .txt #txt# matches all files with txt in the name
+               FDF# matches all files starting with FDF</p>
+            <p>The pattern ability is fairly routine, and doesn't support all the bells and whistles
+               of a true regular expression.</p>
+         </subsection>
+         <subsection name="Authentication">
+            <p>Authentication can be done two different ways. Both involve using the -ru and -wu
+               options to specify a user name. Passwords can be givein via the command line using
+               the -rup and -wup options, along with the passwords. This is good for anonnomous ftp
+               sites, but works for any login site. The other method is detailed here:</p>
+            <source>
+Here is the instruction for setting up ssh public key so you can
+avoid putting your password in the .m2/settings.xml file used
+by Maven.
+
+login to any horizon linux dev system, lapinta for example.
+do
+ssh-keygen -P '' -t dsa
+cd ~/.ssh
+ 
+If you don't already have an "authorized_keys" file simply
+cat id_dsa.pub > authorized_keys
+
+If you already have an "authorized_keys" file append
+cat id_dsa.pub >> authorized_keys
+
+This setup will allow you to jump from one HORIZON linux DEV machine
+to another using ssh without being prompted for password.
+
+If you want to have similiar setup from your Mac to horizon linux dev
+
+on your mac run
+ssh-keygen -P '' -t dsa
+cd ~/.ssh
+now copy your id_dsa.pub to lapinta
+
+on lapinta
+cd ~/.ssh
+append your Mac's id_dsa.pub to authorized_keys file.
+
+The instruction here is "openssh" specific which works on all
+of HORIZON linux machine and your desktop macs.  The current
+HORIZON non-linux machine (ie seastar) uses a different "ssh" 
+software and additional steps are needed to setup the public key. 
+         </source>
+         </subsection>
+         <subsection name="Running commands (-cmd)">
+            <p>As stated above, the crawler has the ability to invoke a command upon receipt of a
+               new file. The basic format is the following:</p>
+            <source>
+-cmd 'command &lt;options&gt;'
+         </source>
+            <p>Where command can be the path to any command you'd like to run on the system the
+               crawler is running on.</p>
+         </subsection>
+
+      </section>
+   </body>
+</document>

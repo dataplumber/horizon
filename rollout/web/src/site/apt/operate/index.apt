@@ -1,0 +1,61 @@
+~~ Copyright 2009, by the California Institute of Technology.
+~~ ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+~~
+~~ $Id: $
+
+  ---
+  Operation
+  ---
+  Christian Alarcon
+  ---
+
+{Operation}
+
+   This document describes how to operate the Dataset Rollout tool application. The rollout tool GUI is an AJAX website built using the {{{http://www.dojotoolkit.com}DOJO Toolkit}}. This application allows a user to add newly defined dataset metadata to allow a rollout process to the operational database. The necessary form fields are located in their respective tabs to allow for a smooth transition from html forms to database sql. The following sections can be found in this document:
+
+   * {{{#Form_Instructions}Form Instructions}}
+
+   * {{{#Save_and_Load_Instructions}Save and Load Instructions}}
+
+   * {{{#Submit_Instructions}Submit Instructions}}
+   
+
+{Form Instructions}
+  
+   The following are instructions on how to properly fill out the forms using this tool.
+  
+   * Dataset, Dataset Policy, Dataset Coverage
+
+   These tabs offer no dynamic features and can be filled out as any standard web form. Certain restrictions apply to some fields (required, number only, date/time only). The restrictions will be brought to the user's attention once the user has entered a value. Fields requiring specific input will have drop down menus but the user is free to type into the text box. For timestamp fields, a date field is separated from the time field. If one has a value entered, the corresponding date or time field must also have an entry. As of 3.1, the persistent ID field has been added and follows a strict regular expression to validate that the input follows the expcted pattern of XXXXXX-XXXXX-XXXXXXX. All letters must be upper case for this field.
+
+   * Dataset Parameter
+
+   This tab has fields that must adhere to the GCMD list of parameters published. The user must select from the drop down menus. The user also has the ability to add any number of parameter sets via the button in the top toolbar.
+
+   * Project, Provider, Collection, Contact, Citation, Policy, Resource
+
+   These tabs all have dynamic fields that can be either filled out fresh, or selected from a drop down to map to an entry existing in the operational database. If multiple sets can be added, a "Create New" button will be available in the top menu.
+
+   * Source/Sensor
+
+   This tab may have any number of source/sensor pairs, but mapping restrictions are enforced. The user may have an existing sensor/source pair by choosing the sensor(sensor automatically mapped to its source), a new sensor with manual mapping to an existing source, or a completely new sensor/source pair. 
+
+{Save and Load Instructions}
+
+   The following are instructions for saving a work in progress, or loading a form previously worked on. The following section assumes an oracle database has been properly configued to this application.
+
+   * Load a Dataset
+
+   The first tab on the web app has a drop down with all datasets currently in progress that have been previously saved. Once a desired dataset has been selected, clicking on the "Load Selected Dataset" button will then programatically fill out and create all saved fields residing in the light weight database. Once loaded, any future saves from that point will overwrite the saves loaded here.
+
+   * Save Progress
+
+   Each tab has a "Save Progress" button on the bottom of the page. Clicking this button will save the form elements to the application's database and appear and in the Load Dataset drop down menu. A message will appear confirming that the save was successful. 
+
+   * Copy From Existing Dataset
+
+   To copy metadata from an exisiting dataset, but flag it as a new dataset, click on the "Copy From Exisiting" tab. The familiar dataset listing will appear here. Upon double clicking a dataset, the user will be taken to the dataset form page with all the values except dataset short and long name filled out according to the selected dataset from the previous page. Continue modifications and saving/submitting as usual. 
+
+{Submit Instructions}
+
+   During the save process, no validation is done on any of the form fields. Once the form is ready for final submission however, the user can go to the Submit tab and click on the submit Button. The warning on this page will let the user know what will happen once the submit button is pressed. Once pressed, the forms in all the tabs are validated against database restrictions. If the checks pass, a sql file with name format newDatasetNEWSHORTNAME.sql in the configured output directory. A message will also be displayed to confirm the success of the generated sql file. 

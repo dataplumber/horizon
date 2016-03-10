@@ -1,0 +1,90 @@
+The following instructions are for the deployment of the
+PO.DAAC weekly reporting web tool.  The code and other build
+files can be found in the following directories:
+/<repository_base_path>/report/trunk/
+/<repository_base_path>/report/trunk/src
+/<repository_base_path>/report/trunk/war
+
+$CATALINA_HOME needs to be defined properly before the
+tomcat server is started.  Since the tomcat process
+is usually started as the tomcat user, this means
+$CATALINA_HOME needs to be defined in the shell that
+the tomcat user uses.
+
+These files need to be modified to comply with the environment
+which the tool will be deployed.
+
+I. /<repository_base_path>/report/trunk/build.properties
+   in which:
+   appserver.home should point to the current $CATALINA_HOME
+   (that is, where Tomcat is installed).
+
+   tomcat.manager.url should point to the URL of the current
+   Tomcat manager.
+
+   tomcat.manager.username and tomcat.manager.password should
+   be current.
+
+   db.url should point to an instance of the Oracle database.
+
+   db.user and db.pw should be current.
+
+II. /<repository_base_path>/report/trunk/war/WEB-INF/messages.properties
+   in which:
+   db.url, db.user, and db.pw should be consistent with what are
+   in the above build.properties file.
+
+III. /<repository_base_path>/report/trunk/war/WEB-INF/classes/log4j.properties
+   in which:
+   log4j.appender.logfile.File should point to:
+   $CATALINA_HOME/logs/report.log
+
+Once the above files are modified the database table needs 
+to be created and the war needs to be built.
+
+To build database table catalog please run:
+pwd = /<deployed_base_path>/report/trunk
+ant createTables
+Please note this only needs to be run if db table does not yet exist.
+Other available test tools are available by simply typing ant in 
+the above pwd.
+
+To build the war file for deployment, cd to:
+/<repository_base_path>/report/trunk/
+and type:
+ant deploywar
+A war file report.war will be created in that directory
+and will be copied to deploy.path as defined in:
+/<repository_base_path>/report/trunk/build.properties
+deploy.path should be the same as $CATALINA_HOME/webapps
+
+* * * * * *
+
+The following instructions are for the deployment of the
+PO.DAAC weekly report archiving tool.  This should be
+deployed and run after the web tool is deployed and run.
+After running ant deploywar above, which builds the class
+files for the archiving tool, do the following:
+On the same machine where the reporting web tool is
+deployed, as the tomcat user,
+cd /<repository_base_path>/report/trunk/src/util
+
+Modify the four paths in the text file crontab as follows:
+1 22 * * 4  cd /home/tomcat/work/webapps/report/trunk/src/util; 
+source environment.sh; /usr/bin/ant run >> /home/tomcat/report_curl.log; 
+date >> /home/tomcat/report_curl.log
+(The sample crontab kicks off the archiving process
+every Thursday at 23:00.)
+The 1st path is /<repository_base_path>/report/trunk/src/util (i.e., where
+the file crontab is)
+The 2nd command -- source -- is how to get $JAVA_HOME, $CATALINA_HOME,
+$PATH etc. defined.  Modify environment.sh to match your installations;
+The 2nd path is where ant is (path not needed if $ANT_HOME is set).
+The 3rd and 4th paths are where you want your log file to be saved.
+
+Then start the cron job:
+crontab crontab
+
+It is assumed that curl is installed here:
+/usr/bin/curl
+

@@ -1,0 +1,32 @@
+From ingest@mako.jpl.nasa.gov Mon Jul 16 13:58:28 2007
+Received: from mako.jpl.nasa.gov (localhost [127.0.0.1])
+	by mako.jpl.nasa.gov (8.12.10/8.12.10) with ESMTP id l6GKwStM106227;
+	Mon, 16 Jul 2007 13:58:28 -0700 (PDT)
+Received: (from ingest@localhost)
+	by mako.jpl.nasa.gov (8.12.10/8.12.5/Submit) id l6GKwSSw113170;
+	Mon, 16 Jul 2007 13:58:28 -0700 (PDT)
+Date: Mon, 16 Jul 2007 13:58:28 -0700 (PDT)
+From: Data Ingestor <thomas.huang@jpl.nasa.gov>
+Message-Id: <200707162058.l6GKwSSw113170@mako.jpl.nasa.gov>
+To: richard.chen@jpl.nasa.gov, ingest@mako.jpl.nasa.gov
+Subject: Submission Package QSCAT Batch 0922 q=nas-archive
+
+
+GROUP = SUBMISSION_PACKAGE_ACK
+product_name = "QSCAT ANCILLARY"
+product_type = "DATA"
+delivery_version_number = "0"
+internet_host_name = "localhost"
+internet_address = "127.0.0.1"
+ftp_transfer_mode = "binary"
+path_name = "/Users/ingest/Development/private/active_archive/nobackup/oceanids0/anc"
+submission_status = READY
+file_name_list = {
+    "QS_Q0A20071910154.20071910435",
+    "QS_Q0A20071921557.20071921924",
+    "QS_Q0A20071970022.20071970343"
+}
+files = 3
+submission_comment = "QSCAT BATCH 0922"
+END_GROUP = SUBMISSION_PACKAGE_ACK
+

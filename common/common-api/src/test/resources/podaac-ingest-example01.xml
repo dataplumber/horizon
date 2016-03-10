@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://horizon.nasa.gov ../../../common-serviceprofile/src/resources/horizon_message.xsd"
+    xmlns="http://horizon.nasa.gov">
+    <submission>
+        <header>
+            <productType>JPL-L2P-MODIS_A</productType>
+            <productName>20070801-MODIS_A-JPL-L2P-A2007213074500.L2_LAC_GHRSST-v01.nc</productName>
+            <version>1</version>
+            <createTime>1185995728000</createTime>
+            <status>READY</status>
+            <catalogOnly>false</catalogOnly>
+            <operations>
+                <operation>
+                    <agent>GHRSST_HANDLER</agent>
+                    <operation>REQUEST</operation>
+                    <time>
+                        <start>1375745314536</start>
+                    </time>
+                </operation>
+            </operations>
+        </header>
+        <metadata>
+            <batch>JPL-L2P-MODIS_A_1375745314536</batch>
+            <temporalCoverage>
+                <start>1185979508000</start>
+                <stop>1185979806000</stop>
+            </temporalCoverage>
+            <spatialCoverage>
+                <rectangles>
+                    <rectangle>
+                        <westLongitude>76.30899810791016</westLongitude>
+                        <northLatitude>-1.600000023841858</northLatitude>
+                        <eastLongitude>101.73799896240234</eastLongitude>
+                        <southLatitude>-22.541000366210938</southLatitude>
+                    </rectangle>
+                </rectangles>
+            </spatialCoverage>
+            <history>
+                <version>1</version>
+                <createDate>1185995739000</createDate>
+                <lastRevisionDate>1185995739000</lastRevisionDate>
+                <revisionHistory>Quicklook MODIS L2P created at the GHRSST Global Data
+    Assembly Center (GDAC), Wed Aug 1 12:15:39 2007</revisionHistory>
+            </history>
+        </metadata>
+        <ingest>
+            <productFiles>
+                <IngestProductFile>
+                    <productFile>
+                        <file>
+                            <name>20070801-MODIS_A-JPL-L2P-A2007213074500.L2_LAC_GHRSST-v01.nc</name>
+                            <links>
+                                <link>sftp://seastorm.jpl.nasa.gov/data/dev/ingest-test/ghrsst_test_data/20070801-MODIS_A-JPL-L2P-A2007213074500.L2_LAC_GHRSST-v01.nc.bz2</link>
+                            </links>
+                            <size>24165642</size>
+                        </file>
+                        <type>DATA</type>
+                    </productFile>
+                </IngestProductFile>
+                <IngestProductFile>
+                    <productFile>
+                        <file>
+                            <name>20070801-MODIS_A-JPL-L2P-A2007213074500.L2_LAC_GHRSST-v01.nc.bz2.md5</name>
+                            <links>
+                                <link>sftp://seastorm.jpl.nasa.gov/data/dev/ingest-test/ghrsst_test_data/20070801-MODIS_A-JPL-L2P-A2007213074500.L2_LAC_GHRSST-v01.nc.bz2.md5</link>
+                            </links>
+                            <size>99</size>
+                        </file>
+                        <type>CHECKSUM</type>
+                    </productFile>
+                </IngestProductFile>
+                <IngestProductFile>
+                    <productFile>
+                        <file>
+                            <name>FR-20070801-MODIS_A-JPL-L2P-A2007213074500.L2_LAC_GHRSST-v01.xml</name>
+                            <links>
+                                <link>sftp://seastorm.jpl.nasa.gov/data/dev/ingest-test/ghrsst_test_data/FR-20070801-MODIS_A-JPL-L2P-A2007213074500.L2_LAC_GHRSST-v01.xml</link>
+                            </links>
+                            <size>1525</size>
+                        </file>
+                        <type>METADATA</type>
+                    </productFile>
+                </IngestProductFile>
+                <IngestProductFile>
+                    <productFile>
+                        <file>
+                            <name>FR-20070801-MODIS_A-JPL-L2P-A2007213074500.L2_LAC_GHRSST-v01.xml.md5</name>
+                            <links>
+                                <link>sftp://seastorm.jpl.nasa.gov/data/dev/ingest-test/ghrsst_test_data/FR-20070801-MODIS_A-JPL-L2P-A2007213074500.L2_LAC_GHRSST-v01.xml.md5</link>
+                            </links>
+                            <size>99</size>
+                        </file>
+                        <type>CHECKSUM</type>
+                    </productFile>
+                </IngestProductFile>
+            </productFiles>
+            <operationSuccess>false</operationSuccess>
+        </ingest>
+        <notification>
+            <lastName>Armstrong</lastName>
+            <firstName>Ed</firstName>
+            <email>ghrsst@podaac.jpl.nasa.gov</email>
+            <address>Jet Propulsion Laboratory, 4800 Oak Grove Dr, Pasadena, CA 91109
+         USA</address>
+            <phone>818-393-6710</phone>
+            <fax>818-393-2718</fax>
+            <role>Technical Contact</role>
+            <messageLevel>SILENT</messageLevel>
+        </notification>
+    </submission>
+    <origin name="gov.nasa.horizon.common.api.transformer.ghrsst.MMRTransformer"/>
+    <target name="ALL"/>
+</message>
+

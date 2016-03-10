@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- 
+Copyright 2007-2014, by the California Institute of Technology.
+ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+
+$Id: $
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+  http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+   <modelVersion>4.0.0</modelVersion>
+   <parent>
+      <groupId>gov.nasa.horizon</groupId>
+      <artifactId>horizon</artifactId>
+      <version>0.0.0</version>
+   </parent>
+
+   <groupId>gov.nasa.horizon</groupId>
+   <artifactId>cm</artifactId>
+   <version>0.0.0</version>
+   <packaging>jar</packaging>
+
+   <name>Data Management and Archive System CM</name>
+   <description> This project contains the main HORIZON CM web site. </description>
+   <url>http://horizon.jpl.nasa.gov/horizon/</url>
+
+   <repositories>
+      <repository>
+         <id>horizon-repo</id>
+         <name>HORIZON Repository</name>
+         <layout>default</layout>
+         <url>http://horizon.jpl.nasa.gov/maven</url>
+         <releases>
+            <enabled>true</enabled>
+            <updatePolicy>always</updatePolicy>
+            <checksumPolicy>warn</checksumPolicy>
+         </releases>
+         <snapshots>
+            <enabled>false</enabled>
+         </snapshots>
+      </repository>
+   </repositories>
+
+   <build>
+      <plugins>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-site-plugin</artifactId>
+            <version>3.3</version>
+            <dependencies>
+               <dependency>
+                  <groupId>commons-httpclient</groupId>
+                  <artifactId>commons-httpclient</artifactId>
+                  <version>3.1</version>
+                  <exclusions>
+                     <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                     </exclusion>
+                  </exclusions>
+               </dependency>
+            </dependencies>
+         </plugin>
+      </plugins>
+   </build>
+
+   <reporting>
+      <plugins>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-project-info-reports-plugin</artifactId>
+            <inherited>false</inherited>
+            <reportSets>
+               <reportSet>
+                  <reports>
+                     <report>dependencies</report>
+                     <report>issue-tracking</report>
+                     <report>mailing-list</report>
+                     <report>project-team</report>
+                     <report>summary</report>
+                  </reports>
+               </reportSet>
+            </reportSets>
+         </plugin>
+      </plugins>
+   </reporting>
+</project>

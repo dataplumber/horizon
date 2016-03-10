@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain xmlns="http://horizon.nasa.gov">
+   <default>gibsDev</default>
+   <federation>
+     <name>gibsDev</name>
+     <url>http://localhost:8090/manager/ingest</url>
+  </federation>
+  <sigevent>http://localhost:8090/sigevent</sigevent>
+</domain>

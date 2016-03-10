@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- 
+   Copyright 2007-2013, by the California Institute of Technology.
+   ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+   
+   Commons utility classes used by Ingest.
+   
+   @author Thomas Huang {Thomas.Huang@jpl.nasa.gov}
+   @version $Id: $
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+   http://maven.apache.org/xsd/maven-4.0.0.xsd">
+   <modelVersion>4.0.0</modelVersion>
+   <parent>
+      <groupId>gov.nasa.horizon</groupId>
+      <artifactId>ingest</artifactId>
+      <version>5.0.0e</version>
+      <relativePath>../pom.xml</relativePath>
+   </parent>
+   <artifactId>ingest-commons</artifactId>
+   <packaging>jar</packaging>
+   <name>Ingest Commons</name>
+   <description>The Ingest Commons module contains common operations such as
+      I/O, data compression/decompression, checksum generation and validation,
+      XML processing, email, and so on.</description>
+   <url>http://horizon.jpl.nasa.gov/docs/horizon/ingest/ingest-commons/</url>
+
+   <dependencies>
+      <dependency>
+         <groupId>gov.nasa.horizon</groupId>
+         <artifactId>common-api</artifactId>
+         <version>5.0.0e</version>
+         <scope>compile</scope>
+      </dependency>
+
+      <dependency>
+         <groupId>junit</groupId>
+         <artifactId>junit</artifactId>
+         <version>4.8.1</version>
+         <scope>test</scope>
+      </dependency>
+   </dependencies>
+
+   <build>
+      <directory>target</directory>
+      <outputDirectory>target/classes</outputDirectory>
+      <finalName>${pom.artifactId}-${pom.version}</finalName>
+      <sourceDirectory>src/main/java</sourceDirectory>
+      <testSourceDirectory>src/test/java</testSourceDirectory>
+      <plugins>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-site-plugin</artifactId>
+            <version>2.1.1</version>
+            <dependencies>
+               <dependency>
+                  <groupId>commons-httpclient</groupId>
+                  <artifactId>commons-httpclient</artifactId>
+                  <version>3.1</version>
+                  <exclusions>
+                     <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                     </exclusion>
+                  </exclusions>
+               </dependency>
+            </dependencies>
+         </plugin>
+         <plugin>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+               <excludes>
+                  <exclude>**/*.java</exclude>
+               </excludes>
+               <systemProperties>
+                  <property>
+                     <name>horizon.test.path</name>
+                     <value>${basedir}/src/test/resources</value>
+                  </property>
+                  <property>
+                     <name>horizon.test.email.user</name>
+                     <value>Thomas Huang</value>
+                  </property>
+                  <property>
+                     <name>horizon.test.email.address</name>
+                     <value>thomas.huang@jpl.nasa.gov</value>
+                  </property>
+               </systemProperties>
+            </configuration>
+         </plugin>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-report-plugin</artifactId>
+            <version>2.5</version>
+            <configuration>
+               <showSuccess>false</showSuccess>
+            </configuration>
+         </plugin>
+         <plugin>
+            <inherited>true</inherited>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>2.3.1</version>
+            <configuration>
+               <source>1.7</source>
+               <target>1.7</target>
+            </configuration>
+         </plugin>
+      </plugins>
+   </build>
+
+   <reporting>
+      <plugins>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-project-info-reports-plugin</artifactId>
+            <reportSets>
+               <reportSet>
+                  <reports>
+                     <report>dependencies</report>
+                     <report>summary</report>
+                  </reports>
+               </reportSet>
+            </reportSets>
+         </plugin>
+         <plugin>
+            <artifactId>maven-javadoc-plugin</artifactId>
+         </plugin>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-report-plugin</artifactId>
+         </plugin>
+      </plugins>
+   </reporting>
+</project>

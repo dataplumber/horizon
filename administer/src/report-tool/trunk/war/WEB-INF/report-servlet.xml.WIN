@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<!--
+  - Application context definition for "report" DispatcherServlet.
+  -->
+
+<beans>
+
+    <!--  Controller for the initial "Hello" page -->
+    <bean id="SpringappController" class="web.SpringappController">
+        <property name="productManager">
+            <ref bean="prodMan"/>
+        </property>
+    </bean>
+
+    <!--  Validator and Form Controller for the "Price Increase" page -->
+   
+   <!--
+    <bean id="priceIncreaseValidator" class="bus.PriceIncreaseValidator"/>
+    <bean id="priceIncreaseForm" class="web.PriceIncreaseFormController">
+        <property name="sessionForm"><value>true</value></property>
+        <property name="commandName"><value>priceIncrease</value></property>
+        <property name="commandClass"><value>bus.PriceIncrease</value></property>
+        <property name="validator"><ref bean="priceIncreaseValidator"/></property>
+        <property name="formView"><value>priceincrease</value></property>
+        <property name="successView"><value>hello.htm</value></property>
+        <property name="productManager">
+            <ref bean="prodMan"/>
+        </property>
+    </bean>
+
+
+ -->
+<!-- MIN GenReport  -->
+  <bean id="genReportForm" class="web.genReportFormController">
+        <property name="sessionForm"><value>true</value></property>
+        <property name="commandName"><value>genReport</value></property>
+        <property name="commandClass"><value>bus.GenReport</value></property>       
+        <property name="formView"><value>genReport</value></property>
+        <property name="successView"><value>genReport.htm</value></property>
+        <property name="productManager">
+            <ref bean="prodMan"/>
+        </property>
+    </bean>
+ 
+   <bean id="reportContentForm" class="web.ReportContentFormController">
+        <property name="sessionForm"><value>true</value></property>
+        <property name="commandName"><value>reportContent</value></property>
+        <property name="commandClass"><value>bus.ReportContent</value></property>       
+        <property name="formView"><value>updateContent</value></property>
+        <property name="successView"><value>report.htm</value></property>
+        <property name="productManager">
+            <ref bean="prodMan"/>
+        </property>
+    </bean>
+
+
+ <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+      <property name="driverClassName"><value>org.hsqldb.jdbcDriver</value></property>
+      <property name="url">
+       <!-- for WIN
+       -->
+       <value>jdbc:hsqldb:/Users/msun/work/webapps/report/db/test</value>
+       <!-- for MAC
+        <value>jdbc:hsqldb:/Users/pan/work/jpl/PODAAC/webapps/report/db/test</value>
+       -->
+       <!-- for LINUX
+        <value>jdbc:hsqldb:/home/pan/work/jpl/db/test</value>
+       -->
+      </property>
+      <property name="username"><value>sa</value></property>
+      <property name="password"><value></value></property>
+    </bean>
+
+    <bean id="prodManDao" class="db.ProductManagerDaoJdbc">
+        <property name="dataSource">
+            <ref bean="dataSource"/>
+        </property>
+    </bean>
+
+ <bean id="prodMan" class="bus.ProductManager">
+        <property name="productManagerDao">
+            <ref bean="prodManDao"/>
+        </property>
+        
+    
+    </bean>
+
+<!--
+    <bean id="product1" class="bus.Product">
+        <property name="description"><value>Lamp</value></property>
+        <property name="price"><value>5.75</value></property>
+    </bean>
+        
+    <bean id="product2" class="bus.Product">
+        <property name="description"><value>Table</value></property>
+        <property name="price"><value>75.25</value></property>
+    </bean>
+
+    <bean id="product3" class="bus.Product">
+        <property name="description"><value>Chair</value></property>
+        <property name="price"><value>22.79</value></property>
+    </bean>
+    -->
+
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename"><value>messages</value></property>
+    </bean>
+
+    <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <props>
+                <prop key="/report.htm">SpringappController</prop>
+                <prop key="/updateContent.htm">reportContentForm</prop>
+<!-- MIN GenReport  -->
+                <prop key="/genReport.htm">genReportForm</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass"><value>org.springframework.web.servlet.view.JstlView</value></property>
+        <property name="prefix"><value>/WEB-INF/jsp/</value></property>
+        <property name="suffix"><value>.jsp</value></property>
+    </bean>
+</beans>

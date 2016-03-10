@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- 
+Copyright 2008, by the California Institute of Technology.
+ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+
+$Id: site.xml 2943 2009-05-03 22:36:05Z shardman $
+-->
+
+<project name="Distribute Code Generation">
+  <bannerLeft>
+    <src>images/podaac_logo.jpg</src>
+    <href>http://podaac-cm.jpl.nasa.gov/</href>
+  </bannerLeft>
+
+  <bannerRight>
+    <name>Distribute Code Generation&nbsp;&nbsp;</name>
+  </bannerRight>
+
+  <body>
+    <links>
+      <item name="Distribute Code Generation" href="http://podaac-cm.jpl.nasa.gov/docs/distribute/distribute-gen/index.html" />
+    </links>
+
+    <menu name="Software Documentation">
+      <item name="About Distribute Code Generation" href="index.html"/>
+    </menu>
+
+    <menu name="Modules">
+      <item name="Distribute ECHO Collection Binding" href="distribute-echo-collection/index.html"/>
+      <item name="Distribute ECHO Granule Binding" href="distribute-echo-granule/index.html"/>
+      <item name="Distribute GCMD DIF Binding" href="distribute-gcmd-dif/index.html"/>
+    </menu>
+
+    <menu ref="reports"/>
+  </body>
+</project>

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Copyright 2013, by the California Institute of Technology. -->
+<!-- ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged. -->
+<!--  -->
+<!-- $Id: $ -->
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+   <properties>
+      <title>Release Description 5.0.0e</title>
+      <author>Thomas Huang</author>
+   </properties>
+   <body>
+      <section name="Release Description 5.0.0e">
+         <p>This release of the Middleware Program Set is a component of the integrated release (<a
+               href="../../cm/release/index-5.0.0e.html">5.0.0e</a>) of the HORIZON System. </p>
+         <p>The Middleware Program Set is new to the HORIZON System. This program is defined to group
+            all middleware-related modules for the HORIZON System. Our success in the application of
+            middleware technology into the HORIZON System has demonstrated the need of more web-enable
+            service components in the future of HORIZON. </p>
+         <p>The first module being released with this program set is the Manager module. The Manager
+            module is the successor of the ingest-grails module. Building on capabilities delivered
+            in the last release, this release focuses on improving the overall reliability of the
+            Middleware Services used by the HORIZON System. The service architecture offers simplified
+            and flexible approach for organizing data products from various mission and/or
+            instruments. </p>
+         <p>The second module being released with this program set is the Inventory Web Service
+            module. This module wraps the Inventory program set with a restful web service. This
+            allows the Inventory program set to be separated from other modules, which increases
+            security (fewer connections, usernames to the datbase) as well as flexibility (single
+            point of Inventory changes, federate the inventory service). 3.2.1 is the initial
+            release of the Inventory web service.</p>
+         <p>Details on this release can be found in the following sections of this document:</p>
+         <ul>
+            <li><a href="#Capabilities">Capabilities</a></li>
+            <li><a href="#System_Requirements">System Requirements</a></li>
+            <li><a href="#Installation">Installation</a></li>
+            <li><a href="#Operation">Operation</a></li>
+         </ul>
+      </section>
+
+      <section name="Capabilities" id="Capabilities">
+         <p>This section details the new, modified and corrected capabilities that comprise this
+            release of the Middleware Program Set.</p>
+         <subsection name="New Capabilities">
+            <p>The following capabilities are new for this release</p>
+            <ul>
+               <li>Manager <ul>
+                     <li>NONE</li>
+                  </ul>
+               </li>
+               <li>SigEvent <ul>
+                     <li>NONE</li>
+                  </ul>
+               </li>
+               <li>Security <ul>
+                     <li>NONE</li>
+                  </ul>
+               </li>
+            </ul>
+         </subsection>
+
+         <subsection name="Modified Capabilities">
+            <p>The following capabilities have been modified for this release</p>
+            <ul>
+               <li>Manager <ul>
+                     <li><a href="https://bugs.earthdata.nasa.gov/browse/GIBS-510">GIBS-510</a> - Include state transitions in manager log</li>
+                  </ul>
+               </li>
+               <li>SigEvent <ul>
+                     <li>NONE</li>
+                  </ul>
+               </li>
+               <li>Security <ul>
+                     <li>NONE</li>
+                  </ul>
+               </li>
+            </ul>
+         </subsection>
+
+         <subsection name="Corrected Capabilities">
+            <p>The following capabilities have been corrected for this release</p>
+            <ul>
+               <li>Manager <ul>
+                     <li><a href="https://bugs.earthdata.nasa.gov/browse/GIBS-512">GIBS-512</a> - Submitted jobs stuck indefinitely with DELETE lock</li>
+                  </ul>
+               </li>
+               <li>Sigevent <ul>
+                     <li>NONE</li>
+                  </ul>
+               </li>
+               <li>Security <ul>
+                     <li>NONE</li>
+                  </ul>
+               </li>
+            </ul>
+         </subsection>
+      </section>
+
+      <section name="System Requirements" id="System_Requirements">
+         <p>The software contained in this program set was developed using Java and will run on any
+            platform with a supported Java Runtime Environment (JRE). The software was specifically
+            developed under Sun Java version 1.7 and has only been tested with this version.</p>
+         <ul>
+            <li>HORIZON Standard Computing Environment<p>This will eventually be documented on the Wiki
+                  and linked to in future releases. For now, the following software and tools should
+                  be available in the current environment:</p>
+               <ul>
+                  <li>Apache Ant 1.8.2</li>
+                  <li>Apache Maven 2.2.1</li>
+                  <li>Grails 2.2.4</li>
+                  <li>Groovy 2.0.8</li>
+                  <li>Sun Java Standard Edition (J2SE) 1.7.x</li>
+               </ul>
+            </li>
+         </ul>
+      </section>
+
+      <section name="Installation" id="Installation">
+         <p>This section details the procedures for installing and configuring the software in this
+            program set.</p>
+         <subsection name="Manager Installation">
+            <p>The Manager module consists of the RESTful interface to the HORIZON data acquisition and
+               archive service. The installation of this module is covered in the <a
+                  href="../manager/install/index.html">Manager Installation</a> document.</p>
+         </subsection>
+         <subsection name="SigEvent Installation">
+            <p>The SigEvent module consists of the RESTful interface to the HORIZON event publish and
+               subscribe system. The installation of this module is covered in the <a
+                  href="../sigevent/install/index.html">SigEvent Installation</a> document.</p>
+         </subsection>
+         <subsection name="Security Installation">
+            <p>The Security module consists of the RESTful interface to the HORIZON service for
+               authentication and authorization system. The installation of this module is covered
+               in the <a href="../security/install/index.html">Security Installation</a>
+               document.</p>
+         </subsection>
+      </section>
+
+      <section name="Operation" id="Operation">
+         <subsection name="Manager Operation">
+            <p>The operation of this module is covered in the <a
+                  href="../manager/operate/index.html">Manager Operation</a> document.</p>
+         </subsection>
+         <subsection name="SigEvent Operation">
+            <p>The operation of this module is covered in the <a
+                  href="../sigevent/operate/index.html">SigEvent Operation</a> document.</p>
+         </subsection>
+         <subsection name="Security Operation">
+            <p>The operation of this module is covered in the <a
+                  href="../security/operate/index.html">Security Operation</a> document.</p>
+         </subsection>
+      </section>
+
+   </body>
+</document>

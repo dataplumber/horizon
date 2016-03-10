@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+
+<!-- 
+  Copyright 2008, by the California Institute of Technology.
+  ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+ 
+  $Id: distribute-main.xml 2369 2008-12-05 05:44:59Z clwong $
+-->
+
+<assembly xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+  http://maven.apache.org/xsd/assembly-1.0.0.xsd">
+  <id>distribute-subscriber</id>
+  <formats>
+    <format>tar.gz</format>
+  </formats>
+  <fileSets>
+     <fileSet>
+        <directory>target</directory>
+        <outputDirectory>lib</outputDirectory>
+        <includes>
+           <include>*.jar</include>
+        </includes>
+     </fileSet>
+<!--     <fileSet>
+         <directory>src/main/resources/bin</directory>
+         <outputDirectory>bin</outputDirectory>
+         <includes>
+            <include>*</include>
+         </includes>
+         <fileMode>755</fileMode>
+         <lineEnding>unix</lineEnding>
+      </fileSet>
+      <fileSet>
+         <directory>src/main/resources/config</directory>
+         <outputDirectory>config</outputDirectory>
+         <includes>
+            <include>*</include>
+         </includes>
+         <fileMode>755</fileMode>
+         <lineEnding>unix</lineEnding>
+      </fileSet> -->
+      <fileSet>
+        <directory>target/classes/bin</directory>
+        <outputDirectory>bin</outputDirectory>
+        <includes>
+           <include>dataSubscriber</include>
+        </includes>
+        <fileMode>755</fileMode>
+        <lineEnding>unix</lineEnding>
+     </fileSet>
+     <fileSet>
+        <directory>target/classes/config</directory>
+        <outputDirectory>config</outputDirectory>
+        <includes>
+           <include>distribute.config</include>
+           <include>horizon_client.lcf</include>
+           <include>horizon_config.pm</include>
+        </includes>
+        <lineEnding>unix</lineEnding>
+        <fileMode>644</fileMode>
+     </fileSet>
+  </fileSets>
+  <dependencySets>
+    <dependencySet>
+      <outputDirectory>lib</outputDirectory>
+      <unpack>false</unpack>
+      <scope>runtime</scope>
+    </dependencySet>
+  </dependencySets>
+</assembly>

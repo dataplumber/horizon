@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Copyright 2007-2013, by the California Institute of Technology. -->
+<!-- ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged. -->
+<!--  -->
+<!-- $Id: $ -->
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+   <properties>
+      <title>Using Subversion</title>
+      <author>Thomas Huang</author>
+   </properties>
+   <body>
+      <section name="Using Subversion">
+         <p>Subversion is the new source code control system that is replacing CVS for HORIZON. <a
+               class="externalLink" href="http://subversion.tigris.org">Subversion</a> is an open
+            source product that improves on CVS and combines features from Perforce and other
+            systems. This document describes the use of Subversion for HORIZON configuration
+            management. The following sections can be found in this document:</p>
+         <ul>
+            <li><a href="#Repository_Access">Repository Access</a></li>
+            <li><a href="#Standard_Commands">Standard Commands</a></li>
+            <li><a href="#Advanced_Commands">Advanced Commands</a></li>
+            <li><a href="#Enabling_Keyword_Expansion">Enabling Keyword Expansion</a></li>
+            <li><a href="#References">References</a></li>
+         </ul>
+      </section>
+      <section name="Repository Access" id="Repository_Access">
+         <p>The machine named <i>horizon</i> with the alias <i>horizon</i> serves as the host to
+            the Subversion repositories. The main repository is accessible from:</p>
+         <ul>
+            <li><a class="externalLink" href="http://horizon.jpl.nasa.gov/repo/">http://horizon.jpl.nasa.gov/repo/</a></li>
+         </ul>
+         <p>Although the repository can be viewed via a web browser, a Subversion client application
+            will be required to interact with the repository. The client application has already
+            been installed on the HORIZON machines. If the client application is required on a
+            user's local desktop machine, it can be downloaded from the <a class="externalLink"
+               href="http://subversion.tigris.org/project_packages.html">Subversion Download</a>
+            page. Binary packages are available for popular platforms (e.g., Windows, Mac OSX,
+            etc.).</p>
+         <p>Configuration for the client application is relatively minimal. The <i>PATH</i>
+            environment variable should include the directory where the <i>svn</i> executable
+            resides. The <i>SVN_EDITOR</i> variable can be set to specify the editor of choice
+            (e.g., /usr/bin/vi, /usr/bin/emacs, etc.) for entering change comments. If the
+               <i>SVN_EDITOR</i> variable is not set, the default editor will be utilized.</p>
+      </section>
+      <section name="Standard Commands" id="Standard_Commands">
+         <p>The contents of the HORIZON repositories are organized in a directory hierarchy. The
+            main directories in the repository contain the following three directories at their
+            top-level:</p>
+         <ul>
+            <li><b>branches</b> - This directory will contain copies of the trunk directory that
+               have been branched off of the main source tree to address specific issues while the
+               trunk is continued to be developed.</li>
+            <li><b>tags</b> - This directory will contain copies of the trunk directory for the
+               purposes of capturing a release or milestone.</li>
+            <li><b>trunk</b> - This directory will contain the main source tree.</li>
+         </ul>
+         <p>Many of the Subversion commands are recursive in nature, meaning that from the point in
+            the project directory where the command is issued, all files and subdirectories will be
+            traversed and acted on appropriately.</p>
+         <subsection name="Checkout a Directory">
+            <p>In order to make modifications to an existing project, that project must be checked
+               out to the user's local environment. For projects containing the <i>branches</i>,
+                  <i>tags</i> and <i>trunk</i> directories, the <i>trunk</i> directory can be
+               checked out directly into a local directory named for the project as demonstrated in
+               the following example:</p>
+            <source>svn checkout http://horizon/repo/trunk/common/trunk/ common</source>
+            <p>For projects not containing the <i>branches</i>, <i>tags</i> and <i>trunk</i>
+               directories, the main project directory can be checked out to the local directory as
+               follows:</p>
+            <source>svn checkout http://horizon/repo/trunk/common/</source>
+         </subsection>
+         <subsection name="Add New Files or Directories">
+            <p>New files or directories can be added to a project. Once the project has been checked
+               out to a local directory, the user can traverse the project directory and create any
+               necessary directories or files and add them to the Subversion repository as
+               follows:</p>
+            <source>mkdir testdir svn add testdir</source>
+            <p>The above example demonstrates the addition of a directory to an existing repository.
+               Files can be added in the same manner. Once files and directories have been added,
+               they must be committed to the repository with the <i>svn commit</i> command.</p>
+         </subsection>
+         <subsection name="Determine Local Modifications">
+            <p>In order to determine what local modifications, if any, have been made to the current
+               project, perform the following command in the top-level directory of the local
+               instance of the project:</p>
+            <source>svn status</source>
+            <p>The above command will tell you which files have been added or modified in the local
+               instance. In order to determine what was modified in a given file, perform the
+               following command:</p>
+            <source>svn diff</source>
+         </subsection>
+         <subsection name="Commit Additions or Modifications">
+            <p>In order for local additions or modifications to be incorporated into the Subversion
+               repository for a given project, they must be committed. This can be accomplished with
+               the following command:</p>
+            <source>svn commit</source>
+            <p>The above command will launch your locally configured editor, which is where the
+               previously mentioned <i>SVN_EDITOR</i> environment variable comes into play. The
+               following command allows the comment to be provided on the command-line:</p>
+            <source>svn commit -m &quot;Meaningful comment regarding the addition or
+               change.&quot;</source>
+            <p>Please enter a meaningful comment regarding the addition or modification and then
+               issue the appropriate save and exit command for the editor. In the case where
+               multiple additions or modifications are captured by this command, the comment will be
+               associated with each item when it is committed to the repository. In addition, if the
+               changeset associated with a particular commit is related to an active ticket in our
+               Trac instance, please reference that ticket in the comment. Use the following
+               formatting example where the ticket number is 21:</p>
+            <source>svn commit -m &quot;Fixed ... as specified in ticket:21.&quot;</source>
+            <p>When the above comment is viewed in the Trac browser, a hyperlink to ticket 21 will
+               be inserted in the comment.</p>
+         </subsection>
+         <subsection name="Get the Latest Updates">
+            <p>In order to get the latest updates to the current project, perform the following
+               command in the top level directory of the local instance of the project:</p>
+            <source>svn update</source>
+            <p>This command is very useful if you checked out a directory a week or so ago and now
+               you want to make modifications to it. In that time someone else may have made a
+               modification or two to the same directory, leaving your local copy out of date.
+               Executing the <i>svn update</i> command will bring your local copy up to date with
+               the repository.</p>
+         </subsection>
+         <subsection name="Get History">
+            <p>In order to get the history for a file, directory or revision from a project
+               directory, perform one of the following commands in a local project directory,
+               respectively:</p>
+            <source>svn log test.java svn log http://pdscm/repo/tools/product-tools/ svn log
+               --revision 9999</source>
+         </subsection>
+      </section>
+      <section name="Advanced Commands" id="Advanced_Command">
+         <p>Although these commands aren't all that advanced, they can create quite a mess if not
+            executed properly.</p>
+         <subsection name="Checking In New Stuff">
+            <p>The import command can be used if the user has been working on something in their
+               local environment and would now like to check in the entire package of work. The
+               following command will check in the content of the <i>new-project</i> directory into
+               the Subversion repository at the specified location:</p>
+            <source>svn import ./new-project http://horizon/repo/trunk/new-project/ \ -m
+               &quot;Initial check in of the new-project package.&quot;</source>
+            <p>An alternative to importing is to create the initial directory in the repository,
+               checkout that directory to the user's local environment and then utilize the add and
+               commit commands as necessary.</p>
+            <source>
+svn mkdir http://horizon/repo/trunk/new-project/ -m &quot;Initial check in of the new-project package.&quot; 
+svn checkout http://horizon/repo/trunk/new-project/
+mkdir branches tags trunk svn add svn commit</source>
+         </subsection>
+         <subsection name="Copy a File or Directory">
+            <p>Typically the copy command is used for capturing a copy of the specified directory
+               for a software release. The following command copies the current <i>trunk</i>
+               directory of the <i>common</i> project in the repository over to the <i>tags</i>
+               directory under the name <i>1.0.0</i>:</p>
+            <source>
+svn copy http://horizon/repo/trunk/common/trunk \
+http://horizon/repo/trunk/common/tags/1.0.0/ \ -m &quot;Initial release of the common package.&quot;
+            </source>
+            <p>Although Subversion will still allow the user to make modifications to files under
+               the <i>tags</i> directory, by policy this will not be allowed. These directories
+               represent releases of software and will not be modified after the fact.</p>
+         </subsection>
+         <subsection name="Move a File or Directory">
+            <p>This command represents the sole reason anyone would need to move from CVS to
+               Subversion. This command allows the user to move or rename a file or directory within
+               a checked out source tree or remotely in the repository.</p>
+            <source>svn move ...</source>
+         </subsection>
+         <subsection name="Delete a File or Directory">
+            <p>This command is pretty straightforward.</p>
+            <source>
+svn delete ...
+            </source>
+         </subsection>
+         <subsection name="Merge a Change Set">
+            <p>Although this should not be the normal practice, there are times when we would like
+               to slip a change into a tagged release. This can be accomplished with the following
+               set of commands:</p>
+            <source>
+svn checkout http://horizon/repo/trunk/&lt;program-set&gt;/tags/X.X.X/ 
+cd X.X.X 
+svn merge -r &lt;rev&gt;:&lt;rev&gt; http://horizon/repo/trunk/&lt;program-set&gt;/trunk 
+svn commit
+            </source>
+            <p>In the commands above, we are checking out the target directory and then changing
+               directories into that directory. When performing the <i>svn merge</i> command, the
+               first &lt;rev&gt; should be the revision number that created the tag directory and
+               the second &lt;rev&gt; should be the revision number for the change to be merged from
+               the source directory that follows in the command. You should see the files listed
+               that are associated with the change. You can then commit these changes to the tagged
+               directory and then remove the tagged directory from your work space.</p>
+         </subsection>
+      </section>
+      <section name="Enabling Keyword Expansion" id="Enabling_Keyword_Expansion">
+         <p>Similar to CVS, Subversion offers the capability to expand keyword variables that are
+            embedded in source files. Although several keywords are available, the <i>Id</i> keyword
+            should be utilized at a minimum and placed in the header of each source file. See the
+            example below.</p>
+         <subsection name="Option 1 (New files)">
+            <p>In order to enable this feature on all files one must change the
+               $HOME/.subversion/config file. Simply uncomment the &quot;enable-auto-props =
+               yes&quot; and add the following in the auto props section:</p>
+            <source>
+*.java = svn:keywords=Id Revision
+            </source>
+            <p>This tells subversion that for any <i>.java</i> files you want the <i>Id</i> and
+                  <i>Revision</i> keywords to be replaced. Subversion defines five keywords that can
+               be replaced, some of which have aliases. They are as follows:</p>
+            <ul>
+               <li>LastChangedDate<p>This keyword describes the last time the file was known to have
+                     been changed in the repository, and looks something like $LastChangedDate:
+                     2002-07-22 21:42:37 -0700 (Mon, 22 Jul 2002) $. It may be abbreviated as
+                        <i>Date</i>.</p></li>
+               <li>LastChangedRevision<p>This keyword describes the last known revision in which
+                     this file changed in the repository, and looks something like
+                     $LastChangedRevision: 6224 $. It may be abbreviated as <i>Revision</i> or
+                        <i>Rev</i>.</p></li>
+               <li>LastChangedBy<p>This keyword describes the last known user to change this file in
+                     the repository, and looks something like $LastChangedBy: harry $. It may be
+                     abbreviated as <i>Author</i>.</p></li>
+               <li>HeadURL<p>This keyword describes the full URL to the latest version of the file
+                     in the repository, and looks something like $HeadURL: <a class="externalLink"
+                        href="http://svn.collab.net/repos/trunk/README"
+                        >http://svn.collab.net/repos/trunk/README</a> $. It may be abbreviated as
+                        <i>URL</i>.</p></li>
+               <li>Id<p>This keyword is a compressed combination of the other keywords. Its
+                     substitution looks something like $Id: index.apt 6224 2010-11-11 23:29:39Z
+                     thuang $.</p></li>
+            </ul>
+         </subsection>
+         <subsection name="Option 2 (Existing files)">
+            <p>A possible alternative to the solution above is to run the following commands in the
+               source tree of choice:</p>
+            <source>
+egrep -rl '\$Id' * | grep -v /.svn/ | xargs svn propset svn:keywords Id 
+svn commit
+            </source>
+            <p>If you would like to enable more than one keyword (i.e., Id and Revision), run the
+               following commands:</p>
+            <source>
+egrep -rl '\$Id' * | grep -v /.svn/ | xargs svn propset svn:keywords 'Id Revision' 
+svn commit
+            </source>
+            <p>You can also run the commands for a single file as follows:</p>
+            <source>
+svn propset svn:keywords &quot;Id Revision&quot; test.java 
+svn commit test.java
+            </source>
+         </subsection>
+         <subsection name="The Result">
+            <p>So if you have followed one of the options above the following source code:</p>
+            <source>
+// Copyright (c) 2006 ... 
+// 
+// $Id: index.apt 6224 2010-11-11 23:29:39Z thuang $ 
+package gov.nasa.horizon.test; 
+/** 
+ * This is a test class. 
+ * @author S. Hardman 
+ * @version $Revision: 6224 $ 
+*/ 
+public class Test {}
+            </source>
+            <p>will be expanded to:</p>
+            <source>
+// Copyright (c) 2006 ... 
+// 
+// $Id: index.apt 6224 2010-11-11 23:29:39Z thuang $ 
+package gov.nasa.horizon.test; 
+/** 
+ * This is a test class. 
+ * @author S. Hardman 
+ * @version $Revision: 6224 $ 
+*/ 
+public class Test {}
+            </source>
+         </subsection>
+      </section>
+      <section name="References" id="References">
+         <p>If you like reading or would like to understand Subversion in more detail try the <a
+               class="externalLink" href="http://svnbook.red-bean.com/">Subversion book</a>,
+            although if you know CVS you should be good to go. You can also buy a copy at your
+            favorite bookseller or check out a copy at your nearest library!</p>
+         <p>Other resources include:</p>
+         <ul>
+            <li><a class="externalLink"
+                  href="http://subversion.tigris.org/files/documents/15/177/svn-ref.ps">Online Quick Reference</a></li>
+            <li><a class="externalLink" href="http://subversion.tigris.org/faq.html">Online FAQ</a></li>
+            <li><a class="externalLink" href="http://svn.collab.net/repos/svn/trunk/doc/user/cvs-crossover-guide.html">Online CVS to SVN Crossover Guide</a></li>
+         </ul>
+      </section>
+   </body>
+</document>

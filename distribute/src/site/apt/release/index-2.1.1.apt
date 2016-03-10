@@ -1,0 +1,56 @@
+~~ Copyright 2010, by the California Institute of Technology.
+~~ ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+~~
+~~ $Id: $
+
+  ---
+  Release Description 2.1.1
+  ---
+  Michael Gangl
+  ---
+
+Release Description 2.1.1
+
+  This release of the Distribute Program Set is a component of the integrated release ({{{../../cm/release/index-2.1.1.html}2.1.1}}) of the PO.DAAC System. This release is intended as an operational release. The following sections can be found in this document:
+
+  * {{{#Capabilities}Capabilities}}
+
+  * {{{#Liens}Liens}}
+
+  * {{{#System_Requirements}System Requirements}}
+
+  * {{{#Installation}Installation}}
+
+  * {{{#Operation}Operation}}
+
+
+{Capabilities}
+
+  This section details the new, modified and corrected capabilities that comprise this release of the Inventory Program Set. In lieu of listing the capabilities by requirement they have been summarized. For a complete list of the requirements and their support status, see {{{#Appendix_A_-_Requirements_Support}Appendix A}}.
+
+* New Capabilities
+
+  N/A
+
+
+* Modified Capabilities
+
+  N/A
+
+* Corrected Capabilies
+
+  * {{{https://podaac-cm/trac/ticket/424}Ticket 424}} - ECHO: duplicate granules
+  
+  * {{{https://podaac-cm/trac/ticket/464}Ticket 464}} - ShortName doesn't match between collection and granule file
+
+[]
+
+{Installation}
+
+  This section details the procedures for installing and configuring the software in this program set. Installation is covered in a separate {{{../distribute-main/install/index.html}Installation}} document.
+
+{Operation}
+
+  This section details any necessary setup and the commands for running the applications in this program set. Operation is covered in a separate {{{../distribute-main/operate/index.html}Operation}} document.
+
+

@@ -1,0 +1,58 @@
+1.0 PO.DAAC Significant Events
+(Deliveries, completed tasks, breakthrough, presentations, publications,
+proposals, meetings, conferences, etc.  Spell out acronyms and identify 
+affiliations (e.g., Stanwilson, NOAA NESDIS scientist).)
+--> Text Box
+
+2.0 Science Product Engineering
+2.1 Ocean Surface Topography
+--> Text Box
+2.2 Ocean Vector Winds
+--> Text Box
+2.3 Sea Surface Temperature
+--> Text Box
+2.4 Gravity
+--> Text Box
+2.5 Sea Surface Salinity
+--> Text Box
+2.6 SCCOOS
+--> Text Box
+2.7 Customer Support: Time Consuming User Support
+--> Text Box
+2.8 Customer Support: New Products and Tool Updates
+--> Text Box
+2.9 Proposals, Papers, and Talks
+--> Text Box
+2.10 Other Product Engineering Tasks
+--> Text Box
+
+3.0 Development
+3.1 Data Center
+--> Text Box
+3.2 Data Tools and Services
+--> Text Box
+3.3 Legacy Maintenance 
+--> Text Box
+3.4 Other Development Activities
+--> Text Box
+
+4.0 Operations
+4.1 Operations: Data Distribution
+--> Text Box
+4.2 Operations: Data Archive
+--> Text Box
+4.3 Operations: Data Migration
+--> Text Box
+4.4 Operations: Database and Metrics
+--> Text Box
+4.5 Operations: System Administration
+--> Text Box
+4.6 Operations: Integration & Test
+--> Text Box
+4.7 Configuration Management
+--> Text Box
+4.8 User Services: Help Desk
+--> Text Box
+4.9 Web Development / Maintenance
+--> Text Box
+

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Copyright 2013, by the California Institute of Technology. -->
+<!-- ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged. -->
+<!--  -->
+<!-- $Id: $ -->
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+   <properties>
+      <title>Operation</title>
+      <author>T. Huang</author>
+   </properties>
+   <body>
+      <section name="Operation">
+         <p>This document describes how to operate the SigEvent web application. SigEvent GUI is an
+            AJAX website built using the <a class="externalLink" href="http://www.dojotoolkit.com"
+               >DOJO Toolkit</a>. In conjunction with the Grails server application, this graphical
+            interface allows a user to operate, monitor, and maintain the SigEvent application.The
+            following sections can be found in this document:</p>
+         <ul>
+            <li><a href="#Event_Management_Instructions">Event Management Instructions</a></li>
+            <li><a href="#Category_Management_Instructions">Category Management
+               Instructions</a></li>
+         </ul>
+      </section>
+      <section name="Event_Management Instructions" id="Event_Management_Instructions">
+         <p>The following are the event management operations available to a user with access to the
+            site.</p>
+         <ul>
+            <li>View/Sort SigEvents <p>By default, all events are displayed in date descending
+                  order. The menu on the left contains all the categories to filter from. Clicking a
+                  column header will sort the results by that column. Click again to alternate the
+                  order of sorting. The paging menu above the event list allows the traversing of
+                  several event results. Hitting the refresh button will refresh the current view
+                  with the latest information from the server (does not refresh the page).</p>
+               <img src="../images/event-default.jpg" alt=""/>
+            </li>
+            <li>Search SigEvents <p>The left accordion menu has both list of categories or a search
+                  form. Clicking on &quot;Search&quot; will open up the search form where the user
+                  will be able to search by a range of categories. The results are instantly
+                  populated in the events list to the right. Hitting &quot;Reset&quot; will clear
+                  the form and resets the search results to show all events. Feature to come:
+                  Searching by date/date-range.</p>
+               <img src="../images/event-search.jpg" alt=""/>
+            </li>
+            <li>Adding a Category <p>In the category listing on the left, scrolling to the bottom of
+                  the list will show a button to add a new event group category. Clicking this will
+                  bring up form to create a new category/type event group.</p>
+               <img src="../images/category-create.jpg" alt=""/>
+            </li>
+            <li>Resolving Events <p>When an event is selected, extra information is displayed in the
+                  bottom right pane. In this pane, if the event has not yet been resolved, the
+                  option to resolve the event will appear at the top of this pane. The user can then
+                  fill out the resolution field and send a request to the server to resolve the
+                  event. Resolved events will have a green box next to their listing. </p></li>
+         </ul>
+      </section>
+
+      <section name="Category Management Instructions" id="Category_Management_Instructions">
+         <p>The following are the category management operations available to a user with access to
+            the site. To access the notification features, click on the &quot;Notifications&quot;
+            tab underneath the DMAS banner. Clicking the refresh button under this tab will refresh
+            the current view of notifications with the most recent server call. </p>
+         <ul>
+            <li>Creating a Notification <p>To create a notification, click on &quot;Create New&quot;
+                  from the notification management tab. A form will open up with all the necessary
+                  fields to create a new Notification. Character and input restrictions will be
+                  enforced when a user begins to type in a field. Submit with &quot;Add&quot; or
+                  cancel with &quot;Cancel&quot;.</p>
+               <img src="../images/notification-create.jpg" alt=""/>
+            </li>
+            <li>Deleting a Notification<p>To delete one or many notifications, select the desired
+                  notifications to delete from the notifications tab. To select many, shift click
+                  through the desired notifications. Clicking on &quot;Delete Selected&quot; will
+                  then attempt to remove the selected notifications. A confirmation box will appear
+                  before sending the request to the server.</p>
+            </li>
+            <li>Editing a Notification <p>To edit a notification, double click the desired
+                  notification to modify. A form will appear with editable fields similar to that of
+                  the create form. Submit with &quot;Edit&quot;, cancel with &quot;Cancel&quot;.</p>
+            </li>
+         </ul>
+      </section>
+   </body>
+</document>

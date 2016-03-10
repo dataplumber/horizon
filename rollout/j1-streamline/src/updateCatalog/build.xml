@@ -1,0 +1,86 @@
+<?xml version="1.0" standalone="yes"?>
+<!--
+Used to run update database code.
+-->
+<project name="UpdateCatalog" basedir="." default="usage">
+  <description>
+  Used to update Streamlining db.
+  </description>
+
+  <property name="lib.home" value="../../war/WEB-INF/lib/" />
+  <path id="classpath">  
+    <pathelement path="./classes" />
+    <fileset dir="${lib.home}" includes="*.jar" />
+  </path>
+
+  <target name="usage">
+        <echo message=""/>
+        <echo message="user.home is ${user.home}"/>
+        <echo message=""/>
+        <echo message="${name} build file"/>
+        <echo message="-----------------------------------"/>
+        <echo message=""/>
+        <echo message="Available targets are:"/>
+        <echo message=""/>
+        <echo message="compile      --> Compile main source files"/>
+        <echo message="printData    --> Prints contents of db"/>
+        <echo message="deleteData   --> Delete contents of db"/>
+        <echo message="BuildCatalog --> Update db with contents of data store"/>
+        <echo message="MakePublic   --> Move appropriate data and update db"/>
+        <echo message="clean        --> Remove class files"/>
+        <echo message=""/>
+    </target>
+
+
+<!--
+   <echo message="Compiling the java source files..." />
+-->
+   <target name="compile" description="Compile main source files">
+    <mkdir dir="classes" />    
+    <javac destdir="./classes" target = "1.5" debug="on">
+      <src path="." />
+      <classpath refid="classpath" />
+    </javac>
+  </target>
+
+  <target name="printData" depends="compile" description="Run DB dump">
+    <echo message="Running the DB dump ..." />
+    <java classname="updateCatalog/read" fork="true">
+      <classpath refid="classpath" />
+    </java>
+  </target>
+
+  <target name="BuildCatalog" depends="compile" description="Run DB insert">
+    <echo message="Running the DB insert ..." />
+    <java classname="updateCatalog/insert" fork="true">
+      <classpath refid="classpath" />
+    </java>
+  </target>
+
+  <target name="deleteData" depends="compile" description="Run DB delete">
+    <echo message="Running the DB delete ..." />
+    <java classname="updateCatalog/deleteTable" fork="true">
+      <classpath refid="classpath" />
+    </java>
+  </target>
+
+  <target name="MakePublic" depends="compile" description="Run releaseData">
+    <echo message="Running releaseData ..." />
+    <java classname="updateCatalog/releaseData" fork="true">
+      <classpath refid="classpath" />
+    </java>
+  </target>
+
+  <target name="run_test" depends="compile" description="Run setTest">
+    <echo message="Running setTest ..." />
+    <java classname="updateCatalog/setTest" fork="true">
+      <classpath refid="classpath" />
+    </java>
+  </target>
+
+  <target name="clean" description="Deletes all the generated artifacts.">
+    <!--delete dir="schemas" /-->
+    <delete dir="classes" />
+  </target>
+</project>
+

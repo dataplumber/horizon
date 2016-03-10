@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+$Id$
+-->
+
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+  
+        <property name="connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+        <property name="connection.url">${database.url}</property>
+        <property name="connection.username">${database.username}</property>
+        <property name="connection.password">${database.password}</property>
+        
+        <!-- JDBC connection pool (use the built-in) 
+        <property name="connection.pool_size">10</property>
+         -->
+         
+        <!-- configuration pool via hibernate.c3p0 
+           <property name="hibernate.c3p0.min_size">5</property>
+           <property name="hibernate.c3p0.max_size">20</property>
+           <property name="hibernate.c3p0.max_statements">50</property>
+           <property name="hibernate.c3p0.timeout">300</property>
+        -->
+        <!-- configuration pool via c3p0 -->
+        <property name="c3p0.acquire_increment">1</property>
+        <property name="c3p0.idle_test_period">100</property><!-- seconds -->
+        <property name="c3p0.min_size">3</property>
+        <property name="c3p0.max_size">10</property>
+        <property name="c3p0.max_statements">0</property>
+        <property name="c3p0.timeout">100</property><!-- seconds -->
+        
+        <!-- SQL dialect -->
+        <!--  property name="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</property>
+        -->
+        <property name="hibernate.dialect">org.hibernatespatial.oracle.OracleSpatial10gDialect</property>
+
+        <!-- Enable auto-commit mode for special cases (integration testing) -->
+        <!-- 
+        <property name="connection.autocommit">true</property>
+         -->
+
+        <!-- Enable Hibernate's automatic session context management -->
+        <property name="current_session_context_class">thread</property>
+
+        <!-- Disable the second-level cache  -->
+        <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
+        <property name="cache.use_query_cache">false</property>
+        <property name="cache.use_minimal_puts">false</property>
+
+        <!-- In eager fetching, only join three tables deep if joins are used -->
+        <property name="max_fetch_depth">3</property>
+
+         <!-- Print SQL to stdout, format it nicely  -->
+        <property name="show_sql">false</property>
+         
+        <property name="format_sql">true</property>
+        <property name="use_sql_comments">true</property>
+		 
+		 
+        <!-- Drop and re-create the database schema on startup 
+        <property name="hbm2ddl.auto">create</property> -->
+        <mapping resource="gov/nasa/podaac/inventory/model/Granule.hbm.xml"/>
+       	<mapping resource="gov/nasa/podaac/inventory/model/Dataset.hbm.xml"/>
+       	<mapping resource="gov/nasa/podaac/inventory/model/Provider.hbm.xml"/>
+      	<mapping resource="gov/nasa/podaac/inventory/model/Collection.hbm.xml"/>
+    </session-factory>
+</hibernate-configuration>

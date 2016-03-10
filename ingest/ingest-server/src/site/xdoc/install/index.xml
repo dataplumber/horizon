@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Copyright 2007-2008, by the California Institute of Technology. -->
+<!-- ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged. -->
+<!--  -->
+<!-- $Id: $ -->
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+   <properties>
+      <title>Installation</title>
+      <author>T. Huang</author>
+   </properties>
+   <body>
+      <section name="Installation">
+         <p>This document describes how to install and configure the Ingest Engine. The following
+            sections can be found in this document:</p>
+         <ul>
+            <li><a href="#Distribution_Contents">Distribution Contents</a></li>
+            <li><a href="#Server_Configuration">Server Configuration</a></li>
+         </ul>
+      </section>
+      <section name="Distribution Contents" id="Distribution_Contents">
+         <p>This release of HORIZON server requires Java Standard Edition
+               1.7 or higher. The software is shipped in a self-contained GZIP file. Below is an
+            illustration of the software distribution after it has been expanded:</p>
+         <img src="../images/horizon_server_dist.jpg" alt=""/>
+         <ul>
+            <li><i>config</i> - this directory contains server configuration information.<ul>
+                  <li><i>hroizonconfig.pm</i> - this is a Perl application launcher utility file. In
+                     general the user/admin won't have to modify this file </li>
+                  <li><i>HORIZONdomain.xml</i> - the domain file the software will use to establish
+                     connection to the Ingest Grails middleware.</li>
+                  <li><i>HORIZONserver.lcf</i> - the server log configuration file.</li>
+               </ul></li>
+            <li><i>lib</i> - this directory contains all run-time libraries for both client and
+               server applications.</li>
+            <li><i>sbin</i> - this directory contains launchers and/or utility program for the
+               Ingest engine.</li>
+            <li><i>useHORIZON.csh</i> - this file is a script for setting up the environment.</li>
+         </ul>
+      </section>
+      <section name="Server Configuration" id="Server_Configuration">
+         <p>Beginning with Version 4.0, HORIZON server will no longer issue a boot request to the
+            Middleware for its runtime configuration. The only configuration information required
+            for the HORIZON server to boot is the domain file and the log configuration file.</p>
+         <subsection name="Logger">
+            <p>The HORIZON server was developed to use the popular message logging toolkit, <a
+                  class="externalLink" href="http://logging.apache.org">log4j</a>, for flexible
+               message filtering and redirection. Message logging level is used for message
+               verbosity. Log4j supports the following levels - TRACE, DEBUG, INFO, WARN, ERROR, and
+               FATAL. If the logger is configured for DEBUG level, the server will output messages
+               that are logged in DEBUG..FATAL level and ignore all messages logged with TRACE
+               level. By default, the server is shipped with INFO level enabled. For higher
+               visibility into the operations within the server, the administrator can change the
+               logging level to DEBUG in <i>config/HORIZONserver.lcf</i> as follows:</p>
+            <source>
+&lt;root&gt;
+     &lt;level value=&quot;DEBUG&quot;/&gt;
+     &lt;appender-ref ref=&quot;FILE&quot;/&gt;
+     &lt;appender-ref ref=&quot;CONSOLE&quot;/&gt;
+ &lt;/root&gt;
+            </source>
+         </subsection>
+         <subsection name="Regarding the HORIZONdomain.xml file">
+            <p>The domain file contains connection lookup information. It is a simple federation to
+               URL mapping file. Ingest client uses this file to lookup the federation connection
+               string.</p>
+            <source>
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;domain xmlns=&quot;http://horizon.jpl.nasa.gov&quot;&gt;
+   &lt;default&gt;horizonDev&lt;/default&gt;
+   &lt;federation&gt;
+      &lt;name&gt;horizonDev&lt;/name&gt;
+      &lt;url&gt;http://lanina.jpl.nasa.gov:8080/manager/ingest&lt;/url&gt;
+   &lt;/federation&gt;
+   &lt;sigevent&gt;http://lanina.jpl.nasa.gov:8080/sigevent&lt;/sigevent&gt;
+   &lt;jobkeeper&gt;
+      &lt;server&gt;lapinta:2181&lt;/server&gt;
+      &lt;webservice&gt;lapinta:9998&lt;/webservice&gt;
+   &lt;/jobkeeper&gt;
+   &lt;discovery&gt;http://seastorm.jpl.nasa.gov:8983/solr.war&lt;/discovery&gt;
+   &lt;inventory&gt;http://lanina.jpl.nasa.gov:9191&lt;/inventory&gt;
+&lt;/domain&gt;
+            </source>
+            <p>It is recommended that you use the domain file generated from the Operator Tool since
+               it will contain the URL values needed by the Ingest Server, namely, sigevent and
+               jobkeeper.</p>
+         </subsection>
+         <subsection name="Regarding the useHORIZON.csh script">
+            <p>The <i>useHORIZON.csh</i> is an environment setting script.</p>
+            <source>% cat useHORIZON.csh
+
+setenv JAVA_HOME /usr/local/java
+setenv PATH {JAVA_HOME}/bin:${PATH}
+
+setenv HORIZON ${cwd}/config
+setenv PATH ${HORIZON}/../sbin:${PATH}</source>
+            <p>The script assumes your Java distribution is installed under <i>/user/local/java</i>.
+               The script also assumes the user is sourcing it within the Ingest distribution
+               directory. For multi-user operation environment, the line below should be modified
+               with the correct directory path.</p>
+            <source>setenv HORIZON &lt;path to the ingest server software distribution&gt;/config</source>
+         </subsection>
+         <subsection name="Regarding security at startup">
+            <p>The HORIZON server requires authentication with the HORIZON Middleware at startup time.
+               Authentication requires username/password combination where the username must be
+               registered as an administrator in the HORIZON Middleware. The authentication information
+               can be provided at the HORIZON server startup command arguments, or via the keychain
+               file created by the HORIZON Client distribution (e.g. % ingest login).</p>
+         </subsection>
+      </section>
+   </body>
+</document>

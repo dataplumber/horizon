@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="sigevent" default="usage">
+
+  <property file="${user.home}/.ant.properties"/>
+
+  <property name="driver" value="org.postgresql.Driver"/>
+  <property name="url" value="jdbc:postgresql://localhost:5432/gibs"/>
+  <property name="jar"
+    value="${user.home}/.m2/repository/postgresql/postgresql/9.1-901.jdbc4/postgresql-9.1-901.jdbc4.jar"/>
+
+
+  <!-- Echo the connection properties. -->
+  <echo level="info" message="The connection properties are set as follows:"/>
+  <echo level="info" message="driver:  ${driver}"/>
+  <echo level="info" message="url:     ${url}"/>
+  <echo level="info" message="jar:     ${jar}"/>
+
+  <!-- Echo usage to the terminal. -->
+  <target name="usage">
+    <echo level="info"
+      message="This script allows the user to create, drop and load the Ingest database schema."/>
+    <echo level="info"/>
+    <echo level="info" message="List all of the available targets as follows:"/>
+    <echo level="info" message="sigevent_schema.sh [-p | -projecthelp]"/>
+    <echo level="info"/>
+    <echo level="info" message="Execute one or more of the targets as follows:"/>
+    <echo message="ingest_schema.sh [&lt;target&gt; [&lt;target&gt; [...]]]"/>
+    <echo level="info"/>
+    <echo level="info" message="Execute a target with user name and password as follows:"/>
+    <echo
+      message="sigevent_schema.sh &lt;target&gt; -Dusername=&lt;username&gt; -Dpassword=&lt;password&gt;"
+    />
+  </target>
+
+  <!-- Drop the Sigevent schema. -->
+  <target name="drop" description="Drop the Sigevent schema.">
+    <sql driver="${driver}" url="${url}" userid="${username}" password="${password}"
+      keepformat="true" onerror="continue">
+      <classpath>
+        <pathelement path="${jar}"/>
+      </classpath>
+      <transaction src="drop_sigevent_pgsql_schema.sql"/>
+    </sql>
+  </target>
+
+  <!-- Create the sigevent schema. -->
+  <target name="create" description="Create the Sigevent schema.">
+    <sql driver="${driver}" url="${url}" userid="${username}" password="${password}"
+      keepformat="true">
+      <classpath>
+        <pathelement path="${jar}"/>
+      </classpath>
+      <transaction src="create_sigevent_pgsql_schema.sql"/>
+    </sql>
+  </target>
+</project>

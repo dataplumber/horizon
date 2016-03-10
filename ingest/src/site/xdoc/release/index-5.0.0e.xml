@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Copyright 2013, by the California Institute of Technology. -->
+<!-- ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged. -->
+<!--  -->
+<!-- $Id: $ -->
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+   <properties>
+      <title>Release Description 5.0.0e</title>
+      <author>T. Huang</author>
+   </properties>
+   <body>
+      <section name="Release Description 5.0.0e">
+         <p>This release of the Ingest Program Set is a component of the integrated release (<a
+               href="../../cm/release/index-5.0.0e.html">5.0.0e</a>) of the HORIZON System. This
+            release is intended as an operational release.</p>
+         <p>Building on capabilities delivered in the last release, this release focuses on
+            improving the overall reliability of the Ingest System. Details on this release can be
+            found in the following sections of this document:</p>
+         <ul>
+            <li><a href="#Capabilities">Capabilities</a></li>
+            <li><a href="#Installation">Installation</a></li>
+            <li><a href="#Operation">Operation</a></li>
+         </ul>
+      </section>
+      <section name="Capabilities" id="Capabilities">
+         <p>This section details the new, modified and corrected capabilities that comprise this
+            release of the Ingest Program Set. In lieu of listing the capabilities by requirement
+            they have been summarized. For a complete list of the requirements and their support
+            status, see <a href="#Appendix_A_-_Requirements_Support">Appendix A</a>.</p>
+         <subsection name="New Capabilities">
+            <ul>
+               <li>NONE</li>
+            </ul>
+         </subsection>
+         <subsection name="Modified Capabilities">
+            <ul>
+               <li><a href="https://bugs.earthdata.nasa.gov/browse/GIBS-500">GIBS-500</a> - Address authentication updates for ingest server</li>
+               <li><a href="https://bugs.earthdata.nasa.gov/browse/GIBS-488">GIBS-488</a> - Ingest Server Needs DEBUG Log Entry</li>
+            </ul>
+         </subsection>
+         <subsection name="Corrected Capabilities">
+            <ul>
+               <li><a href="https://bugs.earthdata.nasa.gov/browse/GIBS-495">GIBS-495</a> - Ingest Client not cleaning up data/ and submitted/ directories</li>
+            </ul>
+         </subsection>
+      </section>
+      <section name="Installation" id="Installation">
+         <p>This section details the procedures for installing and configuring the software in this
+            program set.</p>
+         <subsection name="Ingest-Server Installation">
+            <p>The Ingest Server module consists of the core implementation for the program set
+               (everything happens here). The installation of this module is covered in the <a
+                  href="../ingest-server/install/index.html">Ingest Server Installation</a>
+               document.</p>
+         </subsection>
+         <subsection name="Ingest-Client Installation">
+            <p>The Ingest Client module consists of command-line applications for interfacing with
+               the Manager Web Service. The installation of this module is covered in the <a
+                  href="../ingest-client/install/index.html">Ingest Client Installation</a>
+               document.</p>
+         </subsection>
+      </section>
+      <section name="Operation">
+         <p>This section details any necessary setup and the commands for running the software in
+            this program set.</p>
+         <subsection name="Ingest-Server Operation">
+            <p>The operation of this module is covered in the <a
+                  href="../ingest-server/operate/index.html">Ingest Server Operation</a>
+               document.</p>
+         </subsection>
+         <subsection name="Ingest-Client Operation">
+            <p>The operation of this module is covered in the <a
+                  href="../ingest-client/operate/index.html">Ingest Client Operation</a>
+               document.</p>
+         </subsection>
+      </section>
+   </body>
+</document>

@@ -1,0 +1,2 @@
+#/bin/csh
+java  -Dlog4j.configuration=file://${sapi.home}/config/log4j.properties -classpath '${sapi.home}/lib/*' gov.nasa.horizon.security.client.Client

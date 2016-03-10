@@ -1,0 +1,566 @@
+<DOCFLEX_TEMPLATE VER='1.9'>
+CREATED='2005-04-26 03:31:00'
+LAST_UPDATE='2007-09-08 09:40:52'
+DESIGNER_TOOL='DocFlex SDK 1.x'
+TEMPLATE_TYPE='DocumentTemplate'
+DSM_TYPE_ID='xsddoc'
+ROOT_ETS={'xs:%annotated';'xs:schema'}
+<TEMPLATE_PARAMS>
+	PARAM={
+		param.name='showHeading';
+		param.type='boolean';
+	}
+	PARAM={
+		param.name='sec.annotation.xhtml';
+		param.displayName='Process XHTML tags';
+		param.type='boolean';
+		param.boolean.default='true';
+		param.hidden='true';
+	}
+	PARAM={
+		param.name='sec.annotation.otherTags';
+		param.displayName='Show other tags';
+		param.type='boolean';
+		param.boolean.default='true';
+	}
+	PARAM={
+		param.name='sec.annotation.images.include';
+		param.displayName='Include images';
+		param.type='boolean';
+		param.boolean.default='true';
+	}
+	PARAM={
+		param.name='sec.annotation.images.copy';
+		param.displayName='Copy images';
+		param.type='boolean';
+		param.boolean.default='true';
+	}
+</TEMPLATE_PARAMS>
+FMT={
+	doc.lengthUnits='pt';
+	doc.hlink.style.link='cs3';
+}
+<STYLES>
+	CHAR_STYLE={
+		style.name='Code Smaller';
+		style.id='cs1';
+		text.font.name='Courier New';
+		text.font.size='8';
+	}
+	CHAR_STYLE={
+		style.name='Default Paragraph Font';
+		style.id='cs2';
+		style.default='true';
+	}
+	CHAR_STYLE={
+		style.name='Hyperlink';
+		style.id='cs3';
+		text.decor.underline='true';
+		text.color.foreground='#0000FF';
+	}
+	PAR_STYLE={
+		style.name='Normal';
+		style.id='s1';
+		style.default='true';
+	}
+</STYLES>
+<ROOT>
+	<ELEMENT_ITER>
+		TARGET_ET='xs:documentation'
+		SCOPE='advanced-location-rules'
+		RULES={
+			'* -> xs:annotation/xs:documentation';
+		}
+		<BODY>
+			<FOLDER>
+				<BODY>
+					<ELEMENT_ITER>
+						DESCR='iterate by all nodes contained in \'xs:documentation\' element;\nthe output is set to text flow and the rendering of embedded HTML is switched on (see  Formatting | Text Flow tab)'
+						FMT={
+							sec.outputStyle='text-par';
+							txtfl.delimiter.type='none';
+							txtfl.option.renderEmbeddedHTML='true';
+						}
+						TARGET_ET='<ANY>'
+						SCOPE='simple-location-rules'
+						RULES={
+							'* -> *';
+						}
+						<BODY>
+							<SS_CALL>
+								DESCR='processing of each node'
+								FMT={
+									sec.indent.left='10';
+								}
+								SS_NAME='Node'
+								PARAMS_EXPR='Array (true)'
+							</SS_CALL>
+						</BODY>
+					</ELEMENT_ITER>
+					<FOLDER>
+						FMT={
+							sec.spacing.after='4';
+						}
+						<BODY>
+							<AREA_SEC>
+								FMT={
+									sec.indent.block='true';
+								}
+								<AREA>
+									<CTRL_GROUP>
+										<CTRLS>
+											<DATA_CTRL>
+												FMT={
+													ctrl.option.text.trimSpaces='true';
+													ctrl.option.text.noBlankOutput='true';
+													text.font.size.relative='95';
+												}
+												<DOC_HLINK>
+													HKEYS={
+														'url = resolveURL (\n  getAttrStringValue("source"),\n  getXMLDocument().getAttrStringValue("xmlURI")\n);\n\nfindXMLDocument(url).id\n';
+														'"detail"';
+													}
+												</DOC_HLINK>
+												<URL_HLINK>
+													TARGET_FRAME_EXPR='"_blank"'
+													TARGET_FRAME_ALWAYS
+													URL_EXPR='getAttrStringValue("source")'
+												</URL_HLINK>
+												ATTR='source'
+											</DATA_CTRL>
+										</CTRLS>
+									</CTRL_GROUP>
+								</AREA>
+							</AREA_SEC>
+						</BODY>
+						<HEADER>
+							<AREA_SEC>
+								<AREA>
+									<CTRL_GROUP>
+										<CTRLS>
+											<LABEL>
+												FMT={
+													text.font.style.bold='true';
+												}
+												TEXT='See: '
+											</LABEL>
+										</CTRLS>
+									</CTRL_GROUP>
+								</AREA>
+							</AREA_SEC>
+						</HEADER>
+					</FOLDER>
+				</BODY>
+				<HEADER>
+					<AREA_SEC>
+						COND='getBooleanParam("showHeading") || iterator.numItems > 1'
+						FMT={
+							text.font.size.relative='95';
+							text.font.style.bold='true';
+							par.page.keepWithNext='true';
+						}
+						<AREA>
+							<SPACER>
+								COND='! iterator.isFirstItem'
+								FMT={
+									spacer.height='8';
+								}
+							</SPACER>
+							<CTRL_GROUP>
+								FMT={
+									par.margin.top='0';
+									par.margin.bottom='6';
+								}
+								<CTRLS>
+									<LABEL>
+										TEXT='Annotation'
+									</LABEL>
+									<DELIMITER>
+										FMT={
+											text.style='cs1';
+										}
+									</DELIMITER>
+									<DATA_CTRL>
+										COND='iterator.numItems > 1'
+										FORMULA='iterator.itemNo'
+									</DATA_CTRL>
+								</CTRLS>
+							</CTRL_GROUP>
+						</AREA>
+					</AREA_SEC>
+				</HEADER>
+			</FOLDER>
+		</BODY>
+	</ELEMENT_ITER>
+</ROOT>
+<STOCK_SECTIONS>
+	<FOLDER>
+		COND='getBooleanParam("sec.annotation.images.include")'
+		FMT={
+			sec.outputStyle='text-par';
+			txtfl.delimiter.type='none';
+		}
+		SS_NAME='<img>'
+		<BODY>
+			<ATTR_ITER>
+				DESCR='generates the list of the element\'s attributes'
+				FMT={
+					txtfl.delimiter.type='none';
+				}
+				SCOPE='enumerated-attrs'
+				EXCL_PASSED=false
+				<BODY>
+					<AREA_SEC>
+						COND='iterator.attr.name == "src"'
+						<AREA>
+							<CTRL_GROUP>
+								<CTRLS>
+									<LABEL>
+										TEXT=' src="'
+									</LABEL>
+									<DATA_CTRL>
+										FORMULA='srcURL = resolveURL (\n  iterator.value.toString(),\n  getXMLDocument().getAttrStringValue("xmlURI")\n);\n\noutput.format.name == "HTML" && getBooleanParam("sec.annotation.images.copy") &&\n  (dstFile = copyFile (srcURL, output.filesDir)) != "" \n? makeRelativePath (dstFile, output.dir) : srcURL'
+									</DATA_CTRL>
+									<LABEL>
+										TEXT='"'
+									</LABEL>
+								</CTRLS>
+							</CTRL_GROUP>
+						</AREA>
+					</AREA_SEC>
+					<AREA_SEC>
+						COND='sectionBlock.execSecNone'
+						<AREA>
+							<CTRL_GROUP>
+								<CTRLS>
+									<DELIMITER>
+									</DELIMITER>
+									<DATA_CTRL>
+										FORMULA='iterator.attr.name'
+									</DATA_CTRL>
+									<LABEL>
+										TEXT='="'
+									</LABEL>
+									<DATA_CTRL>
+										FORMULA='encodeXMLChars (\n  iterator.attr.dsmAttr.rawValue,\n  true, true, true, false\n)'
+									</DATA_CTRL>
+									<LABEL>
+										TEXT='"'
+									</LABEL>
+								</CTRLS>
+							</CTRL_GROUP>
+						</AREA>
+					</AREA_SEC>
+				</BODY>
+			</ATTR_ITER>
+		</BODY>
+		<HEADER>
+			<AREA_SEC>
+				<AREA>
+					<CTRL_GROUP>
+						<CTRLS>
+							<LABEL>
+								TEXT='<img'
+							</LABEL>
+						</CTRLS>
+					</CTRL_GROUP>
+				</AREA>
+			</AREA_SEC>
+		</HEADER>
+		<FOOTER>
+			<AREA_SEC>
+				<AREA>
+					<CTRL_GROUP>
+						<CTRLS>
+							<LABEL>
+								TEXT='>'
+							</LABEL>
+						</CTRLS>
+					</CTRL_GROUP>
+				</AREA>
+			</AREA_SEC>
+		</FOOTER>
+	</FOLDER>
+	<ATTR_ITER>
+		DESCR='generates the list of the element\'s attributes'
+		FMT={
+			sec.outputStyle='text-par';
+			txtfl.delimiter.type='none';
+		}
+		SCOPE='enumerated-attrs'
+		EXCL_PASSED=false
+		FILTER='name = iterator.attr.name;\nname != "xmlns" && ! name.startsWith ("xmlns:")'
+		SS_NAME='AttrList'
+		<BODY>
+			<AREA_SEC>
+				<AREA>
+					<CTRL_GROUP>
+						<CTRLS>
+							<DELIMITER>
+							</DELIMITER>
+							<DATA_CTRL>
+								FORMULA='iterator.attr.name'
+							</DATA_CTRL>
+							<LABEL>
+								TEXT='="'
+							</LABEL>
+							<DATA_CTRL>
+								FORMULA='encodeXMLChars (\n  iterator.attr.dsmAttr.rawValue,\n  true, true, true, false\n)'
+							</DATA_CTRL>
+							<LABEL>
+								TEXT='"'
+							</LABEL>
+						</CTRLS>
+					</CTRL_GROUP>
+				</AREA>
+			</AREA_SEC>
+		</BODY>
+	</ATTR_ITER>
+	<FOLDER>
+		DESCR='processing the documentation node; param indicates whether to collapse whitespaces'
+		FMT={
+			sec.outputStyle='text-par';
+			txtfl.delimiter.type='none';
+		}
+		SS_NAME='Node'
+		<BODY>
+			<FOLDER>
+				DESCR='in case of a pseudo-element (non-element node) process only TEXT or CDATA nodes (see Component | Context Element tab in the Area Section)'
+				COND='contextElement.dsmElement.pseudoElement'
+				<BODY>
+					<AREA_SEC>
+						MATCHING_ETS={'#CDATA';'#TEXT'}
+						<AREA>
+							<CTRL_GROUP>
+								<CTRLS>
+									<DATA_CTRL>
+										FMT={
+											txtfl.option.renderEmbeddedHTML='false';
+										}
+										FORMULA='text = contextElement.value.toString();\n\nstockSection.recursionDepth > 0 ?\n  stockSection.param.toBoolean() ? \n    collapseSpaces(text, false, false) : text\n: collapseSpaces(text, iterator.isFirstItem, iterator.isLastItem)\n'
+									</DATA_CTRL>
+								</CTRLS>
+							</CTRL_GROUP>
+						</AREA>
+					</AREA_SEC>
+				</BODY>
+			</FOLDER>
+			<FOLDER>
+				DESCR='case of element node'
+				COND='sectionBlock.execSecNone'
+				<BODY>
+					<ELEMENT_ITER>
+						DESCR='if the current element belongs to the XHTML namespace and processing of XHTML tags is enabled, reprint the element\'s tags so as they look as an ordinary HTML and process the element\'s content.'
+						COND='getBooleanParam("sec.annotation.xhtml") &&\ncontextElement.belongsToNS ("xhtml")'
+						INIT_EXPR='setVar("tag", contextElement.dsmElement.localName.toLowerCase())'
+						TARGET_ET='<ANY>'
+						SCOPE='simple-location-rules'
+						RULES={
+							'* -> *';
+						}
+						<BODY>
+							<SS_CALL>
+								DESCR='calls this stock-section recursively'
+								FMT={
+									sec.indent.left='10';
+								}
+								SS_NAME='Node'
+								PARAMS_EXPR='getVar("tag") == "pre" ? Array (false) : stockSection.params'
+							</SS_CALL>
+						</BODY>
+						<HEADER>
+							<AREA_SEC>
+								<AREA>
+									<CTRL_GROUP>
+										<CTRLS>
+											<LABEL>
+												TEXT='<'
+											</LABEL>
+											<DATA_CTRL>
+												FORMULA='contextElement.dsmElement.localName'
+											</DATA_CTRL>
+											<SS_CALL_CTRL>
+												SS_NAME='AttrList'
+											</SS_CALL_CTRL>
+											<LABEL>
+												TEXT='>'
+											</LABEL>
+										</CTRLS>
+									</CTRL_GROUP>
+								</AREA>
+							</AREA_SEC>
+						</HEADER>
+						<FOOTER>
+							<AREA_SEC>
+								<AREA>
+									<CTRL_GROUP>
+										<CTRLS>
+											<LABEL>
+												TEXT='</'
+											</LABEL>
+											<DATA_CTRL>
+												FORMULA='contextElement.dsmElement.localName'
+											</DATA_CTRL>
+											<LABEL>
+												TEXT='>'
+											</LABEL>
+										</CTRLS>
+									</CTRL_GROUP>
+								</AREA>
+							</AREA_SEC>
+						</FOOTER>
+						<ELSE>
+							DESCR='this is executed when no child nodes encountered -- the case of a simple element'
+							<SS_CALL>
+								COND='getVar("tag") == "img"'
+								SS_NAME='<img>'
+							</SS_CALL>
+							<AREA_SEC>
+								COND='sectionBlock.execSecNone'
+								<AREA>
+									<CTRL_GROUP>
+										<CTRLS>
+											<LABEL>
+												TEXT='<'
+											</LABEL>
+											<DATA_CTRL>
+												FORMULA='contextElement.dsmElement.localName'
+											</DATA_CTRL>
+											<SS_CALL_CTRL>
+												SS_NAME='AttrList'
+											</SS_CALL_CTRL>
+											<LABEL>
+												TEXT='>'
+											</LABEL>
+										</CTRLS>
+									</CTRL_GROUP>
+								</AREA>
+							</AREA_SEC>
+						</ELSE>
+					</ELEMENT_ITER>
+					<FOLDER>
+						DESCR='otherwise or in case of any other (non-XHTML) element'
+						COND='sectionBlock.execSecNone'
+						<BODY>
+							<ELEMENT_ITER>
+								DESCR='if \'show other tags\' is specified, reprint the element\'s tags so that they appear in the documentation the same as they are defined in XML. \n\nThe "Formatting | Text Flow | Render embeded HTML" property is disabled at each Area Section printing the tag.'
+								COND='getBooleanParam("sec.annotation.otherTags")'
+								TARGET_ET='<ANY>'
+								SCOPE='simple-location-rules'
+								RULES={
+									'* -> *';
+								}
+								COLLAPSED
+								<BODY>
+									<SS_CALL>
+										DESCR='calls this stock-section recursively'
+										FMT={
+											sec.indent.left='10';
+										}
+										SS_NAME='Node'
+										PARAMS_EXPR='stockSection.params'
+									</SS_CALL>
+								</BODY>
+								<HEADER>
+									<AREA_SEC>
+										FMT={
+											txtfl.option.renderEmbeddedHTML='false';
+										}
+										<AREA>
+											<CTRL_GROUP>
+												<CTRLS>
+													<LABEL>
+														TEXT='<'
+													</LABEL>
+													<DATA_CTRL>
+														FORMULA='contextElement.dsmElement.qName'
+													</DATA_CTRL>
+													<SS_CALL_CTRL>
+														SS_NAME='AttrList'
+													</SS_CALL_CTRL>
+													<LABEL>
+														TEXT='>'
+													</LABEL>
+												</CTRLS>
+											</CTRL_GROUP>
+										</AREA>
+									</AREA_SEC>
+								</HEADER>
+								<FOOTER>
+									<AREA_SEC>
+										FMT={
+											txtfl.option.renderEmbeddedHTML='false';
+										}
+										<AREA>
+											<CTRL_GROUP>
+												<CTRLS>
+													<LABEL>
+														TEXT='</'
+													</LABEL>
+													<DATA_CTRL>
+														FORMULA='contextElement.dsmElement.qName'
+													</DATA_CTRL>
+													<LABEL>
+														TEXT='>'
+													</LABEL>
+												</CTRLS>
+											</CTRL_GROUP>
+										</AREA>
+									</AREA_SEC>
+								</FOOTER>
+								<ELSE>
+									DESCR='this is executed when no child nodes encountered -- the case of a simple element'
+									<AREA_SEC>
+										FMT={
+											txtfl.option.renderEmbeddedHTML='false';
+										}
+										<AREA>
+											<CTRL_GROUP>
+												<CTRLS>
+													<LABEL>
+														TEXT='<'
+													</LABEL>
+													<DATA_CTRL>
+														FORMULA='contextElement.dsmElement.qName'
+													</DATA_CTRL>
+													<SS_CALL_CTRL>
+														SS_NAME='AttrList'
+													</SS_CALL_CTRL>
+													<LABEL>
+														TEXT='/>'
+													</LABEL>
+												</CTRLS>
+											</CTRL_GROUP>
+										</AREA>
+									</AREA_SEC>
+								</ELSE>
+							</ELEMENT_ITER>
+							<ELEMENT_ITER>
+								DESCR='otherwise, only process the element content'
+								COND='sectionBlock.execSecNone'
+								TARGET_ET='<ANY>'
+								SCOPE='simple-location-rules'
+								RULES={
+									'* -> *';
+								}
+								COLLAPSED
+								<BODY>
+									<SS_CALL>
+										DESCR='calls this stock-section recursively'
+										FMT={
+											sec.indent.left='10';
+										}
+										SS_NAME='Node'
+										PARAMS_EXPR='stockSection.params'
+									</SS_CALL>
+								</BODY>
+							</ELEMENT_ITER>
+						</BODY>
+					</FOLDER>
+				</BODY>
+			</FOLDER>
+		</BODY>
+	</FOLDER>
+</STOCK_SECTIONS>
+CHECKSUM='QxTrJkFxC6vJkS6N5GooJw'
+</DOCFLEX_TEMPLATE>

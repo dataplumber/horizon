@@ -1,0 +1,78 @@
+~~ Copyright 2008-2009, by the California Institute of Technology.
+~~ ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+~~
+~~ $Id: index.apt 6264 2010-11-12 20:21:49Z thuang $
+
+  ---
+  Operation
+  ---
+  Sean Hardman
+  ---
+  
+Operation
+
+  This document describes how to use the Monitor utilities of the Administer program set. Each section corresponds with an available application. The following sections can be found in this document:
+
+   * {{{Monitor}Monitor}}
+
+{Monitor}
+
+  The Bourne Shell script <monitor> is actually a wrapper for the Ant script <monitor.xml>. This script relies on Ant, which is part of the PO.DAAC standard development environment, and the Oracle Client which should be installed by the system administrators.
+
+  Variables for the <monitor> script can be supplied either on the command-line or in a configuration file. The following variables are supported:
+
+*--++
+| <<Variable>> | <<Description>> |
+*--++
+| username | The Oracle user account name that identifies the owner of the database objects to be created, dropped or manipulated as a resulting of executing the script. There is no default value. |
+*--++
+| password | The password that corresponds with the Oracle user account name. If entering the password on the command-line and the password contains special characters, each special character should be preceded by a \\<\\> character and the whole password should be single quoted. There is no default value. |
+*--++
+| sid | This is the Oracle System Identifier (SID) which identifies the Oracle database instance with which to connect. PO.DAAC currently has three instances identified by <DAACDEV>, <DAACTEST> and <DAACOPS>. The value is not case sensitive. |
+*--++
+
+  All of the variables above can be specified in a configuration file. The configuration file must be named <.ant.properties> and must be located in the user's home directory. In the following example, the <username>, <password> and <sid> are specified so that they don't need to be supplied on the command-line:
+
++--
+username=<username>
+password=<password>
+sid=<sid>
++--
+
+  The variables can also be specified on the command-line. The <monitor> script must be executed from a directory where the SQL scripts and the <monitor.xml> script reside. Executing the script with no arguments will produce the following usage statement displayed to the terminal:
+
++--
+% ./monitor
+
+Buildfile: monitor.xml
+
+usage:
+     [echo] This script allows the operator ...
+     [echo] 
+     [echo] List all of the available targets as follows:
+     [echo] monitor [-p | -projecthelp]
+     [echo] 
+     [echo] Execute one or more of the targets as follows:
+     [echo] monitor <target> [-Darg=<arg1> [-Darg=<arg2> [-Darg=<arg3>]]]
+     [echo] 
+     [echo] Execute a target with user name, password and SID as follows:
+     [echo] monitor <target> -Dusername=<username> -Dpassword=<password> -Dsid=<sid>
+
+BUILD SUCCESSFUL
+Total time: 0 seconds
++--
+
+  In order to view the available targets for the <monitor> script, execute the script as follows:
+
++--
+% ./monitor -p
+
+Buildfile: monitor.xml
+
+Main targets:
+
+  <target>          <Target description.>
+  ...
+Default target: usage
++--
+

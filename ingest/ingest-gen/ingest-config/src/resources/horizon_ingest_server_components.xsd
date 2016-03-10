@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+   Copyright (c) 2008-2013
+   Jet Propulsion Laboratory, California Institute of Technology
+   All rights reserved
+   
+   This XML schema defines HORIZON ingest server components.
+   
+   
+   @author T. Huang {Thomas.Huang@jpl.nasa.gov}
+   @version $Id: $
+-->
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+   xmlns:horizon.nasa="http://horizon.nasa.gov/webservice/schema"
+   targetNamespace="http://horizon.nasa.gov/webservice/schema" elementFormDefault="qualified">
+
+   <xsd:element name="components">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="component" minOccurs="1" maxOccurs="unbounded">
+               <xsd:complexType>
+                  <xsd:sequence>
+                     <xsd:element name="type" type="xsd:string"/>
+                     <xsd:element name="name" type="xsd:string"/>
+                     <xsd:element name="class" type="xsd:string"/>
+                     <xsd:element name="configuration" minOccurs="0" maxOccurs="1">
+                        <xsd:complexType>
+                           <xsd:sequence minOccurs="1" maxOccurs="unbounded">
+                              <xsd:element name="parameter" type="xsd:string"/>
+                              <xsd:element name="value" type="xsd:string"/>
+                           </xsd:sequence>
+                        </xsd:complexType>
+                     </xsd:element>
+                  </xsd:sequence>
+               </xsd:complexType>
+            </xsd:element>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+</xsd:schema>

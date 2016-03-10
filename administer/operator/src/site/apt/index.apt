@@ -1,0 +1,14 @@
+~~ Copyright 2009, by the California Institute of Technology.
+~~ ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+~~
+~~ $Id: $
+
+  ---
+  About DMAS Operator Tool
+  ---
+  Christian Alarcon
+  ---
+  
+About DMAS Operator Tool
+
+  The DMAS Operator Tool was designed as an interface for the Manager program set. It acts as a front end for various DMAS-operation related tasks such as granule management and storage management. This application uses a combination of JQuery and CSS3 for visual effect and appearances.

@@ -1,0 +1,96 @@
+#!/usr/bin/perl -w
+# -*-Perl-*-
+#
+### =============================================================== ###
+#                                                                     #
+#  The HORIZON SIP Submission Client Utility                          #
+#                                                                     #
+#  Function:                                                          #
+#  Submits SIP files to the HORIZON Ingestion Service.                #
+#  Use the help command option to display usage.                      #
+#                                                                     #
+#  Assumptions:                                                       #
+#  - Perl 5 is installed on the target platform in /usr/bin/perl      #
+#  - The $HORIZON environment variable must point to the directory    #
+#    containing the domain file, the SSL certificate, and             #
+#    ingestconfig.pm files.                                           #
+#                                                                     #
+#  Copyright (c) 2007, Jet Propulsion Laboratory,                     #
+#  California Institute of Technology.  All rights reserved           #
+#                                                                     #
+#  Created:                                                           #
+#  Aug. 27, 2007 T. Huang {Thomas.Huang@jpl.nasa.gov}                 #
+#                                                                     #
+#  Modifications:                                                     #
+#                                                                     #
+### =============================================================== ###
+#
+# $Id: $
+#
+
+use strict;
+use Getopt::Std;
+use File::Spec;
+die "[ERROR] HORIZON environment variable is not set.\n" unless $ENV{HORIZON};
+require File::Spec->catdir($ENV{HORIZON}, 'horizon_config.pm');
+                                                                                
+#umask 077;
+
+#set $debug to 1 to turn on trace info
+my $debug=0;
+
+my $javaCmd = &getCmd ($debug);
+my $classpath = $ENV{CLASSPATH} ? $ENV{CLASSPATH} : "";
+my $restartdir = $ENV{HORIZON_RESTART_DIR} ? $ENV{HORIZON_RESTART_DIR} : "user.home";
+my @args = &getJVMArgs($classpath, $debug);
+                                                                              
+my $logconfig = File::Spec->catdir($ENV{HORIZON}, 'horizon_client.lcf');
+
+my $isOption = 0;
+my @optArgv = ();
+
+foreach my $element (@ARGV) {
+        my $argument = "";
+        if($isOption == 1) {
+                $argument = $element;
+                $isOption = 0;
+        } else {
+                if(index($element, '-') == 0) {
+                        $argument = $element;
+                        if(length($element) == 2) {
+                                $isOption = 1;
+                        }
+                }
+        }
+        if($argument ne "") {
+                push(@optArgv, $argument);
+        }
+}
+my @tempArgv = @ARGV;
+@ARGV = @optArgv;
+my %options=();
+getopt ('f:n:u:p:r:h:t:s:z:w:e:', \%options);
+@ARGV = @tempArgv;
+
+my $logfile = "";
+
+if ($options{n}) {
+   $logfile = "ingest-client-$options{n}.log";
+}
+else {
+   $logfile =  File::Basename::basename($0).".log";
+}
+
+push @args, "-Dhorizon.home=$ENV{HORIZON}/../";
+push @args, "-Dhorizon.restart.dir=$restartdir";
+push @args, "-Dhorizon.logging.path=$ENV{HORIZON_LOGGING}";
+push @args, "-Dhorizon.logging.file=$logfile";
+push @args, "-Dlog4j.configuration=file://$logconfig";
+push @args, "-Dlog4j.configuratorClass=org.apache.log4j.xml.DOMConfigurator";
+push @args, "-Dhorizon.domain.file=$ENV{HORIZON}/horizon_domain.xml";
+push @args, "gov.nasa.horizon.ingest.client.IngestClient";
+push @args, @ARGV;
+
+print "\n $javaCmd @args\n\n" if ($debug);
+my $returnValue = system $javaCmd, @args;
+exit $returnValue >> 8;

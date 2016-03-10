@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Copyright 2013, by the California Institute of Technology. -->
+<!-- ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged. -->
+<!--  -->
+<!-- $Id: $ -->
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+   <properties>
+      <title>Release Description 5.0.0d</title>
+      <author>Christian Alarcon</author>
+   </properties>
+   <body>
+      <section name="Release Description 5.0.0d">
+         <p>This release of the Archive Program Set is a component of the integrated release (<a
+               href="../../cm/release/index-5.0.0d.html">5.0.0d</a>) of the HORIZON System. </p>
+         <p>Details on this release can be found in the following sections of this document:</p>
+         <ul>
+            <li><a href="#Capabilities">Capabilities</a></li>
+            <li><a href="#System_Requirements">System Requirements</a></li>
+            <li><a href="#Installation">Installation</a></li>
+            <li><a href="#Operation">Operation</a></li>
+         </ul>
+      </section>
+
+      <section name="Capabilities" id="Capabilities">
+         <p>This section details the new, modified and corrected capabilities that comprise this
+            release of the Middleware Program Set.</p>
+         <subsection name="New Capabilities">
+            <p>The following capabilities are new for this release</p>
+            <ul>
+               <li>NONE</li>
+            </ul>
+         </subsection>
+
+         <subsection name="Modified Capabilities">
+            <p>The following capabilities have been modified for this release</p>
+            <ul>
+               <li>NONE</li>
+            </ul>
+         </subsection>
+
+         <subsection name="Corrected Capabilities">
+            <p>The following capabilities have been corrected for this release</p>
+            <ul>
+               <li>NONE</li>
+            </ul>
+         </subsection>
+      </section>
+
+      <section name="System Requirements" id="System_Requirements">
+         <p>The software contained in this program set was developed using Java and will run on any
+            platform with a supported Java Runtime Environment (JRE). The software was specifically
+            developed under Sun Java version 1.7 and has only been tested with this version.</p>
+         <ul>
+            <li>HORIZON Standard Computing Environment<p>This will eventually be documented on the
+                  Wiki and linked to in future releases. For now, the following software and tools
+                  should be available in the current environment:</p>
+               <ul>
+                  <li>Apache Ant 1.8.2</li>
+                  <li>Apache Maven 2.2.1</li>
+                  <li>Grails 2.2.4</li>
+                  <li>Groovy 2.0.8</li>
+                  <li>Sun Java Standard Edition (J2SE) 1.7.x</li>
+               </ul>
+            </li>
+         </ul>
+      </section>
+
+      <section name="Installation" id="Installation">
+         <p>The Archive module installation is covered in the <a href="../install/index.html"
+               >Archive Installation</a> document.</p>
+      </section>
+
+      <section name="Operation" id="Operation">
+         <p>The operation of this module is covered in the <a href="../operate/index.html">Security
+               Operation</a> document.</p>
+      </section>
+
+   </body>
+</document>

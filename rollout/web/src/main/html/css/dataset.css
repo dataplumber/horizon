@@ -1,0 +1,369 @@
+@import "../js/dojo/resources/dojo.css";
+
+/*
+@import "../js/dijit/themes/tundra/tundra.css";
+@import "../js/dojox/grid/resources/Grid.css"
+@import "../js/dojox/grid/resources/tundraGrid.css";
+@import "../js/dijit/themes/soria/soria.css";
+@import "../js/dojox/grid/resources/soriaGrid.css";
+*/
+@import "../js/dijit/themes/claro/claro.css";
+@import "../js/dojox/grid/resources/claroGrid.css";
+
+/*
+@import "../js/dijit/themes/soria/soria.css";
+@import "../js/dojox/grid/resources/soriaGrid.css";
+
+@import "../js/dijit/themes/soria/nihilo.css";
+@import "../js/dojox/grid/resources/nihiloGrid.css";
+*/
+html, body{	
+	width: 100%;	/* make the body expand to fill the visible window */
+	height: 100%;
+	/*overflow: hidden;	/* erase window level scrollbars */
+	padding: 0 0 0 0;
+	margin: 0px 0 0px 0;
+	font: 10pt Arial,Myriad,Tahoma,Verdana,sans-serif;
+	background-color: #BEC3C6;
+	background: url(../images/bg.jpg) repeat-x #BEC3C6;;
+}
+
+#main{
+	margin: 0 auto;
+	/*width:900px;*/
+	height: 100%;
+	/*min-height: 550px;*/
+	padding: 0 0 0 0;
+}
+
+.uploadBtn{
+    border:1px solid #333333;
+    /*border-color:#366dba;*/
+    background: #ededed url(../js/dijit/themes/tundra/images/buttonActive.png) bottom repeat-x;
+    /*font-size:14px;*/
+    width:201px;
+    height:30px;
+    vertical-align:middle; /* emulates a <button> if node is not */
+    text-align:center;
+}
+.uploadHover{
+    border-color: #a5beda;
+    border-bottom-color:#5c7590;
+    color:#243C5F;
+    background:#fcfdff url(images/buttonHover.png) repeat-x bottom;
+    cursor:pointer;
+}
+
+.uploadPress{
+    background:#CCC;
+}
+.uploadDisabled{
+    background-image:none;
+    background-color:#666;
+    color:#999;
+    border:1px solid #999;
+}
+
+
+
+#banner {
+background-color: #333333; 
+background: -webkit-gradient(linear, left top, left 25, from(#000000), color-stop(4%, #444), to(#000000));
+background: -moz-linear-gradient(top, #000000, #444 1px, #000000 25px);
+color: #333;
+height: 32px;
+padding:0;
+border:none;
+/*padding:3px; */
+}
+
+#banner .title{
+font-size:1.5em;
+font-weight:bold;
+color:#fff;
+padding-top:4px;
+}
+
+#banner .home-link {
+display:block;
+float:left;
+width: 40px;
+margin: 2px 4px;
+height:100%;
+background: url(../images/home-icon.png) no-repeat;
+}
+
+#banner .user-name {
+padding: 8px 15px;
+float:right;
+color:#fff;
+font-weight:bold;
+border-left: 1px solid #666;
+border-right: 1px solid #666;
+cursor: pointer;
+}
+
+#banner .user-name:hover {
+background: #444;
+}
+
+#banner .short-name{
+font-size:1.0em;
+font-weight:normal;
+color:#fff;
+padding:8px;
+float:right;
+}
+
+.user-info {
+position:absolute;
+top:32px;
+right:0;
+width: 150px;
+height: 68px;
+background: #fff;
+padding: 10px;
+z-index:6;
+
+border: 1px solid #888888;
+border-top: none;
+-moz-border-radius: 0 0 6px 6px;
+-webkit-border-radius: 0 0 6px 6px;
+-moz-box-shadow: -2px 6px 4px rgba(0, 0, 0, 0.3);
+
+display:none;
+}
+
+#top{
+background-color: #333333; 
+color: #ffffff;
+padding:0px; 
+border: 0;
+background: url(../images/top.gif) repeat-x;
+height: 37px;
+}
+
+#top-left{
+height: 37px;
+width: 25px;
+background: url(../images/top-left.gif);
+float: left;
+}
+
+#top-right{
+height: 37px;
+width: 90px;
+background: url(../images/top-right.gif);
+float: right;
+}
+
+#footer {
+background-color: #333333; 
+color: #ffffff;
+padding:0px; 
+border: 0;
+background: url(../images/bottom.gif);
+height: 37px;
+}
+
+#bottom-left {
+height: 37px;
+width: 25px;
+background: url(../images/bottom-left.gif);
+float: left;
+}
+
+#bottom-right {
+height: 37px;
+width: 90px;
+background: url(../images/bottom-right.gif);
+float: right;
+}
+
+
+
+.dijitTextBox,
+.dijitValidationTextBox                  
+.dijitTextBox,
+.dijit.FilteringSelect,
+.tundra .dijitTextArea.myField,
+.dijitComboBox
+{
+        width:400px;
+        margin:5px 0 0 0;
+}
+
+.dijitTimeTextBox,.dijitDateTextBox
+{
+	width:110px;
+}
+
+.claro .dojoxGridRow {
+	line-height: 21px;
+}
+
+/* list of messages
+TODO: If i add the rules below as a plain tr/td it seems to mess up accordion, tree, etc. ???
+*/
+#listPane tr:hover, #listPane td:hover, .dijitTreeContent:hover {
+	background-color: #ededed;
+	color: #333;
+	cursor: pointer;
+}
+#listPane tr, #listPane td { cursor: pointer; }
+
+table.demoTable {
+	border-collapse: collapse;	
+}
+
+th {
+	background-color: #4f8ce5; 
+	color: #666; 
+	font-weight:: bold !important;
+	margin:0;
+	padding:3px; 
+	background-image:url('../js/dijit/themes/tundra/images/titleBar.png');
+	background-position:0px -1px; 
+}
+
+.dijitRtl caption,
+.dijitRtl th {
+	text-align:right;
+}
+
+th .arrowNode { 
+	position:relative; 
+	float:left;
+	top:4px;
+	left:4px; 
+	width:16px;
+	height:16px;
+}
+
+.dijitRtl th .arrowNode{
+	float:right;	
+}
+
+th.arrowUp .arrowNode {
+	margin-right: 5px;
+	margin-top: -4px;
+	margin-bottom: 5px;
+	width: 15px;
+	height:15px;
+	background:transparent url("../js/dijit/themes/tundra/images/spriteRoundedIconsSmall.png") -45px top no-repeat;
+}
+
+th.arrowDown .arrowNode {
+	margin-right: 5px;
+	margin-top: -4px;
+	margin-bottom: 5px;
+	width: 15px;
+	height:15px;
+	background:transparent url("../js/dijit/themes/tundra/images/spriteRoundedIconsSmall.png") -15px top no-repeat;
+}
+
+.demoTable td { padding:3px; } 
+.demoTable {
+	border-spacing:0; 
+	padding:0; margin:0; 
+	width:98%;
+	
+}
+.oddRow {
+	background-color: #f2f5f9;
+}
+
+.selectedRow {
+	background-color: black;
+}
+
+#message {
+	padding: 8px;
+}
+
+/* Icons */
+
+.mailIconCancel,
+.mailIconOptions,
+.mailIconFolderDocuments,
+.mailIconFolderInbox,
+.mailIconFolderSent,
+.mailIconGetMail,
+.mailIconNewMessage,
+.mailIconMailbox,
+.mailIconOk,
+.mailIconTrashcanFull {
+	background-image: url('../images/icons.png'); /* mail icons sprite image */
+	background-repeat: no-repeat; 
+	width: 16px;
+	height: 16px;
+	text-align: center;
+	padding-right:4px; 
+}
+
+.dj_ie6 .mailIconCancel,
+.dj_ie6 .mailIconOptions,
+.dj_ie6 .mailIconFolderDocuments,
+.dj_ie6 .mailIconFolderInbox,
+.dj_ie6 .mailIconFolderSent,
+.dj_ie6 .mailIconGetMail,
+.dj_ie6 .mailIconNewMessage,
+.dj_ie6 .mailIconMailbox,
+.dj_ie6 .mailIconOk,
+.dj_ie6 .mailIconTrashcanFull {
+	background-image: url('../images/icons.gif');
+}
+
+
+.mailIconCancel { background-position: 0px; }
+.mailIconOptions { background-position: -22px; }
+.mailIconFolderDocuments { background-position: -44px; }
+.mailIconFolderInbox { background-position: -66px; }
+.mailIconFolderSent { background-position: -88px; }
+.mailIconGetMail { background-position: -110px; }
+.mailIconNewMessage { background-position: -132px; }
+.mailIconMailbox { background-position: -154px; }
+.mailIconOk { background-position: -176px; }
+.mailIconTrashcanFull { background-position: -198px; }
+
+/* page inline styles */
+
+#inbox .dijitSplitterH { height: 5px }
+#inbox .dijitSplitterV { width: 5px }
+
+#preLoader {
+	width:100%; height:100%; margin:0; padding:0;
+	position:absolute; top:0; left:0;
+	background:#fff url('../js/dojox/image/resources/images/loading.gif') no-repeat center center;
+	z-index:999;
+}
+#preLoader p {
+	color:#ededed;
+	font:72pt Arial,san-serif;
+	font-weight:bold;
+	
+}
+
+/* buttons on Contact tab for filtering list of contacts to a given letter */
+.contactIndex, .contactIndexAll {
+	margin: 0.5em;
+	color: blue;
+	font-style: italic;
+	vertical-align: middle;
+	cursor: pointer;
+}
+.contactIndexAll {
+	/* for the word ALL that appears before and after the letters A-Z */
+	color: purple;
+}
+.contactIndexSelected {
+	/* the most recently selected letter gets this class too */
+	color: red;
+}
+
+.error-message{
+    padding:2px;
+    border: red 1px solid;
+    color: red;
+    margin-left: 20px;
+}

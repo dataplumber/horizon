@@ -1,0 +1,59 @@
+~~ Copyright 2010, by the California Institute of Technology.
+~~ ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+~~
+~~ $Id: $
+
+  ---
+  Release Description 3.0.0
+  ---
+  Michael Gangl
+  ---
+
+Release Description 3.0.0
+
+  This release of the Distribute Program Set is a component of the integrated release ({{{../../cm/release/index-3.0.0.html}3.0.0}}) of the PO.DAAC System. This release is intended as an operational release. The following sections can be found in this document:
+
+  * {{{Capabilities}Capabilities}}
+
+  * {{{Liens}Liens}}
+
+  * {{{System_Requirements}System Requirements}}
+
+  * {{{Installation}Installation}}
+
+  * {{{Operation}Operation}}
+
+
+{Capabilities}
+
+  This section details the new, modified and corrected capabilities that comprise this release of the Inventory Program Set. In lieu of listing the capabilities by requirement they have been summarized. For a complete list of the requirements and their support status, see {{{Appendix_A_-_Requirements_Support}Appendix A}}.
+
+* New Capabilities
+
+  * Echo granule export can now export polygon infromation stored in the granule_spatial tables.
+
+  * -fb option has been added to force the "bounding-box" spatial type. Normal operation is to use the spatial element if it exists.
+
+  * Datacast can now write out polygon information for extent info.
+
+* Modified Capabilities
+
+  * N/A
+
+* Corrected Capabilies
+
+  * Corrected some incorrect mapping for the datacast item files.
+
+  * Added archive center name PO.DAAC to ECHO collection export.
+  
+[]
+
+{Installation}
+
+  This section details the procedures for installing and configuring the software in this program set. Installation is covered in a separate {{{../distribute-main/install/index.html}Installation}} document.
+
+{Operation}
+
+  This section details any necessary setup and the commands for running the applications in this program set. Operation is covered in a separate {{{../distribute-main/operate/index.html}Operation}} document.
+
+

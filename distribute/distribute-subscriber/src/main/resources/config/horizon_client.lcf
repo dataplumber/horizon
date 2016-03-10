@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<!--
+   Logging configuration file used by the HORIZON logging framework.
+   It configures logging levels and output targets for 
+   server processes.
+   
+   @author T. Huang {Thomas.Huang@jpl.nasa.gov}
+   @version $Id: horizonserver.lcf 9749 2012-03-13 15:58:31Z nchung $
+-->
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false">
+    <appender name="FILE" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="${user.home}/logs/${horizon.logging.file}"/>
+        <param name="Append" value="true"/>
+        <param name="ImmediateFlush" value="true"/>
+        <!-- Configure to logger to create a new log file for each day.  -->
+        <!--   other rollover DataPattern value includes                 -->
+        <!--     '.'yyyy-MM          - rollover at the beginning of each -->
+        <!--                           month                             -->
+        <!--     '.'yyyy-ww          - rollover at the first day of each -->
+        <!--                           week                              -->
+        <!--     '.'yyyy-MM-dd-a     - rollover at midnight and midday of-->
+        <!--                           each day                          -->
+        <!--     '.'yyyy-MM-dd-HH    - rollover at the top of each hour  -->
+        <!--     '.'yyyy-MM-dd-HH-mm - rollover at the beginning of every-->
+        <!--                           minute                            -->
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %-5p [%c{1}:%L] {%t} %m%n"/>
+        </layout>
+    </appender>
+    <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+        <param name="Target" value="System.out"/>
+        <param name="Threshold" value="DEBUG"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{ABSOLUTE} %-5p [%c{1}:%L] {%t} %m%n"/>
+        </layout>
+    </appender>
+        <appender name="STDOUT" class="org.apache.log4j.ConsoleAppender">
+        <param name="Target" value="System.out"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%p] %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="INFO"/>
+            <param name="LevelMax" value="INFO"/>
+        </filter>
+    </appender>
+    <appender name="STDERR" class="org.apache.log4j.ConsoleAppender">
+        <param name="Target" value="System.err"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%p] %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="WARN"/>
+            <param name="LevelMax" value="FATAL"/>
+        </filter>
+    </appender>
+    <!--                          -->
+    <!-- Declare the SMTPAppender -->
+    <!--                          -->
+    <appender name="EMAIL" class="org.apache.log4j.net.SMTPAppender">
+        <param name="BufferSize" value="512"/>
+        <param name="SMTPHost" value="mail.jpl.nasa.gov"/>
+        <param name="From" value="Thomas.Huang@jpl.nasa.gov"/>
+        <param name="To" value="Thomas.Huang@jpl.nasa.gov"/>
+        <param name="Subject" value="Ingest Server ${ingest.server.name} Message"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%d{ISO8601}]%n%n%-5p%n[%c:%L]%n%m%n%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="ERROR"/>
+            <param name="LevelMax" value="FATAL"/>
+        </filter>
+    </appender>
+    <logger name="org.apache.zookeeper">
+        <!-- Print only messages of level info or above in the package org.apache.zookeeper -->
+        <level value="warn"/> 
+    </logger>
+    <logger name="org.apache.commons.httpclient">
+        <!-- Print only messages of level info or above in the package org.apache.commons.httpclient -->
+        <level value="info"/> 
+    </logger>
+    <!--                           -->
+    <!-- setup log4j's root logger -->
+    <!--                           -->
+    <root>
+        <level value="INFO"/>
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="STDERR"/>
+        <!-- <appender-ref ref="EMAIL"/> -->
+    </root>
+</log4j:configuration>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+   Copyright (c) 2008-2013
+   Jet Propulsion Laboratory, California Institute of Technology
+   All rights reserved
+   
+   This XML schema defines service management message exchanged between agents
+   of HORIZON services
+   
+   @author T. Huang {Thomas.Huang@jpl.nasa.gov}
+   @version $Id: $
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:horizon.nasa="http://horizon.nasa.gov"
+   targetNamespace="http://horizon.nasa.gov" elementFormDefault="qualified">
+
+   <xsd:complexType name="Management">
+      <xsd:annotation>
+         <xsd:documentation> Definition of agent message format. The message should be used to
+            dynamically configure a serivce. </xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element name="connections" type="xsd:nonNegativeInteger"/>
+         <xsd:element name="serviceThreads" type="xsd:nonNegativeInteger"/>
+         <xsd:element name="memoryUsage" type="xsd:nonNegativeInteger"/>
+         <xsd:element name="memoryThreshold" type="xsd:nonNegativeInteger"/>
+         <xsd:element name="upTime" type="xsd:duration"/>
+         <xsd:element name="message" type="xsd:string"/>
+      </xsd:sequence>
+      <xsd:attribute name="opcode" use="required">
+         <xsd:simpleType>
+            <xsd:annotation>
+               <xsd:documentation> The opcode sent between agents. More opcodes will be added in the
+                  future. </xsd:documentation>
+            </xsd:annotation>
+            <xsd:restriction base="xsd:string">
+               <xsd:enumeration value="STATS"/>
+               <xsd:enumeration value="CONFIG_CHANGE"/>
+               <xsd:enumeration value="HOTBOOT"/>
+               <xsd:enumeration value="SHUTDOWN"/>
+               <xsd:enumeration value="ERROR"/>
+            </xsd:restriction>
+         </xsd:simpleType>
+      </xsd:attribute>
+      <xsd:attribute name="requester" type="xsd:string" use="optional"/>
+   </xsd:complexType>
+
+</xsd:schema>

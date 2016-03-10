@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+
+<!-- 
+  Copyright 2009, by the California Institute of Technology.
+  ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+
+  $Id: distribute-gcmd.xml 2941 2009-05-03 20:35:52Z shardman $
+-->
+
+<assembly xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+  http://maven.apache.org/xsd/assembly-1.0.0.xsd">
+  <id>distribute-gcmd</id>
+  <formats>
+    <format>tar.gz</format>
+  </formats>
+  <fileSets>
+    <fileSet>
+      <directory>target</directory>
+      <outputDirectory>.</outputDirectory>
+      <includes>
+        <include>*.jar</include>
+      </includes>
+    </fileSet>
+    <fileSet>
+      <directory>target/config</directory>
+      <outputDirectory>.</outputDirectory>
+      <fileMode>644</fileMode>
+      <lineEnding>unix</lineEnding>
+    </fileSet>
+  </fileSets>
+  <dependencySets>
+    <dependencySet>
+      <outputDirectory>lib</outputDirectory>
+      <unpack>false</unpack>
+      <scope>runtime</scope>
+    </dependencySet>
+  </dependencySets>
+</assembly>

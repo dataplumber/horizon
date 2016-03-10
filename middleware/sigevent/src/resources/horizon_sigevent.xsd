@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+  Copyright (c) 2013
+  Jet Propulsion Laboratory, California Institute of Technology
+  All rights reserved
+  
+  This XML schema defines DMAS sigevent message specifications
+  
+  @version $Id: $
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:dmas.nasa="http://dmas.jpl.nasa.gov"
+   targetNamespace="http://dmas.jpl.nasa.gov" elementFormDefault="qualified">
+   <xsd:element name="Response">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="AvailablePages" minOccurs="0" maxOccurs="1"
+               type="xsd:nonNegativeInteger">
+               <xsd:annotation>
+                  <xsd:documentation>The number of available pages of content</xsd:documentation>
+               </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="Content" type="dmas.nasa:ContentType"/>
+            <xsd:element name="CurrentPage" minOccurs="0" maxOccurs="1"
+               type="xsd:nonNegativeInteger">
+               <xsd:annotation>
+                  <xsd:documentation>The current page of content</xsd:documentation>
+               </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="Type" type="dmas.nasa:ResponseStatusType"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+
+   <xsd:complexType name="ContentType" mixed="true">
+      <xsd:choice minOccurs="0" maxOccurs="unbounded">
+         <xsd:element name="SysEvents" type="dmas.nasa:SysEventsType"/>
+         <xsd:element name="SysEventGroups" type="dmas.nasa:SysEventGroupsType"/>
+         <xsd:element name="SysUsers" type="dmas.nasa:SysUsersType"/>
+         <xsd:element name="SysNotifies" type="dmas.nasa:SysNotifiesType"/>
+         <xsd:element name="SysConstants" type="dmas.nasa:SysConstantsType"/>
+      </xsd:choice>
+   </xsd:complexType>
+
+   <xsd:simpleType name="ResponseStatusType">
+      <xsd:annotation>
+         <xsd:documentation>Defines possible status code for response.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:string">
+         <xsd:enumeration value="OK"/>
+         <xsd:enumeration value="ERROR"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+
+   <xsd:simpleType name="SysEventCategoryType">
+      <xsd:annotation>
+         <xsd:documentation>Defines possible event type.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:string">
+         <xsd:enumeration value="INFO"/>
+         <xsd:enumeration value="WARN"/>
+         <xsd:enumeration value="ERROR"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+
+   <xsd:simpleType name="MessageContentType">
+      <xsd:annotation>
+         <xsd:documentation>Defines possible message content type.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:string">
+         <xsd:enumeration value="COMPLETE"/>
+         <xsd:enumeration value="DESCRIPTION"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+
+   <xsd:simpleType name="MessageFormatType">
+      <xsd:annotation>
+         <xsd:documentation>Defines possible message format type.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:string">
+         <xsd:enumeration value="TEXT"/>
+         <xsd:enumeration value="XML"/>
+         <xsd:enumeration value="JSON"/>
+         <xsd:enumeration value="TWEET"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+
+   <xsd:simpleType name="NotifyMethodType">
+      <xsd:annotation>
+         <xsd:documentation>Defines possible notify method type.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:string">
+         <xsd:enumeration value="EMAIL"/>
+         <xsd:enumeration value="JMS"/>
+         <xsd:enumeration value="MULTICAST"/>
+         <xsd:enumeration value="TWITTER"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+
+   <xsd:complexType name="SysEventGroupsType">
+      <xsd:sequence>
+         <xsd:element name="SysEventGroup" maxOccurs="unbounded" type="dmas.nasa:SysEventGroupType"
+         />
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="SysEventGroupType">
+      <xsd:annotation>
+         <xsd:documentation>Defines the event group information.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element ref="dmas.nasa:Id"/>
+         <xsd:element ref="dmas.nasa:Type"/>
+         <xsd:element ref="dmas.nasa:Category"/>
+         <xsd:element name="PurgeRate" type="xsd:nonNegativeInteger">
+            <xsd:annotation>
+               <xsd:documentation>The frequency for purging registered events. In unit of
+                  Day(s).</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="SysEventsType">
+      <xsd:sequence>
+         <xsd:element name="SysEvent" maxOccurs="unbounded" type="dmas.nasa:SysEventType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="SysEventType">
+      <xsd:annotation>
+         <xsd:documentation>Defines the event information.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element ref="dmas.nasa:Id"/>
+         <xsd:element ref="dmas.nasa:Category"/>
+         <xsd:element ref="dmas.nasa:Type"/>
+         <xsd:element name="DataSize" type="xsd:nonNegativeInteger">
+            <xsd:annotation>
+               <xsd:documentation>Size of any relevant data associated with the event, such as input
+                  data, stacktrace, etc.</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="DataUrl" type="xsd:anyURI">
+            <xsd:annotation>
+               <xsd:documentation>Link to show any relevant data associated with the event, such as
+                  input data, stacktrace, etc.</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="Computer" type="xsd:string">
+            <xsd:annotation>
+               <xsd:documentation>The name or IP address of the computer that reported the
+                  event</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="Description" type="xsd:string">
+            <xsd:annotation>
+               <xsd:documentation>The description of the event</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="FirstReceived" type="xsd:nonNegativeInteger">
+            <xsd:annotation>
+               <xsd:documentation>The initial time when the event was reported</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="LastReceived" type="xsd:nonNegativeInteger">
+            <xsd:annotation>
+               <xsd:documentation>The last receive time of the event</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="Occurrence" type="xsd:nonNegativeInteger">
+            <xsd:annotation>
+               <xsd:documentation>The source of the event. It might just be the name of the program
+                  that reported the event.</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="Pid" type="xsd:nonNegativeInteger" nillable="true">
+            <xsd:annotation>
+               <xsd:documentation>The process ID</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="Provider" type="xsd:string">
+            <xsd:annotation>
+               <xsd:documentation>The owner of the source of event</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="Resolution" type="xsd:string">
+            <xsd:annotation>
+               <xsd:documentation>A description on how the event got resolved</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="ResolvedAt" type="xsd:nonNegativeInteger" nillable="true">
+            <xsd:annotation>
+               <xsd:documentation>The time when the event was resolved</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="Source" type="xsd:string">
+            <xsd:annotation>
+               <xsd:documentation>The source of the event. It might just be the name of the program
+                  that reported the event.</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="Data" type="xsd:string" minOccurs="0">
+            <xsd:annotation>
+               <xsd:documentation>Any relevant data associated with the event, such as input data,
+                  stacktrace, etc.</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="SysNotifiesType">
+      <xsd:sequence>
+         <xsd:element name="SysNotify" maxOccurs="unbounded" type="dmas.nasa:SysNotifyType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="SysNotifyType">
+      <xsd:annotation>
+         <xsd:documentation>Defines the notification information.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element ref="dmas.nasa:Id"/>
+         <xsd:element ref="dmas.nasa:Category"/>
+         <xsd:element ref="dmas.nasa:Type"/>
+         <xsd:element name="Method" type="dmas.nasa:NotifyMethodType">
+            <xsd:annotation>
+               <xsd:documentation>The method for notification</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="Contact" type="xsd:string">
+            <xsd:annotation>
+               <xsd:documentation>The actual contact info - email address or JMS
+                  topic</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="Rate" type="xsd:nonNegativeInteger">
+            <xsd:annotation>
+               <xsd:documentation>The rate of notification. This is in units of
+                  minutes.</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="RemindRate" type="xsd:nonNegativeInteger">
+            <xsd:annotation>
+               <xsd:documentation>The rate at which to send reminder notification. This is in units
+                  of hours.</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="MessageFormat" type="dmas.nasa:MessageFormatType">
+            <xsd:annotation>
+               <xsd:documentation>The message format</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="Content" type="dmas.nasa:MessageContentType">
+            <xsd:annotation>
+               <xsd:documentation>The content to be delivered</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="LastReport" type="xsd:nonNegativeInteger">
+            <xsd:annotation>
+               <xsd:documentation>The last time an outgoing message was
+                  generated</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="LastNotified" type="xsd:nonNegativeInteger">
+            <xsd:annotation>
+               <xsd:documentation>The last time this subscriber was notified</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="LastRemind" type="xsd:nonNegativeInteger" nillable="true">
+            <xsd:annotation>
+               <xsd:documentation>The last time this subscriber was reminded of unresolved
+                  events</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="Note" type="xsd:string">
+            <xsd:annotation>
+               <xsd:documentation>Any note associate with this subscriber</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="SysUsersType">
+      <xsd:sequence>
+         <xsd:element name="SysUser" type="dmas.nasa:SysUserType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="SysUserType">
+      <xsd:annotation>
+         <xsd:documentation>Defines the user's information.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element ref="dmas.nasa:Id"/>
+         <xsd:element name="Username" type="xsd:string"/>
+         <xsd:element name="Role" type="xsd:string"/>
+         <xsd:element name="Setting" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="SysConstantsType">
+      <xsd:sequence>
+         <xsd:element name="SysConstant" maxOccurs="unbounded" type="dmas.nasa:SysConstantType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="SysConstantType">
+      <xsd:sequence>
+         <xsd:element name="Value" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:element name="Id" type="xsd:nonNegativeInteger">
+      <xsd:annotation>
+         <xsd:documentation>Unique identifier</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:element name="Category" type="xsd:string">
+      <xsd:annotation>
+         <xsd:documentation>User defined event category that will be filtered by any subscriber e.g.
+            SECURITY category is to capture any security event</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:element name="Type" type="dmas.nasa:SysEventCategoryType">
+      <xsd:annotation>
+         <xsd:documentation>The event level to distinguish the event from an information message to
+            an alert message</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+</xsd:schema>

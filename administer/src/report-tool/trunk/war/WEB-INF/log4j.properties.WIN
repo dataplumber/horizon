@@ -1,0 +1,21 @@
+# For JBoss: Avoid to setup Log4J outside $JBOSS_HOME/server/default/deploy/log4j.xml!
+# For all other servers: Comment out the Log4J listener in web.xml to activate Log4J.
+log4j.rootLogger=INFO, stdout, logfile
+
+log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
+log4j.appender.stdout.layout.ConversionPattern=%d %p [%c] - <%m>%n
+
+log4j.appender.logfile=org.apache.log4j.RollingFileAppender
+# for WIN
+log4j.appender.logfile.File=C:/Users/msun/software/apache-tomcat-5.5.23/logs/report.log
+# for MAC
+##log4j.appender.logfile.File=/Users/pan/work/jpl/PODAAC/Tomcat/apache-tomcat-5.5.20/logs/springapp.log
+# for LINUX
+##log4j.appender.logfile.File=/opt/tomcat5/logs/report.log
+log4j.appender.logfile.MaxFileSize=512KB
+# Keep three backup files.
+log4j.appender.logfile.MaxBackupIndex=3
+# Pattern to output: date priority [category] - message
+log4j.appender.logfile.layout=org.apache.log4j.PatternLayout
+log4j.appender.logfile.layout.ConversionPattern=%d %p [%c] - %m%n

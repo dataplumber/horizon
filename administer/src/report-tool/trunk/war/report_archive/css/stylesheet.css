@@ -1,0 +1,9 @@
+TEXTAREA.readonly {COLOR: #333333; BACKGROUND-COLOR: #CCCCCC;}
+TEXTAREA.rw {COLOR: #000000; BACKGROUND-COLOR: #FFFFFF;}
+TEXTAREA.append {COLOR: #999999; BACKGROUND-COLOR: #FFFFFF;}
+h1,h2,h3,h4,h5,h6 
+{
+color: #0099CC
+}
+p.wrap{width: 660px; margin-right: 20px; margin-left: 20px;}
+p.wrap1{color: red; width: 660px; margin-right: 10px; margin-left: 10px;}

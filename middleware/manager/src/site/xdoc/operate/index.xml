@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Copyright 2013, by the California Institute of Technology. -->
+<!-- ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged. -->
+<!--  -->
+<!-- $Id: $ -->
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+   <properties>
+      <title>Operation</title>
+      <author>T. Huang</author>
+   </properties>
+   <body>
+      <section name="Overview">
+         <p>Manager is a middleware web service implemented using the <a class="externalLink"
+               href="http://grails.org">Grails</a> web framework. The purpose of this middleware is
+            to be the management service for data ingestion and archival federation. Some of the
+            capabilities of the Manager include</p>
+         <ul>
+            <li>User management</li>
+            <li>Service management</li>
+            <li>Storage management</li>
+            <li>Load-Balanced job assignment</li>
+            <li>Automatic retry</li>
+            <li>Service monitoring</li>
+         </ul>
+      </section>
+      <section name="Service Architecture">
+         <p>The illustration below is the higher level architectural diagram of a system using the
+            Manager. Both the Ingest and Archive services can be deployed dynamically without
+            rebooting the Manager.</p>
+         <img src="../images/manager_arch.jpg" alt="Service Architecture"/>
+      </section>
+      <section name="State Machine">
+         <p>The illustration below identifies the states for handling a product from initial
+            ingestion request to archived. When a product has been successfully archived, Manager
+            automatically triggers cleanup on the ingest's staging area.</p>
+         <img src="../images/manager_states.jpg" alt="State Machines" width="800"/>
+      </section>
+      <section name="Start and Stop Manager Web Service">
+         <p>For the current distribution of Manager Web Service runs as a Grail application. There
+            are ways to package the Manager as a WAR (Web Archive) for service container (Tomcat,
+            Jetty, etc) deployment, but this deploymebnt model has not be tested by the DMAS
+            development team.</p>
+         <ul>
+            <li><i>Start the service</i> By default, the service listens on TCP port 8080 (by
+               default)
+               <source>
+% grails -Dgrails.env=development run-app
+# look for message
+# Server running. Browse to http://localhost:8080/manager
+               </source>
+            </li>
+            <li><i>Stop the service</i> Opeartor could stop the serivce by issuing <i>Control-C</i>
+               or use the system's <i>kill</i> command. </li>
+         </ul>
+      </section>
+   </body>
+</document>

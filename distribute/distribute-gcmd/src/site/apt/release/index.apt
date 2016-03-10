@@ -1,0 +1,69 @@
+~~ Copyright 2009, by the California Institute of Technology.
+~~ ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+~~
+~~ $Id: index.apt 5914 2010-09-19 01:01:28Z thuang $
+
+  ---
+  Release Description
+  ---
+  Dawn Finney, Sean Hardman
+  ---
+  
+Release Description
+
+  The following releases have been recorded for the application:
+
+  * Version: 1.0.7
+
+    * Date: 2009-08-11
+
+    * Description: Added Data_Set_Language field and more comments to various files.
+
+  * Version: 1.0.6.2
+
+    * Date: 2009-08-04
+
+    * Description: Made both Last_DIF_Revision_Date and DIF_Creation_Date to be the same date, both the same as the day the program generated the files. Updated global.txt to include Project and IDN_Node lines.
+
+  * Version: 1.0.6.1
+
+    * Date: 2009-07-24
+
+    * Description: Removed Vertical Resolution and Vertical Resolution Range fields. Added Project and IDN_Node fields.
+
+  * Version: 1.0.6
+
+    * Date: 2009-07-22
+
+    * Description: Fixed bug with empty sheets and removing empty rows. Now allows for multiple topics on Parameters sheet.
+
+  * Version: 1.0.5
+
+    * Date: 2009-07-10
+
+    * Description: Fixed bug. Now will attempt to change illegal XML characters to their XML acceptable form. Changed program name. Help feature also lists version and last revision date.
+
+  * Version: 1.0.5
+
+    * Date: 2009-06-30
+
+    * Description: Added help feature accessible by not inputing any files into the program: java -jar gcmd1.0.5.jar.
+
+  * Version: 1.0.4
+
+    * Date: 2009-06-25
+
+    * Description: Added ability to accept changes to environment variables like the test file. Arguments include: <output>, <flag>, <xlist>, <gcmd>, <xml> and <mainsave>.
+
+  * Version: 1.0.3
+
+    * Date: 2009-06-23
+
+    * Description: Added the ability to change the output directory through the text file.
+
+  * Version: 1.0.2
+
+    * Date: 2009-06-19
+
+    * Description: Fixed bug and changed so that files are passed directly to the jar file with no prompt.
+

@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+
+<!-- 
+   Copyright 2007, by the California Institute of Technology.
+   ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+   
+   Assembly file used to create client distribution
+   
+   @author Thomas Huang {Thomas.Huang@jpl.nasa.gov}
+   @version $Id: ingest-client.xml 2520 2009-01-30 02:16:29Z axt $
+-->
+
+<assembly xmlns="http://maven.apache.org/POM/4.0.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+   http://maven.apache.org/xsd/assembly-1.0.0.xsd">
+   <id>ingest-client</id>
+   <formats>
+      <format>tar.gz</format>
+   </formats>
+   <fileSets>
+      <fileSet>
+         <directory>target</directory>
+         <outputDirectory>lib</outputDirectory>
+         <includes>
+            <include>*.jar</include>
+         </includes>
+      </fileSet>
+      <fileSet>
+         <directory>src/main/resources/bin</directory>
+         <outputDirectory>bin</outputDirectory>
+         <includes>
+            <include>ingest</include>
+         </includes>
+         <fileMode>755</fileMode>
+         <lineEnding>unix</lineEnding>
+      </fileSet>
+      <fileSet>
+         <directory>src/main/resources/config</directory>
+         <outputDirectory>config</outputDirectory>
+         <includes>
+            <include>horizon_client.lcf</include>
+            <include>horizon_config.pm</include>
+            <include>horizon_domain.xml</include>
+         </includes>
+         <lineEnding>unix</lineEnding>
+         <fileMode>644</fileMode>
+      </fileSet>
+      <fileSet>
+         <directory>src/main/resources</directory>
+         <outputDirectory/>
+         <includes>
+            <include>useHORIZON.csh</include>
+         </includes>
+         <lineEnding>unix</lineEnding>
+         <fileMode>644</fileMode>
+      </fileSet>
+   </fileSets>
+   <dependencySets>
+      <dependencySet>
+         <outputDirectory>lib</outputDirectory>
+         <unpack>false</unpack>
+         <scope>runtime</scope>
+         <excludes>
+            <exclude>ant-*.jar</exclude>
+            <exclude>xerces*.jar</exclude>
+            <exclude>xml-api*.jar</exclude>
+            <exclude>junit*.jar</exclude>
+         </excludes>
+      </dependencySet>
+   </dependencySets>
+</assembly>

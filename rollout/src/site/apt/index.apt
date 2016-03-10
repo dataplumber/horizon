@@ -1,0 +1,14 @@
+~~ Copyright 2007, by the California Institute of Technology.
+~~ ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+~~
+~~ $Id: index.apt 6371 2010-11-24 21:58:36Z thuang $
+
+  ---
+  About Product Rollout
+  ---
+  Sean Hardman
+  ---
+  
+About Product Rollout
+
+  The Product Rollout program set integrates tools to capture descriptive information (name, author, source, etc) with operationally needed information to facilitate (cataloging, archive, and search) and with preservation information (length to retain, backup policy, etc). The Product Rollout program set accepts dataset metadata, attributes that apply to every granule of a dataset, and provides catalog information, the integrated information, to the Inventory program set in order to satisfy that higher level of metadata that is needed to properly manage a product.

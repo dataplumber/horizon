@@ -1,0 +1,1 @@
+1 22 * * 4  cd /home/tomcat/work/webapps/report-tool/trunk/src/util; source environment.sh; /usr/bin/ant run >> /home/tomcat/report_curl.log; date >> /home/tomcat/report_curl.log

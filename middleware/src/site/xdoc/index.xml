@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+   <properties>
+      <title>About Middleware</title>
+   </properties>
+   <body>
+   <!-- Copyright 2009 by the California Institute of Technology. -->
+   <!-- ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged. -->
+      <section name="About Middleware">
+         <p>The Middleware program set is part of the DMAS system, which
+            contains modules and services relate to the managing and
+            tracking the internals of DMAS. The services provides
+            security, job management, storage management, query, and
+            event notification functionalities.</p>
+      </section>
+   </body>
+</document>

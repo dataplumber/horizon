@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+   Copyright (c) 2008-2013
+   Jet Propulsion Laboratory, California Institute of Technology
+   All rights reserved
+   
+   This XML schema defines product message types used by the HORIZON services.
+   Example product message type includes Submission Information Package (SIP),
+   Archive Information Package (AIP), and Distribution Information Package (DIP)
+   
+   @author T. Huang {Thomas.Huang@jpl.nasa.gov}
+   @version $Id: $
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:horizon.nasa="http://horizon.nasa.gov"
+   targetNamespace="http://horizon.nasa.gov" elementFormDefault="qualified">
+   <xsd:include schemaLocation="horizon_metadata.xsd"/>
+   <xsd:include schemaLocation="horizon_header.xsd"/>
+   <xsd:include schemaLocation="horizon_ingest.xsd"/>
+
+   <xsd:complexType name="Submission">
+      <xsd:annotation>
+         <xsd:documentation> Defines the product submission message. Each submission must contain a
+            Header. Currently the system supports Ingest and Archive submissions</xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element name="header" type="horizon.nasa:Header">
+            <xsd:annotation>
+               <xsd:documentation> The submission message header </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="metadata" type="horizon.nasa:Metadata" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="ingest" type="horizon.nasa:Ingest" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="archive" type="horizon.nasa:Ingest" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="notification" type="horizon.nasa:Notification" minOccurs="0" maxOccurs="8">
+            <xsd:annotation>
+               <xsd:documentation> List of people to notify abound the status of this product
+                  message. </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+
+</xsd:schema>

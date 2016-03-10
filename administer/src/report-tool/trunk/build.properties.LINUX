@@ -1,0 +1,25 @@
+# Ant properties for building the springapp
+
+####appserver.home=${user.home}/jakarta-tomcat-5.0.28
+# for LINUX
+appserver.home=/home/tomcat/apache-tomcat-5.5.23
+# for MAC
+###appserver.home=${user.home}/work/jpl/PODAAC/Tomcat/apache-tomcat-5.5.20
+# for WIN
+##appserver.home=${user.home}/software/apache-tomcat-5.5.23
+deploy.path=${appserver.home}/webapps
+
+# for LINUX
+tomcat.manager.url=http://kepler.jpl.nasa.gov:8080/manager/html
+# for MAC
+###tomcat.manager.url=http://localhost:8080/manager/html
+tomcat.manager.username=tomcat
+tomcat.manager.password=password
+
+db.driver=org.hsqldb.jdbcDriver
+# for LINUX
+db.url=jdbc:hsqldb:/home/tomcat/dbs/report/db/report
+# for MAC and WIN
+###db.url=jdbc:hsqldb:db/report
+db.user=sa
+db.pw=

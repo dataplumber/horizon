@@ -1,0 +1,233 @@
+~~ Copyright 2008, by the California Institute of Technology.
+~~ ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+~~
+~~ $Id: index.apt 10156 2012-06-07 21:50:51Z gangl $
+
+  ---
+  Operation
+  ---
+  Mike Gangl
+  ---
+  
+Operation
+
+  This document describes how to use the Distribute software. Each section corresponds with an available application. The following sections can be found in this document:
+
+   * {{{Setup for IWS}Setup for IWS}}
+
+   * {{{createCollection.sh}createCollection.sh}}
+
+   * {{{echoExport.sh}echoExport.sh}}
+   
+   * {{{EMSReport.sh}EMSReport.sh}}
+   
+   * {{{Datacast.sh}Datacast.sh}}   
+
+   * {{{gcmdExport.sh}gcmdExport.sh}}
+
+
+{Setup for IWS}
+
+  Setting up the distribute tools for using the Inventory Web Service is straight forward. In the distribute.config file, you have the following applicable options:
+
++--
+gov.nasa.podaac.inventory.factory=gov.nasa.podaac.distribute.common.wsm.Query
+#gov.nasa.podaac.inventory.factory=gov.nasa.podaac.distribute.common.direct.Query
+inventory.ws.url=https://lanina
+inventory.ws.port=http://9192
+inventory.ws.user=
+inventory.ws.password=
++--
+
+  The web services version is set by default, but simply comment the "wsm" line and uncomment "direct" and you'll use the legacy hibernate system. 
+  
+  The URL, User and Password fields must be set accordingly for using the web service.  
+
+{echoExport.sh}
+
+  echoExport.sh is a utility which will create granule information for export to ECHO.
+
++--
+sh echoExport.sh 
+usage: ECHOExport [-a] [-c <collectionId>] [-C] [-cl <cid1,cid2,cid3,...>]
+       [-cr <startId:endId>] [-f <path>] [-g] [-p <password>] [-u <username>] [-U
+       <c,g>] [-v <path>]
+ -a,--all                             Export ECHO collection files
+                                      associated with the visibile products;
+ -c,--cid <collectionId>              Collection Id
+ -C,--collection                      Export collection file; Used with -c
+                                      and -g;
+ -cl,--cidList <cid1,cid2,cid3,...>   List of collection ids
+ -cr,--cidRange <startId:endId>       Range of collection ids
+ -f,--ftp <path>                      Ftp ECHO XML files in a given path;
+ -fb,--fb                             Forces the use of bounding box for
+                                      spatial element in export.
+ -g,--granule                         Export granule files of the given
+                                      collectionId; Used with 'c';
+ -p,--password <password>             FTP Password
+ -u,--username <username>             FTP User Name
+ -U,--upload <c,g>                    Upload files with optional arguments
+                                      where 'c' for collection and 'g' for granule;
+ -v,--validate <path>                 Validate (XML & URLs) files in a
+                                      given path;
++--
+
+
+  For example, the following command will create the granule lists for collection 11 into a set of collection files:
+
++--
+% sh echoExport.sh -c 11 -g -C
++--
+
+  And the log file's output will read:
+
++--
+2009-06-12 14:02:58,289 INFO  ECHOExport:99 - processGranules:11
+2009-06-12 14:03:03,296 INFO  ECHOGranuleFile:149 - Process collectionId=11 datasetId=28
+2009-06-12 14:03:28,432 INFO  ECHOGranuleFile:185 - granuleSize=581
+2009-06-12 14:04:34,522 INFO  ECHOGranuleFile:196 - Processing Granule [99]: 20050201-NAR16_SST-EUR-L2P-sst1nar_noaa16_20050201_asc-v01.nc
+2009-06-12 14:04:39,852 INFO  ECHOGranuleFile:196 - Processing Granule [100]: 20050201-NAR16_SST-EUR-L2P-sst1nar_noaa16_20050201_desc-v01.nc
+2009-06-12 14:04:43,892 INFO  ECHOGranuleFile:196 - Processing Granule [171]: 20050202-NAR16_SST-EUR-L2P-sst1nar_noaa16_20050202_asc-v01.nc
+2009-06-12 14:04:47,717 INFO  ECHOGranuleFile:196 - Processing Granule [172]: 20050202-NAR16_SST-EUR-L2P-sst1nar_noaa16_20050202_desc-v01.nc
+....
++--
+
+  The output files are specified in the config/distribute.config file, where one can also set the number of granules to break each file into. For example, if this is set to 100, there will only be 100 granule files per collection.xml file. There will be mutliple files if there are over 100 granules.
+  
+  The -fb option will force the program to use the granuleReal entries to create a bounding-box, spatial envelope when exporting individual granules. 
+  
+{EMSReport.sh}
+
+  EMSReport.sh is a utility that will create EMS report files for ingest and archive.
+
++--
+  sh EMSReport.sh -help
+  usage: EMSReport [-archive] [-d <date>] [-ed <endDate>] [-h] [-ingest] [-pid] [-o
+       <output>]
+  -archive,--archive                Create the archhive report
+  -d,--report-date <date>           The date on which to run the report. If
+                                   not specified, yesterday's date is used. Date is in the format MM/DD/YYYY.
+  -ed,--report-end-date <endDate>   The end date with which to run the
+                                   reporting tool. The report-date option is required if this option is used.
+                                   Date is in the format MM/DD/YYYY. A report will not be generated for the
+                                   the date entered here (non-inclusive).
+  -h,--help                         Display help and usage information
+  -ingest,--ingest                  Create the ingest report
+  -legacyId,--use-legacyId          Flag to use the legacy dataset id
+                                   (numeric) when creating reports.
+  -o,--output-path <output>         The path where the output file(s) will
+                                   be written.
+  -pid,--productId		    Flag to use Product IDs instead of Dataset IDs
++--
+
+  -archive or -ingest, and an output path (-o) are required to run the tool.
+
+  Ingest and archive reports should be generated for each day by specifying the -archive and -ingest flags (you can run both flags at the same time). 
+  
+  By default, the program runs for "yesterday" in calendar days. You can specify a date on which to run the report by using the -d option. To run the report across several days, specify a beginning date and an end date (-ed). Files will be split based on which day the file was archived or ingested.
+  
+  The files need an output path to be written to, specified by the -o option. An example would be something like -o /store/EMS and all files will be written to the EMS directory. Files are automatically versioned if a previous report currently exists. Newer files will have a ".rev" suffix followed by a number (the higher the number, the more recent the version.
+
+  By default, the program will use the permanent Dataset ID for output. This is new as of release 3.1.0. If You want to sue the numeica dataset_id, you must specify the -legacyId option. The -pid option will continue to use the product_id as defined in the collection tables.
+  
+  The following command will run archive and ingest reports, using the product ID instead of dataset ID, and store the files in the /store/EMS directory, and create 2 files:
++--
+% sh EMSReport.sh -archive -ingest -pid -o /store/EMS
++--
+
+  The following command will run the ingest report for the first 3 weeks of february (and will create 21 files):
+
++--
+% sh EMSReport.sh -ingest -o /store/EMS -d 02/01/2010 -ed 02/21/2010 -legacyId
++--
+
+
+{Datacast.sh}
+
+  Datacast.sh is a utility that will create datacast granule items which are simply key=value pairs in plain text.
+
++--
+  sh Datacast.sh 
+  usage: Datacast [-d <date>] [-dataset <dataset>] [-ed <endDate>] [-h] [-o
+       <output>]
+  -d,--report-date <date>           The date on which to run the report. If
+                                   not specified, yesterday's date is used. Date is in the format MM/DD/YYYY.
+  -dataset,--dataset <dataset>      The dataset on which to run datacasting
+  -ed,--report-end-date <endDate>   The end date with which to run the
+                                   reporting tool. The report-date option is required if this option is used.
+                                   Date is in the format MM/DD/YYYY. A report will not be generated for the
+                                   the date entered here (non-inclusive).
+  -h,--help                         Display help and usage information
+  -o,--output-path <output>         The path where the output files will be written.
+  -shortname,--use-shortname        Flag to use the legacy shortname to
+                                   find and create products
+
++--
+
+  Note: As of release 3.1.0, the tool now defaults to using the dataset permanent ID. To continue running the tool with dataset short names, specify the -shortname option. The previous note about usage here used to read: This tool does not use dataset ids, but rather dataset shortnames. If the shortname is not found the user will be alreted to this. 
+
+  The output of this tool will be a granule file of key=value pairs to be ingested by the datacast IngestItems script. It is the first step in the datacast process.
+
+  Only a dataset name and output path are required to run the tool. Like the EMS tool above, a start and end date can be spcified to run the reports over a single or series of past days.
+
+  The report defaults to "yesterday" as a default time range for archival.  
+
+  The output path, while it can be any location the user has permission to write to, should be stored in a data directory under the datacast directories. Each dataset to be datacast will need  "granules," "items-xml," and "queue" directories for the datacast service to work correctly. The output of this tool should be placed in the "granules" subdirectory.
+
+  The following commands will run the datacast tool on JPL-L2P-MODIS_A data:
+
++--
+% sh Datacast.sh -d JPL-L2P-MODIS_A -shortname -o /usr/local/daac/datacasts/feedExample/granules
++--
+
+  The following commands will run the datacast tool on JPL-L2P-MODIS_A data for a past day:
+
++--
+% sh Datacast.sh -d 04/22/2009 -dataset JPL-L2P-MODIS_A -shortname -o /usr/local/daac/datacasts/feedExample/granules
++--
+
+
+{gcmdExport.sh}
+
+  gcmdExport.sh is a utility that will create DIF XML files for submission to the Global Change Master Directory (GCMD).
+  
++--
+  sh gcmdExport.sh --help
+  usage: GCMDExport [-dataset <ds1,ds2,ds3,...>] [-h] [-shortname] [-v]
+  -dataset,--dataset <ds1,ds2,ds3,...>   Dataset persistent ID or short
+                                         name
+  -h,--help                              Display help and usage information
+  -shortname,--use-shortname             Flag to use the legacy short name
+                                         to find dataset and generate DIF XML file
+  -v,--validate                          Validate resulting XML file(s)
+  
++--
+
+  By default, the values specified for the -dataset option is assumed to be dataset persistent ID. Use -shortname option to specify dataset shortname rather than dataset persistent ID.
+  
+  Use -v option to validate the generated XML file(s) against the DIF XML schema version 9.8.2.
+  
+  DIF XML file for each dataset will be generated and stored in the directory that is specified in config/distribute.config file as gcmd.data.location.
+  
+  In config/distribute.config, the user can also specify default values that will be used in the resulting DIF XML file.  For example, by specifying gcmd.iso.topic.category=Oceans the following element will be appended to the XML file: <ISO_Topic_Category>Oceans</ISO_Topic_Category>.  Note that all contacts exported to the XML file(s) will have the same address as specified in config/distribute.config.
+  
+  The following command will generate DIF XML files for dataset PODAAC-AQUAR-0SORM and PODAAC-GH17G-2PN01 and will check that the resulting XML files conform to DIF XML schema:
+
++--
+% sh gcmdExport.sh -dataset PODAAC-GHAMS-2PE01,PODAAC-EMTGE-WAVA1 -v
++--
+
+  The log file's output will read:
+
++--
+2011-03-23 10:35:23,381 INFO  GCMDExport:69 - Process dataset: PODAAC-GHAMS-2PE01
+2011-03-23 10:35:25,252 INFO  GCMDDatasetFile:171 - Processing Dataset [5]: PODAAC-GHAMS-2PE01
+2011-03-23 10:35:25,984 INFO  GCMDExport:58 - /usr/local/daac/distribute/gcmd/PODAAC-GHAMS-2PE01.xml conforms to DIF schema
+2011-03-23 10:35:25,984 INFO  GCMDExport:85 - Process dataset PODAAC-GHAMS-2PE01 completed.
+2011-03-23 10:35:25,984 INFO  GCMDExport:69 - Process dataset: PODAAC-EMTGE-WAVA1
+2011-03-23 10:35:26,091 INFO  GCMDDatasetFile:171 - Processing Dataset [124]: PODAAC-EMTGE-WAVA1
+2011-03-23 10:35:26,875 INFO  GCMDExport:58 - /usr/local/daac/distribute/gcmd/PODAAC-EMTGE-WAVA1.xml conforms to DIF schema
+2011-03-23 10:35:26,875 INFO  GCMDExport:85 - Process dataset PODAAC-EMTGE-WAVA1 completed.
+....
++--
+

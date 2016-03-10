@@ -1,0 +1,60 @@
+~~ Copyright 2008-2009, by the California Institute of Technology.
+~~ ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
+~~
+~~ $Id: index.apt 6267 2010-11-13 07:22:39Z gangl $
+
+  ---
+  Installation
+  ---
+  Mike Gangl
+  ---
+  
+Installation
+
+  This document describes how to install and configure the Distribute-Main software of the Distribute program set. The following sections can be found in this document:
+
+  * {{{Distribution_Contents}Distribution Contents}}
+
+  * {{{Configuration}Configuration}}
+
+{Distribution Contents}
+
+  The program set is packaged in a self-contained TAR/GZIP file. The package can be extracted with the following command (where X.X.X is the current version):
+
++--
+% tar -xzvf distribute-main-X.X.X-distribute-main.tar.gz
++--
+
+  Below is an illustration of the distribution after it has been extracted:
+
+[../images/distribute-main_dist.jpg]
+
+  The contents of the package are as follows:
+
+  * <<<bin>>> - Directory containing the executables.
+
+    * <<<createCollection.sh>>> - Script for creating ECHO Collection submission files.
+
+    * <<<echoExport.sh>>> - Script for uploading the ECHO submission files to ECHO via FTP.
+
+  * <<<config>>> - Directory containing the configuration files.
+
+    *<<<distribute.config>>> - Configuration for the distribute software.
+
+    *<<<distribute.log.properties>>> - Configuration file containing logging properties.
+
+    *<<<hibernate.cfg.xml>>> - Configuration file containing properties used by Inventory API with Hibernate implementation.
+
+    * <<<schema>>> - Directory containing XML Schema files.
+
+    * <<<sql>>> - Directory containing the old database schema setup files.
+
+  * <<<lib>>> - Directory containing the run-time libraries for the executables.
+
+{Configuration}
+
+  Before running the tool, ensure your database setup is configured by running the following command in the ./config/sql folder:
+
++--
+% sh distribute_schema.sh
++--

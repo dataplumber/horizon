@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:horizon.nasa="http://horizon.nasa.gov/webservice/schema"
+	targetNamespace="http://horizon.nasa.gov/webservice/schema" elementFormDefault="qualified">
+
+	<xsd:annotation>
+		<xsd:documentation xml:lang="en"> This schema defines the structure for the metadataManifest
+			XML. </xsd:documentation>
+	</xsd:annotation>
+
+	<xsd:complexType name="field">
+		<xsd:attribute name="type" type="xsd:string"/>
+		<xsd:attribute name="name" type="xsd:string"/>
+		<xsd:attribute name="required" type="xsd:boolean"/>
+	</xsd:complexType>
+
+	<xsd:element name="dataset" type="horizon.nasa:dataset"/>
+	<xsd:element name="collection" type="horizon.nasa:dataset"/>
+	<xsd:element name="granule" type="horizon.nasa:dataset"/>
+	<xsd:element name="source" type="horizon.nasa:dataset"/>
+	<xsd:element name="sensor" type="horizon.nasa:dataset"/>
+	<xsd:element name="contact" type="horizon.nasa:dataset"/>
+	<xsd:element name="provider" type="horizon.nasa:dataset"/>
+	<xsd:element name="project" type="horizon.nasa:dataset"/>
+	<xsd:element name="element" type="horizon.nasa:dataset"/>
+
+	<xsd:complexType name="dataset">
+		<xsd:sequence>
+			<xsd:element name="field" type="horizon.nasa:field" maxOccurs="unbounded" minOccurs="0"
+			> </xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="type" type="xsd:string"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="collection">
+		<xsd:sequence>
+			<xsd:element name="field" type="horizon.nasa:field" maxOccurs="unbounded" minOccurs="0"
+			> </xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="type" type="xsd:string"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="granule">
+		<xsd:sequence>
+			<xsd:element name="field" type="horizon.nasa:field" maxOccurs="unbounded" minOccurs="0"
+			> </xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="type" type="xsd:string"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="source">
+		<xsd:sequence>
+			<xsd:element name="field" type="horizon.nasa:field" maxOccurs="unbounded" minOccurs="0"
+			> </xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="type" type="xsd:string"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="sensor">
+		<xsd:sequence>
+			<xsd:element name="field" type="horizon.nasa:field" maxOccurs="unbounded" minOccurs="0"
+			> </xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="type" type="xsd:string"/>
+	</xsd:complexType>
+	<xsd:complexType name="contact">
+		<xsd:sequence>
+			<xsd:element name="field" type="horizon.nasa:field" maxOccurs="unbounded" minOccurs="0"
+			> </xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="type" type="xsd:string"/>
+	</xsd:complexType>
+	<xsd:complexType name="provider">
+		<xsd:sequence>
+			<xsd:element name="field" type="horizon.nasa:field" maxOccurs="unbounded" minOccurs="0"
+			> </xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="type" type="xsd:string"/>
+	</xsd:complexType>
+	<xsd:complexType name="project">
+		<xsd:sequence>
+			<xsd:element name="field" type="horizon.nasa:field" maxOccurs="unbounded" minOccurs="0"
+			> </xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="type" type="xsd:string"/>
+	</xsd:complexType>
+	<xsd:complexType name="element">
+		<xsd:sequence>
+			<xsd:element name="field" type="horizon.nasa:field" maxOccurs="unbounded" minOccurs="0"
+			> </xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="type" type="xsd:string"/>
+	</xsd:complexType>
+
+</xsd:schema>
