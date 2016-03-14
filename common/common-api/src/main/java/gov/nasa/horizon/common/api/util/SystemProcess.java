@@ -26,7 +26,6 @@ public class SystemProcess {
     * Method to execute a system command and capture its standard errors.
     * 
     * @param command the system command to be executed
-    * @param logger the message logger
     * @return the Errno object reference.
     */
    public static final Errno execute(String command) {

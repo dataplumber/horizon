@@ -23,7 +23,7 @@
 	</div>
 	
 	<a href="index.php" class="home-link"></a>
-	<div class="title">Dataset Manager Tool <span style="font-size:0.7em">v5.0.0d</span></div>	
+	<div class="title">Dataset Manager Tool <span style="font-size:0.7em">v5.1.0</span></div>	
 </div>
 	<?php 
 		/*$shortName = getFieldValue($datasetManifest, "dataset_shortName");

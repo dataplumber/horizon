@@ -6,7 +6,7 @@ import java.io.IOException;
  * This is a utility class that has only one method to allow user to type in
  * their password without being echoed back on the console.
  * 
- * @author T. Huang <mailto:thomas.huang@jpl.nasa.gov>Thomas.Huang@jpl.nasa.gov</mailto>
+ * @author T. Huang
  * @version $Id: Console.java 244 2007-10-02 20:12:47Z axt $
  */
 public class Console {

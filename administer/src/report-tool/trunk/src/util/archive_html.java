@@ -61,9 +61,7 @@ class archive_html {
       String line = null;
 
       // write each line to output file
-      Integer lines = 0;
-      while ((line = br.readLine())!= null && lines < 2000) {
-	lines = lines + 1;
+      while ((line = br.readLine())!= null ) {
         //System.out.println(line);
         if(!line.contains(arch) && !line.contains(back))
           p.println(line);

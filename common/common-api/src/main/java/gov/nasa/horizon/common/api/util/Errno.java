@@ -7,7 +7,7 @@ package gov.nasa.horizon.common.api.util;
 
 /**
  * Contains value and message associated with an errno
- * @author
+ * @author T. Huang
  * @version $Id:$
  */
 public class Errno {

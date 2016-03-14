@@ -17,7 +17,7 @@ import java.util.Date;
  * Implementation of Agent object using JAXB for XML marshalling and
  * unmarshalling.
  *
- * @author T. Huang <mailto:thomas.huang@jpl.nasa.gov>Thomas.Huang@jpl.nasa.gov</mailto>
+ * @author T. Huang
  * @version $Id: $
  */
 public class AgentJaxb extends AccessorBase implements SPAgent {

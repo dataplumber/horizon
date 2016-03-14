@@ -20,8 +20,8 @@
          </ul>
       </section>
       <section name="Distribution Contents" id="Distribution_Contents">
-         <p>This release of HORIZON server requires Java Standard Edition
-               1.7 or higher. The software is shipped in a self-contained GZIP file. Below is an
+         <p>This release of HORIZON's Ingest server requires Java Standard Edition
+               1.8 or higher. The software is shipped in a self-contained GZIP file. Below is an
             illustration of the software distribution after it has been expanded:</p>
          <img src="../images/horizon_server_dist.jpg" alt=""/>
          <ul>
@@ -40,11 +40,11 @@
          </ul>
       </section>
       <section name="Server Configuration" id="Server_Configuration">
-         <p>Beginning with Version 4.0, HORIZON server will no longer issue a boot request to the
+         <p>Beginning with Version 4.0, HORIZON's Ingest server will no longer issue a boot request to the
             Middleware for its runtime configuration. The only configuration information required
-            for the HORIZON server to boot is the domain file and the log configuration file.</p>
+            for the HORIZON's Ingest server to boot is the domain file and the log configuration file.</p>
          <subsection name="Logger">
-            <p>The HORIZON server was developed to use the popular message logging toolkit, <a
+            <p>The HORIZON's Ingest server was developed to use the popular message logging toolkit, <a
                   class="externalLink" href="http://logging.apache.org">log4j</a>, for flexible
                message filtering and redirection. Message logging level is used for message
                verbosity. Log4j supports the following levels - TRACE, DEBUG, INFO, WARN, ERROR, and
@@ -102,10 +102,10 @@ setenv PATH ${HORIZON}/../sbin:${PATH}</source>
             <source>setenv HORIZON &lt;path to the ingest server software distribution&gt;/config</source>
          </subsection>
          <subsection name="Regarding security at startup">
-            <p>The HORIZON server requires authentication with the HORIZON Middleware at startup time.
+            <p>The HORIZON's Ingest server requires authentication with the HORIZON Middleware at startup time.
                Authentication requires username/password combination where the username must be
                registered as an administrator in the HORIZON Middleware. The authentication information
-               can be provided at the HORIZON server startup command arguments, or via the keychain
+               can be provided at the HORIZON's Ingest server startup command arguments, or via the keychain
                file created by the HORIZON Client distribution (e.g. % ingest login).</p>
          </subsection>
       </section>

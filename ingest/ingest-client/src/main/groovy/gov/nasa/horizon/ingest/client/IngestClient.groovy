@@ -77,6 +77,15 @@ public class IngestClient {
                prefixes: [
                      new Prefix(name: "help")
                ]
+         ),
+         CLEAN: new Option(
+               name: "clean",
+               required: false,
+               description: "Clean error directory operation.",
+               withValue: false,
+               prefixes: [
+                     new Prefix(name: "clean")
+               ]
          )
    ]
    private static final Map COMMANDS = [
@@ -346,6 +355,22 @@ public class IngestClient {
                      )
                ] as LinkedHashMap,
                METHOD: "helpRequested"
+         ],
+         CLEAN: [
+             OPTIONS: [
+                 LOCAL_REPO: new Option(
+                     name: "LocalRepo",
+                     required: false,
+                     description: "Path to repo for error directory cleanup.",
+                     withValue: true,
+                     prefixes: [
+                           new Prefix(name: "-r"),
+                           new Prefix(name: "--repo", valueSeparator: "=", isLong: true)
+                     ]
+               ),
+                 ],
+             INPUTS: [:] as LinkedHashMap,
+             METHOD: "cleanupErrorRequested"
          ]
    ]
    private SigEvent sigevent
@@ -562,6 +587,7 @@ public class IngestClient {
           log.info("Monitoring local repository ${localRepo} for new submissions....")
       }
       
+      File shutdown = new File("/tmp/ingest_client_shutdown")
       while (true) {
          // process submitted products only if it has been x minutes since the last.
           if(skipPurge) {
@@ -673,18 +699,19 @@ public class IngestClient {
                 }
              }
          }
+         // checking for shutdown file
+         if (shutdown.exists()) {
+            break
+         }
+         
          // sleep for 5 seconds
          sleep(5000)
       }
-   }
-
-   private void checkSubmitted(LoginInformation loginInformation, String federation, String localRepo) {
-      String stSubmitted = "${localRepo}${File.separator}staging${File.separator}submitted"
-      String erSubmit = "${localRepo}${File.separator}errors${File.separator}submission"
-      String data = "${localRepo}${File.separator}staging${File.separator}data"
-
-
-
+      log.info("Ingest Client shutting down...")
+      
+      if (shutdown.exists()) {
+          shutdown.delete()
+      }
    }
 
    protected void replaceRequested(CommandLine commandLine) {
@@ -804,6 +831,75 @@ public class IngestClient {
       String password = null
 
       login(federation, userName, password)
+   }
+   
+   protected void cleanupErrorRequested(CommandLine commandLine) {
+       String localRepo = commandLine.getOptionValue(COMMANDS.CLEAN.OPTIONS.LOCAL_REPO)
+       String daDir = "${localRepo}${File.separator}staging${File.separator}data"
+       String stSubmitted = "${localRepo}${File.separator}staging${File.separator}submitted"
+       String erSubmit = "${localRepo}${File.separator}error${File.separator}submission"
+       String erValidation = "${localRepo}${File.separator}error${File.separator}validation"
+       
+       log.info("Cleaning up products in the 'error' directory...")
+       
+       def cleanList = []
+       
+       new File(erSubmit).listFiles().each {File ptDir ->
+           ptDir.listFiles().each { File sip ->
+               if (sip.name.endsWith("xml")) {
+                   cleanList.add(sip)
+               }
+           }
+       }
+       new File(erValidation).listFiles().each {File ptDir ->
+           ptDir.listFiles().each { File sip ->
+               if (sip.name.endsWith("xml")) {
+                   cleanList.add(sip)
+               }
+           }
+       }
+       
+       log.info("Found "+cleanList.size() + " products to clean.")
+       
+       def errors = []
+       cleanList.each {File sip ->
+           log.info("Cleaning up product "+retrieveProductName(sip))
+           String productUniqueName = retrieveProductUniqueDir(sip)
+           String productType = retrieveProductTypes(sip)[0]
+           File dataDir = new File("${daDir}${File.separator}${productType}${File.separator}${productUniqueName}")
+           if(dataDir.exists() && dataDir.isDirectory()) { 
+               log.debug("Attempting to delete data dir: "+dataDir)
+               def dataDel = dataDir.deleteDir()
+               if(!dataDel) {
+                   log.error("Could not delete data directory: "+dataDir)
+                   errors.add(sip)
+               }
+               else {
+                   def sipDel = sip.delete()
+                   if(!sipDel) {
+                       log.error("Could not delete sip file: "+sip)
+                       errors.add(sip)
+                   }
+                   else {
+                       log.debug("Successfully removed sip and data for "+sip.name)
+                   }
+               }
+           }
+           else {
+               log.error("Data dir does not exist or is not a directory: "+dataDir)
+               errors.add(sip)
+           }
+       }
+       def cleanCount = cleanList.size() - errors.size()
+       log.info("Done cleaning "+cleanCount+" out of "+cleanList.size()+" products")
+       
+       if(errors.size() > 0) {
+           log.info("The following sips failed to be cleaned:")
+           log.info("-----------------------------------------------")
+           errors.each { File sip ->
+               log.info(sip)
+           }
+       }
    }
 
    protected String readLineFromStandardInput(String prompt) {

@@ -136,7 +136,7 @@ $(function() {
 		<div id="operator-bottom" class="operator-roundBottom"></div>
 	</div>
 	<!-- operator-main -->
-	<span class="operator-versionInfo">Version 5.0.0d</span>
+	<span class="operator-versionInfo">Version 5.1.0</span>
 </div>
 <!-- operator-container -->
 <?php else: ?>

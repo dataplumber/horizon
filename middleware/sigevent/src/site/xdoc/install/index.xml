@@ -48,10 +48,10 @@ environments {
       dmas_email_host = 'smtp.jpl.nasa.gov'
       dmas_provider_url = "jnp://localhost:1099"
       dmas_jms_username = "user"
-      dmas_jms_password = "password"
+      dmas_jms_password = "1234"
       sigevent_api_data_uri = "http://localhost:8100/sigevent/events/data"
-      sigevent_twitter_username = "user"
-      sigevent_twitter_password = 'password'
+      sigevent_twitter_username = "sigeventdev"
+      sigevent_twitter_password = 'SigEvent@07'
       sigevent_twitter_characters_limit = 140
       //SecurityServiceInfo
       gov.nasa.dmas.security.service.enable = true
@@ -120,7 +120,7 @@ environments {
          dialect = "org.hibernate.dialect.PostgreSQLDialect"
          url = "jdbc:postgresql://localhost:5432/gibs"
          username = "user"
-         password = 'password'
+         password = '1234'
       }
    }
    test {

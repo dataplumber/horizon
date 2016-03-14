@@ -46,7 +46,7 @@ import org.xml.sax.SAXParseException;
  * schema, creation of Document object, and utility methods for exporting
  * Document object to String or data stream.
  * 
- * @author T. Huang <mailto:thomas.huang@jpl.nasa.gov>Thomas.Huang@jpl.nasa.gov</mailto>
+ * @author T. Huang
  * @version $Id: DocumentParser.java 244 2007-10-02 20:12:47Z axt $
  */
 public class DocumentParser {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
 <!-- 
-   Copyright 2007-2013, by the California Institute of Technology.
+   Copyright 2007-2016, by the California Institute of Technology.
    ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
    
    JAXB build file for generating server Configuration classes.
@@ -18,7 +18,7 @@
    <parent>
       <groupId>gov.nasa.horizon</groupId>
       <artifactId>ingest-gen</artifactId>
-      <version>5.0.0e</version>
+      <version>5.1.0</version>
       <relativePath>../pom.xml</relativePath>
    </parent>
    <artifactId>ingest-config</artifactId>
@@ -28,11 +28,16 @@
       definition. </description>
    <url>http://horizon.jpl.nasa.gov/docs/horizon/ingest/horizon/ingest-gen/ingest-config/</url>
 
+   <properties>
+      <project.build.sourceEncoding> UTF-8 </project.build.sourceEncoding>
+      <project.reporting.outputEncoding> UTF-8 </project.reporting.outputEncoding>
+   </properties>
+
    <dependencies>
       <dependency>
          <groupId>javax.xml.bind</groupId>
          <artifactId>jaxb-api</artifactId>
-         <version>2.2.7</version>
+         <version>2.2.9</version>
          <scope>compile</scope>
          <exclusions>
             <exclusion>
@@ -92,6 +97,9 @@
    </dependencies>
 
    <build>
+      <directory>target</directory>
+      <outputDirectory>target/classes</outputDirectory>
+      <sourceDirectory>target/generated-sources/xjc</sourceDirectory>
       <resources>
          <resource>
             <directory>${basedir}/src/resources</directory>
@@ -106,32 +114,12 @@
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-site-plugin</artifactId>
-            <version>2.1.1</version>
-            <dependencies>
-               <dependency>
-                  <groupId>commons-httpclient</groupId>
-                  <artifactId>commons-httpclient</artifactId>
-                  <version>3.1</version>
-                  <exclusions>
-                     <exclusion>
-                        <groupId>commons-logging</groupId>
-                        <artifactId>commons-logging</artifactId>
-                     </exclusion>
-                  </exclusions>
-               </dependency>
-            </dependencies>
+            <version>3.5</version>
          </plugin>
          <plugin>
             <groupId>org.jvnet.jaxb2.maven2</groupId>
             <artifactId>maven-jaxb2-plugin</artifactId>
-            <version>0.8.3</version>
-            <dependencies>
-               <dependency>
-                  <groupId>org.jvnet.jaxb2_commons</groupId>
-                  <artifactId>basic</artifactId>
-                  <version>0.4.1.5</version>
-               </dependency>
-            </dependencies>
+            <version>0.9.1</version>
             <executions>
                <execution>
                   <goals>
@@ -147,22 +135,16 @@
                </includeSchemas>
                <strict>true</strict>
                <verbose>true</verbose>
-               <args>
-                  <arg>-Xequals</arg>
-                  <arg>-XhashCode</arg>
-                  <arg>-XtoString</arg>
-                  <arg>-Xsync-methods</arg>
-               </args>
             </configuration>
          </plugin>
          <plugin>
             <inherited>true</inherited>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
-            <version>2.3.1</version>
+            <version>3.5.1</version>
             <configuration>
-               <source>1.7</source>
-               <target>1.7</target>
+               <source>1.8</source>
+               <target>1.8</target>
             </configuration>
          </plugin>
          <plugin>
@@ -179,13 +161,10 @@
                         <mkdir dir="${basedir}/target/site/xsddoc"/>
                         <xsddoc file="${basedir}/src/resources/horizon_ingest_server.xsd"
                            out="${basedir}/target/site/xsddoc"
-                           doctitle="HORIZON Server Configuration Schema Reference"
-                           header="HORIZON Server Configuration Schema Reference"
-                           footer="Copyright &#169; 2007-2013, by the California Institute of Technology. ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged."
+                           doctitle="Ingest Server Configuration Schema Reference"
+                           header="Ingest Server Configuration Schema Reference"
+                           footer="Copyright &#169; 2007-2016, by the California Institute of Technology. ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged."
                            verbose="true"/>
-                        <!--
-                        css="${basedir}/../resources/stylesheet.css"
-                        -->
                      </tasks>
                   </configuration>
                   <goals>
@@ -219,11 +198,27 @@
             </reportSets>
          </plugin>
          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-javadoc-plugin</artifactId>
+            <configuration>
+               <additionalparam>-Xdoclint:none</additionalparam>
+            </configuration>
+            <reportSets>
+               <reportSet>
+                  <id>html</id>
+                  <reports>
+                     <report>javadoc</report>
+                  </reports>
+               </reportSet>
+            </reportSets>
          </plugin>
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-report-plugin</artifactId>
+            <version>2.9</version>
+            <configuration>
+               <showSuccess>false</showSuccess>
+            </configuration>
          </plugin>
       </plugins>
    </reporting>

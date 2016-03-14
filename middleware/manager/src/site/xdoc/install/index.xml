@@ -43,7 +43,7 @@
    &lt;users&gt;
       &lt;user&gt;
          &lt;username&gt;thuang&lt;/username&gt;
-         &lt;password&gt;password&lt;/password&gt;
+         &lt;password&gt;12345&lt;/password&gt;
          &lt;name&gt;Thomas Huang&lt;/name&gt;
          &lt;email&gt;thomas.huang@jpl.nasa.gov&lt;/email&gt;
          &lt;role&gt;devAddAndGet&lt;/role&gt;
@@ -80,7 +80,7 @@
          &lt;organization&gt;JPL&lt;/organization&gt;
          &lt;maxConnection&gt;2&lt;/maxConnection&gt;
          &lt;username&gt;ingest&lt;/username&gt;
-         &lt;password&gt;password&lt;/password&gt;
+         &lt;password&gt;ingest&lt;/password&gt;
       &lt;/remoteSystem&gt;
       ...
    &lt;/remoteSystems&gt;
@@ -136,7 +136,7 @@ environments {
          dialect = "org.hibernate.dialect.PostgreSQLDialect"
          url = "jdbc:postgresql://localhost:5432/gibs"
          username = "user"
-         password = 'password'
+         password = '1234'
       }
    }
    test {

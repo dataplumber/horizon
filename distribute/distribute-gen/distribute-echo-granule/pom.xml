@@ -15,7 +15,7 @@ $Id: pom.xml 10506 2012-08-28 22:16:30Z thuang $
   <parent>
     <groupId>gov.nasa.podaac</groupId>
     <artifactId>distribute-gen</artifactId>
-    <version>5.0.0d</version>
+    <version>5.1.0</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
@@ -28,14 +28,10 @@ $Id: pom.xml 10506 2012-08-28 22:16:30Z thuang $
     handling the ECHO submissions. </description>
   <url>http://podaac-cm.jpl.nasa.gov/docs/distribute/distribute-gen/distribute-echo-granule/</url>
 
-   <properties>
-       <project.build.sourceEncoding>
-         UTF-8
-       </project.build.sourceEncoding>
-       <project.reporting.outputEncoding>
-         UTF-8
-       </project.reporting.outputEncoding>
-     </properties>
+  <properties>
+    <project.build.sourceEncoding> UTF-8 </project.build.sourceEncoding>
+    <project.reporting.outputEncoding> UTF-8 </project.reporting.outputEncoding>
+  </properties>
 
   <dependencies>
     <dependency>

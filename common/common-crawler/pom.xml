@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
 <!-- 
-Copyright 2008-2013, by the California Institute of Technology.
+Copyright 2008-2016, by the California Institute of Technology.
 ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
    
 $Id: $
@@ -15,7 +15,7 @@ $Id: $
    <parent>
       <groupId>gov.nasa.horizon</groupId>
       <artifactId>common</artifactId>
-      <version>5.0.0e</version>
+      <version>5.1.0</version>
       <relativePath>../pom.xml</relativePath>
    </parent>
 
@@ -38,13 +38,13 @@ $Id: $
       <dependency>
          <groupId>gov.nasa.horizon</groupId>
          <artifactId>common-api</artifactId>
-         <version>5.0.0e</version>
+         <version>5.1.0</version>
          <scope>compile</scope>
       </dependency>
       <dependency>
          <groupId>gov.nasa.horizon</groupId>
          <artifactId>common-crawlercache</artifactId>
-         <version>5.0.0e</version>
+         <version>5.1.0</version>
          <exclusions>
             <exclusion>
                <groupId>xerces</groupId>
@@ -124,8 +124,7 @@ $Id: $
          </plugin>
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-report-plugin</artifactId>
-            <version>2.5</version>
+            <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
                <argLine>-Xms32m -Xmx1024m</argLine>
                <includes>
@@ -208,30 +207,25 @@ $Id: $
          </plugin>
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-report-plugin</artifactId>
+            <version>2.9</version>
+            <configuration>
+               <showSuccess>false</showSuccess>
+            </configuration>
+         </plugin>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-site-plugin</artifactId>
-            <version>2.1.1</version>
-            <dependencies>
-               <dependency>
-                  <groupId>commons-httpclient</groupId>
-                  <artifactId>commons-httpclient</artifactId>
-                  <version>3.1</version>
-                  <exclusions>
-                     <exclusion>
-                        <groupId>commons-logging</groupId>
-                        <artifactId>commons-logging</artifactId>
-                     </exclusion>
-                  </exclusions>
-               </dependency>
-            </dependencies>
+            <version>3.5</version>
          </plugin>
          <plugin>
             <inherited>true</inherited>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
-            <version>2.3.1</version>
+            <version>3.5.1</version>
             <configuration>
-               <source>1.7</source>
-               <target>1.7</target>
+               <source>1.8</source>
+               <target>1.8</target>
             </configuration>
          </plugin>
       </plugins>
@@ -242,6 +236,9 @@ $Id: $
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-javadoc-plugin</artifactId>
+            <configuration>
+               <additionalparam>-Xdoclint:none</additionalparam>
+            </configuration>
             <reportSets>
                <reportSet>
                   <id>html</id>

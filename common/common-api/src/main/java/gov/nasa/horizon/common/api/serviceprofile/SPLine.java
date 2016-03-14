@@ -7,7 +7,7 @@ public interface SPLine extends Accessor {
     * 
     * @param latitude the latitude value
     * @param longitude the longitude value
-    * @return
+    * @return a point object
     */
    SPPoint createPoint(double latitude, double longitude);
 

@@ -95,7 +95,7 @@ public class FileProductUtility {
     * GetFile is called after parameters are set (uri, authentication) and returns the given file
     *
     * @return VFSFileProduct implementing the FileProduct interface, null if the file does not exist.
-    * @throws Exception
+    * @throws Exception if unable to obtain file product object
     */
    public FileProduct getFile() throws Exception {
       FileObject File = null;
@@ -167,8 +167,8 @@ public class FileProductUtility {
    /**
     * setAuthentication sets the username and password for an s/ftp session
     *
-    * @parameter username the username to be used for authentication
-    * @parameter password the password to be used for authentication
+    * @param username the username to be used for authentication
+    * @param password the password to be used for authentication
     */
    public void setAuthentication(String username, String password) {
       try {

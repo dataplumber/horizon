@@ -15,7 +15,7 @@ $Id: pom.xml 1941 2008-09-20 05:17:44Z shardman $
   <parent>
     <groupId>gov.nasa.podaac</groupId>
     <artifactId>rollout</artifactId>
-    <version>5.0.0d</version>
+    <version>5.1.0</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 

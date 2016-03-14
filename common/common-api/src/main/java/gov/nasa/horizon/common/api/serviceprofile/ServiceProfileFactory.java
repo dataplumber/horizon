@@ -51,6 +51,7 @@ public class ServiceProfileFactory {
     * Creates an empty ServiceProfile object to be filled by user application.
     *
     * @return a ServiceProfile object
+    * @throws ServiceProfileException if unable to create ServiceProfile object
     */
    public ServiceProfile createServiceProfile() throws ServiceProfileException {
       return ServiceProfileJaxb.createServiceProfile();
@@ -64,6 +65,7 @@ public class ServiceProfileFactory {
     * @return ServiceProfile object on success.
     * @throws ServiceProfileException If there is an error when creating
     *            ServiceProfile object.
+    * @throws IOException if unable to open the input file
     * @see #createServiceProfileFromMessage(String)
     */
    public ServiceProfile createServiceProfileFromMessage(File file)

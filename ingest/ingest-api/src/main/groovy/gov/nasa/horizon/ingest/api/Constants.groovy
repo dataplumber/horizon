@@ -13,12 +13,12 @@ package gov.nasa.horizon.ingest.api
  */
 class Constants {
 
-  static final String API_VERSION = "5.0.0e"
-  static final String VERSION = "5.0.0e"
-  static final String VERSION_DATE = "November 2013"
-  static final String API_VERSION_STR = "DMAS API release $API_VERSION"
+  static final String API_VERSION = "5.1.0"
+  static final String VERSION = "5.1.0"
+  static final String VERSION_DATE = "March 2016"
+  static final String API_VERSION_STR = "HORIZON API release $API_VERSION"
   static final String COPYRIGHT =
-  "Copyright 2013, Jet Propulsion Laboratory, Caltech, NASA"
+  "Copyright 2016, Jet Propulsion Laboratory, Caltech, NASA"
   static final String CLIENT_VERSION_STR =
   "DMAS Ingest Client Release $VERSION, $VERSION_DATE"
 

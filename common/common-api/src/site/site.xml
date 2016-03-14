@@ -7,7 +7,11 @@ ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
 $Id: site.xml 5885 2010-09-17 20:23:10Z thuang $
 -->
 
-<project name="Common API">
+<project xmlns="http://maven.apache.org/DECORATION/1.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/DECORATION/1.0.0 http://maven.apache.org/xsd/decoration-1.0.0.xsd"
+    name="Common API">
+
   <bannerLeft>
     <src>images/horizon_logo.jpg</src>
     <href>http://horizon.jpl.nasa.gov/</href>

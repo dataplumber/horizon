@@ -178,7 +178,7 @@ DMAS Operator Tool
 </div>
 
 </div> <!-- operator-main -->
-<span class="operator-versionInfo">Version 5.0.0d</span>
+<span class="operator-versionInfo">Version 5.1.0</span>
 </div> <!-- operator-container -->
 
 <div id="operator-dialog" title="Attention:"></div>

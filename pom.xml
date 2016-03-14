@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
 <!-- 
-Copyright 2007-2014, by the California Institute of Technology.
+Copyright 2007-2016, by the California Institute of Technology.
 ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
 
 $Id: $
@@ -18,7 +18,7 @@ $Id: $
    <version>0.0.0</version>
    <packaging>pom</packaging>
    <properties>
-      <horizon.version>5.0.0e</horizon.version>
+      <horizon.version>5.1.0</horizon.version>
    </properties>
 
    <name>HORIZON - Framework for Data Management and Workflow</name>
@@ -72,13 +72,30 @@ $Id: $
       </site>
    </distributionManagement>
    <repositories>
-    <repository>
-      <id>horizon-repo</id>
-      <name>Horizon Repo</name>
-      <url>http://horizon.jpl.nasa.gov/maven</url>
-    </repository>
-  </repositories>
+      <repository>
+         <id>horizon-repo</id>
+         <name>Horizon Repo</name>
+         <url>http://horizon.jpl.nasa.gov/maven</url>
+      </repository>
+   </repositories>
    <developers>
+      <developer>
+         <id>thuang</id>
+         <name>Thomas Huang</name>
+         <email>Thomas.Huang@jpl.nasa.gov</email>
+         <roles>
+            <role>Architect</role>
+            <role>Core System Development Lead</role>
+         </roles>
+      </developer>
+      <developer>
+         <id>nchung</id>
+         <name>Nga Quach</name>
+         <email>Nga.T.Chung@jpl.nasa.gov</email>
+         <roles>
+            <role>Development Lead</role>
+         </roles>
+      </developer>
       <developer>
          <id>qchau</id>
          <name>Qui Chau</name>
@@ -93,14 +110,6 @@ $Id: $
          <email>Michael.E.Gangl@jpl.nasa.gov</email>
          <roles>
             <role>Developer</role>
-         </roles>
-      </developer>
-      <developer>
-         <id>thuang</id>
-         <name>Thomas Huang</name>
-         <email>Thomas.Huang@jpl.nasa.gov</email>
-         <roles>
-            <role>Core System Development Lead</role>
          </roles>
       </developer>
       <developer>
@@ -119,16 +128,14 @@ $Id: $
             <role>Developer</role>
          </roles>
       </developer>
-   </developers>
-
-   <contributors>
-      <contributor>
-         <name>Chris Finch</name>
-         <email>Chris.Finch@jpl.nasa.gov</email>
+      <developer>
+         <id>decesare</id>
+         <name>Cristina De Cesare</name>
+         <email>Cristina.M.DeCesare@jpl.nasa.gov</email>
          <roles>
-            <role>System Engineer</role>
+            <role>Developer</role>
          </roles>
-      </contributor>
-   </contributors>
+      </developer>
+   </developers>
 
 </project>

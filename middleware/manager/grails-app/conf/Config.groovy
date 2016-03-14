@@ -163,7 +163,7 @@ environments {
       gov.nasa.horizon.inventory.host = "https://lanina.jpl.nasa.gov"
       gov.nasa.horizon.inventory.port = 9192
       gov.nasa.horizon.inventory.user = "thuang"
-      gov.nasa.horizon.inventory.pass = "password"
+      gov.nasa.horizon.inventory.pass = "txh388"
    }
 
    oracle {
@@ -184,7 +184,7 @@ environments {
       gov.nasa.horizon.inventory.host = "https://lanina.jpl.nasa.gov"
       gov.nasa.horizon.inventory.port = 9192
       gov.nasa.horizon.inventory.user = "thuang"
-      gov.nasa.horizon.inventory.pass = "password"
+      gov.nasa.horizon.inventory.pass = "txh388"
    }
 
    development {
@@ -204,7 +204,7 @@ environments {
       //Host and port of inventory service
       gov.nasa.horizon.inventory.url = "http://localhost:9192"
       gov.nasa.horizon.inventory.user = "thuang"
-      gov.nasa.horizon.inventory.pass = "password"
+      gov.nasa.horizon.inventory.pass = "txh388"
    }
    
    sit {
@@ -224,7 +224,7 @@ environments {
       //Host and port of inventory service
       gov.nasa.horizon.inventory.url = "http://localhost:9192"
       gov.nasa.horizon.inventory.user = "thuang"
-      gov.nasa.horizon.inventory.pass = "password"
+      gov.nasa.horizon.inventory.pass = "txh388"
    }
 
    test {
@@ -246,7 +246,7 @@ environments {
       gov.nasa.horizon.inventory.host = "https://lanina.jpl.nasa.gov"
       gov.nasa.horizon.inventory.port = 9192
       gov.nasa.horizon.inventory.user = "thuang"
-      gov.nasa.horizon.inventory.pass = "password"
+      gov.nasa.horizon.inventory.pass = "txh388"
    }
 
    testing {
@@ -267,7 +267,7 @@ environments {
       gov.nasa.horizon.inventory.host = "https://lanina.jpl.nasa.gov"
       gov.nasa.horizon.inventory.port = 9192
       gov.nasa.horizon.inventory.user = "thuang"
-      gov.nasa.horizon.inventory.pass = "password"
+      gov.nasa.horizon.inventory.pass = "txh388"
    }
 
    production {
@@ -288,7 +288,7 @@ environments {
       gov.nasa.horizon.inventory.host = "https://lanina.jpl.nasa.gov"
       gov.nasa.horizon.inventory.port = 9192
       gov.nasa.horizon.inventory.user = "thuang"
-      gov.nasa.horizon.inventory.pass = "password"
+      gov.nasa.horizon.inventory.pass = "txh388"
    }
 
    operation {
@@ -309,7 +309,7 @@ environments {
       gov.nasa.horizon.inventory.host = "https://lanina.jpl.nasa.gov"
       gov.nasa.horizon.inventory.port = 9192
       gov.nasa.horizon.inventory.user = "thuang"
-      gov.nasa.horizon.inventory.pass = "password"
+      gov.nasa.horizon.inventory.pass = "txh388"
    }
 
    smap_cal_val {

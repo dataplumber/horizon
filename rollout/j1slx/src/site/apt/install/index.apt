@@ -72,7 +72,7 @@ gov.nasa.podaac.j1slx.ldap.searchDn = 'ou=personnel,dc=dir,dc=jpl,dc=nasa,dc=gov
 gov.nasa.podaac.j1slx.inventory.host = 'https://lanina'
 gov.nasa.podaac.j1slx.inventory.port = 9192
 gov.nasa.podaac.j1slx.inventory.user = 'thuang'
-gov.nasa.podaac.j1slx.inventory.pass = 'password'
+gov.nasa.podaac.j1slx.inventory.pass = 'txh388'
 +--
    
    J1SLX talks to the invetory for latest granules. The above information is the connection information for the IWS. Notice the change in supplying both the base host and the port, now that Inventory information is shared over SSL.

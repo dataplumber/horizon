@@ -15,27 +15,23 @@
   <parent>
     <groupId>gov.nasa.podaac</groupId>
     <artifactId>distribute</artifactId>
-    <version>5.0.0e</version>
+    <version>5.1.0</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
   <groupId>gov.nasa.podaac</groupId>
   <artifactId>distribute-gcmd</artifactId>
-  <version>5.0.0e</version>
+  <version>5.1.0</version>
   <packaging>jar</packaging>
 
   <name>Distribute GCMD</name>
   <description> This module contains the GCMD DIF generator application. </description>
   <url>http://podaac-cm.jpl.nasa.gov/docs/distribute/distribute-gcmd/</url>
 
-   <properties>
-       <project.build.sourceEncoding>
-         UTF-8
-       </project.build.sourceEncoding>
-       <project.reporting.outputEncoding>
-         UTF-8
-       </project.reporting.outputEncoding>
-     </properties>
+  <properties>
+    <project.build.sourceEncoding> UTF-8 </project.build.sourceEncoding>
+    <project.reporting.outputEncoding> UTF-8 </project.reporting.outputEncoding>
+  </properties>
 
   <dependencies>
     <dependency>

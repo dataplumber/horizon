@@ -125,10 +125,11 @@ public class DistributedQueue {
 
     /**
      * Return the head of the queue without modifying the queue.
+     * @param storageEngine name of the storage engine
      * @return the data at the head of the queue.
-     * @throws NoSuchElementException
-     * @throws KeeperException
-     * @throws InterruptedException
+     * @throws NoSuchElementException if unable to locate
+     * @throws KeeperException unable to locate the node
+     * @throws InterruptedException  when interrupted
      */
     public byte[] element(String storageEngine) throws NoSuchElementException, KeeperException, InterruptedException {
         TreeMap<String,String> orderedChildren;
@@ -162,10 +163,11 @@ public class DistributedQueue {
 
     /**
      * Attempts to remove the head of the queue and return it.
+     * @param storageEngine name of the storage engine
      * @return The former head of the queue
-     * @throws NoSuchElementException
-     * @throws KeeperException
-     * @throws InterruptedException
+     * @throws NoSuchElementException if not found
+     * @throws KeeperException if not found
+     * @throws InterruptedException if interrupted
      */
     public byte[] remove(String storageEngine) throws NoSuchElementException, KeeperException, InterruptedException {
         TreeMap<String,String> orderedChildren;
@@ -212,10 +214,11 @@ public class DistributedQueue {
 
     /**
      * Removes the head of the queue and returns it, blocks until it succeeds.
+     * @param storageEngine name of the storage engine
      * @return The former head of the queue
-     * @throws NoSuchElementException
-     * @throws KeeperException
-     * @throws InterruptedException
+     * @throws NoSuchElementException if not found
+     * @throws KeeperException if not found
+     * @throws InterruptedException if interrupted
      */
     public byte[] take(String storageEngine) throws KeeperException, InterruptedException {
         TreeMap<String,String> orderedChildren;
@@ -265,8 +268,12 @@ public class DistributedQueue {
     
     /**
      * Inserts data into queue.
-     * @param data
+     * @param storage name of the storage
+     * @param priority the input priority
+     * @param data input data
      * @return true if data was successfully added
+     * @throws KeeperException if not found
+     * @throws InterruptedException if interrupted
      */
     public String offer(String storage, Integer priority, byte[] data) throws KeeperException, InterruptedException{
 
@@ -290,9 +297,10 @@ public class DistributedQueue {
 
     /**
      * Returns the data at the first element of the queue, or null if the queue is empty.
+     * @param storageEngine the input storage engine
      * @return data at the first element of the queue, or null.
-     * @throws KeeperException
-     * @throws InterruptedException
+     * @throws KeeperException if not found
+     * @throws InterruptedException if interrupted
      */
     public byte[] peek(String storageEngine) throws KeeperException, InterruptedException{
         try{
@@ -305,9 +313,10 @@ public class DistributedQueue {
 
     /**
      * Attempts to remove the head of the queue and return it. Returns null if the queue is empty.
+     * @param storageEngine the input storage engine
      * @return Head of the queue or null.
-     * @throws KeeperException
-     * @throws InterruptedException
+     * @throws KeeperException if not found
+     * @throws InterruptedException if interrupted
      */
     public byte[] poll(String storageEngine) throws KeeperException, InterruptedException {
         try{

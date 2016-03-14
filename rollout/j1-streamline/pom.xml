@@ -12,7 +12,7 @@ $Id: pom.xml 10511 2012-08-28 22:22:51Z thuang $
   <parent>
     <groupId>gov.nasa.podaac</groupId>
     <artifactId>rollout</artifactId>
-    <version>5.0.0d</version>
+    <version>5.1.0</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
@@ -21,8 +21,7 @@ $Id: pom.xml 10511 2012-08-28 22:22:51Z thuang $
   <packaging>jar</packaging>
 
   <name>Jason-1 Streamline</name>
-  <description>
-    The purpose of this software is to provide a method for the Jason Data Engineer to move the Jason GDR and SGDR data sets through the delivery process.
-  </description>
+  <description> The purpose of this software is to provide a method for the Jason Data Engineer to
+    move the Jason GDR and SGDR data sets through the delivery process. </description>
   <url>http://podaac-cm.jpl.nasa.gov/docs/rollout/j1-streamline/</url>
 </project>

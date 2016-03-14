@@ -72,7 +72,7 @@ gov.nasa.podaac.j1slx.ldap.searchDn = 'ou=personnel,dc=dir,dc=jpl,dc=nasa,dc=gov
 gov.nasa.podaac.j1slx.inventory.host = 'https://lanina'
 gov.nasa.podaac.j1slx.inventory.port = 9192
 gov.nasa.podaac.j1slx.inventory.user = 'thuang'
-gov.nasa.podaac.j1slx.inventory.pass = 'password'
+gov.nasa.podaac.j1slx.inventory.pass = 'txh388'
 
 
 gov.nasa.podaac.j1slx.testReassociate = false 

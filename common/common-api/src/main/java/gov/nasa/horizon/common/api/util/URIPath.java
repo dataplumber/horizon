@@ -18,10 +18,8 @@ import org.apache.commons.logging.LogFactory;
 
 /**
  * A utility class to simplify operations related to URI string. This class is an immutable class.
- * <p/>
- * The standard URI has the following format (without the query entry) <center>[scheme:][//authority][path]</center>
- * <p/>
- * Where the Authority entry can have the following format <center>[user-info@]host[:port]</center>
+ * The standard URI has the following format (without the query entry) [scheme:][//authority][path]
+ * Where the Authority entry can have the following format [user-info@]host[:port]
  *
  * @author T. Huang {Thomas.Huang@jpl.nasa.gov}
  * @version $Id:$

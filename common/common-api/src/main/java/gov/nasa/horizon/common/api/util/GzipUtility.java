@@ -39,7 +39,7 @@ public class GzipUtility {
    /**
     * Compresses data.
     * 
-    * @param data Data to be compressed.
+    * @param dataSource Data to be compressed.
     * @return Compressed data.
     * @throws IOException If there is an error.
     */

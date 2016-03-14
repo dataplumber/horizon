@@ -11,8 +11,8 @@ deploy.path=${appserver.home}/webapps
 
 tomcat.manager.url=http://localhost:8080/manager/html
 # for LINUX and MAC
-##tomcat.manager.username=tomcat
-##tomcat.manager.password=password
+##tomcat.manager.username=pan
+##tomcat.manager.password=lptennis
 # for WIN
 tomcat.manager.username=tomcat
 tomcat.manager.password=password

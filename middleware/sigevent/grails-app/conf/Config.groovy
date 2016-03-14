@@ -148,7 +148,7 @@ environments {
       horizon_email_from = 'sigevent-noreply'
       horizon_provider_url = "jnp://localhost:1099"
       horizon_jms_username = "thuang"
-      horizon_jms_password = "password"
+      horizon_jms_password = "txh388"
       sigevent_api_data_uri = "http://localhost:8100/sigevent/events/data"
       sigevent_twitter_username = "username"
       sigevent_twitter_password = 'password'
@@ -166,7 +166,7 @@ environments {
       horizon_email_from = 'noreply@localhost'
       horizon_provider_url = "jnp://localhost:1099"
       horizon_jms_username = "thuang"
-      horizon_jms_password = "password"
+      horizon_jms_password = "txh388"
       sigevent_api_data_uri = "http://localhost:8100/sigevent/events/data"
       sigevent_twitter_username = "username"
       sigevent_twitter_password = 'password'
@@ -184,10 +184,10 @@ environments {
       horizon_email_from = 'noreply@localhost'
       horizon_provider_url = "jnp://localhost:1099"
       horizon_jms_username = "thuang"
-      horizon_jms_password = "password"
+      horizon_jms_password = "txh388"
       sigevent_api_data_uri = "http://localhost:8100/sigevent/events/data"
-      sigevent_twitter_username = "user"
-      sigevent_twitter_password = 'password'
+      sigevent_twitter_username = "sigeventdev"
+      sigevent_twitter_password = 'SigEvent@07'
       sigevent_twitter_characters_limit = 140
       //SecurityServiceInfo
       gov.nasa.horizon.security.service.enable = true
@@ -202,7 +202,7 @@ environments {
       horizon_email_from = 'noreply@localhost'
       horizon_provider_url = "jnp://lanina.jpl.nasa.gov:1099"
       horizon_jms_username = "thuang"
-      horizon_jms_password = "password"
+      horizon_jms_password = "txh388"
       sigevent_api_data_uri = "http://lanina.jpl.nasa.gov:8100/sigevent/events/data"
       sigevent_twitter_username = "username"
       sigevent_twitter_password = 'password'
@@ -220,7 +220,7 @@ environments {
       horizon_email_from = 'noreply@localhost'
       horizon_provider_url = "jnp://lanina.jpl.nasa.gov:1099"
       horizon_jms_username = "thuang"
-      horizon_jms_password = "password"
+      horizon_jms_password = "txh388"
       sigevent_api_data_uri = "http://lanina.jpl.nasa.gov:8100/sigevent/events/data"
       sigevent_twitter_username = "username"
       sigevent_twitter_password = 'password'
@@ -238,7 +238,7 @@ environments {
       horizon_email_from = 'noreply@localhost'
       horizon_provider_url = "jnp://prawn.jpl.nasa.gov:1099"
       horizon_jms_username = "thuang"
-      horizon_jms_password = "password"
+      horizon_jms_password = "txh388"
       sigevent_api_data_uri = "http://prawn.jpl.nasa.gov:8100/sigevent/events/data"
       sigevent_twitter_username = "username"
       sigevent_twitter_password = 'password'
@@ -256,7 +256,7 @@ environments {
       horizon_email_from = 'noreply@localhost'
       horizon_provider_url = "jnp://prawn.jpl.nasa.gov:1099"
       horizon_jms_username = "thuang"
-      horizon_jms_password = "password"
+      horizon_jms_password = "txh388"
       sigevent_api_data_uri = "http://prawn.jpl.nasa.gov:8100/sigevent/events/data"
       sigevent_twitter_username = "username"
       sigevent_twitter_password = 'password'
@@ -274,10 +274,10 @@ environments {
       horizon_email_from = 'noreply@localhost'
       horizon_provider_url = "jnp://localhost:1099"
       horizon_jms_username = "thuang"
-      horizon_jms_password = "password"
+      horizon_jms_password = "txh388"
       sigevent_api_data_uri = "http://tie-2-aws.jpl.nasa.gov:3230/sigevent/events/data"
-      sigevent_twitter_username = "user"
-      sigevent_twitter_password = 'password'
+      sigevent_twitter_username = "sigeventdev"
+      sigevent_twitter_password = 'SigEvent@07'
       sigevent_twitter_characters_limit = 140
       //SecurityServiceInfo
       gov.nasa.horizon.security.service.enable = true

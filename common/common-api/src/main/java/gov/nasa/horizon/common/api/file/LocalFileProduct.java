@@ -103,6 +103,13 @@ public class LocalFileProduct implements FileProduct {
       this.init(this.filename);
       this.digest = digest;
    }
+   
+   public void setDigestValue(String digest, boolean initialize) {
+	  if(initialize) { 
+		  this.init(this.filename); 
+	  }
+      this.digest = digest;
+   }
 
    @Override
    public String getName() {

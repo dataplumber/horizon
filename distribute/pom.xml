@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
 <!-- 
-  Copyright 2008, by the California Institute of Technology.
+  Copyright 2016, by the California Institute of Technology.
   ALL RIGHTS RESERVED. United States Government Sponsorship acknowledged.
   
   $Id: pom.xml 10506 2012-08-28 22:16:30Z thuang $
@@ -20,7 +20,7 @@
 
    <groupId>gov.nasa.horizon</groupId>
    <artifactId>distribute</artifactId>
-   <version>5.0.0e</version>
+   <version>5.1.0</version>
    <packaging>pom</packaging>
 
    <name>Distribute Program Set</name>
@@ -44,53 +44,25 @@
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-site-plugin</artifactId>
-            <version>2.1.1</version>
-            <dependencies>
-               <dependency>
-                  <groupId>commons-httpclient</groupId>
-                  <artifactId>commons-httpclient</artifactId>
-                  <version>3.1</version>
-                  <exclusions>
-                     <exclusion>
-                        <groupId>commons-logging</groupId>
-                        <artifactId>commons-logging</artifactId>
-                     </exclusion>
-                  </exclusions>
-               </dependency>
-            </dependencies>
+            <version>3.5</version>
          </plugin>
          <plugin>
             <inherited>true</inherited>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
-            <version>2.3.1</version>
+            <version>3.5.1</version>
             <configuration>
-               <source>1.6</source>
-               <target>1.6</target>
+               <source>1.8</source>
+               <target>1.8</target>
             </configuration>
          </plugin>
       </plugins>
    </build>
 
-<!--
-   <repositories>
-      <repository>
-         <id>podaac-repo</id>
-         <name>PO.DAAC Repository</name>
-         <url>http://podaac-cm.jpl.nasa.gov/maven2</url>
-         <releases>
-            <updatePolicy>always</updatePolicy>
-            <checksumPolicy>warn</checksumPolicy>
-         </releases>
-         <snapshots>
-            <enabled>false</enabled>
-         </snapshots>
-      </repository>
-   </repositories>
--->
    <reporting>
       <plugins>
          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-project-info-reports-plugin</artifactId>
             <reportSets>
                <reportSet>
@@ -102,13 +74,27 @@
             </reportSets>
          </plugin>
          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-javadoc-plugin</artifactId>
             <configuration>
-               <use>false</use>
+               <additionalparam>-Xdoclint:none</additionalparam>
             </configuration>
+            <reportSets>
+               <reportSet>
+                  <id>html</id>
+                  <reports>
+                     <report>javadoc</report>
+                  </reports>
+               </reportSet>
+            </reportSets>
          </plugin>
          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-report-plugin</artifactId>
+            <version>2.9</version>
+            <configuration>
+               <showSuccess>false</showSuccess>
+            </configuration>
          </plugin>
       </plugins>
    </reporting>

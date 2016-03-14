@@ -21,7 +21,7 @@ $Id: pom.xml 10504 2012-08-28 22:10:31Z thuang $
 
   <groupId>gov.nasa.podaac</groupId>
   <artifactId>administer</artifactId>
-  <version>5.0.0d</version>
+  <version>5.1.0</version>
   <packaging>pom</packaging>
 
   <name>Administer Program Set</name>

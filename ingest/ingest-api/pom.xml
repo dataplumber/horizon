@@ -18,7 +18,7 @@
    <parent>
       <groupId>gov.nasa.horizon</groupId>
       <artifactId>ingest</artifactId>
-      <version>5.0.0e</version>
+      <version>5.1.0</version>
       <relativePath>../pom.xml</relativePath>
    </parent>
    <artifactId>ingest-api</artifactId>
@@ -30,6 +30,11 @@
       logics. </description>
    <url>http://horizon.jpl.nasa.gov/docs/horizon/ingest/ingest-api/</url>
 
+   <properties>
+      <project.build.sourceEncoding> UTF-8 </project.build.sourceEncoding>
+      <project.reporting.outputEncoding> UTF-8 </project.reporting.outputEncoding>
+   </properties>
+
    <dependencies>
       <dependency>
          <groupId>org.codehaus.groovy</groupId>
@@ -39,7 +44,7 @@
       <dependency>
          <groupId>gov.nasa.horizon</groupId>
          <artifactId>ingest-protocol</artifactId>
-         <version>5.0.0e</version>
+         <version>5.1.0</version>
          <exclusions>
             <exclusion>
                <groupId>xerces</groupId>
@@ -50,7 +55,7 @@
       <dependency>
          <groupId>gov.nasa.horizon</groupId>
          <artifactId>ingest-domain</artifactId>
-         <version>5.0.0e</version>
+         <version>5.1.0</version>
          <exclusions>
             <exclusion>
                <groupId>xerces</groupId>
@@ -61,7 +66,7 @@
       <dependency>
          <groupId>gov.nasa.horizon</groupId>
          <artifactId>ingest-keychain</artifactId>
-         <version>5.0.0e</version>
+         <version>5.1.0</version>
          <exclusions>
             <exclusion>
                <groupId>xerces</groupId>
@@ -72,17 +77,17 @@
       <dependency>
          <groupId>gov.nasa.horizon</groupId>
          <artifactId>ingest-commons</artifactId>
-         <version>5.0.0e</version>
+         <version>5.1.0</version>
       </dependency>
       <dependency>
          <groupId>gov.nasa.horizon</groupId>
          <artifactId>common-api</artifactId>
-         <version>5.0.0e</version>
+         <version>5.1.0</version>
       </dependency>
       <dependency>
          <groupId>gov.nasa.horizon</groupId>
          <artifactId>common-groovy</artifactId>
-         <version>5.0.0e</version>
+         <version>5.1.0</version>
       </dependency>
       <dependency>
          <groupId>junit</groupId>
@@ -113,23 +118,6 @@
       <plugins>
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-site-plugin</artifactId>
-            <version>2.1.1</version>
-            <dependencies>
-               <dependency>
-                  <groupId>commons-httpclient</groupId>
-                  <artifactId>commons-httpclient</artifactId>
-                  <version>3.1</version>
-                  <exclusions>
-                     <exclusion>
-                        <groupId>commons-logging</groupId>
-                        <artifactId>commons-logging</artifactId>
-                     </exclusion>
-                  </exclusions>
-               </dependency>
-            </dependencies>
-         </plugin>
-         <plugin>
             <artifactId>maven-antrun-plugin</artifactId>
             <executions>
                <execution>
@@ -190,14 +178,10 @@
             </executions>
          </plugin>
          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
                <testClassesDirectory>${project.build.outputDirectory}</testClassesDirectory>
-               <!--
-               <excludes>
-                  <exclude>**/**</exclude>
-               </excludes>
-               -->
                <systemProperties>
                   <property>
                      <name>ingest.test.path</name>
@@ -241,19 +225,24 @@
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-report-plugin</artifactId>
-            <version>2.5</version>
+            <version>2.9</version>
             <configuration>
                <showSuccess>false</showSuccess>
             </configuration>
          </plugin>
          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-site-plugin</artifactId>
+            <version>3.5</version>
+         </plugin>
+         <plugin>
             <inherited>true</inherited>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
-            <version>2.3.1</version>
+            <version>3.5.1</version>
             <configuration>
-               <source>1.7</source>
-               <target>1.7</target>
+               <source>1.8</source>
+               <target>1.8</target>
             </configuration>
          </plugin>
       </plugins>
@@ -263,22 +252,26 @@
       <plugins>
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-project-info-reports-plugin</artifactId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <configuration>
+               <additionalparam>-Xdoclint:none</additionalparam>
+            </configuration>
             <reportSets>
                <reportSet>
+                  <id>html</id>
                   <reports>
-                     <report>dependencies</report>
-                     <report>summary</report>
+                     <report>javadoc</report>
                   </reports>
                </reportSet>
             </reportSets>
          </plugin>
          <plugin>
-            <artifactId>maven-javadoc-plugin</artifactId>
-         </plugin>
-         <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-report-plugin</artifactId>
+            <version>2.9</version>
+            <configuration>
+               <showSuccess>false</showSuccess>
+            </configuration>
          </plugin>
       </plugins>
    </reporting>
