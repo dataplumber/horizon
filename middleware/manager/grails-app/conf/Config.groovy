@@ -162,8 +162,8 @@ environments {
       //Host and port of inventory service
       gov.nasa.horizon.inventory.host = "https://lanina.jpl.nasa.gov"
       gov.nasa.horizon.inventory.port = 9192
-      gov.nasa.horizon.inventory.user = "thuang"
-      gov.nasa.horizon.inventory.pass = "txh388"
+      gov.nasa.horizon.inventory.user = "username"
+      gov.nasa.horizon.inventory.pass = "password"
       
       query.processArchives.max = 20
       query.processPurge.max = 5
@@ -191,8 +191,8 @@ environments {
       //Host and port of inventory service
       gov.nasa.horizon.inventory.host = "https://lanina.jpl.nasa.gov"
       gov.nasa.horizon.inventory.port = 9192
-      gov.nasa.horizon.inventory.user = "thuang"
-      gov.nasa.horizon.inventory.pass = "txh388"
+      gov.nasa.horizon.inventory.user = "username"
+      gov.nasa.horizon.inventory.pass = "password"
       
       query.processArchives.max = 20
       query.processPurge.max = 5
@@ -219,8 +219,8 @@ environments {
 
       //Host and port of inventory service
       gov.nasa.horizon.inventory.url = "http://localhost:3130"
-      gov.nasa.horizon.inventory.user = "thuang"
-      gov.nasa.horizon.inventory.pass = "txh388"
+      gov.nasa.horizon.inventory.user = "username"
+      gov.nasa.horizon.inventory.pass = "password"
       
       query.processArchives.max = 20
       query.processPurge.max = 5
@@ -247,8 +247,8 @@ environments {
 
       //Host and port of inventory service
       gov.nasa.horizon.inventory.url = "http://localhost:9192"
-      gov.nasa.horizon.inventory.user = "thuang"
-      gov.nasa.horizon.inventory.pass = "txh388"
+      gov.nasa.horizon.inventory.user = "username"
+      gov.nasa.horizon.inventory.pass = "password"
       
       query.processArchives.max = 20
       query.processPurge.max = 5
@@ -277,8 +277,8 @@ environments {
       //Host and port of inventory service
       gov.nasa.horizon.inventory.host = "https://lanina.jpl.nasa.gov"
       gov.nasa.horizon.inventory.port = 9192
-      gov.nasa.horizon.inventory.user = "thuang"
-      gov.nasa.horizon.inventory.pass = "txh388"
+      gov.nasa.horizon.inventory.user = "username"
+      gov.nasa.horizon.inventory.pass = "password"
       
       query.processArchives.max = 20
       query.processPurge.max = 5
@@ -306,8 +306,8 @@ environments {
       //Host and port of inventory service
       gov.nasa.horizon.inventory.host = "https://lanina.jpl.nasa.gov"
       gov.nasa.horizon.inventory.port = 9192
-      gov.nasa.horizon.inventory.user = "thuang"
-      gov.nasa.horizon.inventory.pass = "txh388"
+      gov.nasa.horizon.inventory.user = "username"
+      gov.nasa.horizon.inventory.pass = "password"
       
       query.processArchives.max = 20
       query.processPurge.max = 5
@@ -335,8 +335,8 @@ environments {
       //Host and port of inventory service
       gov.nasa.horizon.inventory.host = "https://lanina.jpl.nasa.gov"
       gov.nasa.horizon.inventory.port = 9192
-      gov.nasa.horizon.inventory.user = "thuang"
-      gov.nasa.horizon.inventory.pass = "txh388"
+      gov.nasa.horizon.inventory.user = "username"
+      gov.nasa.horizon.inventory.pass = "password"
       
       query.processArchives.max = 20
       query.processPurge.max = 5
@@ -364,8 +364,8 @@ environments {
       //Host and port of inventory service
       gov.nasa.horizon.inventory.host = "https://lanina.jpl.nasa.gov"
       gov.nasa.horizon.inventory.port = 9192
-      gov.nasa.horizon.inventory.user = "thuang"
-      gov.nasa.horizon.inventory.pass = "txh388"
+      gov.nasa.horizon.inventory.user = "username"
+      gov.nasa.horizon.inventory.pass = "password"
       
       query.processArchives.max = 20
       query.processPurge.max = 5
@@ -392,8 +392,8 @@ environments {
 
       //Host and port of inventory service
       gov.nasa.horizon.inventory.url = "http://tie-2-aws.jpl.nasa.gov:3130"
-      gov.nasa.horizon.inventory.user = "gibs"
-      gov.nasa.horizon.inventory.pass = "gibs"
+      gov.nasa.horizon.inventory.user = "username"
+      gov.nasa.horizon.inventory.pass = "password"
       
       query.processArchives.max = 20
       query.processPurge.max = 5
