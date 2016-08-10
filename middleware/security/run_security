@@ -1,1 +1,1 @@
-grails run-app -Dgrails.server.port.http=3030 -Dgrails.server.port.https=3040 -https -Dhorizon.app=SECURITY
+grails run-app -Dgrails.server.port.http=9196 -Dgrails.server.port.https=9197 -https -Dhorizon.app=SECURITY

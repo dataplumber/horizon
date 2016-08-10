@@ -2,14 +2,16 @@ grails.servlet.version = "2.5" // Change depending on target container complianc
 grails.project.class.dir = "target/classes"
 grails.project.test.class.dir = "target/test-classes"
 grails.project.test.reports.dir = "target/test-reports"
-grails.project.target.level = 1.6
-grails.project.source.level = 1.6
+grails.project.target.level = 1.8
+grails.project.source.level = 1.8
 //grails.project.war.file = "target/${appName}-${appVersion}.war"
 
 // uncomment (and adjust settings) to fork the JVM to isolate classpaths
 //grails.project.fork = [
 //   run: [maxMemory:1024, minMemory:64, debug:false, maxPerm:256]
 //]
+
+grails.project.dependency.resolver = "maven"
 
 grails.project.dependency.resolution = {
     // inherit Grails' default dependencies
@@ -48,20 +50,20 @@ grails.project.dependency.resolution = {
     }
 
     plugins {
-        runtime ":hibernate:$grailsVersion"
-        runtime ":jquery:1.8.3"
-        runtime ":resources:1.2"
-        runtime ":quartz:1.0"
+        build ":tomcat:7.0.55.3" // or ":tomcat:8.0.22"
 
-        // Uncomment these (or add new ones) to enable additional resources capabilities
-        //runtime ":zipped-resources:1.0"
-        //runtime ":cached-resources:1.0"
-        //runtime ":yui-minify-resources:0.1.5"
+        // plugins for the compile step
+        compile ":scaffolding:2.1.2"
+        compile ':cache:1.1.8'
+        // asset-pipeline 2.0+ requires Java 7, use version 1.9.x with Java 6
+        compile ":asset-pipeline:2.5.7"
 
-        build ":tomcat:$grailsVersion"
+        // plugins needed at runtime but not for compilation
+        runtime ":hibernate4:4.3.10" // or ":hibernate:3.6.10.18"
+        runtime ":database-migration:1.4.0"
+        runtime ":jquery:1.11.1"
 
-        runtime ":database-migration:1.3.2"
-
-        compile ':cache:1.0.1'
+      runtime ":resources:1.2.8"
+      compile ":quartz:1.0.2"
     }
 }

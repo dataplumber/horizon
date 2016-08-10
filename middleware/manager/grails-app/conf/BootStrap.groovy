@@ -139,6 +139,11 @@ class BootStrap {
                   }
                }
             }
+            else {
+                if (!admin) {
+                    admin = user
+                }
+            }
          }
 
          // register product types
@@ -166,6 +171,10 @@ class BootStrap {
                   }
                }
             }
+            Integer productPriority = JobPriority.DEFAULT.value
+            if ((it.priority?.text()?.trim())?.size() != 0) {
+               productPriority = JobPriority.valueOf(it.priority?.text()?.trim()).value
+            }
             if (!productType) {
                productType = new IngProductType(
                      federation: fed,
@@ -178,7 +187,8 @@ class BootStrap {
                      updatedBy: admin,
                      updated: new Date().time,
                      note: "${ptname} product",
-                     eventCategory: category
+                     eventCategory: category,
+                     priority: productPriority
                )
                if (!productType.save(flush: true)) {
                   productType.errors.each {
@@ -316,7 +326,7 @@ class BootStrap {
    }
 
    private void cleanEngineJobs() {
-      def engineJobsCount = IngEngineJob.createCriteria().get {
+      def engineJobsCount = IngEngineJob.createCriteria().count {
          product {
             productType {
                federation {

@@ -32,7 +32,7 @@ public class Verify {
 	private static String OFFLINE = "OFFLINE";
 	
 
-	public static void verifyByProductType(Long productTypeId, List<Long>productIdList) {
+	public static void verifyByProductType(Long productTypeId, List<Long> productIdList) {
 		log.debug("verfiyByProductType: productTypeId="+productTypeId);
 		long time = System.currentTimeMillis();
 		Date startTime = new Date();
@@ -126,7 +126,7 @@ public class Verify {
 				} else archiveResultFormat = "\n\n"+formatResult();
 			}					
 		
-			refList = null;//TODO - InventoryFactory.getInstance().getQuery().getReferenceAIPByProduct(productIdList);
+			//refList = null;//TODO - InventoryFactory.getInstance().getQuery().getReferenceAIPByProduct(productIdList);
 			if ((refList != null) && (!refList.isEmpty())) {
 				referenceVerifyCount = verifyReference(refList);
 				if (referenceVerifyCount<0) {
@@ -142,8 +142,8 @@ public class Verify {
 				+"\nNo. Products\t:\t"+productSize
 				+"\nNo. Archives\t:\t"+archiveList.size()+"\tFailures:\t"+archiveVerifyCount
 				+archiveResultFormat
-				+"\nNo. References\t:\t"+refList.size()+"\tFailures:\t"+referenceVerifyCount
-				+refResultFormat
+				//+"\nNo. References\t:\t"+refList.size()+"\tFailures:\t"+referenceVerifyCount
+				//+refResultFormat
 				+"\nProcess Time\t:\t"+time/1000. + " seconds"
 				+"\n\n===== "+new Date()+"   End of Summary ===================\n"
 		);

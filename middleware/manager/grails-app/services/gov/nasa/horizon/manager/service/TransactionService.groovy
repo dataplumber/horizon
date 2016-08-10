@@ -652,7 +652,7 @@ class TransactionService {
                }
                order('priority', 'asc')
             }
-            maxResults(20)
+            maxResults(grailsApplication.config.query.processDeletes.max as Integer)
             order("created", "asc")
          }
          log.info("Found "+pendingDeletes.size()+" products for deletion")
@@ -900,7 +900,7 @@ class TransactionService {
             }
             order('priority', 'asc')
          }
-         maxResults(20)
+         maxResults(grailsApplication.config.query.processAdds.max as Integer)
          order("created", 'asc')
       }
 
@@ -1055,7 +1055,7 @@ class TransactionService {
             }
             order('priority', 'asc')
          }
-         maxResults(20)
+         maxResults(grailsApplication.config.query.processReplacePurge.max as Integer)
          order('created', 'asc')
       }
 
@@ -1282,7 +1282,7 @@ class TransactionService {
             }
             order('priority', 'asc')
          }
-         maxResults(20)
+         maxResults(grailsApplication.config.query.processArchives.max as Integer)
          order("created", 'asc')
       }
 
@@ -1504,7 +1504,7 @@ class TransactionService {
                }
                order('priority', 'asc')
             }
-            maxResults(5)
+            maxResults(grailsApplication.config.query.processPurge.max as Integer)
             order('created', 'asc')
          }
 
@@ -1682,8 +1682,8 @@ class TransactionService {
                   }
                }
             }
-            maxResults(maxPerPage)
-            firstResult(offset)
+            maxResults(5)
+            //firstResult(offset)
             order("assigned", "asc")
          }
          

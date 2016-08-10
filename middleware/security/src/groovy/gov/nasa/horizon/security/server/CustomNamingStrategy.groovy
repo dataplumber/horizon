@@ -1,7 +1,7 @@
 package gov.nasa.horizon.security.server
 
 import org.hibernate.cfg.ImprovedNamingStrategy
-import org.hibernate.util.StringHelper
+import org.hibernate.internal.util.StringHelper
 
 class CustomNamingStrategy extends ImprovedNamingStrategy {
 

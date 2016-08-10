@@ -749,7 +749,7 @@ public class InventoryApi {
       return result
    }
 
-   List<Product> getProductIdListAll(String ptName, Date start, Date stop, Integer page, Boolean onlineOnly = false) throws InventoryException {
+   List<Product> getProductIdListAll(String ptName, Date start, Date stop, Integer page, Boolean onlineOnly = false, String pattern = null) throws InventoryException {
       List<Product> returnList = []
       def startLong = (start) ? start.getTime() : null
       def stopLong = (stop) ? stop.getTime() : null
@@ -762,6 +762,8 @@ public class InventoryApi {
          body.page = page
       if (onlineOnly)
          body.onlineOnly = onlineOnly
+      if (pattern)
+         body.pattern = pattern
       try {
          http.post(path: "/$relativePath/productTypeByName/$ptName/listProducts", body: body, contentType: ContentType.XML) { resp, xml ->
             log.debug "http - POST - /inventory/productTypeByName/$ptName/listProducts"
@@ -785,7 +787,7 @@ public class InventoryApi {
       }
       return returnList
    }
-   List<Product> getProductIdListAll(Long ptId, Date start, Date stop, Integer page, Boolean onlineOnly = false) throws InventoryException {
+   List<Product> getProductIdListAll(Long ptId, Date start, Date stop, Integer page, Boolean onlineOnly = false, String pattern = null) throws InventoryException {
       List<Product> returnList = []
       def startLong = (start) ? start.getTime() : null
       def stopLong = (stop) ? stop.getTime() : null
@@ -798,6 +800,8 @@ public class InventoryApi {
          body.page = page
       if (onlineOnly)
          body.onlineOnly = onlineOnly
+      if (pattern)
+         body.pattern = pattern
       try {
          http.post(path: "/$relativePath/productType/$ptId/listProducts", body: body, contentType: ContentType.XML) { resp, xml ->
             log.debug "http - POST - /inventory/productType/$ptId/listProducts"
@@ -806,9 +810,9 @@ public class InventoryApi {
             } else {
 
                for (def product : xml.product) {
-                   
                    def stopTime = (product.startTime.text() != "" && product.startTime.text() != null) ? new Date(product.startTime.text() as Long) : null
-                  returnList.add(new Product(name: product.name.text(), id: product.id.text() as Long, archiveTime: new Date(product.archiveTime.text() as Long), startTime: new Date(product.startTime.text() as Long), stopTime: stopTime))
+                   def archiveTime = (product.archiveTime.text() != "" && product.archiveTime.text() != null) ? new Date(product.archiveTime.text() as Long) : null
+                   returnList.add(new Product(name: product.name.text(), id: product.id.text() as Long, archiveTime: archiveTime, startTime: new Date(product.startTime.text() as Long), stopTime: stopTime))
                }
             }
          }
@@ -817,7 +821,7 @@ public class InventoryApi {
          log.debug ("Unable to find products for Product Type ${ptId}.  ${e.message}")
       }
       catch (Exception e) {
-         throw new InventoryException(e.getMessage())
+         throw new InventoryException(e.getMessage(), e)
       }
       return returnList
    }

@@ -164,6 +164,14 @@ environments {
       gov.nasa.horizon.inventory.port = 9192
       gov.nasa.horizon.inventory.user = "thuang"
       gov.nasa.horizon.inventory.pass = "txh388"
+      
+      query.processArchives.max = 20
+      query.processPurge.max = 5
+      query.processDeletes.max = 20
+      query.processAdds.max = 20
+      query.processReplacePurge.max = 20
+      query.processStaged.max = 5
+      query.processInventoried.max = 5
    }
 
    oracle {
@@ -185,6 +193,14 @@ environments {
       gov.nasa.horizon.inventory.port = 9192
       gov.nasa.horizon.inventory.user = "thuang"
       gov.nasa.horizon.inventory.pass = "txh388"
+      
+      query.processArchives.max = 20
+      query.processPurge.max = 5
+      query.processDeletes.max = 20
+      query.processAdds.max = 20
+      query.processReplacePurge.max = 20
+      query.processStaged.max = 5
+      query.processInventoried.max = 5
    }
 
    development {
@@ -202,9 +218,17 @@ environments {
       gov.nasa.horizon.security.realm = "HORIZON-MANAGER"
 
       //Host and port of inventory service
-      gov.nasa.horizon.inventory.url = "http://localhost:9192"
+      gov.nasa.horizon.inventory.url = "http://localhost:3130"
       gov.nasa.horizon.inventory.user = "thuang"
       gov.nasa.horizon.inventory.pass = "txh388"
+      
+      query.processArchives.max = 20
+      query.processPurge.max = 5
+      query.processDeletes.max = 20
+      query.processAdds.max = 20
+      query.processReplacePurge.max = 20
+      query.processStaged.max = 5
+      query.processInventoried.max = 5
    }
    
    sit {
@@ -225,6 +249,14 @@ environments {
       gov.nasa.horizon.inventory.url = "http://localhost:9192"
       gov.nasa.horizon.inventory.user = "thuang"
       gov.nasa.horizon.inventory.pass = "txh388"
+      
+      query.processArchives.max = 20
+      query.processPurge.max = 5
+      query.processDeletes.max = 20
+      query.processAdds.max = 20
+      query.processReplacePurge.max = 20
+      query.processStaged.max = 5
+      query.processInventoried.max = 5
    }
 
    test {
@@ -247,6 +279,14 @@ environments {
       gov.nasa.horizon.inventory.port = 9192
       gov.nasa.horizon.inventory.user = "thuang"
       gov.nasa.horizon.inventory.pass = "txh388"
+      
+      query.processArchives.max = 20
+      query.processPurge.max = 5
+      query.processDeletes.max = 20
+      query.processAdds.max = 20
+      query.processReplacePurge.max = 20
+      query.processStaged.max = 5
+      query.processInventoried.max = 5
    }
 
    testing {
@@ -268,6 +308,14 @@ environments {
       gov.nasa.horizon.inventory.port = 9192
       gov.nasa.horizon.inventory.user = "thuang"
       gov.nasa.horizon.inventory.pass = "txh388"
+      
+      query.processArchives.max = 20
+      query.processPurge.max = 5
+      query.processDeletes.max = 20
+      query.processAdds.max = 20
+      query.processReplacePurge.max = 20
+      query.processStaged.max = 5
+      query.processInventoried.max = 5
    }
 
    production {
@@ -289,6 +337,14 @@ environments {
       gov.nasa.horizon.inventory.port = 9192
       gov.nasa.horizon.inventory.user = "thuang"
       gov.nasa.horizon.inventory.pass = "txh388"
+      
+      query.processArchives.max = 20
+      query.processPurge.max = 5
+      query.processDeletes.max = 20
+      query.processAdds.max = 20
+      query.processReplacePurge.max = 20
+      query.processStaged.max = 5
+      query.processInventoried.max = 5
    }
 
    operation {
@@ -310,6 +366,14 @@ environments {
       gov.nasa.horizon.inventory.port = 9192
       gov.nasa.horizon.inventory.user = "thuang"
       gov.nasa.horizon.inventory.pass = "txh388"
+      
+      query.processArchives.max = 20
+      query.processPurge.max = 5
+      query.processDeletes.max = 20
+      query.processAdds.max = 20
+      query.processReplacePurge.max = 20
+      query.processStaged.max = 5
+      query.processInventoried.max = 5
    }
 
    smap_cal_val {
@@ -330,5 +394,13 @@ environments {
       gov.nasa.horizon.inventory.url = "http://tie-2-aws.jpl.nasa.gov:3130"
       gov.nasa.horizon.inventory.user = "gibs"
       gov.nasa.horizon.inventory.pass = "gibs"
+      
+      query.processArchives.max = 20
+      query.processPurge.max = 5
+      query.processDeletes.max = 20
+      query.processAdds.max = 20
+      query.processReplacePurge.max = 20
+      query.processStaged.max = 5
+      query.processInventoried.max = 5
   }
 }

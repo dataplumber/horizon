@@ -3,7 +3,7 @@
 * California Institute of Technology.  All rights reserved
 */
 
-import com.mchange.v2.c3p0.ComboPooledDataSource
+import com.mchange.v2.c3p0.*
 
 beans = {
    def config = application.config

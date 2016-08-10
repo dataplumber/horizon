@@ -1,4 +1,4 @@
-import org.codehaus.groovy.grails.commons.ConfigurationHolder
+
 
 //import net.unto.twitter.Api
 //import net.unto.twitter.TwitterProtos.Status
@@ -8,8 +8,9 @@ import org.codehaus.groovy.grails.commons.ConfigurationHolder
  * SysTwitterService
  */
 class SysTwitterService {
-   private static final String TwitterUserName = ConfigurationHolder.config.sigevent_twitter_username
-   private static final String TwitterPassword = ConfigurationHolder.config.sigevent_twitter_password
+   def grailsApplication
+   private final String TwitterUserName = grailsApplication.config.sigevent_twitter_username
+   private final String TwitterPassword = grailsApplication.config.sigevent_twitter_password
    boolean transactional = false
 
    public void publish(String message) {

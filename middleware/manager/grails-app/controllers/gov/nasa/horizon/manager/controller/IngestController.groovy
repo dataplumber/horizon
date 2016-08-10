@@ -5,14 +5,16 @@ import gov.nasa.horizon.ingest.api.protocol.IngestProtocol
 import gov.nasa.horizon.manager.domain.IngDataFile
 import gov.nasa.horizon.manager.domain.IngProduct
 import gov.nasa.horizon.manager.domain.IngProductType
+import groovy.xml.XmlUtil
+import groovy.util.slurpersupport.NodeChild
 
 class IngestController {
    def transactionService
-
+   
    def init = {
-      log.debug("calling IngestRequest.loadRequest with params ${params.horizon.params}")
+      log.debug("calling IngestRequest.loadRequest with params ${request.XML.params}")
       IngestProtocol protocol = new IngestProtocol()
-      protocol.load(params.horizon.params as String)
+      protocol.load(request.XML.params as String)
       log.debug("return from loadRequest")
 
       flash.protocol = protocol
@@ -47,9 +49,9 @@ class IngestController {
 
    def add = {
       try {
-         log.debug "Executing action $actionName ${params.horizon.params}"
+         log.debug "Executing action $actionName ${request.XML.params}"
          IngestProtocol protocol = new IngestProtocol()
-         protocol.load(params.horizon.params as String)
+         protocol.load(request.XML.params as String)
 
          flash.protocol = protocol
 
@@ -114,7 +116,7 @@ class IngestController {
       try {
          log.debug "Executing action ${actionName}"
          IngestProtocol protocol = new IngestProtocol()
-         protocol.load(params.horizon.params as String)
+         protocol.load(request.XML.params as String)
 
          flash.protocol = protocol
 
@@ -177,7 +179,7 @@ class IngestController {
       try {
          log.trace "Executing action ${actionName}"
          IngestProtocol protocol = new IngestProtocol()
-         protocol.load(params.horizon.params as String)
+         protocol.load(request.XML.params as String)
 
          log.debug "LIST REQUEST: ${protocol.toString()}"
 

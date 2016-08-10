@@ -1,14 +1,15 @@
 package gov.nasa.horizon.security.server
 
-import org.codehaus.groovy.grails.commons.ConfigurationHolder;
+import grails.util.Holders
 
 class TokenCleanJob {
 
+    def grailsApplication
 	def cacheService
 	def concurrent = false
 	
 	static triggers = {
-		simple name: 'cleanTokens', startDelay: ((Integer)ConfigurationHolder.config.security.token.jobStartDelay)*1000, repeatInterval: ((Integer)ConfigurationHolder.config.security.token.jobInterval)*1000L //wait a minute, then every minute
+		simple name: 'cleanTokens', startDelay: ((Integer)Holders.config.security.token.jobStartDelay)*1000, repeatInterval: ((Integer)Holders.config.security.token.jobInterval)*1000L //wait a minute, then every minute
 	  }
 	  def group = "horizon-security"
 	

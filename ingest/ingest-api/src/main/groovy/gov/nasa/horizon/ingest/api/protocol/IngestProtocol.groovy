@@ -1256,7 +1256,7 @@ class IngestProtocol extends JAXBBinder {
    }
 
    String toRequest() {
-      String content = super.toString()
+      String content = toString()
       def writer = new StringWriter()
       def xml = new MarkupBuilder(writer)
       xml.horizon() {
@@ -1264,6 +1264,10 @@ class IngestProtocol extends JAXBBinder {
          params(content)
       }
       return writer.toString()
+   }
+
+   String toString() {
+	   return super.toString()
    }
 
 }

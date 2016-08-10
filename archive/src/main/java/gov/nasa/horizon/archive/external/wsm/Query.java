@@ -168,17 +168,17 @@ class Query implements InventoryQuery
             startDate = start.getTime();
          if(stop != null)
             stopDate = stop.getTime();
-         List<Product> gs = service.getProductIdListAll(ptId, startDate, stopDate, 1, false);
-         List<Product> results = new ArrayList<Product>();
-         if(gs != null) {
-            for (Product xi : gs) {
-               results.add(service.getProduct(xi.getId()));
-            }
-         }
-         return results;
+         List<Product> gs = service.getProductIdListAll(ptId, startDate, stopDate, 1, true, pattern);
+//         List<Product> results = new ArrayList<Product>();
+//         if(gs != null) {
+//            for (Product xi : gs) {
+//               results.add(service.getProduct(xi.getId()));
+//            }
+//         }
+         return gs;
 
       } catch (InventoryException e) {
-         log.error("Error fetching product list:" + e.getLocalizedMessage());
+         log.error("Error fetching product list:" + e.getLocalizedMessage(),e);
          return null;
       }
 
@@ -516,7 +516,7 @@ class Query implements InventoryQuery
          if(stop !=null) {
             stopTime = stop.getTime();
          }
-         List<Product> products = service.getProductIdListAll(productTypeId, startTime, stopTime, 1, false);
+         List<Product> products = service.getProductIdListAll(productTypeId, startTime, stopTime, 1, true);
          for (Product product : products) {
             results.add(product.getId());
          }

@@ -222,7 +222,7 @@ class OperatorService {
 				eq("id", id)
 				productType {
 					federation {
-						eq("name", grailsApplication.config.horizon_dataset_update_federation)
+						eq("name", grailsApplication.config.manager_federation)
 					}
 				}
 			}
@@ -615,7 +615,7 @@ class OperatorService {
    }
 
    public def createProductType(String userName, String productTypeName) {
-      String federationValue = grailsApplication.config.horizon_dataset_update_federation as String
+      String federationValue = grailsApplication.config.manager_federation as String
       def purgeRateValue = grailsApplication.config.horizon_dataset_update_purge_rate
 
       def federation = IngFederation.findByName(federationValue)

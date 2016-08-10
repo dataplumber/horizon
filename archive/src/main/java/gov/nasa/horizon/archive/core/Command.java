@@ -929,11 +929,11 @@ public class Command {
 		else
 			stop = null;
 		
-		System.out.println("ProductType: " + dId);
-		System.out.println("Pattern: " + pattern);
+//		System.out.println("ProductType: " + dId);
+//		System.out.println("Pattern: " + pattern);
 		
 		log.info("ProductType: " + dId);
-		log.info("Pattern: " + pattern);
+		log.info("Pattern: " + pattern+"\n");
 		
 		if(startIsDefined){
 			System.out.println("start: " + start.getTime());
@@ -950,18 +950,18 @@ public class Command {
 			log.error("Error fetching products.");
 			return;
 		}
-		System.out.println("returned size: " + gl.size());
-		System.out.println("[product_id] product_name");
-		System.out.println("--------------\n");
+//		System.out.println("returned size: " + gl.size());
+//		System.out.println("[product_id] product_name");
+//		System.out.println("--------------\n");
 		log.info("returned size: " + gl.size());
 		log.info("[product_id] product_name");
 		log.info("--------------\n");
 		
 		for(Product g: gl){
-			System.out.println("["+g.getId()+"] "+g.getName());
+//			System.out.println("["+g.getId()+"] "+g.getName());
 			log.info("["+g.getId()+"] "+g.getName());
 			if(outFile != null){
-			//output to file here	
+			    //output to file here	
 			}
 		}
 	}	

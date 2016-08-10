@@ -1,11 +1,12 @@
 import gov.nasa.horizon.sigevent.SysNotify
 import gov.nasa.horizon.sigevent.SysOutgoing
-import org.codehaus.groovy.grails.commons.ConfigurationHolder
 
 /**
  * SysOutgoingService
  */
 class SysOutgoingService {
+    
+   def grailsApplication
    private static final Map Methods = [
       (NotifyMethod.Email): "publishByEmail",
       (NotifyMethod.Jms): "publishByJms",
@@ -15,7 +16,7 @@ class SysOutgoingService {
    boolean transactional = false
    def sysEmailService
    def sysJmsService
-   def sysTwitterService
+   //def sysTwitterService
 
    public SysOutgoing create(Map parameters) throws RuntimeException {
       SysOutgoing outgoing = new SysOutgoing(parameters)
@@ -77,7 +78,7 @@ class SysOutgoingService {
          subject += " triggered by ALL subscription"
       }
       def email = [
-         "from": ConfigurationHolder.config.horizon_email_from,
+         "from": grailsApplication.config.horizon_email_from,
          "to": [outgoing.contact],
          "subject": subject,
          "text": outgoing.message

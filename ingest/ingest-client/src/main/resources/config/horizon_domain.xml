@@ -4,6 +4,8 @@
    <federation>
       <name>localDev</name>
       <url>http://localhost:8080/manager/ingest</url>
+      <productType>pt1</productType>
+      <productType>pt2</productType>
    </federation>
    <sigevent>http://localhost:9090/sigevent</sigevent>
    <jobkeeper>

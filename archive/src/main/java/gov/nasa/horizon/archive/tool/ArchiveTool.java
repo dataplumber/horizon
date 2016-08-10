@@ -85,18 +85,18 @@ public class ArchiveTool {
                 .withLongOpt("productTypeId")
                 .withDescription("Product Type Id" )
                 .create("pt"));
-		/* Take these options out because it can be hugh impact.
+		// Take these options out because it can be huge impact.
 		optionGroup.addOption( OptionBuilder.withArgName( "id1,id2,id3,..." )
                 .hasArgs()
                 .withValueSeparator(',')
                 .withDescription("List of pt id" )
-                .create("dl") );	
+                .create("dl") );
 		optionGroup.addOption( OptionBuilder.withArgName( "beginId:endId" )
                 .hasArgs(2)
                 .withValueSeparator(':')
                 .withDescription("Range of pt id" )
                 .create("dr") );
-                */
+                
 		return optionGroup;
 	}
 

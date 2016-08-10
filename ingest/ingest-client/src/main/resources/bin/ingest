@@ -41,7 +41,7 @@ my $debug=0;
 
 my $javaCmd = &getCmd ($debug);
 my $classpath = $ENV{CLASSPATH} ? $ENV{CLASSPATH} : "";
-my $restartdir = $ENV{HORIZON_RESTART_DIR} ? $ENV{HORIZON_RESTART_DIR} : "user.home";
+my $restartdir = $ENV{HORIZON_RESTART_DIR} ? $ENV{HORIZON_RESTART_DIR} : "";
 my @args = &getJVMArgs($classpath, $debug);
                                                                               
 my $logconfig = File::Spec->catdir($ENV{HORIZON}, 'horizon_client.lcf');
@@ -82,7 +82,9 @@ else {
 }
 
 push @args, "-Dhorizon.home=$ENV{HORIZON}/../";
-push @args, "-Dhorizon.restart.dir=$restartdir";
+if (!$restartdir eq "") {
+    push @args, "-Dhorizon.restart.dir=$restartdir";
+}
 push @args, "-Dhorizon.logging.path=$ENV{HORIZON_LOGGING}";
 push @args, "-Dhorizon.logging.file=$logfile";
 push @args, "-Dlog4j.configuration=file://$logconfig";

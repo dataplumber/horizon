@@ -50,9 +50,20 @@ grails.project.dependency.resolution = {
    }
 
    plugins {
-      runtime ":hibernate:$grailsVersion"
-      runtime ":jquery:1.8.3"
-      runtime ":resources:1.2"
+        build ":tomcat:7.0.55.3" // or ":tomcat:8.0.22"
+
+        // plugins for the compile step
+        compile ":scaffolding:2.1.2"
+        compile ':cache:1.1.8'
+        // asset-pipeline 2.0+ requires Java 7, use version 1.9.x with Java 6
+        compile ":asset-pipeline:2.5.7"
+
+        // plugins needed at runtime but not for compilation
+        runtime ":hibernate4:4.3.10" // or ":hibernate:3.6.10.18"
+        runtime ":database-migration:1.4.0"
+        runtime ":jquery:1.11.1"
+
+      runtime ":resources:1.2.8"
       compile ":quartz:1.0.2"
 
       // Uncomment these (or add new ones) to enable additional resources capabilities
@@ -60,10 +71,5 @@ grails.project.dependency.resolution = {
       //runtime ":cached-resources:1.0"
       //runtime ":yui-minify-resources:0.1.5"
 
-      build ":tomcat:$grailsVersion"
-
-      runtime ":database-migration:1.3.2"
-
-      compile ':cache:1.0.1'
    }
 }

@@ -50,7 +50,7 @@ class InventoryService {
             }
             order('priority', 'asc')
          }
-         maxResults(5)
+         maxResults(grailsApplication.config.query.processStaged.max as Integer)
          order('created', 'asc')
       }
       if (!pendings || pendings.size() == 0)
@@ -156,7 +156,7 @@ class InventoryService {
             order('priority', 'asc')
          }
          lock(true)
-         maxResults(5)
+         maxResults(grailsApplication.config.query.processInventoried.max as Integer)
          order('created', 'asc')
       }
       if (!pendings || pendings.size() == 0) {

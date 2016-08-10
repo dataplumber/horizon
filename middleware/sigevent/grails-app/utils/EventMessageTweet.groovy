@@ -1,5 +1,3 @@
-import org.codehaus.groovy.grails.commons.ConfigurationHolder
-
 import gov.nasa.horizon.common.api.util.DateTimeUtility
 import gov.nasa.horizon.sigevent.SysEvent
 import gov.nasa.horizon.sigevent.SysNotify
@@ -8,7 +6,8 @@ import gov.nasa.horizon.sigevent.SysNotify
  * EventMessageTweet
  */
 public class EventMessageTweet extends EventMessage {
-   private static final int TwitterCharactersLimit = ConfigurationHolder.config.sigevent_twitter_characters_limit
+   static def grailsApplication
+   private static final int TwitterCharactersLimit = grailsApplication.config.sigevent_twitter_characters_limit
    private static final String EndingCharacters = "..."
    
    protected String constructDescription(List<SysEvent> events, SysNotify notify) {

@@ -209,9 +209,9 @@ class Access implements InventoryAccess
     	String basepath = ArchiveData.absolutePath(baseLocation);
 
 		//Only update the product root_path
-		if(!basepath.startsWith("file://"))
-			basepath = "file://" + basepath;
-		
+//		if(!basepath.startsWith("file://"))
+//			basepath = "file://" + basepath;
+//		
 		//call to update root_path
 		try {
 			service.updateProductRootPath(product.getId(), basepath);

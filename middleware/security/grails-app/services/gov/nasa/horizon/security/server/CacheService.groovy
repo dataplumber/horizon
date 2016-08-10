@@ -1,19 +1,20 @@
 package gov.nasa.horizon.security.server
 import gov.nasa.horizon.security.server.utils.Encrypt
-import org.codehaus.groovy.grails.commons.ConfigurationHolder
+import grails.util.Holders
 
 class CacheService {
 
     static transactional = true
 
+    def grailsApplication
 	def cache = [:]
 	def LOCKED = -1;
 	def UNKNOWN = 0;
 	def SUCCESS = 1;
 	
-	def allowedMisses = (Integer) ConfigurationHolder.config.security.caching.misses;
-	def lockTime = (Integer) ConfigurationHolder.config.security.caching.cacheTimeLimit;
-	def cacheTime = (Integer) ConfigurationHolder.config.security.caching.lockTimeLimit;
+	def allowedMisses = (Integer) Holders.config.security.caching.misses;
+	def lockTime = (Integer) Holders.config.security.caching.cacheTimeLimit;
+	def cacheTime = (Integer) Holders.config.security.caching.lockTimeLimit;
 		
 	def limitReached(origin, interval){
 		def now = new Date().getTime()
